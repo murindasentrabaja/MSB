@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERP SYSTEM | PT MURINDA SENTRA BAJA</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="description" content="Advanced ERP System - PT Murinda Sentra Baja | Enterprise Resource Planning with Real-time Analytics">
+    <meta name="keywords" content="ERP, Manufacturing, Steel, Industry 4.0, Business Intelligence, Dashboard">
+    <meta name="author" content="Aspuro Amarulloh Khoiri">
+    <meta name="theme-color" content="#0a0e27">
+    <title>ERP SYSTEM | PT MURINDA SENTRA BAJA - Advanced Dashboard</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     
     <style>
         :root {
@@ -13,415 +21,271 @@
             --primary-blue-hover: #025aa5;
             --primary-green: #10b981;
             --primary-orange: #f59e0b;
+            --primary-purple: #8b5cf6;
+            --primary-cyan: #06b6d4;
+            --primary-red: #ef4444;
             
-            --bg-body: #eef2f6;
-            --bg-card: rgba(255, 255, 255, 0.65);
+            --bg-body: #0a0e27;
+            --bg-body-light: #eef2f6;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --bg-glass: rgba(255, 255, 255, 0.08);
             
             --text-dark: #1e293b;
             --text-muted: #64748b;
-            --text-light: #94a3b8;
+            --text-light: #e2e8f0;
+            --text-white: #ffffff;
             
-            --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.05);
-            --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.07);
+            --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.1);
+            --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.15);
+            --shadow-neon: 0 0 20px rgba(2, 117, 216, 0.3);
             
             --transition-smooth: 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            outline: none;
-            transition: all 0.3s ease-in-out;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
 
         body {
-            background-color: var(--bg-body);
-            color: var(--text-dark);
-            font-family: 'Nunito', sans-serif;
-            overflow: hidden;
-            height: 100vh;
-            width: 100vw;
+            background: var(--bg-body);
+            color: var(--text-light);
+            font-family: 'Inter', 'Nunito', sans-serif;
+            overflow-x: hidden;
             position: relative;
+            transition: background 0.5s ease;
         }
 
-        h1, h2, h3, h4, h5, button {
-            font-family: 'Poppins', sans-serif;
-        }
+        /* ==================== LIGHT THEME OPTIMIZATION ==================== */
+        body.light-theme { background: var(--bg-body-light); color: var(--text-dark); }
+        body.light-theme .top-info-bar, body.light-theme header, body.light-theme footer { background: rgba(255, 255, 255, 0.85); border-color: rgba(0, 0, 0, 0.1); color: #1e293b; }
+        body.light-theme .stat-card, body.light-theme .chart-card, body.light-theme .module-card, body.light-theme .notification, body.light-theme .login-card { background: rgba(255, 255, 255, 0.9); border-color: rgba(0, 0, 0, 0.1); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); }
+        body.light-theme .stat-value, body.light-theme .chart-title, body.light-theme .module-info h3, body.light-theme .section-title, body.light-theme .login-card h2 { color: #0f172a; }
+        body.light-theme .stat-label, body.light-theme .chart-subtitle, body.light-theme .module-info p, body.light-theme .footer-address, body.light-theme .footer-copy { color: #475569; }
+        body.light-theme .footer-address strong, body.light-theme .footer-copy span:first-child { color: #0f172a; }
+        body.light-theme .user-profile, body.light-theme .theme-toggle { background: #f1f5f9; color: #0f172a; border-color: #cbd5e1; }
+        body.light-theme .header-divider { background: #cbd5e1; }
+        body.light-theme .datetime { color: #1e293b; }
+        body.light-theme .input-group input { background: #f8fafc; border-color: #cbd5e1; color: #0f172a; }
+        body.light-theme .input-group input::placeholder { color: #94a3b8; }
+        h1, h2, h3, h4, h5, button { font-family: 'Poppins', sans-serif; }
 
-        /* BACKGROUND ANIMASI "SOFT GRADIENT" */
-        .bg-glow {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(90px);
-            opacity: 0.4;
-            z-index: -1;
-            animation: float 12s infinite alternate ease-in-out;
-        }
-        .blob-1 { background: #0275d8; width: 450px; height: 450px; top: -10%; left: -10%; }
-        .blob-2 { background: #10b981; width: 350px; height: 350px; bottom: 10%; right: -5%; animation-delay: 2s; }
-        .blob-3 { background: #f59e0b; width: 400px; height: 400px; top: 40%; left: 40%; animation-delay: 4s; }
+        /* ==================== PARTICLES BACKGROUND ==================== */
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; opacity: 0.6; }
 
-        @keyframes float {
-            0% { transform: translateY(0px) scale(1); }
-            100% { transform: translateY(40px) scale(1.1); }
-        }
+        /* ==================== GRADIENT BLOBS ==================== */
+        .bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.3; z-index: -1; animation: float 15s infinite alternate ease-in-out; pointer-events: none; will-change: transform; }
+        .blob-1 { background: linear-gradient(135deg, #0275d8, #06b6d4); width: 600px; height: 600px; top: -15%; left: -10%; }
+        .blob-2 { background: linear-gradient(135deg, #10b981, #059669); width: 500px; height: 500px; bottom: -10%; right: -10%; animation-delay: 3s; }
+        .blob-3 { background: linear-gradient(135deg, #f59e0b, #dc2626); width: 550px; height: 550px; top: 35%; right: -5%; animation-delay: 6s; }
+        .blob-4 { background: linear-gradient(135deg, #8b5cf6, #ec4899); width: 450px; height: 450px; bottom: 20%; left: 15%; animation-delay: 9s; }
+        @keyframes float { 0% { transform: translate(0, 0) scale(1) rotate(0deg); } 50% { transform: translate(30px, -30px) scale(1.1) rotate(180deg); } 100% { transform: translate(-20px, 20px) scale(0.9) rotate(360deg); } }
 
-        /* ================== HALAMAN LOGIN ================== */
-        #login-page {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            position: absolute;
-            top: 0; left: 0; width: 100%;
-            z-index: 1000;
-            background: rgba(238, 242, 246, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
+        /* ==================== LOADING SCREEN ==================== */
+        #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s, visibility 0.5s; }
+        #loading-screen.hidden { opacity: 0; visibility: hidden; }
+        .loader { width: 80px; height: 80px; border: 6px solid rgba(2, 117, 216, 0.2); border-top: 6px solid #0275d8; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .loading-text { margin-top: 25px; font-size: 1.2rem; font-weight: 600; color: var(--text-light); letter-spacing: 2px; }
+        .loading-progress { margin-top: 15px; font-size: 0.9rem; color: var(--primary-cyan); }
 
-        .login-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            padding: 45px 40px;
-            border-radius: 24px;
-            width: 100%;
-            max-width: 420px;
-            text-align: center;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.1);
-        }
+        /* ==================== LOGIN PAGE ==================== */
+        #login-page { display: flex; justify-content: center; align-items: center; min-height: 100vh; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
+        .login-card { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(25px); border: 2px solid rgba(255, 255, 255, 0.18); padding: 50px 45px; border-radius: 30px; width: 100%; max-width: 480px; text-align: center; box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4), 0 0 60px rgba(2, 117, 216, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1); position: relative; overflow: hidden; animation: slideUp 0.8s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        .login-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent); animation: shimmer 3s infinite; }
+        @keyframes shimmer { 0% { left: -100%; } 100% { left: 200%; } }
+        .login-card img.logo { width: 70%; margin-bottom: 20px; filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3)); }
+        .login-card h2 { font-size: 1.3rem; font-weight: 700; letter-spacing: 2px; background: linear-gradient(135deg, #0275d8, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 40px; text-transform: uppercase; }
+        .input-group { position: relative; margin-bottom: 25px; }
+        .input-group i { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: var(--primary-cyan); font-size: 1.2rem; transition: all 0.3s; }
+        .input-group input { width: 100%; padding: 18px 25px 18px 60px; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 15px; color: var(--text-white); font-size: 1rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: all 0.4s; }
+        .input-group input::placeholder { color: rgba(255, 255, 255, 0.5); }
+        .input-group input:focus { background: rgba(255, 255, 255, 0.1); border-color: var(--primary-cyan); box-shadow: 0 0 25px rgba(6, 182, 212, 0.3); transform: translateY(-2px); }
+        .input-group input:focus + i { color: var(--primary-cyan); transform: translateY(-50%) scale(1.1); }
+        .login-btn { width: 100%; padding: 18px; margin-top: 15px; background: linear-gradient(135deg, #0275d8 0%, #06b6d4 100%); border: none; border-radius: 15px; color: #ffffff; font-weight: 700; font-size: 1.1rem; letter-spacing: 1.5px; cursor: pointer; box-shadow: 0 10px 30px rgba(2, 117, 216, 0.4); position: relative; overflow: hidden; transition: all 0.4s; }
+        .login-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent); transition: 0.6s; }
+        .login-btn:hover::before { left: 100%; } .login-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(2, 117, 216, 0.6); }
+        .login-footer { margin-top: 40px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); font-weight: 500; line-height: 1.8; }
+        .error-msg { color: #ef4444; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 12px; border-radius: 10px; font-size: 0.9rem; margin-top: 20px; font-weight: 600; display: none; animation: shake 0.5s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
 
-        .login-card img.logo { width: 75%; margin-bottom: 15px; }
+        /* ==================== MAIN DASHBOARD ==================== */
+        #main-dashboard { display: none; flex-direction: column; min-height: 100vh; transition: transform var(--transition-smooth), opacity var(--transition-smooth), filter var(--transition-smooth); transform-origin: top center; animation: fadeIn 0.8s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .dashboard-dimmed { transform: scale(0.97) translateY(-10px); opacity: 0.5; filter: blur(6px); pointer-events: none; }
 
-        .login-card h2 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            letter-spacing: 1.5px;
-            color: var(--primary-blue);
-            margin-bottom: 35px;
-            text-transform: uppercase;
-        }
+        /* ==================== TOP INFO BAR ==================== */
+        .top-info-bar { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; font-weight: 600; color: var(--text-light); z-index: 101; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2); }
+        .datetime { display: flex; align-items: center; gap: 15px; } .datetime i { color: var(--primary-cyan); }
+        .hse-ticker-wrap { flex: 1; max-width: 60%; overflow: hidden; white-space: nowrap; position: relative; display: flex; align-items: center; background: rgba(245, 158, 11, 0.15); padding: 8px 20px; border-radius: 15px; border: 1px solid rgba(245, 158, 11, 0.3); margin-left: 30px; }
+        .hse-ticker { display: inline-block; padding-left: 100%; animation: ticker 35s linear infinite; font-weight: 700; color: #fbbf24; }
+        .hse-ticker i { margin-right: 10px; color: var(--primary-orange); }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        .input-group { position: relative; margin-bottom: 20px; }
-        .input-group i {
-            position: absolute; left: 20px; top: 50%;
-            transform: translateY(-50%); color: var(--primary-blue);
-            font-size: 1.1rem;
-        }
-
-        .input-group input {
-            width: 100%; padding: 16px 20px 16px 55px;
-            background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(2, 117, 216, 0.2);
-            border-radius: 12px; color: var(--text-dark);
-            font-size: 0.95rem; font-family: 'Nunito', sans-serif;
-            font-weight: 600; transition: 0.3s;
-        }
-
-        .input-group input:focus {
-            background: #ffffff; border-color: var(--primary-blue);
-            box-shadow: 0 0 15px rgba(2, 117, 216, 0.2);
-        }
-
-        .login-btn {
-            width: 100%; padding: 16px; margin-top: 10px;
-            background: linear-gradient(135deg, var(--primary-blue), #00c6ff);
-            border: none; border-radius: 12px; color: #ffffff; font-weight: 600;
-            font-size: 1rem; letter-spacing: 1px; cursor: pointer;
-            box-shadow: 0 8px 20px rgba(2, 117, 216, 0.3);
-            position: relative; overflow: hidden;
-        }
-
-        .login-btn::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
-            transform: skewX(-20deg); transition: 0.5s;
-        }
-        .login-btn:hover::before { left: 150%; }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(2, 117, 216, 0.4);
-        }
-
-        .login-footer {
-            margin-top: 35px; font-size: 0.75rem;
-            color: var(--text-muted); font-weight: 600; line-height: 1.5;
-        }
-
-        .error-msg {
-            color: #ef4444; font-size: 0.85rem; margin-top: 15px;
-            font-weight: 700; display: none;
-        }
-
-        /* ================== MAIN DASHBOARD ================== */
-        #main-dashboard {
-            display: none;
-            flex-direction: column;
-            height: 100vh;
-            transition: transform var(--transition-smooth), 
-                        opacity var(--transition-smooth),
-                        filter var(--transition-smooth);
-            transform-origin: top center;
-        }
-
-        .dashboard-dimmed {
-            transform: scale(0.97) translateY(-10px);
-            opacity: 0.6; filter: blur(4px); pointer-events: none;
-        }
-
-        .top-info-bar {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 10px 40px; display: flex; justify-content: space-between;
-            font-size: 0.85rem; font-weight: 700; color: var(--text-muted);
-            z-index: 101;
-        }
-
-        /* RUNNING TEXT HSE */
-        .hse-ticker-wrap {
-            width: 60%; overflow: hidden; white-space: nowrap; position: relative;
-            display: flex; align-items: center; background: rgba(245, 158, 11, 0.1);
-            padding: 2px 15px; border-radius: 12px; border: 1px solid rgba(245, 158, 11, 0.2);
-        }
-        .hse-ticker {
-            display: inline-block; padding-left: 100%;
-            animation: ticker 30s linear infinite; font-weight: 700; color: #b45309;
-        }
-        .hse-ticker i { margin-right: 8px; color: var(--primary-orange); }
-
-        @keyframes ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
-
-        header {
-            height: 80px; background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.5); display: flex;
-            justify-content: space-between; align-items: center;
-            padding: 0 40px; z-index: 100; box-shadow: 0 4px 30px rgba(0,0,0,0.03);
-        }
-
-        .header-left { display: flex; align-items: center; gap: 25px; }
-        header img.logo-small { height: 40px; }
-        .header-divider { width:2px; height:35px; background: rgba(226, 232, 240, 0.8); }
-
-        .system-status {
-            display: flex; align-items: center; gap: 8px;
-            font-family: 'Poppins', sans-serif; font-weight: 600;
-            font-size: 0.85rem; color: var(--primary-green);
-            background: rgba(16, 185, 129, 0.1); padding: 6px 15px; border-radius: 20px;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-        .status-dot {
-            width: 8px; height: 8px; background: var(--primary-green);
-            border-radius: 50%; box-shadow: 0 0 10px var(--primary-green);
-            animation: pulse 1.5s infinite;
-        }
-
+        /* ==================== HEADER ==================== */
+        header { min-height: 85px; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; z-index: 100; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3); position: sticky; top: 0; }
+        .header-left { display: flex; align-items: center; gap: 30px; }
+        header img.logo-small { height: 45px; filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.3)); }
+        .header-divider { width: 2px; height: 40px; background: rgba(255, 255, 255, 0.2); }
+        .system-status { display: flex; align-items: center; gap: 10px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--primary-green); background: rgba(16, 185, 129, 0.15); padding: 10px 20px; border-radius: 25px; border: 1px solid rgba(16, 185, 129, 0.3); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2); }
+        .status-dot { width: 10px; height: 10px; background: var(--primary-green); border-radius: 50%; box-shadow: 0 0 15px var(--primary-green); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px var(--primary-green); } 50% { opacity: 0.6; transform: scale(1.3); box-shadow: 0 0 25px var(--primary-green); } }
         .nav-right { display: flex; align-items: center; gap: 20px; }
-        .user-profile {
-            display: flex; align-items: center; gap: 12px;
-            background: rgba(255, 255, 255, 0.9); padding: 8px 18px; border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.6); font-weight: 700; color: var(--primary-blue);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-        }
+        .theme-toggle { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px 15px; border-radius: 12px; cursor: pointer; color: var(--text-light); font-size: 1.1rem; transition: all 0.3s; }
+        .theme-toggle:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.1); }
+        .user-profile { display: flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.1); padding: 10px 20px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.2); font-weight: 700; color: var(--text-light); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
+        .user-profile i { font-size: 1.3rem; color: var(--primary-cyan); }
+        .btn-logout { background: rgba(239, 68, 68, 0.15); border: 2px solid rgba(239, 68, 68, 0.5); color: #ef4444; padding: 10px 20px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
+        .btn-logout:hover { background: #ef4444; color: white; box-shadow: 0 5px 20px rgba(239, 68, 68, 0.4); transform: translateY(-2px); }
 
-        .btn-logout {
-            background: transparent; border: 1.5px solid rgba(239, 68, 68, 0.7);
-            color: #ef4444; padding: 8px 18px; border-radius: 12px;
-            cursor: pointer; font-weight: 600; font-size: 0.9rem;
-            transition: all 0.3s;
-        }
-        .btn-logout:hover {
-            background: #ef4444; color: white;
-            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
-        }
+        /* ==================== DASHBOARD STATS ==================== */
+        .dashboard-stats { padding: 30px 40px 15px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+        .stat-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 15px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); transition: all 0.4s; position: relative; overflow: hidden; }
+        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; transition: width 0.4s; }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3); }
+        .stat-card:hover::before { width: 100%; opacity: 0.1; }
+        .stat-card.blue::before { background: var(--primary-blue); } .stat-card.green::before { background: var(--primary-green); } .stat-card.orange::before { background: var(--primary-orange); } .stat-card.purple::before { background: var(--primary-purple); } .stat-card.red::before { background: var(--primary-red); }
+        .stat-icon { width: 55px; height: 55px; border-radius: 15px; display: flex; justify-content: center; align-items: center; font-size: 1.6rem; flex-shrink: 0; }
+        .stat-card.blue .stat-icon { background: rgba(2, 117, 216, 0.15); color: var(--primary-blue); box-shadow: 0 0 30px rgba(2, 117, 216, 0.3); }
+        .stat-card.green .stat-icon { background: rgba(16, 185, 129, 0.15); color: var(--primary-green); box-shadow: 0 0 30px rgba(16, 185, 129, 0.3); }
+        .stat-card.orange .stat-icon { background: rgba(245, 158, 11, 0.15); color: var(--primary-orange); box-shadow: 0 0 30px rgba(245, 158, 11, 0.3); }
+        .stat-card.purple .stat-icon { background: rgba(139, 92, 246, 0.15); color: var(--primary-purple); box-shadow: 0 0 30px rgba(139, 92, 246, 0.3); }
+        .stat-card.red .stat-icon { background: rgba(239, 68, 68, 0.15); color: var(--primary-red); box-shadow: 0 0 30px rgba(239, 68, 68, 0.3); }
+        .stat-info { flex: 1; min-width: 0; }
+        .stat-label { font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .stat-value { font-size: 1.6rem; font-weight: 800; color: var(--text-white); line-height: 1; }
 
-        /* GRID CONTENT (GLASSMORPHISM) */
-        .content-area {
-            flex: 1; padding: 40px; overflow-y: auto; display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px; align-content: start; position: relative; z-index: 10;
-        }
+        /* ==================== CHARTS SECTION ==================== */
+        .charts-section { padding: 0 40px 25px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+        /* Efek Hover Mewah pada Chart Card */
+.chart-card {
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    z-index: 1;
+}
+.chart-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 50px rgba(6, 182, 212, 0.15), inset 0 0 0 1px rgba(6, 182, 212, 0.4);
+    z-index: 10;
+}
+.chart-card canvas:hover {
+    cursor: crosshair;
+}
+        .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .chart-title { font-size: 1rem; font-weight: 700; color: var(--text-white); }
+        .chart-subtitle { font-size: 0.75rem; color: rgba(255, 255, 255, 0.5); margin-top: 1px; }
+        .chart-card canvas { max-height: 220px; width: 100% !important; }
 
-        .module-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: 20px; padding: 30px; cursor: pointer;
-            display: flex; flex-direction: column; gap: 15px;
-            box-shadow: var(--shadow-glass);
-            position: relative; overflow: hidden;
-        }
-
-        /* Efek Kilap Mewah (Shine Effect) */
-        .module-card::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent);
-            transform: skewX(-20deg); transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .module-card:hover { transform: translateY(-8px) scale(1.02); }
+        /* ==================== MODULE CARDS ==================== */
+        .content-area { padding: 0 40px 40px 40px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px; align-content: start; position: relative; z-index: 10; }
+        .section-title { grid-column: 1 / -1; font-size: 1.4rem; font-weight: 800; color: var(--text-white); margin-top: 15px; margin-bottom: 5px; display: flex; align-items: center; gap: 15px; }
+        .section-title::before { content: ''; width: 5px; height: 32px; background: linear-gradient(180deg, var(--primary-cyan), var(--primary-blue)); border-radius: 10px; }
+        .module-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 22px; padding: 30px; cursor: pointer; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); position: relative; overflow: hidden; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .module-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent); transform: skewX(-20deg); transition: 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+        .module-card:hover { transform: translateY(-10px) scale(1.02); }
         .module-card:hover::before { left: 150%; }
+        .module-card.blue { border-color: rgba(2, 117, 216, 0.3); } .module-card.green { border-color: rgba(16, 185, 129, 0.3); } .module-card.orange { border-color: rgba(245, 158, 11, 0.3); }
+        .module-card.blue:hover { box-shadow: 0 20px 60px rgba(2, 117, 216, 0.3); border-color: rgba(2, 117, 216, 0.5); }
+        .module-card.green:hover { box-shadow: 0 20px 60px rgba(16, 185, 129, 0.3); border-color: rgba(16, 185, 129, 0.5); }
+        .module-card.orange:hover { box-shadow: 0 20px 60px rgba(245, 158, 11, 0.3); border-color: rgba(245, 158, 11, 0.5); }
+        .module-icon { width: 70px; height: 70px; border-radius: 18px; display: flex; justify-content: center; align-items: center; font-size: 2rem; backdrop-filter: blur(5px); transition: all 0.4s; }
+        .module-card:hover .module-icon { transform: scale(1.1) rotate(5deg); }
+        .blue .module-icon { background: rgba(2, 117, 216, 0.15); color: #2196f3; border: 2px solid rgba(2, 117, 216, 0.3); box-shadow: 0 0 25px rgba(2, 117, 216, 0.4); }
+        .green .module-icon { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 2px solid rgba(16, 185, 129, 0.3); box-shadow: 0 0 25px rgba(16, 185, 129, 0.4); }
+        .orange .module-icon { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 2px solid rgba(245, 158, 11, 0.3); box-shadow: 0 0 25px rgba(245, 158, 11, 0.4); }
+        .module-info h3 { font-size: 1.25rem; margin-bottom: 8px; color: var(--text-white); font-weight: 700; }
+        .module-info p { font-size: 0.95rem; color: rgba(255, 255, 255, 0.7); line-height: 1.6; }
+        .explore-btn { font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; margin-top: auto; transition: all 0.3s; }
+        .module-card:hover .explore-btn { letter-spacing: 1px; }
+        .module-card:hover .explore-btn i { transform: translateX(8px); }
+        .blue .explore-btn { color: #2196f3; } .green .explore-btn { color: #10b981; } .orange .explore-btn { color: #fbbf24; }
 
-        /* Glow spesifik berdasarkan warna saat hover */
-        .module-card.blue:hover { box-shadow: 0 15px 35px rgba(2, 117, 216, 0.15); border-color: rgba(2, 117, 216, 0.3); }
-        .module-card.green:hover { box-shadow: 0 15px 35px rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); }
-        .module-card.orange:hover { box-shadow: 0 15px 35px rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.3); }
+        /* ==================== NOTIFICATIONS ==================== */
+        .notification-container { position: fixed; top: 20px; right: 20px; z-index: 9998; display: flex; flex-direction: column; gap: 15px; }
+        .notification { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 18px 25px; border-radius: 15px; min-width: 320px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); display: flex; align-items: center; gap: 15px; animation: slideInRight 0.5s ease-out; }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(400px); } to { opacity: 1; transform: translateX(0); } }
+        .notification i { font-size: 1.5rem; }
+        .notification.success { border-left: 4px solid var(--primary-green); } .notification.success i { color: var(--primary-green); }
+        .notification.warning { border-left: 4px solid var(--primary-orange); } .notification.warning i { color: var(--primary-orange); }
+        .notification-content { flex: 1; }
+        .notification-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 3px; }
+        .notification-message { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); }
 
-        .module-icon {
-            width: 60px; height: 60px; border-radius: 16px;
-            display: flex; justify-content: center; align-items: center; font-size: 1.8rem;
-            backdrop-filter: blur(5px);
-        }
-        .blue .module-icon { background: rgba(2, 117, 216, 0.1); color: var(--primary-blue); border: 1px solid rgba(2, 117, 216, 0.2); }
-        .green .module-icon { background: rgba(16, 185, 129, 0.1); color: var(--primary-green); border: 1px solid rgba(16, 185, 129, 0.2); }
-        .orange .module-icon { background: rgba(245, 158, 11, 0.1); color: var(--primary-orange); border: 1px solid rgba(245, 158, 11, 0.2); }
-
-        .module-info h3 { font-size: 1.15rem; margin-bottom: 5px; color: #0f172a; }
-        .module-info p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
-
-        .explore-btn {
-            font-weight: 600; font-size: 0.9rem; display: flex; align-items: center;
-            gap: 8px; margin-top: auto; transition: 0.3s;
-        }
-        .module-card:hover .explore-btn { letter-spacing: 0.5px; }
-        .module-card:hover .explore-btn i { transform: translateX(5px); }
-
-        .blue .explore-btn { color: var(--primary-blue); }
-        .green .explore-btn { color: var(--primary-green); }
-        .orange .explore-btn { color: var(--primary-orange); }
-
-        /* VIEWPORT SYSTEM (IFRAME) */
-        #viewport-container {
-            display: none; position: fixed; top: 120px; left: 0;
-            width: 100%; height: calc(100vh - 120px);
-            background: #ffffff; z-index: 500; opacity: 0;
-            transform: translateY(40px) scale(0.98);
-            transition: transform var(--transition-smooth), opacity var(--transition-smooth);
-            will-change: transform, opacity;
-            border-top-left-radius: 20px; border-top-right-radius: 20px;
-            box-shadow: 0 -10px 50px rgba(0,0,0,0.15); overflow: hidden;
-        }
+        /* ==================== VIEWPORT SYSTEM ==================== */
+        #viewport-container { display: none; position: fixed; top: 120px; left: 0; width: 100%; height: calc(100vh - 120px); background: #ffffff; z-index: 500; opacity: 0; transform: translateY(40px) scale(0.98); transition: transform var(--transition-smooth), opacity var(--transition-smooth); will-change: transform, opacity; border-top-left-radius: 25px; border-top-right-radius: 25px; box-shadow: 0 -15px 60px rgba(0, 0, 0, 0.4); overflow: hidden; }
         #viewport-container.active { opacity: 1; transform: translateY(0) scale(1); }
-        iframe { width: 100%; height: 100%; border: none; background: #fff; }
-
-        .back-nav {
-            position: fixed; bottom: 30px; right: 30px;
-            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            color: #fff; padding: 15px 25px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2);
-            font-weight: 600; cursor: pointer; z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25); font-size: 0.9rem;
-            display: none; align-items: center; gap: 10px;
-            opacity: 0; transform: translateY(20px); transition: all var(--transition-smooth);
-        }
+        #erp-frame { width: 100%; height: 100%; border: none; background: #fff; }
+        .back-nav { position: fixed; bottom: 30px; right: 30px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); color: #fff; padding: 16px 28px; border-radius: 50px; border: 2px solid rgba(255, 255, 255, 0.2); font-weight: 700; cursor: pointer; z-index: 1000; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); font-size: 0.95rem; display: none; align-items: center; gap: 12px; opacity: 0; transform: translateY(20px); transition: all var(--transition-smooth); }
         .back-nav.active { opacity: 1; transform: translateY(0); }
-        .back-nav:hover { background: #000; transform: translateY(-3px) scale(1.05); border-color: rgba(255,255,255,0.4); }
+        .back-nav:hover { background: #000; transform: translateY(-5px) scale(1.05); border-color: var(--primary-cyan); box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7); }
 
-        footer {
-            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 20px 40px; display: flex; justify-content: space-between;
-            align-items: center; color: var(--text-muted); z-index: 100;
-        }
-        .footer-address { font-size: 0.85rem; line-height: 1.6; }
-        .footer-address strong { color: var(--text-dark); font-size: 0.95rem; }
-        .footer-contact { margin-top: 5px; display: flex; gap: 15px; font-weight: 700; color: var(--primary-blue); }
-        .footer-copy { text-align: right; font-size: 0.8rem; font-weight: 600; }
+        /* ==================== FOOTER ==================== */
+        footer { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 30px 40px; display: flex; justify-content: space-between; align-items: center; color: rgba(255, 255, 255, 0.7); z-index: 100; box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.2); }
+        .footer-address { font-size: 0.9rem; line-height: 1.8; }
+        .footer-address strong { color: var(--text-white); font-size: 1rem; display: block; margin-bottom: 5px; }
+        .footer-contact { margin-top: 10px; display: flex; gap: 20px; font-weight: 600; color: var(--primary-cyan); }
+        .footer-copy { text-align: right; font-size: 0.85rem; font-weight: 600; }
+        .footer-copy span:first-child { color: var(--text-white); display: block; margin-bottom: 5px; }
 
-        @keyframes pulse {
-            0% { opacity: 1; transform: scale(1); box-shadow: 0 0 5px var(--primary-green); }
-            50% { opacity: 0.5; transform: scale(1.2); box-shadow: 0 0 15px var(--primary-green); }
-            100% { opacity: 1; transform: scale(1); box-shadow: 0 0 5px var(--primary-green); }
-        }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        ::-webkit-scrollbar-thumb { background: rgba(2, 117, 216, 0.5); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-cyan); }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.5); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary-blue); }
+        /* ==================== RESPONSIVE DESIGN ==================== */
+        @media (max-width: 1200px) { .charts-section { grid-template-columns: 1fr; } }
+        @media (max-width: 992px) { .content-area { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } .hse-ticker-wrap { max-width: 50%; } .dashboard-stats { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
+        @media (max-width: 768px) { .top-info-bar { flex-direction: column; align-items: flex-start; gap: 12px; padding: 15px 20px; } .hse-ticker-wrap { max-width: 100%; margin-left: 0; } header { padding: 15px 20px; flex-wrap: wrap; gap: 15px; } .header-divider { display: none; } .dashboard-stats, .charts-section, .content-area { padding: 20px; } .content-area { grid-template-columns: 1fr; } #viewport-container { top: 140px; height: calc(100vh - 140px); } footer { flex-direction: column; text-align: center; padding: 25px 20px; gap: 20px; } .footer-contact { flex-direction: column; gap: 10px; } .footer-copy { text-align: center; } .back-nav { bottom: 20px; left: 20px; right: 20px; justify-content: center; } }
+        @media (max-width: 480px) { .login-card { padding: 40px 30px; width: 92%; } header img.logo-small { height: 35px; } .dashboard-stats { grid-template-columns: 1fr; } }
 
-        /* ================== RESPONSIVE DESIGN ================== */
-        @media (max-width: 992px) {
-            .content-area { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
-            .hse-ticker-wrap { width: 50%; }
-        }
-
-        @media (max-width: 768px) {
-            .top-info-bar { flex-direction: column; align-items: center; gap: 10px; padding: 10px 15px; text-align: center; }
-            .hse-ticker-wrap { width: 100%; margin-top: 5px; }
-            
-            header { height: auto; padding: 15px 20px; flex-wrap: wrap; gap: 15px; justify-content: center; }
-            .header-left { gap: 15px; flex-wrap: wrap; justify-content: center; }
-            .header-divider { display: none; }
-            .system-status span { display: none; }
-            .system-status { padding: 6px; border-radius: 50%; } 
-            
-            .nav-right { width: 100%; justify-content: space-between; }
-            .user-profile span { display: none; }
-            .user-profile { padding: 8px; border-radius: 50%; }
-            .btn-logout { padding: 8px 15px; font-size: 0.85rem; }
-
-            .content-area { padding: 20px; grid-template-columns: 1fr; }
-            .module-card { padding: 20px; }
-            
-            #viewport-container { top: 160px; height: calc(100vh - 160px); }
-
-            footer { flex-direction: column; text-align: center; padding: 20px; gap: 15px; }
-            .footer-contact { flex-direction: column; gap: 8px; align-items: center; }
-            .footer-copy { text-align: center; }
-            
-            .back-nav { bottom: 20px; right: 20px; padding: 12px 20px; font-size: 0.8rem; }
-        }
-
-        @media (max-width: 480px) {
-            .login-card { padding: 35px 25px; width: 90%; }
-            header img.logo-small { height: 32px; }
-            #viewport-container { top: 170px; height: calc(100vh - 170px); }
-        }
+        .ripple { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.5); transform: scale(0); animation: ripple-animation 0.6s ease-out; pointer-events: none; }
+        @keyframes ripple-animation { to { transform: scale(4); opacity: 0; } }
     </style>
 </head>
 <body>
+    <div id="loading-screen" aria-live="polite">
+        <div class="loader"></div>
+        <div class="loading-text">MSB ERP System</div>
+        <div class="loading-progress">Kalijati, Subang...</div>
+    </div>
 
-    <div class="bg-glow blob-1"></div>
-    <div class="bg-glow blob-2"></div>
-    <div class="bg-glow blob-3"></div>
+    <div id="particles-js" aria-hidden="true"></div>
+    <div class="bg-glow blob-1" aria-hidden="true"></div>
+    <div class="bg-glow blob-2" aria-hidden="true"></div>
+    <div class="bg-glow blob-3" aria-hidden="true"></div>
+    <div class="bg-glow blob-4" aria-hidden="true"></div>
+
+    <div class="notification-container" id="notification-container" aria-live="assertive"></div>
 
     <div id="login-page">
         <div class="login-card">
-            <img src="Murinda Logo.png" alt="Murinda Logo" class="logo">
+            <img src="Murinda Logo.png" alt="Logo Murinda Sentra Baja" class="logo" onerror="this.style.display='none'">
             <h2>MSB ERP SYSTEM</h2>
             <form onsubmit="doLogin(event)">
                 <div class="input-group">
-                    <i class="fa-solid fa-user-lock"></i>
-                    <input type="text" id="user" placeholder="Nama Pengguna" required autocomplete="off">
+                    <input type="text" id="user" placeholder="Nama Pengguna" required autocomplete="username" aria-label="Nama Pengguna">
+                    <i class="fa-solid fa-user-lock" aria-hidden="true"></i>
                 </div>
                 <div class="input-group">
-                    <i class="fa-solid fa-key"></i>
-                    <input type="password" id="pass" placeholder="Kata Sandi Keamanan" required>
+                    <input type="password" id="pass" placeholder="Kata Sandi Keamanan" required autocomplete="current-password" aria-label="Kata Sandi">
+                    <i class="fa-solid fa-key" aria-hidden="true"></i>
                 </div>
-                <button type="submit" class="login-btn">Login System</button>
-                <p id="err" class="error-msg">Akses Ditolak: Kredensial Tidak Valid</p>
+                <button type="submit" class="login-btn">LOGIN SYSTEM</button>
+                <p id="err" class="error-msg" role="alert">Akses Ditolak: Kredensial Tidak Valid</p>
             </form>
             <div class="login-footer">
-                PT Murinda Sentra Baja <br> Developed by Aspuro Amarulloh Khoiri <br> &copy; 2026
+                PT Murinda Sentra Baja <br> Developed by Aspuro Amarulloh Khoiri <br> © 2026
             </div>
         </div>
     </div>
 
-    <div id="main-dashboard">
+    <main id="main-dashboard" style="display: none;">
         <div class="top-info-bar">
             <div class="datetime">
-                <i class="fa-regular fa-calendar"></i> <span id="current-date">Memuat...</span> &nbsp;|&nbsp; 
-                <i class="fa-regular fa-clock"></i> <span id="current-time">Memuat...</span>
+                <span><i class="fa-regular fa-calendar" aria-hidden="true"></i> <span id="current-date">Memuat...</span></span>
+                <span><i class="fa-regular fa-clock" aria-hidden="true"></i> <span id="current-time">Memuat...</span></span>
             </div>
-            <div class="hse-ticker-wrap">
+            <div class="hse-ticker-wrap" aria-label="HSE Reminder Ticker">
                 <div class="hse-ticker">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
                     <strong>HSE REMINDER:</strong> Utamakan Keselamatan dan Kesehatan Kerja (K3) | Pastikan Area Kerja Aman Sebelum Memulai Aktivitas | Wajib Menggunakan APD Lengkap di Area Pabrik Kalijati | Zero Accident adalah Komitmen Kita Bersama!
                 </div>
             </div>
@@ -429,160 +293,471 @@
 
         <header>
             <div class="header-left">
-                <img src="Murinda Logo.png" alt="Logo" class="logo-small">
+                <img src="Murinda Logo.png" alt="Logo" class="logo-small" onerror="this.style.display='none'">
                 <div class="header-divider"></div>
-                <div class="system-status">
+                <div class="system-status" aria-label="System Status">
                     <div class="status-dot"></div>
-                    <span>Terhubung Secara Realtime</span>
+                    <span>Online MSB ERP System</span>
                 </div>
             </div>
-            <div class="nav-right">
+            <nav class="nav-right" aria-label="User Navigation">
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Dark or Light Theme" title="Toggle Theme">
+                    <i class="fa-solid fa-moon" aria-hidden="true"></i>
+                </button>
                 <div class="user-profile">
-                    <i class="fa-solid fa-circle-user"></i>
+                    <i class="fa-solid fa-circle-user" aria-hidden="true"></i>
                     <span id="display-user">Kalijati</span>
                 </div>
-                <button class="btn-logout" onclick="doLogout()"><i class="fa-solid fa-power-off"></i> Logout</button>
-            </div>
+                <button class="btn-logout" onclick="doLogout()" aria-label="Logout from System">
+                    <i class="fa-solid fa-power-off" aria-hidden="true"></i> Logout
+                </button>
+            </nav>
         </header>
 
-        <div class="content-area">
-            <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/HR-System/')">
-                <div class="module-icon"><i class="fa-solid fa-people-group"></i></div>
-                <div class="module-info">
-                    <h3>Human Resource</h3>
-                    <p>Otomatisasi seluruh proses SDM termasuk Penilaian Kinerja. Sinkronisasi data real-time untuk keputusan strategis presisi.</p>
-                </div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
+        <section class="dashboard-stats" aria-label="Key Performance Indicators">
+            <div class="stat-card blue">
+                <div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-users"></i></div>
+                <div class="stat-info"><div class="stat-label">Karyawan</div><div class="stat-value" id="stat-karyawan">0</div></div>
             </div>
-
-            <div class="module-card green" onclick="launch('https://script.google.com/macros/s/AKfycby2qLzZNFxz42Q3AyLJFHs3J_qRqdPGSmBIFq3AR-kmLmXasM758fXUcjqsXNDwP-xGIA/exec')">
-                <div class="module-icon"><i class="fa-solid fa-building-circle-check"></i></div>
-                <div class="module-info">
-                    <h3>General Affairs</h3>
-                    <p>Kelola fasilitas dan operasional kantor secara digital. Tingkatkan produktivitas dengan alur kerja yang efisien.</p>
-                </div>
-                <div class="explore-btn">Buka Eksternal <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+            <div class="stat-card green">
+                <div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                <div class="stat-info"><div class="stat-label">Purchase Order</div><div class="stat-value" id="stat-po">0</div></div>
             </div>
-
-            <div class="module-card orange" onclick="launch('https://murindasentrabaja.github.io/HSE/')">
-                <div class="module-icon"><i class="fa-solid fa-helmet-safety"></i></div>
-                <div class="module-info">
-                    <h3>HSE System</h3>
-                    <p>Kendali penuh kepatuhan K3. Pastikan standar keselamatan dan pelaporan lingkungan yang akurat dan transparan.</p>
-                </div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
+            <div class="stat-card orange">
+                <div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-truck"></i></div>
+                <div class="stat-info"><div class="stat-label">Pengiriman</div><div class="stat-value" id="stat-pengiriman">0</div></div>
             </div>
-
-            <div class="module-card blue" onclick="launch('https://script.google.com/macros/s/AKfycbwR5NaX2kvBkXE1NHxOsfIX_FdV0ePrpnSeFO7CyEp6Q0F1_jFkbLZXcKdlu-RvaA/exec')">
-                <div class="module-icon"><i class="fa-solid fa-gears"></i></div>
-                <div class="module-info">
-                    <h3>Maintenance</h3>
-                    <p>Prediksi kebutuhan perawatan mesin secara otomatis. Minimalkan downtime dengan manajemen riwayat aset yang cepat.</p>
-                </div>
-                <div class="explore-btn">Buka Eksternal <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+            <div class="stat-card purple">
+                <div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-boxes-stacked"></i></div>
+                <div class="stat-info"><div class="stat-label">Stok Produksi</div><div class="stat-value" id="stat-stok">0</div></div>
             </div>
-
-            <div class="module-card green" onclick="launch('https://murindasentrabaja.github.io/Purchase-Order/')">
-                <div class="module-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-                <div class="module-info">
-                    <h3>Purchase Order</h3>
-                    <p>Pengadaan cerdas terintegrasi. Persetujuan multi-level yang ringkas dengan kendali vendor yang ketat.</p>
-                </div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
+            <div class="stat-card blue">
+                <div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-clipboard-check"></i></div>
+                <div class="stat-info"><div class="stat-label">Jumlah LKP</div><div class="stat-value" id="stat-lkp">0</div></div>
             </div>
-
-            <div class="module-card orange" onclick="launch('https://murindasentrabaja.github.io/Warehouse-System/')">
-                <div class="module-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
-                <div class="module-info">
-                    <h3>Warehouse</h3>
-                    <p>Visibilitas stok dan logistik real-time. Eliminasi kesalahan inventaris dan percepat alur mutasi barang.</p>
-                </div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
+            <div class="stat-card red">
+                <div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <div class="stat-info"><div class="stat-label">Total Insiden</div><div class="stat-value" id="stat-insiden">0</div></div>
             </div>
-
-            <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/Production-Tracking/')">
-                <div class="module-icon"><i class="fa-solid fa-industry"></i></div>
-                <div class="module-info">
-                    <h3>Produksi</h3>
-                    <p>Monitoring lini manufaktur secara digital. Percepat output harian dengan data efisiensi fabrikasi yang akurat.</p>
-                </div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
+            <div class="stat-card green">
+                <div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-clock"></i></div>
+                <div class="stat-info"><div class="stat-label">SPP Belum Datang</div><div class="stat-value" id="stat-spp">0</div></div>
             </div>
+        </section>
 
-            <div class="module-card green" onclick="launch('https://murindasentrabaja.github.io/QC-Inspection/')">
-                <div class="module-icon"><i class="fa-solid fa-microscope"></i></div>
-                <div class="module-info">
-                    <h3>Quality Control</h3>
-                    <p>Standardisasi mutu yang presisi. Inspeksi cepat berbasis data untuk menjaga integritas struktur secara maksimal.</p>
-                </div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
+        <section class="charts-section" aria-label="Data Analytics Charts">
+    <div class="chart-card">
+        <div class="chart-header">
+            <div>
+                <h3 class="chart-title">Trend PO Bulanan</h3>
+                <p class="chart-subtitle">Data Rekapitulasi Purchase Order per Bulan</p>
             </div>
-
-            <div class="module-card orange" onclick="launch('https://murindasentrabaja.github.io/SPP/')">
-                <div class="module-icon"><i class="fa-solid fa-file-invoice"></i></div>
-                <div class="module-info">
-                    <h3>SPP System</h3>
-                    <p>Manajemen Surat Permintaan Pembelian. Kelola dan pantau pengajuan kebutuhan material secara efisien.</p>
-                </div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
-            </div>
-
         </div>
+        <canvas id="clientProcessChart" aria-label="Line Chart Trend PO" role="img"></canvas>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-header">
+            <div>
+                <h3 class="chart-title">Distribusi Karyawan</h3>
+                <p class="chart-subtitle">Perbandingan per Departemen</p>
+            </div>
+        </div>
+        <canvas id="karyawanDeptChart" aria-label="Doughnut Chart Distribusi Karyawan" role="img"></canvas>
+    </div>
+</section>
+
+        <section class="content-area" aria-label="ERP Modules Application Navigation">
+            <h2 class="section-title"><span>Modul ERP System</span></h2>
+
+            <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/HR-System/')" tabindex="0" role="button">
+                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-people-group"></i></div>
+                <div class="module-info"><h3>Human Resource</h3><p>Otomatisasi seluruh proses SDM termasuk Penilaian Kinerja. Sinkronisasi data real-time.</p></div>
+                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
+            </div>
+
+            <div class="module-card green" onclick="launch('https://script.google.com/macros/s/AKfycby2qLzZNFxz42Q3AyLJFHs3J_qRqdPGSmBIFq3AR-kmLmXasM758fXUcjqsXNDwP-xGIA/exec')" tabindex="0" role="button">
+                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-building-circle-check"></i></div>
+                <div class="module-info"><h3>General Affairs</h3><p>Kelola fasilitas dan operasional kantor secara digital. Tingkatkan produktivitas alur kerja.</p></div>
+                <div class="explore-btn">Buka Eksternal <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+            </div>
+
+            <div class="module-card orange" onclick="launch('https://murindasentrabaja.github.io/HSE/')" tabindex="0" role="button">
+                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-helmet-safety"></i></div>
+                <div class="module-info"><h3>HSE System</h3><p>Kendali penuh kepatuhan K3. Pastikan standar keselamatan dan pelaporan lingkungan akurat.</p></div>
+                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
+            </div>
+
+            <div class="module-card blue" onclick="launch('https://script.google.com/macros/s/AKfycbwR5NaX2kvBkXE1NHxOsfIX_FdV0ePrpnSeFO7CyEp6Q0F1_jFkbLZXcKdlu-RvaA/exec')" tabindex="0" role="button">
+                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-gears"></i></div>
+                <div class="module-info"><h3>Maintenance</h3><p>Prediksi kebutuhan perawatan mesin secara otomatis. Minimalkan downtime.</p></div>
+                <div class="explore-btn">Buka Eksternal <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+            </div>
+
+            <div class="module-card green" onclick="launch('https://murindasentrabaja.github.io/Purchase-Order/')" tabindex="0" role="button">
+                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                <div class="module-info"><h3>Purchase Order</h3><p>Pengadaan cerdas terintegrasi. Persetujuan multi-level yang ringkas dengan kendali vendor.</p></div>
+                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
+            </div>
+
+            <div class="module-card orange" onclick="launch('https://murindasentrabaja.github.io/Warehouse-System/')" tabindex="0" role="button">
+                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-boxes-stacked"></i></div>
+                <div class="module-info"><h3>Warehouse</h3><p>Visibilitas stok dan logistik real-time. Eliminasi kesalahan inventaris.</p></div>
+                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
+            </div>
+
+            <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/Production-Tracking/')" tabindex="0" role="button">
+                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-industry"></i></div>
+                <div class="module-info"><h3>Produksi</h3><p>Monitoring lini manufaktur secara digital. Percepat output harian dengan data efisiensi akurat.</p></div>
+                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
+            </div>
+
+            <div class="module-card green" onclick="launch('https://murindasentrabaja.github.io/QC-Inspection/')" tabindex="0" role="button">
+                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-microscope"></i></div>
+                <div class="module-info"><h3>Quality Control</h3><p>Standardisasi mutu yang presisi. Inspeksi cepat berbasis data untuk menjaga integritas.</p></div>
+                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
+            </div>
+
+            <div class="module-card orange" onclick="launch('https://murindasentrabaja.github.io/SPP/')" tabindex="0" role="button">
+                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-file-invoice"></i></div>
+                <div class="module-info"><h3>SPP System</h3><p>Manajemen Surat Permintaan Pembelian. Kelola dan pantau pengajuan kebutuhan material.</p></div>
+                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
+            </div>
+        </section>
 
         <footer>
-            <div class="footer-address">
-                <strong>PT MURINDA SENTRA BAJA</strong><br>
+            <address class="footer-address">
+                <strong>PT MURINDA SENTRA BAJA</strong>
                 Jl. Raya Kalijati Purwadadi No. 123A RT 006/02<br>
                 Desa Kalijati Barat, Kecamatan Kalijati<br>
-                Kabupaten Subang, West Java 41271 (Exit Toll Gate Kalijati)<br>
+                Kabupaten Subang, West Java 41271 (Exit Toll Gate Kalijati)
                 <div class="footer-contact">
-                    <span><i class="fa-solid fa-phone"></i> (+62260) 7495467</span>
-                    <span><i class="fa-solid fa-fax"></i> (+62260) 7495222</span>
-                    <span><i class="fa-solid fa-envelope"></i> plant@murinda.com</span>
+                    <span><i class="fa-solid fa-phone" aria-hidden="true"></i> (+62260) 7495467</span>
+                    <span><i class="fa-solid fa-fax" aria-hidden="true"></i> (+62260) 7495222</span>
+                    <span><i class="fa-solid fa-envelope" aria-hidden="true"></i> plant@murinda.com</span>
                 </div>
-            </div>
+            </address>
             <div class="footer-copy">
-                <span style="color:var(--text-dark);">Hak Cipta &copy; 2026 PT Murinda Sentra Baja. Hak Cipta Dilindungi Undang-Undang.</span><br>
-                <span style="opacity: 0.7;">Developed by Aspuro Amarulloh Khoiri | Version 070626</span>
+                <span>PT Murinda Sentra Baja. Hak Cipta Dilindungi Undang-Undang.</span>
+                <span style="opacity: 0.7;">Developed by Aspuro Amarulloh Khoiri | Version 070695 Premium Enhanced</span>
             </div>
         </footer>
+    </main>
+
+    <div id="viewport-container" aria-hidden="true">
+        <iframe id="erp-frame" title="Embedded ERP Module Viewport"></iframe>
     </div>
 
-    <div id="viewport-container">
-        <iframe id="erp-frame"></iframe>
-    </div>
-    
-    <button class="back-nav" id="back-btn" onclick="closeViewport()">
-        <i class="fa-solid fa-house"></i> Kembali ke Dasboard
+    <button class="back-nav" id="back-btn" onclick="closeViewport()" aria-label="Kembali ke Dashboard">
+        <i class="fa-solid fa-house" aria-hidden="true"></i> Kembali ke Dashboard
     </button>
 
     <script>
-        /* 1. Logika Tanggal & Waktu Live */
+        // =========================================================================
+        // GANTI STRING DI BAWAH DENGAN LINK DEPLOY "WEB APP" APPS SCRIPT ANDA
+        // =========================================================================
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyu96U5qQHgEarOmSdH2wSDGITeV8-67b_5B39t95gLXf5ONy9AA32gxPGYpDQkdww9xw/exec";
+
+        let myCharts = [];
+        let clientChartInstance = null;
+        let deptChartInstance = null;
+        let syncInterval;
+
+        // ==================== ANIMASI & LOADING ====================
+        window.addEventListener('load', function() {
+            setTimeout(function() { document.getElementById('loading-screen').classList.add('hidden'); }, 1500);
+        });
+
+        if (typeof particlesJS !== 'undefined') {
+            particlesJS('particles-js', {
+                particles: { number: { value: 80, density: { enable: true, value_area: 800 } }, color: { value: '#06b6d4' }, shape: { type: 'circle' }, opacity: { value: 0.3, random: true }, size: { value: 3, random: true }, line_linked: { enable: true, distance: 150, color: '#0275d8', opacity: 0.2, width: 1 }, move: { enable: true, speed: 2, direction: 'none', random: true, straight: false, out_mode: 'out', bounce: false } },
+                interactivity: { detect_on: 'canvas', events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: true, mode: 'push' }, resize: true }, modes: { grab: { distance: 140, line_linked: { opacity: 0.5 } }, push: { particles_nb: 4 } } },
+                retina_detect: true
+            });
+        }
+
         function updateDateTime() {
             const now = new Date();
             const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
             const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-            
-            const dateStr = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
-            const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')} WIB`;
-            
-            document.getElementById('current-date').innerText = dateStr;
-            document.getElementById('current-time').innerText = timeStr;
+            document.getElementById('current-date').innerText = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+            document.getElementById('current-time').innerText = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')} WIB`;
         }
-        setInterval(updateDateTime, 1000);
-        updateDateTime();
+        setInterval(updateDateTime, 1000); updateDateTime();
 
-        /* Logika Market Ticker (IHSG/USD) telah dihapus sesuai instruksi */
+        // ==================== FETCH DATA GOOGLE SPREADSHEET ====================
+        // ==================== FETCH DATA GOOGLE SPREADSHEET ====================
+        async function fetchDashboardData() {
+            if (WEB_APP_URL.includes("MASUKKAN_LINK_DEPLOY")) {
+                console.warn("Harap masukkan link Web App Anda terlebih dahulu pada script.");
+                return;
+            }
 
-        /* 3. Logika Autentikasi Login */
+            try {
+                const response = await fetch(WEB_APP_URL);
+                const data = await response.json();
+                
+                /* --- 1. PARSING DATA SUMMARY FLEKSIBEL --- */
+                let sheetMap = {};
+                if (data.summary && data.summary.length > 0) {
+                    let isHorizontal = data.summary[0].length > 2; 
+                    
+                    if (isHorizontal && data.summary.length > 1) {
+                        data.summary[0].forEach((header, index) => {
+                            if (header) sheetMap[String(header).trim().toLowerCase()] = data.summary[1][index];
+                        });
+                    } else { 
+                        data.summary.forEach(row => {
+                            if (row.length >= 2 && row[0] != null && row[0] !== '') {
+                                sheetMap[String(row[0]).trim().toLowerCase()] = row[1];
+                            }
+                        });
+                    }
+                }
+
+                const parseTarget = (label) => {
+                    let match = sheetMap[label.toLowerCase().trim()];
+                    if (match === undefined || match === null || match === '') return 0;
+                    if (typeof match === 'string') return parseFloat(match.replace(/[^0-9.-]/g, '')) || 0;
+                    return match;
+                };
+
+                // Update Stats
+                animateValue('stat-karyawan', parseTarget('Karyawan'), 1200);
+                animateValue('stat-po', parseTarget('Purchase Order'), 1200);
+                animateValue('stat-pengiriman', parseTarget('Pengiriman'), 1200);
+                animateValue('stat-stok', parseTarget('Stok Produksi'), 1200);
+                animateValue('stat-lkp', parseTarget('Jumlah LKP'), 1200);
+                animateValue('stat-insiden', parseTarget('Total Insiden'), 1200);
+                animateValue('stat-spp', parseTarget('SPP Belum Datang'), 1200);
+
+                /* --- 2. UPDATE DATA CHARTS --- */
+                // Menggunakan data.trendPO dari perubahan Google Apps Script
+                updateDynamicCharts(data.trendPO, data.karyawan);
+
+            } catch (error) {
+                console.error("Gagal sinkronisasi data real-time Web App:", error);
+            }
+        }
+
+       // ==================== UPDATE CHART ====================
+        function updateDynamicCharts(poData, karData) {
+            let textColor = document.body.classList.contains('light-theme') ? '#475569' : '#e2e8f0';
+            let gridColor = document.body.classList.contains('light-theme') ? 'rgba(0,0,0,0.05)' : 'rgba(255, 255, 255, 0.05)';
+
+            // =========================================================
+            // CHART 1: Trend PO Bulanan (Line Chart Dinamis Multi-Kolom)
+            // =========================================================
+            if (poData && poData.length > 1) {
+                const labels = poData.slice(1).map(row => String(row[0] || '')); // Kolom A: Bulan
+                const datasets = [];
+                
+                // Palet warna mewah untuk setiap klien (Sumitomo, Komatsu, dll)
+                const colorPalette = [
+                    { border: '#06b6d4', bg: 'rgba(6, 182, 212, 0.15)', glow: 'rgba(6, 182, 212, 0.8)' }, // Cyan
+                    { border: '#f59e0b', bg: 'rgba(245, 158, 11, 0.15)', glow: 'rgba(245, 158, 11, 0.8)' }, // Orange
+                    { border: '#10b981', bg: 'rgba(16, 185, 129, 0.15)', glow: 'rgba(16, 185, 129, 0.8)' }, // Green
+                    { border: '#8b5cf6', bg: 'rgba(139, 92, 246, 0.15)', glow: 'rgba(139, 92, 246, 0.8)' }  // Purple
+                ];
+
+                // Looping dinamis: Membaca kolom B, C, D, dst (Sumitomo, Komatsu, dll)
+                for (let i = 1; i < poData[0].length; i++) {
+                    let clientName = poData[0][i];
+                    if (!clientName) continue; // Lewati jika header kosong
+                    
+                    let dataValues = poData.slice(1).map(row => parseFloat(row[i]) || 0);
+                    let theme = colorPalette[(i - 1) % colorPalette.length];
+
+                    datasets.push({
+                        label: clientName,
+                        data: dataValues,
+                        backgroundColor: theme.bg,
+                        borderColor: theme.border,
+                        borderWidth: 3,
+                        pointBackgroundColor: document.body.classList.contains('light-theme') ? '#fff' : '#0a0e27',
+                        pointBorderColor: theme.border,
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        // Efek mewah saat kursor diarahkan ke titik (point)
+                        pointHoverRadius: 10,
+                        pointHoverBackgroundColor: theme.border,
+                        pointHoverBorderColor: '#fff',
+                        pointHoverBorderWidth: 3,
+                        hoverBorderWidth: 4,
+                        fill: true,
+                        tension: 0.4 // Kurva melengkung mulus (smooth)
+                    });
+                }
+
+                if (clientChartInstance) clientChartInstance.destroy();
+                const ctxPO = document.getElementById('clientProcessChart').getContext('2d');
+                
+                clientChartInstance = new Chart(ctxPO, {
+                    type: 'line',
+                    data: { labels: labels, datasets: datasets },
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        // Interaksi mewah: garis vertikal yang menyambungkan semua data pada bulan yang sama
+                        interaction: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                        plugins: { 
+                            legend: { 
+                                labels: { color: textColor, font: { family: 'Inter', size: 12 }, usePointStyle: true, boxWidth: 8 } 
+                            },
+                            // Efek Tooltip Glassmorphism
+                            tooltip: {
+                                backgroundColor: document.body.classList.contains('light-theme') ? 'rgba(255, 255, 255, 0.9)' : 'rgba(10, 14, 39, 0.9)',
+                                titleColor: document.body.classList.contains('light-theme') ? '#0f172a' : '#fff',
+                                bodyColor: document.body.classList.contains('light-theme') ? '#475569' : '#cbd5e1',
+                                borderColor: 'rgba(6, 182, 212, 0.4)',
+                                borderWidth: 1,
+                                padding: 15,
+                                boxPadding: 8,
+                                usePointStyle: true,
+                                titleFont: { size: 14, family: 'Poppins', weight: 'bold' },
+                                bodyFont: { size: 13, family: 'Inter', weight: '500' },
+                                cornerRadius: 12,
+                                displayColors: true,
+                                callbacks: {
+                                    label: function(context) {
+                                        return ` ${context.dataset.label}: ${context.parsed.y} PO`;
+                                    }
+                                }
+                            }
+                        }, 
+                        scales: { 
+                            x: { 
+                                ticks: { color: textColor, font: {size: 11, family: 'Inter'} }, 
+                                grid: { display: false, drawBorder: false } 
+                            }, 
+                            y: { 
+                                ticks: { color: textColor, font: {size: 11, family: 'Inter'} }, 
+                                grid: { color: gridColor, borderDash: [5, 5] }, 
+                                beginAtZero: true 
+                            } 
+                        },
+                        animations: {
+                            tension: { duration: 1000, easing: 'linear', from: 0.5, to: 0.4 }
+                        }
+                    }
+                });
+            }
+
+            // =========================================================
+            // CHART 2: Distribusi Karyawan per Departemen (Doughnut)
+            // =========================================================
+            if (karData && karData.length > 1) {
+                let labels = [];
+                let values = [];
+                
+                let deptColIdx = -1;
+                const headers = karData[0].map(h => String(h).toLowerCase());
+                for (let i = 0; i < headers.length; i++) {
+                    if (headers[i].includes('departemen') || headers[i].includes('dept') || headers[i].includes('bagian')) {
+                        deptColIdx = i;
+                        break;
+                    }
+                }
+
+                if (deptColIdx !== -1 && karData[0].length > 2) {
+                    let deptCounts = {};
+                    for (let i = 1; i < karData.length; i++) {
+                        let deptName = String(karData[i][deptColIdx]).trim();
+                        if (deptName) {
+                            deptCounts[deptName] = (deptCounts[deptName] || 0) + 1;
+                        }
+                    }
+                    labels = Object.keys(deptCounts);
+                    values = Object.values(deptCounts);
+                } else {
+                    labels = karData.slice(1).map(row => String(row[0] || ''));
+                    values = karData.slice(1).map(row => parseFloat(row[1]) || 0);
+                }
+
+                const bgColors = ['rgba(2,117,216,0.85)', 'rgba(16,185,129,0.85)', 'rgba(245,158,11,0.85)', 'rgba(139,92,246,0.85)', 'rgba(236,72,153,0.85)', 'rgba(239,68,68,0.85)', '#0ea5e9', '#84cc16'];
+                const hoverBgColors = ['#0275d8', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#ef4444', '#0284c7', '#65a30d'];
+
+                if (deptChartInstance) deptChartInstance.destroy();
+                const ctxDept = document.getElementById('karyawanDeptChart').getContext('2d');
+                deptChartInstance = new Chart(ctxDept, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{ 
+                            data: values, 
+                            backgroundColor: bgColors.slice(0, Math.max(labels.length, bgColors.length)),
+                            hoverBackgroundColor: hoverBgColors.slice(0, Math.max(labels.length, hoverBgColors.length)),
+                            borderWidth: 2,
+                            borderColor: document.body.classList.contains('light-theme') ? '#ffffff' : '#0a0e27',
+                            hoverOffset: 15 // Efek pop-out mewah saat kursor diarahkan ke chart lingkaran
+                        }]
+                    },
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        cutout: '70%', // Membuat cincin lebih elegan
+                        plugins: { 
+                            legend: { 
+                                position: 'right', 
+                                labels: { color: textColor, font: { size: 11, family: 'Inter' }, padding: 15, usePointStyle: true } 
+                            },
+                            tooltip: {
+                                backgroundColor: document.body.classList.contains('light-theme') ? 'rgba(255, 255, 255, 0.9)' : 'rgba(10, 14, 39, 0.9)',
+                                titleColor: document.body.classList.contains('light-theme') ? '#0f172a' : '#fff',
+                                bodyColor: document.body.classList.contains('light-theme') ? '#475569' : '#cbd5e1',
+                                borderColor: 'rgba(2, 117, 216, 0.4)',
+                                borderWidth: 1,
+                                padding: 12,
+                                cornerRadius: 10,
+                                callbacks: {
+                                    label: function(context) {
+                                        let total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        let percentage = Math.round((context.parsed / total) * 100);
+                                        return ` ${context.label}: ${context.parsed} Orang (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        } 
+                    }
+                });
+            }
+
+            myCharts = [clientChartInstance, deptChartInstance].filter(Boolean);
+        }
+
+        // ==================== FUNGSI LAINNYA ====================
+        function animateValue(id, end, duration) {
+            const el = document.getElementById(id); if (!el) return;
+            const start = parseInt(el.textContent) || 0; if (start === end) return;
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                el.textContent = Math.floor(progress * (end - start) + start);
+                if (progress < 1) window.requestAnimationFrame(step); else el.textContent = end;
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        function showNotification(title, message, type = 'success') {
+            const container = document.getElementById('notification-container');
+            const notif = document.createElement('div');
+            notif.className = `notification ${type}`;
+            notif.setAttribute('role', 'alert');
+            const icon = type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation';
+            notif.innerHTML = `<i class="fa-solid ${icon}"></i><div class="notification-content"><div class="notification-title">${title}</div><div class="notification-message">${message}</div></div>`;
+            container.appendChild(notif);
+            setTimeout(() => { notif.style.animation = 'slideInRight 0.5s ease-out reverse'; setTimeout(() => notif.remove(), 500); }, 5000);
+        }
+
         function doLogin(e) {
             e.preventDefault();
-            const u = document.getElementById('user').value;
-            const p = document.getElementById('pass').value;
-            const err = document.getElementById('err');
-            const loginBtn = document.querySelector('.login-btn');
-
-            loginBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> MSB ERP System...';
+            const u = document.getElementById('user').value, p = document.getElementById('pass').value;
+            const btn = document.querySelector('.login-btn'), err = document.getElementById('err');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Memverifikasi...';
 
             setTimeout(() => {
                 if (u === "Kalijati" && p === "113300") {
@@ -591,62 +766,66 @@
                         document.getElementById('login-page').style.display = "none";
                         document.getElementById('main-dashboard').style.display = "flex";
                         
-                        document.getElementById('main-dashboard').animate([
-                            { opacity: 0, transform: 'translateY(15px)' },
-                            { opacity: 1, transform: 'translateY(0)' }
-                        ], { duration: 600, easing: 'ease-out' });
-                    }, 300);
+                        // Eksekusi tarikan data dan interval
+                        fetchDashboardData(); 
+                        syncInterval = setInterval(fetchDashboardData, 30000); 
+
+                        showNotification('Login Berhasil', 'Selamat datang, sistem disinkronkan', 'success');
+                    }, 500);
                 } else {
-                    err.style.display = "block";
-                    loginBtn.innerHTML = 'Login System';
+                    err.style.display = "block"; btn.innerHTML = 'LOGIN SYSTEM';
                     setTimeout(() => { err.style.display = "none"; }, 3000);
                 }
-            }, 800);
+            }, 1200);
         }
 
         function doLogout() {
-            location.reload();
+            showNotification('Logout', 'Anda telah keluar dari sistem', 'warning');
+            clearInterval(syncInterval);
+            setTimeout(() => location.reload(), 1000);
         }
 
-        /* 4. Logika Buka/Tutup Modul */
+        function toggleTheme() {
+            document.body.classList.toggle('light-theme');
+            const icon = document.querySelector('.theme-toggle i');
+            let isLight = document.body.classList.contains('light-theme');
+            icon.className = isLight ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+
+            let textColor = isLight ? '#475569' : '#e2e8f0';
+            let gridColor = isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
+
+            myCharts.forEach(chart => {
+                if(chart.options.plugins.legend.labels) chart.options.plugins.legend.labels.color = textColor;
+                if(chart.options.scales.x) { chart.options.scales.x.ticks.color = textColor; if(chart.options.scales.x.grid) chart.options.scales.x.grid.color = gridColor; }
+                if(chart.options.scales.y) { chart.options.scales.y.ticks.color = textColor; if(chart.options.scales.y.grid) chart.options.scales.y.grid.color = gridColor; }
+                chart.update();
+            });
+        }
+
         function launch(url) {
-            if (url.includes("script.google.com")) {
-                window.open(url, '_blank');
-                return; 
-            }
-
-            const viewport = document.getElementById('viewport-container');
-            const frame = document.getElementById('erp-frame');
-            const backBtn = document.getElementById('back-btn');
-            const dashboard = document.getElementById('main-dashboard');
-
-            viewport.style.display = "block";
-            backBtn.style.display = "flex";
-            frame.src = url;
-
-            void viewport.offsetWidth; 
-
-            viewport.classList.add('active');
-            backBtn.classList.add('active');
-            dashboard.classList.add('dashboard-dimmed');
+            if (url.includes("script.google.com")) { window.open(url, '_blank'); return; }
+            const vp = document.getElementById('viewport-container'), fr = document.getElementById('erp-frame'), b = document.getElementById('back-btn'), db = document.getElementById('main-dashboard');
+            vp.style.display = "block"; b.style.display = "flex"; fr.src = url;
+            void vp.offsetWidth;
+            vp.classList.add('active'); vp.setAttribute('aria-hidden', 'false'); b.classList.add('active'); db.classList.add('dashboard-dimmed');
         }
 
         function closeViewport() {
-            const viewport = document.getElementById('viewport-container');
-            const backBtn = document.getElementById('back-btn');
-            const frame = document.getElementById('erp-frame');
-            const dashboard = document.getElementById('main-dashboard');
-
-            viewport.classList.remove('active');
-            backBtn.classList.remove('active');
-            dashboard.classList.remove('dashboard-dimmed');
-
-            setTimeout(() => {
-                viewport.style.display = "none";
-                backBtn.style.display = "none";
-                frame.src = ""; 
-            }, 700); 
+            const vp = document.getElementById('viewport-container'), b = document.getElementById('back-btn'), fr = document.getElementById('erp-frame'), db = document.getElementById('main-dashboard');
+            vp.classList.remove('active'); vp.setAttribute('aria-hidden', 'true'); b.classList.remove('active'); db.classList.remove('dashboard-dimmed');
+            setTimeout(() => { vp.style.display = "none"; b.style.display = "none"; fr.src = ""; }, 700);
         }
+
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('module-card') || e.target.closest('.module-card')) {
+                const card = e.target.classList.contains('module-card') ? e.target : e.target.closest('.module-card');
+                const ripple = document.createElement('span'); ripple.classList.add('ripple');
+                const rect = card.getBoundingClientRect(); const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2, y = e.clientY - rect.top - size / 2;
+                ripple.style.width = ripple.style.height = size + 'px'; ripple.style.left = x + 'px'; ripple.style.top = y + 'px';
+                card.appendChild(ripple); setTimeout(() => ripple.remove(), 600);
+            }
+        });
     </script>
 </body>
 </html>
