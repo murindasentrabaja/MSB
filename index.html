@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     
     <style>
         :root {
@@ -37,7 +36,6 @@
             
             --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.1);
             --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.15);
-            --shadow-neon: 0 0 20px rgba(2, 117, 216, 0.3);
             
             --transition-smooth: 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -45,16 +43,26 @@
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
 
         body {
-            background: var(--bg-body);
+            /* Mengganti background dengan gambar tema alat berat/konstruksi */
+            background-color: var(--bg-body);
+            background-image: linear-gradient(135deg, rgba(10, 14, 39, 0.90) 0%, rgba(10, 14, 39, 0.95) 100%), url('https://images.unsplash.com/photo-1587843329241-7b00302b1fbb?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
             color: var(--text-light);
             font-family: 'Inter', 'Nunito', sans-serif;
             overflow-x: hidden;
             position: relative;
-            transition: background 0.5s ease;
+            transition: all 0.5s ease;
         }
 
         /* ==================== LIGHT THEME OPTIMIZATION ==================== */
-        body.light-theme { background: var(--bg-body-light); color: var(--text-dark); }
+        body.light-theme { 
+            background-color: var(--bg-body-light); 
+            background-image: linear-gradient(135deg, rgba(238, 242, 246, 0.85) 0%, rgba(238, 242, 246, 0.95) 100%), url('https://images.unsplash.com/photo-1587843329241-7b00302b1fbb?q=80&w=1920&auto=format&fit=crop');
+            color: var(--text-dark); 
+        }
         body.light-theme .top-info-bar, body.light-theme header, body.light-theme footer { background: rgba(255, 255, 255, 0.85); border-color: rgba(0, 0, 0, 0.1); color: #1e293b; }
         body.light-theme .stat-card, body.light-theme .chart-card, body.light-theme .module-card, body.light-theme .notification, body.light-theme .login-card { background: rgba(255, 255, 255, 0.9); border-color: rgba(0, 0, 0, 0.1); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); }
         body.light-theme .stat-value, body.light-theme .chart-title, body.light-theme .module-info h3, body.light-theme .section-title, body.light-theme .login-card h2 { color: #0f172a; }
@@ -67,19 +75,35 @@
         body.light-theme .input-group input::placeholder { color: #94a3b8; }
         h1, h2, h3, h4, h5, button { font-family: 'Poppins', sans-serif; }
 
-        /* ==================== PARTICLES BACKGROUND ==================== */
-        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; opacity: 0.6; }
+        /* ==================== VISIBILITAS LOGO ==================== */
+        /* Menambahkan latar belakang terang membulat saat di mode gelap agar logo hitam tetap jelas */
+        body:not(.light-theme) .login-card img.logo,
+        body:not(.light-theme) header img.logo-small {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 10px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
+        }
+
+        body.light-theme .login-card img.logo,
+        body.light-theme header img.logo-small {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+            filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.15));
+        }
 
         /* ==================== GRADIENT BLOBS ==================== */
-        .bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.3; z-index: -1; animation: float 15s infinite alternate ease-in-out; pointer-events: none; will-change: transform; }
+        .bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.2; z-index: -1; animation: float 15s infinite alternate ease-in-out; pointer-events: none; will-change: transform; }
         .blob-1 { background: linear-gradient(135deg, #0275d8, #06b6d4); width: 600px; height: 600px; top: -15%; left: -10%; }
         .blob-2 { background: linear-gradient(135deg, #10b981, #059669); width: 500px; height: 500px; bottom: -10%; right: -10%; animation-delay: 3s; }
         .blob-3 { background: linear-gradient(135deg, #f59e0b, #dc2626); width: 550px; height: 550px; top: 35%; right: -5%; animation-delay: 6s; }
-        .blob-4 { background: linear-gradient(135deg, #8b5cf6, #ec4899); width: 450px; height: 450px; bottom: 20%; left: 15%; animation-delay: 9s; }
         @keyframes float { 0% { transform: translate(0, 0) scale(1) rotate(0deg); } 50% { transform: translate(30px, -30px) scale(1.1) rotate(180deg); } 100% { transform: translate(-20px, 20px) scale(0.9) rotate(360deg); } }
 
         /* ==================== LOADING SCREEN ==================== */
-        #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s, visibility 0.5s; }
+        #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0e27; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s, visibility 0.5s; }
         #loading-screen.hidden { opacity: 0; visibility: hidden; }
         .loader { width: 80px; height: 80px; border: 6px solid rgba(2, 117, 216, 0.2); border-top: 6px solid #0275d8; border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -87,23 +111,24 @@
         .loading-progress { margin-top: 15px; font-size: 0.9rem; color: var(--primary-cyan); }
 
         /* ==================== LOGIN PAGE ==================== */
-        #login-page { display: flex; justify-content: center; align-items: center; min-height: 100vh; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
-        .login-card { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(25px); border: 2px solid rgba(255, 255, 255, 0.18); padding: 50px 45px; border-radius: 30px; width: 100%; max-width: 480px; text-align: center; box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4), 0 0 60px rgba(2, 117, 216, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1); position: relative; overflow: hidden; animation: slideUp 0.8s ease-out; }
+        #login-page { display: flex; justify-content: center; align-items: center; min-height: 100vh; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+        /* Mengurangi silau/kontras pada form login */
+        .login-card { background: rgba(18, 24, 43, 0.75); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 50px 45px; border-radius: 30px; width: 100%; max-width: 480px; text-align: center; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); position: relative; overflow: hidden; animation: slideUp 0.8s ease-out; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-        .login-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent); animation: shimmer 3s infinite; }
+        .login-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent); animation: shimmer 3s infinite; }
         @keyframes shimmer { 0% { left: -100%; } 100% { left: 200%; } }
-        .login-card img.logo { width: 70%; margin-bottom: 20px; filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3)); }
+        .login-card img.logo { width: 65%; margin-bottom: 25px; object-fit: contain; }
         .login-card h2 { font-size: 1.3rem; font-weight: 700; letter-spacing: 2px; background: linear-gradient(135deg, #0275d8, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 40px; text-transform: uppercase; }
         .input-group { position: relative; margin-bottom: 25px; }
-        .input-group i { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: var(--primary-cyan); font-size: 1.2rem; transition: all 0.3s; }
-        .input-group input { width: 100%; padding: 18px 25px 18px 60px; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 15px; color: var(--text-white); font-size: 1rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: all 0.4s; }
-        .input-group input::placeholder { color: rgba(255, 255, 255, 0.5); }
-        .input-group input:focus { background: rgba(255, 255, 255, 0.1); border-color: var(--primary-cyan); box-shadow: 0 0 25px rgba(6, 182, 212, 0.3); transform: translateY(-2px); }
+        .input-group i { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.2rem; transition: all 0.3s; }
+        .input-group input { width: 100%; padding: 18px 25px 18px 60px; background: rgba(255, 255, 255, 0.05); border: 2px solid transparent; border-radius: 15px; color: var(--text-white); font-size: 1rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: all 0.4s; }
+        .input-group input::placeholder { color: rgba(255, 255, 255, 0.4); }
+        .input-group input:focus { background: rgba(255, 255, 255, 0.1); border-color: rgba(6, 182, 212, 0.5); transform: translateY(-2px); }
         .input-group input:focus + i { color: var(--primary-cyan); transform: translateY(-50%) scale(1.1); }
-        .login-btn { width: 100%; padding: 18px; margin-top: 15px; background: linear-gradient(135deg, #0275d8 0%, #06b6d4 100%); border: none; border-radius: 15px; color: #ffffff; font-weight: 700; font-size: 1.1rem; letter-spacing: 1.5px; cursor: pointer; box-shadow: 0 10px 30px rgba(2, 117, 216, 0.4); position: relative; overflow: hidden; transition: all 0.4s; }
+        .login-btn { width: 100%; padding: 18px; margin-top: 15px; background: linear-gradient(135deg, #0275d8 0%, #06b6d4 100%); border: none; border-radius: 15px; color: #ffffff; font-weight: 700; font-size: 1.1rem; letter-spacing: 1.5px; cursor: pointer; box-shadow: 0 10px 25px rgba(2, 117, 216, 0.3); position: relative; overflow: hidden; transition: all 0.4s; }
         .login-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent); transition: 0.6s; }
-        .login-btn:hover::before { left: 100%; } .login-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(2, 117, 216, 0.6); }
-        .login-footer { margin-top: 40px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); font-weight: 500; line-height: 1.8; }
+        .login-btn:hover::before { left: 100%; } .login-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(2, 117, 216, 0.4); }
+        .login-footer { margin-top: 40px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); font-weight: 500; line-height: 1.8; }
         .error-msg { color: #ef4444; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 12px; border-radius: 10px; font-size: 0.9rem; margin-top: 20px; font-weight: 600; display: none; animation: shake 0.5s; }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
 
@@ -113,62 +138,51 @@
         .dashboard-dimmed { transform: scale(0.97) translateY(-10px); opacity: 0.5; filter: blur(6px); pointer-events: none; }
 
         /* ==================== TOP INFO BAR ==================== */
-        .top-info-bar { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; font-weight: 600; color: var(--text-light); z-index: 101; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2); }
+        .top-info-bar { background: rgba(10, 14, 39, 0.6); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 12px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; font-weight: 600; color: var(--text-light); z-index: 101; }
         .datetime { display: flex; align-items: center; gap: 15px; } .datetime i { color: var(--primary-cyan); }
-        .hse-ticker-wrap { flex: 1; max-width: 60%; overflow: hidden; white-space: nowrap; position: relative; display: flex; align-items: center; background: rgba(245, 158, 11, 0.15); padding: 8px 20px; border-radius: 15px; border: 1px solid rgba(245, 158, 11, 0.3); margin-left: 30px; }
+        .hse-ticker-wrap { flex: 1; max-width: 60%; overflow: hidden; white-space: nowrap; position: relative; display: flex; align-items: center; background: rgba(245, 158, 11, 0.1); padding: 8px 20px; border-radius: 15px; border: 1px solid rgba(245, 158, 11, 0.2); margin-left: 30px; }
         .hse-ticker { display: inline-block; padding-left: 100%; animation: ticker 35s linear infinite; font-weight: 700; color: #fbbf24; }
         .hse-ticker i { margin-right: 10px; color: var(--primary-orange); }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
         /* ==================== HEADER ==================== */
-        header { min-height: 85px; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; z-index: 100; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3); position: sticky; top: 0; }
+        header { min-height: 85px; background: rgba(10, 14, 39, 0.6); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; z-index: 100; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15); position: sticky; top: 0; }
         .header-left { display: flex; align-items: center; gap: 30px; }
-        header img.logo-small { height: 45px; filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.3)); }
-        .header-divider { width: 2px; height: 40px; background: rgba(255, 255, 255, 0.2); }
-        .system-status { display: flex; align-items: center; gap: 10px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--primary-green); background: rgba(16, 185, 129, 0.15); padding: 10px 20px; border-radius: 25px; border: 1px solid rgba(16, 185, 129, 0.3); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2); }
+        header img.logo-small { height: 40px; }
+        .header-divider { width: 2px; height: 40px; background: rgba(255, 255, 255, 0.1); }
+        .system-status { display: flex; align-items: center; gap: 10px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--primary-green); background: rgba(16, 185, 129, 0.1); padding: 10px 20px; border-radius: 25px; border: 1px solid rgba(16, 185, 129, 0.2); }
         .status-dot { width: 10px; height: 10px; background: var(--primary-green); border-radius: 50%; box-shadow: 0 0 15px var(--primary-green); animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px var(--primary-green); } 50% { opacity: 0.6; transform: scale(1.3); box-shadow: 0 0 25px var(--primary-green); } }
         .nav-right { display: flex; align-items: center; gap: 20px; }
-        .theme-toggle { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px 15px; border-radius: 12px; cursor: pointer; color: var(--text-light); font-size: 1.1rem; transition: all 0.3s; }
-        .theme-toggle:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.1); }
-        .user-profile { display: flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.1); padding: 10px 20px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.2); font-weight: 700; color: var(--text-light); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
+        .theme-toggle { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 10px 15px; border-radius: 12px; cursor: pointer; color: var(--text-light); font-size: 1.1rem; transition: all 0.3s; }
+        .theme-toggle:hover { background: rgba(255, 255, 255, 0.1); transform: scale(1.1); }
+        .user-profile { display: flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.05); padding: 10px 20px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.1); font-weight: 700; color: var(--text-light); }
         .user-profile i { font-size: 1.3rem; color: var(--primary-cyan); }
-        .btn-logout { background: rgba(239, 68, 68, 0.15); border: 2px solid rgba(239, 68, 68, 0.5); color: #ef4444; padding: 10px 20px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
-        .btn-logout:hover { background: #ef4444; color: white; box-shadow: 0 5px 20px rgba(239, 68, 68, 0.4); transform: translateY(-2px); }
+        .btn-logout { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; padding: 10px 20px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
+        .btn-logout:hover { background: #ef4444; color: white; transform: translateY(-2px); }
 
         /* ==================== DASHBOARD STATS ==================== */
         .dashboard-stats { padding: 30px 40px 15px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-        .stat-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 15px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); transition: all 0.4s; position: relative; overflow: hidden; }
+        .stat-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 15px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15); transition: all 0.4s; position: relative; overflow: hidden; }
         .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; transition: width 0.4s; }
-        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3); }
-        .stat-card:hover::before { width: 100%; opacity: 0.1; }
+        .stat-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.06); }
+        .stat-card:hover::before { width: 100%; opacity: 0.05; }
         .stat-card.blue::before { background: var(--primary-blue); } .stat-card.green::before { background: var(--primary-green); } .stat-card.orange::before { background: var(--primary-orange); } .stat-card.purple::before { background: var(--primary-purple); } .stat-card.red::before { background: var(--primary-red); }
         .stat-icon { width: 55px; height: 55px; border-radius: 15px; display: flex; justify-content: center; align-items: center; font-size: 1.6rem; flex-shrink: 0; }
-        .stat-card.blue .stat-icon { background: rgba(2, 117, 216, 0.15); color: var(--primary-blue); box-shadow: 0 0 30px rgba(2, 117, 216, 0.3); }
-        .stat-card.green .stat-icon { background: rgba(16, 185, 129, 0.15); color: var(--primary-green); box-shadow: 0 0 30px rgba(16, 185, 129, 0.3); }
-        .stat-card.orange .stat-icon { background: rgba(245, 158, 11, 0.15); color: var(--primary-orange); box-shadow: 0 0 30px rgba(245, 158, 11, 0.3); }
-        .stat-card.purple .stat-icon { background: rgba(139, 92, 246, 0.15); color: var(--primary-purple); box-shadow: 0 0 30px rgba(139, 92, 246, 0.3); }
-        .stat-card.red .stat-icon { background: rgba(239, 68, 68, 0.15); color: var(--primary-red); box-shadow: 0 0 30px rgba(239, 68, 68, 0.3); }
+        .stat-card.blue .stat-icon { background: rgba(2, 117, 216, 0.1); color: var(--primary-blue); }
+        .stat-card.green .stat-icon { background: rgba(16, 185, 129, 0.1); color: var(--primary-green); }
+        .stat-card.orange .stat-icon { background: rgba(245, 158, 11, 0.1); color: var(--primary-orange); }
+        .stat-card.purple .stat-icon { background: rgba(139, 92, 246, 0.1); color: var(--primary-purple); }
+        .stat-card.red .stat-icon { background: rgba(239, 68, 68, 0.1); color: var(--primary-red); }
         .stat-info { flex: 1; min-width: 0; }
         .stat-label { font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .stat-value { font-size: 1.6rem; font-weight: 800; color: var(--text-white); line-height: 1; }
 
         /* ==================== CHARTS SECTION ==================== */
         .charts-section { padding: 0 40px 25px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-        /* Efek Hover Mewah pada Chart Card */
-.chart-card {
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-    z-index: 1;
-}
-.chart-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 50px rgba(6, 182, 212, 0.15), inset 0 0 0 1px rgba(6, 182, 212, 0.4);
-    z-index: 10;
-}
-.chart-card canvas:hover {
-    cursor: crosshair;
-}
+        .chart-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 25px; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); position: relative; z-index: 1; }
+        .chart-card:hover { transform: translateY(-8px) scale(1.01); background: rgba(255, 255, 255, 0.05); z-index: 10; }
+        .chart-card canvas:hover { cursor: crosshair; }
         .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .chart-title { font-size: 1rem; font-weight: 700; color: var(--text-white); }
         .chart-subtitle { font-size: 0.75rem; color: rgba(255, 255, 255, 0.5); margin-top: 1px; }
@@ -178,21 +192,20 @@
         .content-area { padding: 0 40px 40px 40px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px; align-content: start; position: relative; z-index: 10; }
         .section-title { grid-column: 1 / -1; font-size: 1.4rem; font-weight: 800; color: var(--text-white); margin-top: 15px; margin-bottom: 5px; display: flex; align-items: center; gap: 15px; }
         .section-title::before { content: ''; width: 5px; height: 32px; background: linear-gradient(180deg, var(--primary-cyan), var(--primary-blue)); border-radius: 10px; }
-        .module-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 22px; padding: 30px; cursor: pointer; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); position: relative; overflow: hidden; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-        .module-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent); transform: skewX(-20deg); transition: 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
-        .module-card:hover { transform: translateY(-10px) scale(1.02); }
+        .module-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 22px; padding: 30px; cursor: pointer; display: flex; flex-direction: column; gap: 18px; position: relative; overflow: hidden; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .module-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent); transform: skewX(-20deg); transition: 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+        .module-card:hover { transform: translateY(-10px); background: rgba(255, 255, 255, 0.06); }
         .module-card:hover::before { left: 150%; }
-        .module-card.blue { border-color: rgba(2, 117, 216, 0.3); } .module-card.green { border-color: rgba(16, 185, 129, 0.3); } .module-card.orange { border-color: rgba(245, 158, 11, 0.3); }
-        .module-card.blue:hover { box-shadow: 0 20px 60px rgba(2, 117, 216, 0.3); border-color: rgba(2, 117, 216, 0.5); }
-        .module-card.green:hover { box-shadow: 0 20px 60px rgba(16, 185, 129, 0.3); border-color: rgba(16, 185, 129, 0.5); }
-        .module-card.orange:hover { box-shadow: 0 20px 60px rgba(245, 158, 11, 0.3); border-color: rgba(245, 158, 11, 0.5); }
-        .module-icon { width: 70px; height: 70px; border-radius: 18px; display: flex; justify-content: center; align-items: center; font-size: 2rem; backdrop-filter: blur(5px); transition: all 0.4s; }
+        .module-card.blue:hover { border-color: rgba(2, 117, 216, 0.4); }
+        .module-card.green:hover { border-color: rgba(16, 185, 129, 0.4); }
+        .module-card.orange:hover { border-color: rgba(245, 158, 11, 0.4); }
+        .module-icon { width: 70px; height: 70px; border-radius: 18px; display: flex; justify-content: center; align-items: center; font-size: 2rem; transition: all 0.4s; }
         .module-card:hover .module-icon { transform: scale(1.1) rotate(5deg); }
-        .blue .module-icon { background: rgba(2, 117, 216, 0.15); color: #2196f3; border: 2px solid rgba(2, 117, 216, 0.3); box-shadow: 0 0 25px rgba(2, 117, 216, 0.4); }
-        .green .module-icon { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 2px solid rgba(16, 185, 129, 0.3); box-shadow: 0 0 25px rgba(16, 185, 129, 0.4); }
-        .orange .module-icon { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 2px solid rgba(245, 158, 11, 0.3); box-shadow: 0 0 25px rgba(245, 158, 11, 0.4); }
+        .blue .module-icon { background: rgba(2, 117, 216, 0.1); color: #2196f3; }
+        .green .module-icon { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+        .orange .module-icon { background: rgba(245, 158, 11, 0.1); color: #fbbf24; }
         .module-info h3 { font-size: 1.25rem; margin-bottom: 8px; color: var(--text-white); font-weight: 700; }
-        .module-info p { font-size: 0.95rem; color: rgba(255, 255, 255, 0.7); line-height: 1.6; }
+        .module-info p { font-size: 0.95rem; color: rgba(255, 255, 255, 0.6); line-height: 1.6; }
         .explore-btn { font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; margin-top: auto; transition: all 0.3s; }
         .module-card:hover .explore-btn { letter-spacing: 1px; }
         .module-card:hover .explore-btn i { transform: translateX(8px); }
@@ -200,7 +213,7 @@
 
         /* ==================== NOTIFICATIONS ==================== */
         .notification-container { position: fixed; top: 20px; right: 20px; z-index: 9998; display: flex; flex-direction: column; gap: 15px; }
-        .notification { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 18px 25px; border-radius: 15px; min-width: 320px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); display: flex; align-items: center; gap: 15px; animation: slideInRight 0.5s ease-out; }
+        .notification { background: rgba(10, 14, 39, 0.9); border: 1px solid rgba(255, 255, 255, 0.1); padding: 18px 25px; border-radius: 15px; min-width: 320px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); display: flex; align-items: center; gap: 15px; animation: slideInRight 0.5s ease-out; }
         @keyframes slideInRight { from { opacity: 0; transform: translateX(400px); } to { opacity: 1; transform: translateX(0); } }
         .notification i { font-size: 1.5rem; }
         .notification.success { border-left: 4px solid var(--primary-green); } .notification.success i { color: var(--primary-green); }
@@ -215,10 +228,10 @@
         #erp-frame { width: 100%; height: 100%; border: none; background: #fff; }
         .back-nav { position: fixed; bottom: 30px; right: 30px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); color: #fff; padding: 16px 28px; border-radius: 50px; border: 2px solid rgba(255, 255, 255, 0.2); font-weight: 700; cursor: pointer; z-index: 1000; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); font-size: 0.95rem; display: none; align-items: center; gap: 12px; opacity: 0; transform: translateY(20px); transition: all var(--transition-smooth); }
         .back-nav.active { opacity: 1; transform: translateY(0); }
-        .back-nav:hover { background: #000; transform: translateY(-5px) scale(1.05); border-color: var(--primary-cyan); box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7); }
+        .back-nav:hover { background: #000; transform: translateY(-5px) scale(1.05); border-color: var(--primary-cyan); }
 
         /* ==================== FOOTER ==================== */
-        footer { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 30px 40px; display: flex; justify-content: space-between; align-items: center; color: rgba(255, 255, 255, 0.7); z-index: 100; box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.2); }
+        footer { background: rgba(10, 14, 39, 0.7); backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.05); padding: 30px 40px; display: flex; justify-content: space-between; align-items: center; color: rgba(255, 255, 255, 0.6); z-index: 100; }
         .footer-address { font-size: 0.9rem; line-height: 1.8; }
         .footer-address strong { color: var(--text-white); font-size: 1rem; display: block; margin-bottom: 5px; }
         .footer-contact { margin-top: 10px; display: flex; gap: 20px; font-weight: 600; color: var(--primary-cyan); }
@@ -236,7 +249,7 @@
         @media (max-width: 768px) { .top-info-bar { flex-direction: column; align-items: flex-start; gap: 12px; padding: 15px 20px; } .hse-ticker-wrap { max-width: 100%; margin-left: 0; } header { padding: 15px 20px; flex-wrap: wrap; gap: 15px; } .header-divider { display: none; } .dashboard-stats, .charts-section, .content-area { padding: 20px; } .content-area { grid-template-columns: 1fr; } #viewport-container { top: 140px; height: calc(100vh - 140px); } footer { flex-direction: column; text-align: center; padding: 25px 20px; gap: 20px; } .footer-contact { flex-direction: column; gap: 10px; } .footer-copy { text-align: center; } .back-nav { bottom: 20px; left: 20px; right: 20px; justify-content: center; } }
         @media (max-width: 480px) { .login-card { padding: 40px 30px; width: 92%; } header img.logo-small { height: 35px; } .dashboard-stats { grid-template-columns: 1fr; } }
 
-        .ripple { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.5); transform: scale(0); animation: ripple-animation 0.6s ease-out; pointer-events: none; }
+        .ripple { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.3); transform: scale(0); animation: ripple-animation 0.6s ease-out; pointer-events: none; }
         @keyframes ripple-animation { to { transform: scale(4); opacity: 0; } }
     </style>
 </head>
@@ -247,11 +260,9 @@
         <div class="loading-progress">Kalijati, Subang...</div>
     </div>
 
-    <div id="particles-js" aria-hidden="true"></div>
     <div class="bg-glow blob-1" aria-hidden="true"></div>
     <div class="bg-glow blob-2" aria-hidden="true"></div>
     <div class="bg-glow blob-3" aria-hidden="true"></div>
-    <div class="bg-glow blob-4" aria-hidden="true"></div>
 
     <div class="notification-container" id="notification-container" aria-live="assertive"></div>
 
@@ -346,26 +357,26 @@
         </section>
 
         <section class="charts-section" aria-label="Data Analytics Charts">
-    <div class="chart-card">
-        <div class="chart-header">
-            <div>
-                <h3 class="chart-title">Trend PO Bulanan</h3>
-                <p class="chart-subtitle">Data Rekapitulasi Purchase Order per Bulan</p>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div>
+                        <h3 class="chart-title">Trend PO Bulanan</h3>
+                        <p class="chart-subtitle">Data Rekapitulasi Purchase Order per Bulan</p>
+                    </div>
+                </div>
+                <canvas id="clientProcessChart" aria-label="Line Chart Trend PO" role="img"></canvas>
             </div>
-        </div>
-        <canvas id="clientProcessChart" aria-label="Line Chart Trend PO" role="img"></canvas>
-    </div>
 
-    <div class="chart-card">
-        <div class="chart-header">
-            <div>
-                <h3 class="chart-title">Distribusi Karyawan</h3>
-                <p class="chart-subtitle">Perbandingan per Departemen</p>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div>
+                        <h3 class="chart-title">Distribusi Karyawan</h3>
+                        <p class="chart-subtitle">Perbandingan per Departemen</p>
+                    </div>
+                </div>
+                <canvas id="karyawanDeptChart" aria-label="Doughnut Chart Distribusi Karyawan" role="img"></canvas>
             </div>
-        </div>
-        <canvas id="karyawanDeptChart" aria-label="Doughnut Chart Distribusi Karyawan" role="img"></canvas>
-    </div>
-</section>
+        </section>
 
         <section class="content-area" aria-label="ERP Modules Application Navigation">
             <h2 class="section-title"><span>Modul ERP System</span></h2>
@@ -453,9 +464,6 @@
     </button>
 
     <script>
-        // =========================================================================
-        // GANTI STRING DI BAWAH DENGAN LINK DEPLOY "WEB APP" APPS SCRIPT ANDA
-        // =========================================================================
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyu96U5qQHgEarOmSdH2wSDGITeV8-67b_5B39t95gLXf5ONy9AA32gxPGYpDQkdww9xw/exec";
 
         let myCharts = [];
@@ -463,18 +471,11 @@
         let deptChartInstance = null;
         let syncInterval;
 
-        // ==================== ANIMASI & LOADING ====================
         window.addEventListener('load', function() {
             setTimeout(function() { document.getElementById('loading-screen').classList.add('hidden'); }, 1500);
         });
 
-        if (typeof particlesJS !== 'undefined') {
-            particlesJS('particles-js', {
-                particles: { number: { value: 80, density: { enable: true, value_area: 800 } }, color: { value: '#06b6d4' }, shape: { type: 'circle' }, opacity: { value: 0.3, random: true }, size: { value: 3, random: true }, line_linked: { enable: true, distance: 150, color: '#0275d8', opacity: 0.2, width: 1 }, move: { enable: true, speed: 2, direction: 'none', random: true, straight: false, out_mode: 'out', bounce: false } },
-                interactivity: { detect_on: 'canvas', events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: true, mode: 'push' }, resize: true }, modes: { grab: { distance: 140, line_linked: { opacity: 0.5 } }, push: { particles_nb: 4 } } },
-                retina_detect: true
-            });
-        }
+        // Script Particles.js telah dihapus karena diganti background gambar statis tema alat berat
 
         function updateDateTime() {
             const now = new Date();
@@ -485,19 +486,13 @@
         }
         setInterval(updateDateTime, 1000); updateDateTime();
 
-        // ==================== FETCH DATA GOOGLE SPREADSHEET ====================
-        // ==================== FETCH DATA GOOGLE SPREADSHEET ====================
         async function fetchDashboardData() {
-            if (WEB_APP_URL.includes("MASUKKAN_LINK_DEPLOY")) {
-                console.warn("Harap masukkan link Web App Anda terlebih dahulu pada script.");
-                return;
-            }
+            if (WEB_APP_URL.includes("MASUKKAN_LINK_DEPLOY")) return;
 
             try {
                 const response = await fetch(WEB_APP_URL);
                 const data = await response.json();
                 
-                /* --- 1. PARSING DATA SUMMARY FLEKSIBEL --- */
                 let sheetMap = {};
                 if (data.summary && data.summary.length > 0) {
                     let isHorizontal = data.summary[0].length > 2; 
@@ -522,7 +517,6 @@
                     return match;
                 };
 
-                // Update Stats
                 animateValue('stat-karyawan', parseTarget('Karyawan'), 1200);
                 animateValue('stat-po', parseTarget('Purchase Order'), 1200);
                 animateValue('stat-pengiriman', parseTarget('Pengiriman'), 1200);
@@ -531,8 +525,6 @@
                 animateValue('stat-insiden', parseTarget('Total Insiden'), 1200);
                 animateValue('stat-spp', parseTarget('SPP Belum Datang'), 1200);
 
-                /* --- 2. UPDATE DATA CHARTS --- */
-                // Menggunakan data.trendPO dari perubahan Google Apps Script
                 updateDynamicCharts(data.trendPO, data.karyawan);
 
             } catch (error) {
@@ -540,30 +532,24 @@
             }
         }
 
-       // ==================== UPDATE CHART ====================
         function updateDynamicCharts(poData, karData) {
             let textColor = document.body.classList.contains('light-theme') ? '#475569' : '#e2e8f0';
             let gridColor = document.body.classList.contains('light-theme') ? 'rgba(0,0,0,0.05)' : 'rgba(255, 255, 255, 0.05)';
 
-            // =========================================================
-            // CHART 1: Trend PO Bulanan (Line Chart Dinamis Multi-Kolom)
-            // =========================================================
             if (poData && poData.length > 1) {
-                const labels = poData.slice(1).map(row => String(row[0] || '')); // Kolom A: Bulan
+                const labels = poData.slice(1).map(row => String(row[0] || ''));
                 const datasets = [];
                 
-                // Palet warna mewah untuk setiap klien (Sumitomo, Komatsu, dll)
                 const colorPalette = [
-                    { border: '#06b6d4', bg: 'rgba(6, 182, 212, 0.15)', glow: 'rgba(6, 182, 212, 0.8)' }, // Cyan
-                    { border: '#f59e0b', bg: 'rgba(245, 158, 11, 0.15)', glow: 'rgba(245, 158, 11, 0.8)' }, // Orange
-                    { border: '#10b981', bg: 'rgba(16, 185, 129, 0.15)', glow: 'rgba(16, 185, 129, 0.8)' }, // Green
-                    { border: '#8b5cf6', bg: 'rgba(139, 92, 246, 0.15)', glow: 'rgba(139, 92, 246, 0.8)' }  // Purple
+                    { border: '#06b6d4', bg: 'rgba(6, 182, 212, 0.1)' },
+                    { border: '#f59e0b', bg: 'rgba(245, 158, 11, 0.1)' },
+                    { border: '#10b981', bg: 'rgba(16, 185, 129, 0.1)' },
+                    { border: '#8b5cf6', bg: 'rgba(139, 92, 246, 0.1)' }
                 ];
 
-                // Looping dinamis: Membaca kolom B, C, D, dst (Sumitomo, Komatsu, dll)
                 for (let i = 1; i < poData[0].length; i++) {
                     let clientName = poData[0][i];
-                    if (!clientName) continue; // Lewati jika header kosong
+                    if (!clientName) continue;
                     
                     let dataValues = poData.slice(1).map(row => parseFloat(row[i]) || 0);
                     let theme = colorPalette[(i - 1) % colorPalette.length];
@@ -578,14 +564,12 @@
                         pointBorderColor: theme.border,
                         pointBorderWidth: 2,
                         pointRadius: 4,
-                        // Efek mewah saat kursor diarahkan ke titik (point)
-                        pointHoverRadius: 10,
+                        pointHoverRadius: 8,
                         pointHoverBackgroundColor: theme.border,
                         pointHoverBorderColor: '#fff',
-                        pointHoverBorderWidth: 3,
-                        hoverBorderWidth: 4,
+                        pointHoverBorderWidth: 2,
                         fill: true,
-                        tension: 0.4 // Kurva melengkung mulus (smooth)
+                        tension: 0.4
                     });
                 }
 
@@ -598,80 +582,46 @@
                     options: { 
                         responsive: true, 
                         maintainAspectRatio: false, 
-                        // Interaksi mewah: garis vertikal yang menyambungkan semua data pada bulan yang sama
-                        interaction: {
-                            mode: 'index',
-                            intersect: false,
-                        },
+                        interaction: { mode: 'index', intersect: false },
                         plugins: { 
-                            legend: { 
-                                labels: { color: textColor, font: { family: 'Inter', size: 12 }, usePointStyle: true, boxWidth: 8 } 
-                            },
-                            // Efek Tooltip Glassmorphism
+                            legend: { labels: { color: textColor, font: { family: 'Inter', size: 12 }, usePointStyle: true, boxWidth: 8 } },
                             tooltip: {
                                 backgroundColor: document.body.classList.contains('light-theme') ? 'rgba(255, 255, 255, 0.9)' : 'rgba(10, 14, 39, 0.9)',
                                 titleColor: document.body.classList.contains('light-theme') ? '#0f172a' : '#fff',
                                 bodyColor: document.body.classList.contains('light-theme') ? '#475569' : '#cbd5e1',
-                                borderColor: 'rgba(6, 182, 212, 0.4)',
+                                borderColor: 'rgba(6, 182, 212, 0.3)',
                                 borderWidth: 1,
-                                padding: 15,
-                                boxPadding: 8,
+                                padding: 12,
                                 usePointStyle: true,
-                                titleFont: { size: 14, family: 'Poppins', weight: 'bold' },
-                                bodyFont: { size: 13, family: 'Inter', weight: '500' },
-                                cornerRadius: 12,
-                                displayColors: true,
-                                callbacks: {
-                                    label: function(context) {
-                                        return ` ${context.dataset.label}: ${context.parsed.y} PO`;
-                                    }
-                                }
+                                titleFont: { size: 13, family: 'Poppins', weight: 'bold' },
+                                bodyFont: { size: 12, family: 'Inter', weight: '500' },
+                                cornerRadius: 8,
+                                displayColors: true
                             }
                         }, 
                         scales: { 
-                            x: { 
-                                ticks: { color: textColor, font: {size: 11, family: 'Inter'} }, 
-                                grid: { display: false, drawBorder: false } 
-                            }, 
-                            y: { 
-                                ticks: { color: textColor, font: {size: 11, family: 'Inter'} }, 
-                                grid: { color: gridColor, borderDash: [5, 5] }, 
-                                beginAtZero: true 
-                            } 
-                        },
-                        animations: {
-                            tension: { duration: 1000, easing: 'linear', from: 0.5, to: 0.4 }
+                            x: { ticks: { color: textColor, font: {size: 11, family: 'Inter'} }, grid: { display: false } }, 
+                            y: { ticks: { color: textColor, font: {size: 11, family: 'Inter'} }, grid: { color: gridColor, borderDash: [5, 5] }, beginAtZero: true } 
                         }
                     }
                 });
             }
 
-            // =========================================================
-            // CHART 2: Distribusi Karyawan per Departemen (Doughnut)
-            // =========================================================
             if (karData && karData.length > 1) {
-                let labels = [];
-                let values = [];
-                
+                let labels = [], values = [];
                 let deptColIdx = -1;
                 const headers = karData[0].map(h => String(h).toLowerCase());
                 for (let i = 0; i < headers.length; i++) {
-                    if (headers[i].includes('departemen') || headers[i].includes('dept') || headers[i].includes('bagian')) {
-                        deptColIdx = i;
-                        break;
-                    }
+                    if (headers[i].includes('departemen') || headers[i].includes('dept') || headers[i].includes('bagian')) { deptColIdx = i; break; }
                 }
 
                 if (deptColIdx !== -1 && karData[0].length > 2) {
                     let deptCounts = {};
                     for (let i = 1; i < karData.length; i++) {
                         let deptName = String(karData[i][deptColIdx]).trim();
-                        if (deptName) {
-                            deptCounts[deptName] = (deptCounts[deptName] || 0) + 1;
-                        }
+                        if (deptName) deptCounts[deptName] = (deptCounts[deptName] || 0) + 1;
                     }
-                    labels = Object.keys(deptCounts);
-                    values = Object.values(deptCounts);
+                    labels = Object.keys(deptCounts); values = Object.values(deptCounts);
                 } else {
                     labels = karData.slice(1).map(row => String(row[0] || ''));
                     values = karData.slice(1).map(row => parseFloat(row[1]) || 0);
@@ -692,26 +642,18 @@
                             hoverBackgroundColor: hoverBgColors.slice(0, Math.max(labels.length, hoverBgColors.length)),
                             borderWidth: 2,
                             borderColor: document.body.classList.contains('light-theme') ? '#ffffff' : '#0a0e27',
-                            hoverOffset: 15 // Efek pop-out mewah saat kursor diarahkan ke chart lingkaran
+                            hoverOffset: 10
                         }]
                     },
                     options: { 
-                        responsive: true, 
-                        maintainAspectRatio: false, 
-                        cutout: '70%', // Membuat cincin lebih elegan
+                        responsive: true, maintainAspectRatio: false, cutout: '70%',
                         plugins: { 
-                            legend: { 
-                                position: 'right', 
-                                labels: { color: textColor, font: { size: 11, family: 'Inter' }, padding: 15, usePointStyle: true } 
-                            },
+                            legend: { position: 'right', labels: { color: textColor, font: { size: 11, family: 'Inter' }, padding: 15, usePointStyle: true } },
                             tooltip: {
                                 backgroundColor: document.body.classList.contains('light-theme') ? 'rgba(255, 255, 255, 0.9)' : 'rgba(10, 14, 39, 0.9)',
                                 titleColor: document.body.classList.contains('light-theme') ? '#0f172a' : '#fff',
                                 bodyColor: document.body.classList.contains('light-theme') ? '#475569' : '#cbd5e1',
-                                borderColor: 'rgba(2, 117, 216, 0.4)',
-                                borderWidth: 1,
-                                padding: 12,
-                                cornerRadius: 10,
+                                borderColor: 'rgba(2, 117, 216, 0.3)', borderWidth: 1, padding: 12, cornerRadius: 8,
                                 callbacks: {
                                     label: function(context) {
                                         let total = context.dataset.data.reduce((a, b) => a + b, 0);
@@ -728,7 +670,6 @@
             myCharts = [clientChartInstance, deptChartInstance].filter(Boolean);
         }
 
-        // ==================== FUNGSI LAINNYA ====================
         function animateValue(id, end, duration) {
             const el = document.getElementById(id); if (!el) return;
             const start = parseInt(el.textContent) || 0; if (start === end) return;
@@ -766,7 +707,6 @@
                         document.getElementById('login-page').style.display = "none";
                         document.getElementById('main-dashboard').style.display = "flex";
                         
-                        // Eksekusi tarikan data dan interval
                         fetchDashboardData(); 
                         syncInterval = setInterval(fetchDashboardData, 30000); 
 
