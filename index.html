@@ -43,7 +43,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
 
         body {
-            /* Mengganti background dengan gambar tema alat berat/konstruksi */
             background-color: var(--bg-body);
             background-image: linear-gradient(135deg, rgba(10, 14, 39, 0.90) 0%, rgba(10, 14, 39, 0.95) 100%), url('https://images.unsplash.com/photo-1587843329241-7b00302b1fbb?q=80&w=1920&auto=format&fit=crop');
             background-size: cover;
@@ -76,7 +75,6 @@
         h1, h2, h3, h4, h5, button { font-family: 'Poppins', sans-serif; }
 
         /* ==================== VISIBILITAS LOGO ==================== */
-        /* Menambahkan latar belakang terang membulat saat di mode gelap agar logo hitam tetap jelas */
         body:not(.light-theme) .login-card img.logo,
         body:not(.light-theme) header img.logo-small {
             background-color: rgba(255, 255, 255, 0.85);
@@ -112,7 +110,6 @@
 
         /* ==================== LOGIN PAGE ==================== */
         #login-page { display: flex; justify-content: center; align-items: center; min-height: 100vh; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-        /* Mengurangi silau/kontras pada form login */
         .login-card { background: rgba(18, 24, 43, 0.75); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 50px 45px; border-radius: 30px; width: 100%; max-width: 480px; text-align: center; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); position: relative; overflow: hidden; animation: slideUp 0.8s ease-out; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
         .login-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent); animation: shimmer 3s infinite; }
@@ -434,6 +431,14 @@
                 <div class="module-info"><h3>SPP System</h3><p>Manajemen Surat Permintaan Pembelian. Kelola dan pantau pengajuan kebutuhan material.</p></div>
                 <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
             </div>
+
+            <!-- MODUL BARU: MASTER SCHEDULE -->
+            <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/Master-Schedule/')" tabindex="0" role="button">
+                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></div>
+                <div class="module-info"><h3>Master Schedule</h3><p>Pantau timeline dan alokasi waktu secara komprehensif.</p></div>
+                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
+            </div>
+            
         </section>
 
         <footer>
@@ -474,8 +479,6 @@
         window.addEventListener('load', function() {
             setTimeout(function() { document.getElementById('loading-screen').classList.add('hidden'); }, 1500);
         });
-
-        // Script Particles.js telah dihapus karena diganti background gambar statis tema alat berat
 
         function updateDateTime() {
             const now = new Date();
