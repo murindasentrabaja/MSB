@@ -3,922 +3,1179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Advanced ERP System - PT Murinda Sentra Baja | Enterprise Resource Planning with Real-time Analytics">
-    <meta name="keywords" content="ERP, Manufacturing, Steel, Industry 4.0, Business Intelligence, Dashboard">
-    <meta name="author" content="Aspuro Amarulloh Khoiri">
-    <meta name="theme-color" content="#0a0e27">
-    <title>ERP SYSTEM | PT MURINDA SENTRA BAJA - Advanced Dashboard</title>
+    <title>Surat Perintah Lembur - MSB</title>
     
-    <!-- Menambahkan Font Playfair Display untuk kesan elegan -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
     
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         :root {
-            --primary-blue: #0275d8;
-            --primary-blue-hover: #025aa5;
-            --primary-green: #10b981;
-            --primary-orange: #f59e0b;
-            --primary-purple: #8b5cf6;
+            --bg-body: #e2e8f0;
+            --bg-surface: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #cbd5e1;
+            --primary: #2563eb;
             --primary-cyan: #06b6d4;
-            --primary-red: #ef4444;
-            
-            --bg-body: #0a0e27;
-            --bg-body-light: #eef2f6;
-            --bg-card: rgba(255, 255, 255, 0.05);
-            --bg-glass: rgba(255, 255, 255, 0.08);
-            
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            --text-light: #e2e8f0;
-            --text-white: #ffffff;
-            
-            --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.1);
-            --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.15);
-            
-            --transition-smooth: 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            --primary-orange: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
 
         body {
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg-body);
-            background-image: linear-gradient(135deg, rgba(10, 14, 39, 0.90) 0%, rgba(10, 14, 39, 0.95) 100%), url('https://images.unsplash.com/photo-1587843329241-7b00302b1fbb?q=80&w=1920&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            color: var(--text-light);
-            font-family: 'Inter', 'Nunito', sans-serif;
-            overflow-x: hidden;
-            position: relative;
-            transition: all 0.5s ease;
+            color: var(--text-main);
+            margin: 0;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
-
-        /* ==================== LIGHT THEME OPTIMIZATION ==================== */
-        body.light-theme { 
-            background-color: var(--bg-body-light); 
-            background-image: linear-gradient(135deg, rgba(238, 242, 246, 0.85) 0%, rgba(238, 242, 246, 0.95) 100%), url('https://images.unsplash.com/photo-1587843329241-7b00302b1fbb?q=80&w=1920&auto=format&fit=crop');
-            color: var(--text-dark); 
-        }
-        body.light-theme .top-info-bar, body.light-theme header, body.light-theme footer { background: rgba(255, 255, 255, 0.85); border-color: rgba(0, 0, 0, 0.1); color: #1e293b; }
-        body.light-theme .stat-card, body.light-theme .chart-card, body.light-theme .module-card, body.light-theme .notification { background: rgba(255, 255, 255, 0.9); border-color: rgba(0, 0, 0, 0.1); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); }
-        body.light-theme .stat-value, body.light-theme .chart-title, body.light-theme .module-info h3, body.light-theme .section-title { color: #0f172a; }
-        body.light-theme .stat-label, body.light-theme .chart-subtitle, body.light-theme .module-info p, body.light-theme .footer-address, body.light-theme .footer-copy { color: #475569; }
-        body.light-theme .footer-address strong, body.light-theme .footer-copy span:first-child { color: #0f172a; }
-        body.light-theme .user-profile, body.light-theme .theme-toggle { background: #f1f5f9; color: #0f172a; border-color: #cbd5e1; }
-        body.light-theme .header-divider { background: #cbd5e1; }
-        body.light-theme .datetime { color: #1e293b; }
-        h1, h2, h3, h4, h5, button { font-family: 'Poppins', sans-serif; }
-
-        body:not(.light-theme) header img.logo-small {
-            background-color: rgba(255, 255, 255, 0.85);
-            padding: 10px 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
-        }
-
-        body.light-theme header img.logo-small {
-            background-color: transparent;
-            padding: 0;
-            border-radius: 0;
-            box-shadow: none;
-            filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.15));
-        }
-
-        /* ==================== GRADIENT BLOBS ==================== */
-        .bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.2; z-index: -1; animation: float 15s infinite alternate ease-in-out; pointer-events: none; will-change: transform; }
-        .blob-1 { background: linear-gradient(135deg, #0275d8, #06b6d4); width: 600px; height: 600px; top: -15%; left: -10%; }
-        .blob-2 { background: linear-gradient(135deg, #10b981, #059669); width: 500px; height: 500px; bottom: -10%; right: -10%; animation-delay: 3s; }
-        .blob-3 { background: linear-gradient(135deg, #f59e0b, #dc2626); width: 550px; height: 550px; top: 35%; right: -5%; animation-delay: 6s; }
-        @keyframes float { 0% { transform: translate(0, 0) scale(1) rotate(0deg); } 50% { transform: translate(30px, -30px) scale(1.1) rotate(180deg); } 100% { transform: translate(-20px, 20px) scale(0.9) rotate(360deg); } }
-
-        /* ==================== LOADING SCREEN ==================== */
-        #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0e27; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s, visibility 0.5s; }
-        #loading-screen.hidden { opacity: 0; visibility: hidden; }
-        .loader { width: 80px; height: 80px; border: 6px solid rgba(2, 117, 216, 0.2); border-top: 6px solid #0275d8; border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .loading-text { margin-top: 25px; font-size: 1.2rem; font-weight: 600; color: var(--text-light); letter-spacing: 2px; }
-        .loading-progress { margin-top: 15px; font-size: 0.9rem; color: var(--primary-cyan); }
 
         /* ==================== LOGIN OVERLAY (MEWAH & ANIMATIF) ==================== */
         #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; display: flex; justify-content: center; align-items: center; z-index: 9998; transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out; }
         
-        .login-wrapper { 
-            transform: scale(1); transition: transform 0.3s ease; 
-            animation: float-smooth 6s ease-in-out infinite;
-        }
-        @keyframes float-smooth {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
+        .login-wrapper { transform: scale(1); transition: transform 0.3s ease; animation: float-smooth 6s ease-in-out infinite; }
+        @keyframes float-smooth { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
         @media (max-width: 768px) { .login-wrapper { transform: scale(0.8); animation: float-smooth-mobile 6s ease-in-out infinite; } }
         @media (max-width: 500px) { .login-wrapper { transform: scale(0.55); animation: float-smooth-mobile-mini 6s ease-in-out infinite; } }
         @keyframes float-smooth-mobile { 0%, 100% { transform: scale(0.8) translateY(0); } 50% { transform: scale(0.8) translateY(-10px); } }
         @keyframes float-smooth-mobile-mini { 0%, 100% { transform: scale(0.55) translateY(0); } 50% { transform: scale(0.55) translateY(-8px); } }
         
-        /* Modifikasi Card Login untuk area konten yang lebih luas */
-        .login-card { position: relative; width: 850px; height: 490px; display: flex; align-items: center; justify-content: flex-start; padding-left: 50px; background: transparent; border-radius: 20px; font-family: 'Poppins', sans-serif; cursor: pointer; outline: none; }
+        .login-card-overlay { position: relative; width: 850px; height: 490px; display: flex; align-items: center; justify-content: flex-start; padding-left: 50px; background: transparent; border-radius: 20px; font-family: 'Poppins', sans-serif; cursor: pointer; outline: none; }
         
-        .login-card .circle { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; pointer-events: none; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .login-card-overlay .circle { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; pointer-events: none; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .login-card-overlay .circle::before { content: ''; position: absolute; width: 250px; height: 250px; background: transparent; border: 4px solid #124388; border-radius: 50%; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); animation: pulse-glow 3s infinite alternate; }
         
-        .login-card .circle::before { 
-            content: ''; position: absolute; width: 250px; height: 250px; background: transparent; 
-            border: 4px solid #124388; border-radius: 50%; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            animation: pulse-glow 3s infinite alternate;
-        }
+        @keyframes pulse-glow { 0% { box-shadow: 0 0 15px rgba(18, 67, 136, 0.3), inset 0 0 10px rgba(18, 67, 136, 0.2); } 100% { box-shadow: 0 0 45px rgba(18, 67, 136, 0.8), inset 0 0 25px rgba(18, 67, 136, 0.5); } }
         
-        @keyframes pulse-glow {
-            0% { box-shadow: 0 0 15px rgba(18, 67, 136, 0.3), inset 0 0 10px rgba(18, 67, 136, 0.2); }
-            100% { box-shadow: 0 0 45px rgba(18, 67, 136, 0.8), inset 0 0 25px rgba(18, 67, 136, 0.5); }
-        }
+        .login-card-overlay .logo-wrapper { z-index: 12; text-align: center; transition: 0.5s ease-in-out; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
+        .login-card-overlay .logo-wrapper .logo_img { max-width: 180px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); animation: logo-breath 4s ease-in-out infinite; }
+        @keyframes logo-breath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
         
-        .login-card .logo-wrapper { z-index: 12; text-align: center; transition: 0.5s ease-in-out; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
-        .login-card .logo-wrapper .logo_img { 
-            max-width: 180px; 
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
-            animation: logo-breath 4s ease-in-out infinite;
-        }
-        @keyframes logo-breath {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
+        .login-card-overlay:hover .circle::before, .login-card-overlay:focus-within .circle::before { width: 100%; height: 100%; border-radius: 20px; background: linear-gradient(135deg, #0a1930, #124388); box-shadow: 0 20px 60px rgba(18, 67, 136, 0.5); border: 0px solid transparent; animation: none; }
+        .login-card-overlay:hover .logo-wrapper, .login-card-overlay:focus-within .logo-wrapper { opacity: 0; transform: scale(0.3); pointer-events: none; }
         
-        /* Interaksi Hover/Focus */
-        .login-card:hover .circle::before, .login-card:focus-within .circle::before { 
-            width: 100%; height: 100%; border-radius: 20px; 
-            background: linear-gradient(135deg, #0a1930, #124388); 
-            box-shadow: 0 20px 60px rgba(18, 67, 136, 0.5); border: 0px solid transparent; 
-            animation: none;
-        }
-        .login-card:hover .logo-wrapper, .login-card:focus-within .logo-wrapper { opacity: 0; transform: scale(0.3); pointer-events: none; }
+        .login-card-overlay .content { position: relative; z-index: 10; width: 100%; max-width: 380px; opacity: 0; visibility: hidden; transform: translateX(-50px); transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: default; }
+        .login-card-overlay:hover .content, .login-card-overlay:focus-within .content { opacity: 1; visibility: visible; transform: translateX(0); transition-delay: 0.3s; }
         
-        .login-card .content { position: relative; z-index: 10; width: 100%; max-width: 380px; opacity: 0; visibility: hidden; transform: translateX(-50px); transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: default; }
-        .login-card:hover .content, .login-card:focus-within .content { opacity: 1; visibility: visible; transform: translateX(0); transition-delay: 0.3s; }
-        
-        .login-card .content h2 { 
-            color: #fff; font-size: 2rem; font-weight: 800; letter-spacing: 2px; margin-bottom: 12px; white-space: nowrap;
-            animation: text-glow 2s ease-in-out infinite alternate;
-        }
-        @keyframes text-glow {
-            0% { text-shadow: 0 0 10px rgba(255,255,255,0.2); }
-            100% { text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 30px rgba(6, 182, 212, 0.6); }
-        }
+        .login-card-overlay .content h2 { color: #fff; font-size: 2rem; font-weight: 800; letter-spacing: 2px; margin-bottom: 12px; white-space: nowrap; animation: text-glow 2s ease-in-out infinite alternate; }
+        @keyframes text-glow { 0% { text-shadow: 0 0 10px rgba(255,255,255,0.2); } 100% { text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 30px rgba(6, 182, 212, 0.6); } }
 
-        /* ==================== ADDRESS BLOCK ELEGAN ==================== */
-        .login-address-block {
-            display: block;
-            text-decoration: none;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-left: 3px solid var(--primary-cyan);
-            border-radius: 12px;
-            padding: 18px 20px;
-            margin-bottom: 22px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .login-address-block:hover {
-            transform: translateX(8px);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
-            border-left-color: var(--primary-orange);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .login-address-block .company-name {
-            font-family: 'Playfair Display', serif; /* Font Kalem dan Elegan */
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .login-address-block .address-text {
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 300;
-            color: #cbd5e1;
-            line-height: 1.5;
-            margin-bottom: 12px;
-        }
-
-        .login-address-block .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--primary-cyan);
-        }
-
-        .login-address-block .contact-info span {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s;
-        }
-        
-        .login-address-block:hover .contact-info span {
-            color: #fff;
-        }
-
-        .login-address-block .contact-info i {
-            width: 14px;
-            text-align: center;
-            color: var(--primary-orange);
-        }
+        .login-address-block { display: block; text-decoration: none; background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid var(--primary-cyan); border-radius: 12px; padding: 18px 20px; margin-bottom: 22px; backdrop-filter: blur(10px); box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .login-address-block:hover { transform: translateX(8px); background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03)); border-left-color: var(--primary-orange); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); border-color: rgba(255, 255, 255, 0.2); }
+        .login-address-block .company-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 600; color: #ffffff; margin-bottom: 8px; letter-spacing: 0.5px; }
+        .login-address-block .address-text { font-family: 'Nunito', sans-serif; font-size: 0.75rem; font-weight: 300; color: #cbd5e1; line-height: 1.5; margin-bottom: 12px; }
+        .login-address-block .contact-info { display: flex; flex-direction: column; gap: 6px; font-family: 'Nunito', sans-serif; font-size: 0.75rem; font-weight: 500; color: var(--primary-cyan); }
+        .login-address-block .contact-info span { display: flex; align-items: center; gap: 8px; transition: color 0.3s; }
+        .login-address-block:hover .contact-info span { color: #fff; }
+        .login-address-block .contact-info i { width: 14px; text-align: center; color: var(--primary-orange); }
         
         .action-container { position: relative; margin-top: 10px; }
-        
-        .luxury-btn { 
-            display: flex; justify-content: center; align-items: center; gap: 15px; width: 100%; 
-            padding: 16px 25px; background: linear-gradient(45deg, #b92025, #e53935, #b92025); background-size: 200% auto;
-            color: #fff; font-weight: 800; font-size: 1.1rem; border: none; cursor: pointer; 
-            border-radius: 50px; text-transform: uppercase; letter-spacing: 2px; 
-            box-shadow: 0 10px 30px rgba(185, 32, 37, 0.4); 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            position: relative; overflow: hidden;
-            animation: gradient-shift 3s ease infinite;
-        }
+        .luxury-btn { display: flex; justify-content: center; align-items: center; gap: 15px; width: 100%; padding: 16px 25px; background: linear-gradient(45deg, #b92025, #e53935, #b92025); background-size: 200% auto; color: #fff; font-weight: 800; font-size: 1.1rem; border: none; cursor: pointer; border-radius: 50px; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 10px 30px rgba(185, 32, 37, 0.4); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; animation: gradient-shift 3s ease infinite; }
         @keyframes gradient-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        
-        .luxury-btn::after {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-            transform: skewX(-20deg); transition: 0.7s;
-        }
-        
+        .luxury-btn::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent); transform: skewX(-20deg); transition: 0.7s; }
         .luxury-btn:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 15px 40px rgba(185, 32, 37, 0.6); }
         .luxury-btn:hover::after { left: 150%; }
-        .luxury-btn i { font-size: 1.3rem; }
         
-        .login-card .factory_img { position: absolute; top: 50%; left: 50%; width: 350px; height: 230px; object-fit: cover; border-radius: 15px; border: 4px solid #fff; box-shadow: 0 20px 40px rgba(0,0,0,0.5); transform: translate(-50%, -50%) scale(0) rotate(-10deg); z-index: 11; transition: 0.7s cubic-bezier(0.25, 1, 0.5, 1.2); pointer-events: none; opacity: 0; }
-        .login-card:hover .factory_img, .login-card:focus-within .factory_img { top: 50%; left: 75%; transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; transition-delay: 0.2s; }
+        .login-card-overlay .factory_img { position: absolute; top: 50%; left: 50%; width: 350px; height: 230px; object-fit: cover; border-radius: 15px; border: 4px solid #fff; box-shadow: 0 20px 40px rgba(0,0,0,0.5); transform: translate(-50%, -50%) scale(0) rotate(-10deg); z-index: 11; transition: 0.7s cubic-bezier(0.25, 1, 0.5, 1.2); pointer-events: none; opacity: 0; }
+        .login-card-overlay:hover .factory_img, .login-card-overlay:focus-within .factory_img { top: 50%; left: 75%; transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; transition-delay: 0.2s; }
 
-        /* ==================== MAIN DASHBOARD ==================== */
-        #main-dashboard { display: none; flex-direction: column; min-height: 100vh; transition: transform var(--transition-smooth), opacity var(--transition-smooth), filter var(--transition-smooth); transform-origin: top center; animation: fadeIn 1s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.97) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-        .dashboard-dimmed { transform: scale(0.97) translateY(-10px); opacity: 0.5; filter: blur(6px); pointer-events: none; }
 
-        /* ==================== TOP INFO BAR ==================== */
-        .top-info-bar { background: rgba(10, 14, 39, 0.6); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 12px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; font-weight: 600; color: var(--text-light); z-index: 101; }
-        .datetime { display: flex; align-items: center; gap: 15px; } .datetime i { color: var(--primary-cyan); }
-        .hse-ticker-wrap { flex: 1; max-width: 60%; overflow: hidden; white-space: nowrap; position: relative; display: flex; align-items: center; background: rgba(245, 158, 11, 0.1); padding: 8px 20px; border-radius: 15px; border: 1px solid rgba(245, 158, 11, 0.2); margin-left: 30px; }
-        .hse-ticker { display: inline-block; padding-left: 100%; animation: ticker 35s linear infinite; font-weight: 700; color: #fbbf24; }
-        .hse-ticker i { margin-right: 10px; color: var(--primary-orange); }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        /* --- TAMPILAN SISTEM LEMBUR --- */
+        .document-wrapper { width: 100%; display: flex; flex-direction: column; align-items: center; overflow-x: auto; padding: 10px 0; }
 
-        /* ==================== HEADER ==================== */
-        header { min-height: 85px; background: rgba(10, 14, 39, 0.6); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; z-index: 100; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15); position: sticky; top: 0; }
-        .header-left { display: flex; align-items: center; gap: 30px; }
-        header img.logo-small { height: 40px; }
-        .header-divider { width: 2px; height: 40px; background: rgba(255, 255, 255, 0.1); }
-        .system-status { display: flex; align-items: center; gap: 10px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--primary-green); background: rgba(16, 185, 129, 0.1); padding: 10px 20px; border-radius: 25px; border: 1px solid rgba(16, 185, 129, 0.2); }
-        .status-dot { width: 10px; height: 10px; background: var(--primary-green); border-radius: 50%; box-shadow: 0 0 15px var(--primary-green); animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px var(--primary-green); } 50% { opacity: 0.6; transform: scale(1.3); box-shadow: 0 0 25px var(--primary-green); } }
-        .nav-right { display: flex; align-items: center; gap: 20px; }
-        .theme-toggle { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 10px 15px; border-radius: 12px; cursor: pointer; color: var(--text-light); font-size: 1.1rem; transition: all 0.3s; }
-        .theme-toggle:hover { background: rgba(255, 255, 255, 0.1); transform: scale(1.1); }
-        .user-profile { display: flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.05); padding: 10px 20px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.1); font-weight: 700; color: var(--text-light); }
-        .user-profile i { font-size: 1.3rem; color: var(--primary-cyan); }
-        .btn-logout { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; padding: 10px 20px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
-        .btn-logout:hover { background: #ef4444; color: white; transform: translateY(-2px); }
+        /* TAMPILAN LOGIN (Awalnya disembunyikan oleh overlay) */
+        #loginScreen { display: none; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; margin-top: 50px; animation: fadeInForm 0.8s ease forwards; }
+        @keyframes fadeInForm { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        #loginScreen h2 { margin-top: 0; color: var(--primary); }
+        .login-group { margin-bottom: 15px; text-align: left; }
+        .login-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--text-muted); }
+        .login-group select, .login-group input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); box-sizing: border-box; }
+        .btn-login { width: 100%; background: var(--primary); color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px;}
+        .btn-login:hover { background: #1d4ed8; }
+        .btn-login:disabled { background: #94a3b8; cursor: not-allowed; }
 
-        /* ==================== DASHBOARD STATS ==================== */
-        .dashboard-stats { padding: 30px 40px 15px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-        .stat-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 15px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15); transition: all 0.4s; position: relative; overflow: hidden; }
-        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; transition: width 0.4s; }
-        .stat-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.06); }
-        .stat-card:hover::before { width: 100%; opacity: 0.05; }
-        .stat-card.blue::before { background: var(--primary-blue); } .stat-card.green::before { background: var(--primary-green); } .stat-card.orange::before { background: var(--primary-orange); } .stat-card.purple::before { background: var(--primary-purple); } .stat-card.red::before { background: var(--primary-red); }
-        .stat-icon { width: 55px; height: 55px; border-radius: 15px; display: flex; justify-content: center; align-items: center; font-size: 1.6rem; flex-shrink: 0; }
-        .stat-card.blue .stat-icon { background: rgba(2, 117, 216, 0.1); color: var(--primary-blue); }
-        .stat-card.green .stat-icon { background: rgba(16, 185, 129, 0.1); color: var(--primary-green); }
-        .stat-card.orange .stat-icon { background: rgba(245, 158, 11, 0.1); color: var(--primary-orange); }
-        .stat-card.purple .stat-icon { background: rgba(139, 92, 246, 0.1); color: var(--primary-purple); }
-        .stat-card.red .stat-icon { background: rgba(239, 68, 68, 0.1); color: var(--primary-red); }
-        .stat-info { flex: 1; min-width: 0; }
-        .stat-label { font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .stat-value { font-size: 1.6rem; font-weight: 800; color: var(--text-white); line-height: 1; }
+        /* TAMPILAN REKAPAN (USER) */
+        #rekapanScreen { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 800px; display: none; }
+        .header-rekapan { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 15px;}
+        .header-rekapan h2 { margin: 0; color: #0f172a;}
+        .disclaimer-text { font-size: 12px; color: #b91c1c; background: #fee2e2; padding: 10px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #fca5a5; font-weight: 500; }
+        .table-rekapan { width: 100%; border-collapse: collapse; font-size: 13px;}
+        .table-rekapan th, .table-rekapan td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; }
+        .table-rekapan th { background: #f1f5f9; }
 
-        /* ==================== CHARTS SECTION ==================== */
-        .charts-section { padding: 0 40px 25px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-        .chart-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 25px; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); position: relative; z-index: 1; }
-        .chart-card:hover { transform: translateY(-8px) scale(1.01); background: rgba(255, 255, 255, 0.05); z-index: 10; }
-        .chart-card canvas:hover { cursor: crosshair; }
-        .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .chart-title { font-size: 1rem; font-weight: 700; color: var(--text-white); }
-        .chart-subtitle { font-size: 0.75rem; color: rgba(255, 255, 255, 0.5); margin-top: 1px; }
-        .chart-card canvas { max-height: 220px; width: 100% !important; }
+        /* TAMPILAN ADMIN */
+        #adminScreen { display: none; width: 100%; flex-direction: column; align-items: center; }
 
-        /* ==================== MODULE CARDS ==================== */
-        .content-area { padding: 0 40px 40px 40px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px; align-content: start; position: relative; z-index: 10; }
-        .section-title { grid-column: 1 / -1; font-size: 1.4rem; font-weight: 800; color: var(--text-white); margin-top: 15px; margin-bottom: 5px; display: flex; align-items: center; gap: 15px; }
-        .section-title::before { content: ''; width: 5px; height: 32px; background: linear-gradient(180deg, var(--primary-cyan), var(--primary-blue)); border-radius: 10px; }
-        .module-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 22px; padding: 30px; cursor: pointer; display: flex; flex-direction: column; gap: 18px; position: relative; overflow: hidden; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-        .module-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent); transform: skewX(-20deg); transition: 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
-        .module-card:hover { transform: translateY(-10px); background: rgba(255, 255, 255, 0.06); }
-        .module-card:hover::before { left: 150%; }
-        .module-card.blue:hover { border-color: rgba(2, 117, 216, 0.4); }
-        .module-card.green:hover { border-color: rgba(16, 185, 129, 0.4); }
-        .module-card.orange:hover { border-color: rgba(245, 158, 11, 0.4); }
-        .module-icon { width: 70px; height: 70px; border-radius: 18px; display: flex; justify-content: center; align-items: center; font-size: 2rem; transition: all 0.4s; }
-        .module-card:hover .module-icon { transform: scale(1.1) rotate(5deg); }
-        .blue .module-icon { background: rgba(2, 117, 216, 0.1); color: #2196f3; }
-        .green .module-icon { background: rgba(16, 185, 129, 0.1); color: #10b981; }
-        .orange .module-icon { background: rgba(245, 158, 11, 0.1); color: #fbbf24; }
-        .module-info h3 { font-size: 1.25rem; margin-bottom: 8px; color: var(--text-white); font-weight: 700; }
-        .module-info p { font-size: 0.95rem; color: rgba(255, 255, 255, 0.6); line-height: 1.6; }
-        .explore-btn { font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; margin-top: auto; transition: all 0.3s; }
-        .module-card:hover .explore-btn { letter-spacing: 1px; }
-        .module-card:hover .explore-btn i { transform: translateX(8px); }
-        .blue .explore-btn { color: #2196f3; } .green .explore-btn { color: #10b981; } .orange .explore-btn { color: #fbbf24; }
+        .controls-wrapper { width: 100%; max-width: 210mm; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; background: var(--bg-surface); padding: 16px 24px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); box-sizing: border-box; border: 1px solid #e2e8f0; }
+        .status-badge { font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 30px; background: #e2e8f0; color: #334155; display: flex; align-items: center; gap: 8px; }
+        .status-badge.hse { background: #fef08a; color: #854d0e; }
+        
+        .action-buttons { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .action-buttons button, .action-buttons select { padding: 10px 15px; border: none; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.2s ease; }
+        
+        .reprint-select { border: 1px solid var(--border-color) !important; background-color: white; color: var(--text-main); font-family: 'Inter', sans-serif;}
+        .btn-print { background: #f8fafc; color: #334155; border: 1px solid var(--border-color); }
+        .btn-print:hover:not(:disabled) { background: #e2e8f0; }
+        .btn-print:disabled { opacity: 0.4; cursor: not-allowed; }
+        .btn-save { background: var(--success); color: white; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2); }
+        .btn-save:hover:not(:disabled) { background: #059669; transform: translateY(-1px); }
+        .btn-logout { background: #fee2e2; color: #b91c1c;}
 
-        /* ==================== NOTIFICATIONS ==================== */
-        .notification-container { position: fixed; top: 20px; right: 20px; z-index: 9998; display: flex; flex-direction: column; gap: 15px; }
-        .notification { background: rgba(10, 14, 39, 0.9); border: 1px solid rgba(255, 255, 255, 0.1); padding: 18px 25px; border-radius: 15px; min-width: 320px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); display: flex; align-items: center; gap: 15px; animation: slideInRight 0.5s ease-out; }
-        @keyframes slideInRight { from { opacity: 0; transform: translateX(400px); } to { opacity: 1; transform: translateX(0); } }
-        .notification i { font-size: 1.5rem; }
-        .notification.success { border-left: 4px solid var(--primary-green); } .notification.success i { color: var(--primary-green); }
-        .notification.warning { border-left: 4px solid var(--primary-orange); } .notification.warning i { color: var(--primary-orange); }
-        .notification-content { flex: 1; }
-        .notification-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 3px; }
-        .notification-message { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); }
+        /* Kertas A4 */
+        .document-a4 { width: 100%; max-width: 210mm; min-height: 297mm; background: var(--bg-surface); padding: 15mm 15mm; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); box-sizing: border-box; position: relative; display: flex; flex-direction: column; }
+        .header-doc { display: grid; grid-template-columns: 100px 1fr 180px; align-items: center; gap: 15px; border-bottom: 4px double #0f172a; padding-bottom: 15px; margin-bottom: 20px; }
+        .header-logo img { width: 100%; max-height: 60px; object-fit: contain; }
+        .header-title { text-align: center; }
+        .header-title h1 { margin: 0; font-size: 22px; font-weight: 800; text-transform: uppercase; color: #0f172a; }
+        .header-title p { margin: 4px 0 0 0; font-size: 11px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; }
 
-        /* ==================== VIEWPORT SYSTEM ==================== */
-        #viewport-container { display: none; position: fixed; top: 120px; left: 0; width: 100%; height: calc(100vh - 120px); background: #ffffff; z-index: 500; opacity: 0; transform: translateY(40px) scale(0.98); transition: transform var(--transition-smooth), opacity var(--transition-smooth); will-change: transform, opacity; border-top-left-radius: 25px; border-top-right-radius: 25px; box-shadow: 0 -15px 60px rgba(0, 0, 0, 0.4); overflow: hidden; }
-        #viewport-container.active { opacity: 1; transform: translateY(0) scale(1); }
-        #erp-frame { width: 100%; height: 100%; border: none; background: #fff; }
-        .back-nav { position: fixed; bottom: 30px; right: 30px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); color: #fff; padding: 16px 28px; border-radius: 50px; border: 2px solid rgba(255, 255, 255, 0.2); font-weight: 700; cursor: pointer; z-index: 1000; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); font-size: 0.95rem; display: none; align-items: center; gap: 12px; opacity: 0; transform: translateY(20px); transition: all var(--transition-smooth); }
-        .back-nav.active { opacity: 1; transform: translateY(0); }
-        .back-nav:hover { background: #000; transform: translateY(-5px) scale(1.05); border-color: var(--primary-cyan); }
+        .doc-control-table { width: 100%; border-collapse: collapse; font-size: 9px; background: white; }
+        .doc-control-table td { border: 1px solid #0f172a; padding: 4px 6px; }
+        .doc-control-table td:first-child { font-weight: 700; background-color: #f1f5f9; width: 70px; }
 
-        /* ==================== FOOTER ==================== */
-        footer { background: rgba(10, 14, 39, 0.7); backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.05); padding: 30px 40px; display: flex; justify-content: space-between; align-items: center; color: rgba(255, 255, 255, 0.6); z-index: 100; }
-        .footer-address { font-size: 0.9rem; line-height: 1.8; }
-        .footer-address strong { color: var(--text-white); font-size: 1rem; display: block; margin-bottom: 5px; }
-        .footer-contact { margin-top: 10px; display: flex; gap: 20px; font-weight: 600; color: var(--primary-cyan); }
-        .footer-copy { text-align: right; font-size: 0.85rem; font-weight: 600; }
-        .footer-copy span:first-child { color: var(--text-white); display: block; margin-bottom: 5px; }
+        .info-section { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px; background: #f8fafc; padding: 12px 15px; border-radius: 8px; border: 1px solid var(--border-color); }
+        .info-group { display: flex; flex-direction: column; gap: 4px; }
+        .info-group label { font-size: 10px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; }
+        
+        input, select { width: 100%; border: 1px solid var(--border-color); border-radius: 4px; padding: 8px; font-family: inherit; font-size: 11px; box-sizing: border-box; background-color: #ffffff; }
+        input[readonly] { background-color: #f1f5f9; color: var(--text-muted); }
 
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
-        ::-webkit-scrollbar-thumb { background: rgba(2, 117, 216, 0.5); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary-cyan); }
+        .main-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; table-layout: fixed; }
+        .main-table th { background-color: #f1f5f9; border: 1px solid #334155; padding: 8px 2px; font-size: 10px; font-weight: 700; text-align: center; text-transform: uppercase; }
+        .main-table td { border: 1px solid #334155; padding: 4px 2px; text-align: center; vertical-align: middle; overflow: hidden; }
+        .main-table input, .main-table select { padding: 4px 3px; font-size: 10.5px; width: 100%; box-sizing: border-box; text-overflow: clip; }
+        .main-table td:nth-child(4), .main-table td:nth-child(5) { text-align: left; }
+        .mh-col { font-weight: 700; color: var(--primary); font-size: 11px; text-align: center !important; }
 
-        /* ==================== RESPONSIVE DESIGN ==================== */
-        @media (max-width: 1200px) { .charts-section { grid-template-columns: 1fr; } }
-        @media (max-width: 992px) { .content-area { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } .hse-ticker-wrap { max-width: 50%; } .dashboard-stats { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
-        @media (max-width: 768px) { .top-info-bar { flex-direction: column; align-items: flex-start; gap: 12px; padding: 15px 20px; } .hse-ticker-wrap { max-width: 100%; margin-left: 0; } header { padding: 15px 20px; flex-wrap: wrap; gap: 15px; } .header-divider { display: none; } .dashboard-stats, .charts-section, .content-area { padding: 20px; } .content-area { grid-template-columns: 1fr; } #viewport-container { top: 140px; height: calc(100vh - 140px); } footer { flex-direction: column; text-align: center; padding: 25px 20px; gap: 20px; } .footer-contact { flex-direction: column; gap: 10px; } .footer-copy { text-align: center; } .back-nav { bottom: 20px; left: 20px; right: 20px; justify-content: center; } }
-        @media (max-width: 480px) { header img.logo-small { height: 35px; } .dashboard-stats { grid-template-columns: 1fr; } }
+        .btn-add-row { width: 100%; padding: 12px; background: #eff6ff; color: var(--primary); border: 2px dashed #93c5fd; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; margin-bottom: 30px; }
+        
+        /* Tombol Delete / Hapus yang ditambahkan kembali */
+        .btn-delete { background: #fee2e2; color: var(--danger); border: 1px solid #fca5a5; border-radius: 4px; padding: 6px; cursor: pointer; font-size: 12px; font-weight: bold; width: 100%; transition: all 0.2s; }
+        .btn-delete:hover { background: #ef4444; color: white; border-color: #ef4444; }
 
-        .ripple { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.3); transform: scale(0); animation: ripple-animation 0.6s ease-out; pointer-events: none; }
-        @keyframes ripple-animation { to { transform: scale(4); opacity: 0; } }
+        .footer-signatures { margin-top: 40px; display: flex; justify-content: space-between; text-align: center; font-size: 12px; page-break-inside: avoid; }
+        .sign-box { width: 28%; display: flex; flex-direction: column; justify-content: space-between; height: 110px; }
+        .sign-title { font-weight: 500; margin-bottom: 20px; }
+        .sign-line { border-bottom: 1px solid #000; margin: 0 10px 4px 10px; }
+        .name-text { font-weight: 700; font-size: 13px; margin-bottom: 2px; }
+        .role-text { font-weight: 500; color: var(--text-muted); font-size: 11px; }
+
+        .system-footer { margin-top: auto; padding-top: 20px; border-top: 2px dashed #cbd5e1; display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: #334155; }
+        .system-footer .qr-box img { width: 55px; height: 55px; }
+        .system-footer .meta-info { flex: 1; padding: 0 15px; }
+        .system-footer .meta-info strong { display: block; margin-top: 4px; font-size: 11px; color: #000; }
+        .system-footer .barcode-box { text-align: right; }
+        .system-footer .barcode-box svg { max-height: 45px; }
+
+        /* PANEL REKAPAN EKSEKUTIF KHUSUS HSE */
+        .executive-panel { width: 100%; max-width: 210mm; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; box-sizing: border-box; border: 1px solid #e2e8f0; display: none; }
+        .grid-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .stat-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; text-align: center; }
+        .stat-card .label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+        .stat-card .value { font-size: 24px; font-weight: 800; color: var(--text-main); margin-top: 5px; }
+        .stat-card.hse-theme { background: #eff6ff; border-color: #bfdbfe; }
+        .stat-card.hse-theme .value { color: #1e40af; }
+        
+        .filter-bar { display: flex; justify-content: space-between; align-items: center; background: #f1f5f9; padding: 10px 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #cbd5e1;}
+        .chart-container { background: #fff; padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 20px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
+
+        /* ANIMASI LOADING OVERLAY */
+        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(8px); z-index: 99999; display: none; flex-direction: column; justify-content: center; align-items: center; color: #ffffff; }
+        .loading-text { font-size: 16px; font-weight: 700; margin-top: 20px; }
+
+        /* --- PRINT STYLES --- */
+        @media print {
+            @page { size: A4 portrait; margin: 8mm; }
+            body { background: white; padding: 0; display: block; }
+            #loginScreen, #rekapanScreen, .controls-wrapper, .btn-add-row, .action-col, .btn-delete, #loadingOverlay, .executive-panel, #login-overlay { display: none !important; }
+            #adminScreen { display: block !important; width: 100%; }
+            .document-wrapper { padding: 0; overflow-x: visible; }
+            .document-a4 { box-shadow: none; padding: 0; margin: 0 auto; width: 100%; max-width: 100%; min-height: auto; } 
+            .main-table { table-layout: auto !important; width: 100% !important; }
+            .main-table th { background-color: #f3f4f6 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 6px 2px; font-size: 9px; }
+            .main-table td { padding: 5px 2px; font-size: 9px; color: black; }
+            .info-section { background: transparent; border: none; padding: 0; gap: 20px; border-bottom: 2px solid #000; padding-bottom: 15px; }
+            .info-group input { border: none !important; border-bottom: 1px dotted #000 !important; background: transparent; }
+            
+            /* Penyesuaian agar arrow dropdown hilang saat di-print */
+            select, .main-table select { 
+                -webkit-appearance: none !important; 
+                -moz-appearance: none !important; 
+                appearance: none !important; 
+                background-image: none !important; 
+                background-color: transparent !important;
+                border: none !important;
+                padding: 0 !important;
+                color: black !important;
+                font-size: 9px !important;
+            }
+            .main-table input { border: none !important; background: transparent !important; padding: 0 !important; color: black !important; font-size: 9px !important; }
+        }
     </style>
 </head>
 <body>
-    <div id="loading-screen" aria-live="polite">
-        <div class="loader"></div>
-        <div class="loading-text">MSB ERP System</div>
-        <div class="loading-progress">Memuat Modul Utama...</div>
-    </div>
 
-    <div class="bg-glow blob-1" aria-hidden="true"></div>
-    <div class="bg-glow blob-2" aria-hidden="true"></div>
-    <div class="bg-glow blob-3" aria-hidden="true"></div>
+<datalist id="jam-lembur-options">
+    <option value="16:30 - 18:00">
+    <option value="16:30 - 21:00">
+    <option value="16:00 - 18:00">
+    <option value="16:00 - 21:00">
+    <option value="17:00 - 21:00">
+    <option value="08:00 - 16:00">
+</datalist>
 
-    <div class="notification-container" id="notification-container" aria-live="assertive"></div>
+<div id="loadingOverlay" class="loading-overlay">
+    <div id="loadingText" class="loading-text">Memproses data... ⏳</div>
+</div>
 
-    <div id="login-overlay">
-        <div class="login-wrapper">
-            <div class="login-card" tabindex="0">
-                <div class="circle">
-                    <div class="logo-wrapper">
-                        <!-- Petunjuk dan teks dihilangkan, menyisakan logo -->
-                        <img src="MSB Logo.png" class="logo_img" alt="Logo PT Murinda" onerror="this.src='https://via.placeholder.com/180x60?text=MSB+Logo'">
-                    </div>
+<div id="login-overlay">
+    <div class="login-wrapper">
+        <div class="login-card-overlay" tabindex="0">
+            <div class="circle">
+                <div class="logo-wrapper">
+                    <img src="MSB Logo.png" class="logo_img" alt="Logo PT Murinda" onerror="this.src='https://via.placeholder.com/180x60?text=MSB+Logo'">
                 </div>
-                
-                <div class="content">
-                    <h2>MSB ERP SYSTEM</h2>
-                    
-                    <!-- BLOK ALAMAT DENGAN LINK MAPS DI SINI -->
-                    <a href="https://maps.app.goo.gl/3DbQMsey9Bh2TC6S8" target="_blank" class="login-address-block">
-                        <div class="company-name">PT Murinda Sentra Baja</div>
-                        <div class="address-text">
-                            Jl. Raya Kalijati Purwadadi No. 123A RT 006/02<br>
-                            Desa Kalijati Barat, Kecamatan Kalijati<br>
-                            Kabupaten Subang, West Java 41271 (Exit Toll Gate Kalijati)
-                        </div>
-                        <div class="contact-info">
-                            <span><i class="fa-solid fa-phone"></i> (+62260) 7495467</span>
-                            <span><i class="fa-solid fa-fax"></i> (+62260) 7495222</span>
-                            <span><i class="fa-solid fa-envelope"></i> plant@murinda.com</span>
-                        </div>
-                    </a>
-
-                    <div class="action-container">
-                        <button class="luxury-btn" onclick="enterSystem(event)" id="enterBtn">
-                            <i class="fa-solid fa-fingerprint"></i> MASUK SISTEM
-                        </button>
-                    </div>
-                </div>
-
-                <img src="Plant MSB.jpg" class="factory_img" alt="Plant PT Murinda" onerror="this.src='https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600&auto=format&fit=crop'">
-            </div>
-        </div>
-    </div>
-
-    <main id="main-dashboard" style="display: none;">
-        <div class="top-info-bar">
-            <div class="datetime">
-                <span><i class="fa-regular fa-calendar" aria-hidden="true"></i> <span id="current-date">Memuat...</span></span>
-                <span><i class="fa-regular fa-clock" aria-hidden="true"></i> <span id="current-time">Memuat...</span></span>
-            </div>
-            <div class="hse-ticker-wrap" aria-label="HSE Reminder Ticker">
-                <div class="hse-ticker">
-                    <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
-                    <strong>HSE REMINDER:</strong> Utamakan Keselamatan dan Kesehatan Kerja (K3) | Pastikan Area Kerja Aman Sebelum Memulai Aktivitas | Wajib Menggunakan APD Lengkap di Area Pabrik Kalijati | Zero Accident adalah Komitmen Kita Bersama!
-                </div>
-            </div>
-        </div>
-
-        <header>
-            <div class="header-left">
-                <img src="MSB Logo.png" alt="Logo" class="logo-small" onerror="this.style.display='none'">
-                <div class="header-divider"></div>
-                <div class="system-status" aria-label="System Status">
-                    <div class="status-dot"></div>
-                    <span>Online MSB ERP System</span>
-                </div>
-            </div>
-            <nav class="nav-right" aria-label="User Navigation">
-                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Dark or Light Theme" title="Toggle Theme">
-                    <i class="fa-solid fa-moon" aria-hidden="true"></i>
-                </button>
-                <div class="user-profile">
-                    <i class="fa-solid fa-circle-user" aria-hidden="true"></i>
-                    <span id="display-user">Kalijati Plant</span>
-                </div>
-                <button class="btn-logout" onclick="doLogout()" aria-label="Logout from System">
-                    <i class="fa-solid fa-power-off" aria-hidden="true"></i> Keluar
-                </button>
-            </nav>
-        </header>
-
-        <section class="dashboard-stats" aria-label="Key Performance Indicators">
-            <div class="stat-card blue">
-                <div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-users"></i></div>
-                <div class="stat-info"><div class="stat-label">Karyawan</div><div class="stat-value" id="stat-karyawan">0</div></div>
-            </div>
-            <div class="stat-card green">
-                <div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-                <div class="stat-info"><div class="stat-label">Purchase Order</div><div class="stat-value" id="stat-po">0</div></div>
-            </div>
-            <div class="stat-card orange">
-                <div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-truck"></i></div>
-                <div class="stat-info"><div class="stat-label">Pengiriman</div><div class="stat-value" id="stat-pengiriman">0</div></div>
-            </div>
-            <div class="stat-card purple">
-                <div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-boxes-stacked"></i></div>
-                <div class="stat-info"><div class="stat-label">Stok Produksi</div><div class="stat-value" id="stat-stok">0</div></div>
-            </div>
-            <div class="stat-card blue">
-                <div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-clipboard-check"></i></div>
-                <div class="stat-info"><div class="stat-label">Jumlah LKP</div><div class="stat-value" id="stat-lkp">0</div></div>
-            </div>
-            <div class="stat-card red">
-                <div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                <div class="stat-info"><div class="stat-label">Total Insiden</div><div class="stat-value" id="stat-insiden">0</div></div>
-            </div>
-            <div class="stat-card green">
-                <div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-clock"></i></div>
-                <div class="stat-info"><div class="stat-label">SPP Kurang</div><div class="stat-value" id="stat-spp">0</div></div>
-            </div>
-        </section>
-
-        <section class="charts-section" aria-label="Data Analytics Charts">
-            <div class="chart-card">
-                <div class="chart-header">
-                    <div>
-                        <h3 class="chart-title">Trend PO Bulanan</h3>
-                        <p class="chart-subtitle">Data Rekapitulasi Purchase Order per Bulan</p>
-                    </div>
-                </div>
-                <canvas id="clientProcessChart" aria-label="Line Chart Trend PO" role="img"></canvas>
-            </div>
-
-            <div class="chart-card">
-                <div class="chart-header">
-                    <div>
-                        <h3 class="chart-title">Distribusi Karyawan</h3>
-                        <p class="chart-subtitle">Perbandingan per Departemen</p>
-                    </div>
-                </div>
-                <canvas id="karyawanDeptChart" aria-label="Doughnut Chart Distribusi Karyawan" role="img"></canvas>
-            </div>
-        </section>
-
-        <section class="content-area" aria-label="ERP Modules Application Navigation">
-            <h2 class="section-title"><span>Modul ERP System</span></h2>
-
-            <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/HR-System/')" tabindex="0" role="button">
-                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-people-group"></i></div>
-                <div class="module-info"><h3>Human Resource</h3><p>Otomatisasi seluruh proses SDM termasuk Penilaian Kinerja. Sinkronisasi data real-time.</p></div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
-            </div>
-
-            <div class="module-card green" onclick="launch('https://murindasentrabaja.github.io/General-Affairs/')" tabindex="0" role="button">
-                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-building-circle-check"></i></div>
-                <div class="module-info"><h3>General Affairs</h3><p>Kelola fasilitas dan operasional kantor secara digital. Tingkatkan produktivitas alur kerja.</p></div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-            </div>
-
-            <div class="module-card orange" onclick="launch('https://murindasentrabaja.github.io/HSE/')" tabindex="0" role="button">
-                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-helmet-safety"></i></div>
-                <div class="module-info"><h3>HSE System</h3><p>Kendali penuh kepatuhan K3. Pastikan standar keselamatan dan pelaporan lingkungan akurat.</p></div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
-            </div>
-
-            <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/Maintenance/')" tabindex="0" role="button">
-                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-gears"></i></div>
-                <div class="module-info"><h3>Maintenance</h3><p>Prediksi kebutuhan perawatan mesin secara otomatis. Minimalkan downtime.</p></div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-            </div>
-
-            <div class="module-card green" onclick="launch('https://murindasentrabaja.github.io/Purchase-Order/')" tabindex="0" role="button">
-                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-                <div class="module-info"><h3>Purchase Order</h3><p>Pengadaan cerdas terintegrasi. Persetujuan multi-level yang ringkas dengan kendali vendor.</p></div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
-            </div>
-
-            <div class="module-card orange" onclick="launch('https://murindasentrabaja.github.io/Warehouse-System/')" tabindex="0" role="button">
-                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-boxes-stacked"></i></div>
-                <div class="module-info"><h3>Warehouse</h3><p>Visibilitas stok dan logistik real-time. Eliminasi kesalahan inventaris.</p></div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
-            </div>
-
-            <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/Production-Tracking/')" tabindex="0" role="button">
-                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-industry"></i></div>
-                <div class="module-info"><h3>Produksi</h3><p>Monitoring lini manufaktur secara digital. Percepat output harian dengan data efisiensi akurat.</p></div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
-            </div>
-
-            <div class="module-card green" onclick="launch('https://murindasentrabaja.github.io/QC-Inspection/')" tabindex="0" role="button">
-                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-microscope"></i></div>
-                <div class="module-info"><h3>Quality Control</h3><p>Standardisasi mutu yang presisi. Inspeksi cepat berbasis data untuk menjaga integritas.</p></div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
-            </div>
-
-            <div class="module-card orange" onclick="launch('https://murindasentrabaja.github.io/SPP/')" tabindex="0" role="button">
-                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-file-invoice"></i></div>
-                <div class="module-info"><h3>SPP System</h3><p>Manajemen Surat Permintaan Pembelian. Kelola dan pantau pengajuan kebutuhan material.</p></div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
-            </div>
-
-            <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/Master-Schedule/')" tabindex="0" role="button">
-                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></div>
-                <div class="module-info"><h3>Master Schedule</h3><p>Pantau timeline dan alokasi waktu secara komprehensif.</p></div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
             </div>
             
-        </section>
-
-        <footer>
-            <address class="footer-address">
-                <strong>PT MURINDA SENTRA BAJA</strong>
-                Jl. Raya Kalijati Purwadadi No. 123A RT 006/02<br>
-                Desa Kalijati Barat, Kecamatan Kalijati<br>
-                Kabupaten Subang, West Java 41271 (Exit Toll Gate Kalijati)
-                <div class="footer-contact">
-                    <span><i class="fa-solid fa-phone" aria-hidden="true"></i> (+62260) 7495467</span>
-                    <span><i class="fa-solid fa-fax" aria-hidden="true"></i> (+62260) 7495222</span>
-                    <span><i class="fa-solid fa-envelope" aria-hidden="true"></i> plant@murinda.com</span>
+            <div class="content">
+                <h2>Portal Lembur</h2>
+                
+                <div class="login-address-block">
+                    <div class="company-name">PT Murinda Sentra Baja</div>
+                    <div class="address-text">
+                        Plant Subang - Jl. Raya Kalijati Purwadadi<br>
+                        Desa Kalijati Barat, Kabupaten Subang<br>
+                        Sistem Pengajuan & Penilaian Kinerja Lembur
+                    </div>
+                    <div class="contact-info">
+                        <span><i class="fa-solid fa-building-shield"></i> Portal Aman Karyawan MSB</span>
+                    </div>
                 </div>
-            </address>
-            <div class="footer-copy">
-                <span>PT Murinda Sentra Baja. Hak Cipta Dilindungi Undang-Undang.</span>
-                <span style="opacity: 0.7;">Developed by Aspuro Amarulloh Khoiri | Version 070695 Premium Enhanced</span>
-            </div>
-        </footer>
-    </main>
 
-    <div id="viewport-container" aria-hidden="true">
-        <iframe id="erp-frame" title="Embedded ERP Module Viewport"></iframe>
+                <div class="action-container">
+                    <button class="luxury-btn" onclick="masukLayarLogin(event)" id="enterBtn">
+                        <i class="fa-solid fa-fingerprint"></i> Lanjut Sistem
+                    </button>
+                </div>
+            </div>
+
+            <img src="Plant MSB.jpg" class="factory_img" alt="Plant PT Murinda" onerror="this.src='https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600&auto=format&fit=crop'">
+        </div>
+    </div>
+</div>
+<div id="loginScreen">
+    <img src="MSB Logo.png" alt="Logo MSB" style="max-height: 40px; margin-bottom: 15px;" onerror="this.style.display='none'">
+    <h2>Portal Lembur</h2>
+    <p style="font-size: 13px; color: #64748b; margin-bottom: 25px;">Masuk menggunakan Nama dan Sandi (ID Karyawan/NIK)</p>
+    
+    <div class="login-group">
+        <label>Pilih Karyawan</label>
+        <select id="loginNama" disabled>
+            <option value="">⏳ Memuat Data Karyawan...</option>
+        </select>
+    </div>
+    <div class="login-group">
+        <label>Kata Sandi</label>
+        <input type="password" id="loginPass" placeholder="Masukkan ID">
+    </div>
+    <button class="btn-login" id="btnLoginBtn" onclick="prosesLogin()" disabled>Autentikasi</button>
+</div>
+
+<div id="rekapanScreen">
+    <div class="header-rekapan">
+        <div>
+            <h2>Rekapan Lembur Saya</h2>
+            <p style="margin:5px 0 0 0; font-size:14px; color:#475569;" id="rekapanInfo">Nama: - | ID: -</p>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn-logout" onclick="logout()" style="padding: 10px 15px; border: none; border-radius: 6px; cursor:pointer; font-weight:bold;">Keluar</button>
+        </div>
+    </div>
+    
+    <div class="disclaimer-text">
+        ⚠️ <strong>Catatan:</strong> Data ini sekedar rekapan form pengajuan. Perhitungan valid tetap bergantung pada absensi HRD.
     </div>
 
-    <button class="back-nav" id="back-btn" onclick="closeViewport()" aria-label="Kembali ke Dashboard">
-        <i class="fa-solid fa-house" aria-hidden="true"></i> Kembali ke Dashboard
-    </button>
+    <table class="table-rekapan">
+        <thead>
+            <tr>
+                <th width="5%">No</th>
+                <th width="25%">Tanggal</th>
+                <th width="50%">Tugas</th>
+                <th width="20%">Waktu Jam</th>
+            </tr>
+        </thead>
+        <tbody id="rekapanBody">
+            <tr><td colspan="4" style="text-align:center;">Memuat data lembur...</td></tr>
+        </tbody>
+    </table>
+</div>
 
-    <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyu96U5qQHgEarOmSdH2wSDGITeV8-67b_5B39t95gLXf5ONy9AA32gxPGYpDQkdww9xw/exec";
+<div id="adminScreen">
+    <div class="controls-wrapper">
+        <div class="status-badge" id="statusInfo">✅ Mode Input Form</div>
+        
+        <div class="action-buttons">
+            <select id="reprintSelect" class="reprint-select" onchange="loadReprintData()">
+                <option value="">-- Mode Form Baru (Atau Pilih Arsip) --</option>
+            </select>
 
-        let myCharts = [];
-        let clientChartInstance = null;
-        let deptChartInstance = null;
-        let syncInterval;
+            <button class="btn-print" id="btnPrint" onclick="cetakDokumen()" disabled>🖨️ Cetak Dokumen</button>
+            <button class="btn-save" id="btnSave" onclick="simpanLemburan()">💾 Simpan Data</button>
+            <button class="btn-logout" onclick="logout()">Keluar</button>
+        </div>
+    </div>
 
-        window.addEventListener('load', function() {
-            setTimeout(function() { document.getElementById('loading-screen').classList.add('hidden'); }, 1500);
-        });
+    <div class="document-wrapper">
+        
+        <div id="executiveSummaryPanel" class="executive-panel">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="margin: 0; color: var(--primary);">📊 Analisa Rekapan Bulanan (HSE)</h3>
+                <input type="month" id="filterPeriodeHSE" class="reprint-select" onchange="generateLaporanHSE()" style="width: auto; padding: 8px; font-weight:bold;">
+            </div>
+            
+            <div class="grid-stats">
+                <div class="stat-card hse-theme">
+                    <div class="label" id="labelFormTerpilih">Total MH Form Ini</div>
+                    <div id="hseStatTodayMH" class="value">0.0 MH</div>
+                    <div id="hseStatTodayCount" style="font-size: 11px; color:#1e40af; margin-top:2px;">0 Orang Terdaftar</div>
+                </div>
+                <div class="stat-card hse-theme" style="background: #f0fdf4; border-color: #bbf7d0;">
+                    <div class="label" style="color: #166534;" id="labelBulanTerpilih">Grand Total Manhours Bulan Ini</div>
+                    <div id="hseStatAllMH" class="value" style="color: #15803d;">0.0 MH</div>
+                    <div id="hseStatMonthCount" style="font-size: 11px; color:#166534; margin-top:2px;">Pilih periode untuk melihat data</div>
+                </div>
+            </div>
 
-        function updateDateTime() {
-            const now = new Date();
-            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-            const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-            document.getElementById('current-date').innerText = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
-            document.getElementById('current-time').innerText = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')} WIB`;
+            <div class="filter-bar" style="margin-top: 10px;">
+                <div style="font-size: 13px; font-weight: bold; color: #334155;">
+                    <i class="fa-solid fa-chart-line"></i> Trend Manhours Mingguan (Periode Terpilih)
+                </div>
+            </div>
+            <div class="chart-container" style="position: relative; height: 240px; width: 100%;">
+                <canvas id="weeklyMHChart"></canvas>
+            </div>
+
+            <div class="filter-bar">
+                <div style="font-size: 13px; font-weight: bold; color: #334155;">
+                    <i class="fa-solid fa-list"></i> Tabel Rincian Manhours per Individu
+                </div>
+            </div>
+
+            <div style="max-height: 250px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 6px;">
+                <table class="table-rekapan" style="width: 100%; font-size:12px;">
+                    <thead style="position: sticky; top: 0; background: #f8fafc; z-index: 10;">
+                        <tr>
+                            <th width="8%">No</th>
+                            <th width="22%">NIK</th>
+                            <th width="45%">Nama Karyawan</th>
+                            <th width="25%" style="text-align: center;">Total Manhours</th>
+                        </tr>
+                    </thead>
+                    <tbody id="executiveSummaryBody">
+                        <tr><td colspan="4" style="text-align:center; padding:10px;">Memuat data...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="document-a4">
+            <div class="header-doc">
+                <div class="header-logo">
+                    <img src="MSB Logo.png" alt="Logo MSB" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'40\'><rect width=\'100\' height=\'40\' fill=\'%23e2e8f0\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'12\' fill=\'%23475569\' font-family=\'sans-serif\'>LOGO</text></svg>'">
+                </div>
+                <div class="header-title">
+                    <h1>PT Murinda Sentra Baja</h1>
+                    <p>Plant Subang - Jl. Raya Kalijati, Subang, Jawa Barat</p>
+                </div>
+                <div class="header-meta">
+                    <table class="doc-control-table">
+                        <tr><td>No. Dok</td><td>: MSB/F-HR-05</td></tr>
+                        <tr><td>Revisi</td><td>: 00</td></tr>
+                        <tr><td>Halaman</td><td>: 1 dari 1</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <div class="info-group">
+                    <label>PERIHAL</label>
+                    <input type="text" id="inpPerihal" value="Surat Perintah Lembur" oninput="markUnsaved()">
+                </div>
+                <div class="info-group">
+                    <label>HARI, TANGGAL</label>
+                    <input type="text" id="inpTanggal" class="date-trick" placeholder="Pilih Tanggal..." 
+                           onfocus="this.type='date'" 
+                           onblur="prosesTanggalFormat(this)" onchange="markUnsaved()">
+                </div>
+                <div class="info-group">
+                    <label>KEPADA</label>
+                    <input type="text" id="inpKepada" value="Human Resource Dept." oninput="markUnsaved()">
+                </div>
+            </div>
+
+            <table class="main-table">
+                <colgroup>
+                    <col style="width: 5%;">  
+                    <col style="width: 12%;"> 
+                    <col style="width: 16%;"> 
+                    <col style="width: 20%;"> 
+                    <col style="width: 25%;"> 
+                    <col style="width: 13%;"> 
+                    <col style="width: 9%;">  
+                    <col style="width: 4%;" class="action-col"> 
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>NIK</th>
+                        <th>Jabatan</th>
+                        <th>Nama Karyawan</th>
+                        <th>Tugas / Pekerjaan</th>
+                        <th>Waktu Jam</th>
+                        <th id="colHeaderMHTTD">MH (Jam)</th>
+                        <th class="action-col">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="tableData">
+                </tbody>
+            </table>
+
+            <button class="btn-add-row" id="btnAddRow" onclick="tambahBaris()">+ Tambah Karyawan Lembur</button>
+
+            <div class="footer-signatures">
+                <div class="sign-box">
+                    <div class="sign-title">Diterima Oleh,</div>
+                    <div>
+                        <div class="sign-line"></div>
+                        <div class="role-text">Human Resource Dept.</div>
+                    </div>
+                </div>
+                <div class="sign-box">
+                    <div class="sign-title">Disetujui Oleh,</div>
+                    <div>
+                        <div class="name-text">Petrus Suhandoyo</div>
+                        <div class="sign-line"></div>
+                        <div class="role-text">Production Manager</div>
+                    </div>
+                </div>
+                <div class="sign-box">
+                    <div class="sign-title">Diketahui Oleh,</div>
+                    <div>
+                        <div class="sign-line"></div>
+                        <div class="role-text">Production Supervisor</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="system-footer">
+                <div class="qr-box">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://github.com/" alt="QR">
+                </div>
+                <div class="meta-info">
+                    Dokumen ini dicetak dan dibuat serta disimpan secara otomatis melalui Sistem Lembur MSB.<br>
+                    Validasi form dapat dipindai melalui QR Code di samping.
+                    <strong>No. Dok: MSB-HRD-FRM-04 | Revisi: Rev.00</strong>
+                </div>
+                <div class="barcode-box">
+                    <svg id="barcode"></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyjuG9pJz1UKyhg4aDi0VJa5YgP2KYG8komxz4o0aXKDHWVeLvfTo_DK1zwgR0CqmhF/exec";
+    
+    const ROLE_HSE = ["HSE"]; 
+    const ROLE_ADMIN_EDIT = ["ASEP SUHERMAN", "ASPURO AMARULLOH KHOIRI"]; 
+    
+    let normalizedData = [];
+    let optionsHTML = '<option value="">-- Pilih --</option>';
+    let currentUser = null;
+    let isSaved = false;
+    let serverListCache = []; 
+    let formDetailsCache = {}; 
+    let weeklyChartInstance = null;
+
+    function masukLayarLogin(e) {
+        e.preventDefault();
+        const btn = document.getElementById('enterBtn');
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> MEMUAT...';
+        btn.style.pointerEvents = 'none';
+
+        setTimeout(() => {
+            const overlay = document.getElementById('login-overlay');
+            overlay.style.opacity = "0";
+            overlay.style.visibility = "hidden";
+            
+            setTimeout(() => {
+                overlay.style.display = "none";
+                document.getElementById('loginScreen').style.display = "block";
+            }, 800);
+        }, 1200);
+    }
+
+    function parseDateToLocalFriendly(dateInput) {
+        if (!dateInput) return "-";
+        let d = new Date(dateInput);
+        if (isNaN(d)) return dateInput;
+        const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+        const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nov','Des'];
+        return `${days[d.getDay()]}, ${String(d.getDate()).padStart(2,'0')}/${months[d.getMonth()]}/${String(d.getFullYear()).slice(-2)}`;
+    }
+
+    function getYYYYMMDD(dateObj) {
+        let y = dateObj.getFullYear();
+        let m = String(dateObj.getMonth() + 1).padStart(2, '0');
+        let d = String(dateObj.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
+    }
+
+    function getYYYYMM(dateObj) {
+        let y = dateObj.getFullYear();
+        let m = String(dateObj.getMonth() + 1).padStart(2, '0');
+        return `${y}-${m}`;
+    }
+
+    function formatBulanTahun(yyyymm) {
+        let parts = yyyymm.split("-");
+        if(parts.length !== 2) return yyyymm;
+        const monthsFull = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+        return `${monthsFull[parseInt(parts[1], 10) - 1]} ${parts[0]}`;
+    }
+
+    function tunjukkanLoading(pesan) {
+        const overlay = document.getElementById('loadingOverlay');
+        const textEl = document.getElementById('loadingText');
+        if (overlay && textEl) {
+            textEl.innerText = pesan;
+            overlay.style.display = 'flex';
         }
-        setInterval(updateDateTime, 1000); updateDateTime();
+    }
 
-        async function fetchDashboardData() {
-            if (WEB_APP_URL.includes("MASUKKAN_LINK_DEPLOY")) return;
+    function sembunyikanLoading() {
+        const overlay = document.getElementById('loadingOverlay');
+        if (overlay) { overlay.style.display = 'none'; }
+    }
 
-            try {
-                const response = await fetch(WEB_APP_URL);
-                const data = await response.json();
-                
-                let sheetMap = {};
-                if (data.summary && data.summary.length > 0) {
-                    let isHorizontal = data.summary[0].length > 2; 
-                    
-                    if (isHorizontal && data.summary.length > 1) {
-                        data.summary[0].forEach((header, index) => {
-                            if (header) sheetMap[String(header).trim().toLowerCase()] = data.summary[1][index];
-                        });
-                    } else { 
-                        data.summary.forEach(row => {
-                            if (row.length >= 2 && row[0] != null && row[0] !== '') {
-                                sheetMap[String(row[0]).trim().toLowerCase()] = row[1];
-                            }
-                        });
-                    }
+    function cetakDokumen() { window.print(); }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchKaryawanInit();
+        let today = new Date();
+        let inpTgl = document.getElementById('inpTanggal');
+        inpTgl.dataset.rawDate = getYYYYMMDD(today);
+        inpTgl.value = formatTanggalIndo(inpTgl.dataset.rawDate);
+        JsBarcode("#barcode", "DRAFT-BELUM-DISIMPAN", { height: 35, displayValue: true, fontSize: 12, margin: 0 });
+
+        document.getElementById('filterPeriodeHSE').value = getYYYYMM(today);
+
+        document.getElementById('loginPass').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                if (!document.getElementById('btnLoginBtn').disabled) {
+                    prosesLogin();
                 }
+            }
+        });
+    });
 
-                const parseTarget = (label) => {
-                    let match = sheetMap[label.toLowerCase().trim()];
-                    if (match === undefined || match === null || match === '') return 0;
-                    if (typeof match === 'string') return parseFloat(match.replace(/[^0-9.-]/g, '')) || 0;
-                    return match;
+    async function fetchKaryawanInit() {
+        try {
+            const response = await fetch(WEB_APP_URL + "?action=getKaryawan");
+            const rawData = await response.json();
+            
+            normalizedData = rawData.map(emp => {
+                const keys = Object.keys(emp);
+                const keyNama = keys.find(k => k.toLowerCase().includes('nama')) || "";
+                const keyNik = keys.find(k => k.toLowerCase().includes('nik') || k.toLowerCase().includes('id')) || "";
+                const keyRole = keys.find(k => k.toLowerCase().includes('role') || k.toLowerCase().includes('jabatan')) || "";
+                
+                return {
+                    nama: keyNama ? String(emp[keyNama]).trim() : "",
+                    nik: keyNik ? String(emp[keyNik]).trim() : "",
+                    role: keyRole ? String(emp[keyRole]).trim() : ""
                 };
+            }).filter(emp => emp.nama !== "");
 
-                animateValue('stat-karyawan', parseTarget('Karyawan'), 1200);
-                animateValue('stat-po', parseTarget('Purchase Order'), 1200);
-                animateValue('stat-pengiriman', parseTarget('Pengiriman'), 1200);
-                animateValue('stat-stok', parseTarget('Stok Produksi'), 1200);
-                animateValue('stat-lkp', parseTarget('Jumlah LKP'), 1200);
-                animateValue('stat-insiden', parseTarget('Total Insiden'), 1200);
-                animateValue('stat-spp', parseTarget('SPP Belum Datang'), 1200);
+            if (!normalizedData.some(e => e.nama.toUpperCase() === "HSE")) {
+                normalizedData.push({ nama: "HSE", nik: "HSE", role: "HSE Officer" });
+            }
 
-                updateDynamicCharts(data.trendPO, data.karyawan);
+            let selectLogin = document.getElementById('loginNama');
+            selectLogin.innerHTML = '<option value="">-- Pilih Nama --</option>';
+            optionsHTML = '<option value="">-- Pilih --</option>';
+            
+            normalizedData.forEach(emp => {
+                optionsHTML += `<option value="${emp.nama}">${emp.nama}</option>`;
+                selectLogin.innerHTML += `<option value="${emp.nama}">${emp.nama}</option>`;
+            });
 
-            } catch (error) {
-                console.error("Gagal sinkronisasi data real-time Web App:", error);
+            selectLogin.disabled = false;
+            document.getElementById('btnLoginBtn').disabled = false;
+            document.getElementById('btnLoginBtn').innerText = "Autentikasi";
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    function prosesLogin() {
+        let nama = document.getElementById('loginNama').value;
+        let pass = document.getElementById('loginPass').value.trim();
+        
+        if(!nama) return alert("Silakan pilih nama karyawan!");
+        let emp = normalizedData.find(e => e.nama === nama);
+        if(pass !== emp.nik) return alert("Kata sandi salah!");
+
+        currentUser = emp;
+        document.getElementById('loginScreen').style.display = 'none';
+
+        let uname = currentUser.nama.toUpperCase();
+        if (ROLE_HSE.includes(uname) || ROLE_ADMIN_EDIT.includes(uname)) {
+            showAdmin(uname);
+            if(document.getElementById('tableData').children.length === 0) {
+                tambahBaris(); 
+            }
+        } else {
+            showRekapan();
+        }
+    }
+
+    async function loadLemburListForReprint() {
+        let reprintDropdown = document.getElementById('reprintSelect');
+        try {
+            const res = await fetch(WEB_APP_URL + "?action=getLemburList");
+            serverListCache = await res.json();
+            reprintDropdown.innerHTML = '<option value="">-- Mode Form Baru (Atau Pilih Arsip) --</option>';
+            serverListCache.forEach(item => {
+                reprintDropdown.innerHTML += `<option value="${item.id}">${item.id} (${parseDateToLocalFriendly(item.tanggal)})</option>`;
+            });
+        } catch(e) { console.error(e); }
+    }
+
+    async function loadReprintData() {
+        let idLembur = document.getElementById('reprintSelect').value;
+        if(!idLembur) {
+            markUnsaved();
+            document.getElementById('tableData').innerHTML = '';
+            tambahBaris();
+            kalkulasiOtomatisForm();
+            return;
+        }
+
+        tunjukkanLoading("Mengambil data MSB ERP System... 🗂️");
+        try {
+            const res = await fetch(WEB_APP_URL + "?action=getLemburDetail&id=" + encodeURIComponent(idLembur));
+            const data = await res.json();
+            sembunyikanLoading();
+
+            document.getElementById('inpPerihal').value = data.master.perihal;
+            document.getElementById('inpTanggal').dataset.rawDate = data.master.tanggal;
+            document.getElementById('inpTanggal').value = formatTanggalIndo(data.master.tanggal);
+            document.getElementById('inpKepada').value = data.master.kepada;
+
+            const tbody = document.getElementById('tableData');
+            tbody.innerHTML = '';
+
+            data.details.forEach(det => {
+                tambahBaris();
+                let lastRow = tbody.lastElementChild;
+                lastRow.querySelector('.nama-input').value = det.nama;
+                lastRow.querySelector('.nik-input').value = det.nik;
+                lastRow.querySelector('.role-input').value = det.role;
+                lastRow.querySelector('.tugas-input').value = det.tugas;
+                lastRow.querySelector('.waktu-jam').value = det.waktu;
+            });
+
+            markSaved(idLembur);
+            terapkanRestriksi();
+            kalkulasiOtomatisForm(); 
+        } catch (error) {
+            sembunyikanLoading();
+            alert("Gagal memuat arsip.");
+        }
+    }
+
+    function showAdmin(uname) {
+        document.getElementById('rekapanScreen').style.display = 'none';
+        document.getElementById('adminScreen').style.display = 'flex';
+        
+        loadLemburListForReprint().then(() => {
+            kalkulasiOtomatisForm();
+            if (ROLE_HSE.includes(uname)) {
+                generateLaporanHSE(); 
+            }
+        });
+        terapkanRestriksi();
+    }
+
+    function terapkanRestriksi() {
+        if (!currentUser) return;
+        let uname = currentUser.nama.toUpperCase();
+        
+        let statusBadge = document.getElementById('statusInfo');
+        let btnSave = document.getElementById('btnSave');
+        let btnAdd = document.getElementById('btnAddRow');
+        let isHSE = ROLE_HSE.includes(uname);
+        
+        document.getElementById('executiveSummaryPanel').style.display = isHSE ? 'block' : 'none';
+        
+        let headerCol = document.getElementById('colHeaderMHTTD');
+
+        if (isHSE) {
+            statusBadge.innerHTML = "🔒 Mode Pantau HSE";
+            statusBadge.className = "status-badge hse";
+            headerCol.innerText = "MH (Jam)";
+
+            btnSave.style.display = "none";
+            btnAdd.style.display = "none";
+            
+            // HSE tidak melihat kolom hapus
+            document.querySelectorAll('.action-col').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('#tableData input, #tableData select').forEach(el => {
+                el.setAttribute('readonly', 'true');
+                if(el.tagName === 'SELECT') el.disabled = true;
+            });
+            
+            document.getElementById('inpPerihal').setAttribute('readonly', 'true');
+            document.getElementById('inpTanggal').disabled = true;
+            document.getElementById('inpKepada').setAttribute('readonly', 'true');
+            
+            let btnPrint = document.getElementById('btnPrint');
+            if(document.getElementById('reprintSelect').value !== "") btnPrint.disabled = false;
+
+        } else if (ROLE_ADMIN_EDIT.includes(uname)) {
+            statusBadge.innerHTML = "📝 Mode Input/Edit Form";
+            statusBadge.className = "status-badge";
+            headerCol.innerText = "TTD";
+
+            btnSave.style.display = "inline-block";
+            btnAdd.style.display = "block";
+            
+            // ADMIN EDIT: Aksi kolom Hapus (X) dimunculkan kembali agar berfungsi normal
+            document.querySelectorAll('.action-col').forEach(el => el.style.display = 'table-cell');
+            
+            document.querySelectorAll('#tableData input:not(.nik-input, .role-input), #tableData select').forEach(el => {
+                el.removeAttribute('readonly');
+                if(el.tagName === 'SELECT') el.disabled = false;
+            });
+            document.getElementById('inpPerihal').removeAttribute('readonly');
+            document.getElementById('inpTanggal').disabled = false;
+            document.getElementById('inpKepada').removeAttribute('readonly');
+        }
+    }
+
+    function hitungJamLembur(waktuStr) {
+        if (!waktuStr) return 0;
+        let parts = waktuStr.split('-');
+        if (parts.length === 2) {
+            let start = parts[0].trim().split(':');
+            let end = parts[1].trim().split(':');
+            if (start.length === 2 && end.length === 2) {
+                let startMin = parseInt(start[0], 10) * 60 + parseInt(start[1], 10);
+                let endMin = parseInt(end[0], 10) * 60 + parseInt(end[1], 10);
+                if (endMin > startMin) return (endMin - startMin) / 60;
+                else return ((endMin + 1440) - startMin) / 60;
             }
         }
+        let num = parseFloat(waktuStr);
+        return isNaN(num) ? 0 : num;
+    }
 
-        function updateDynamicCharts(poData, karData) {
-            let textColor = document.body.classList.contains('light-theme') ? '#475569' : '#e2e8f0';
-            let gridColor = document.body.classList.contains('light-theme') ? 'rgba(0,0,0,0.05)' : 'rgba(255, 255, 255, 0.05)';
+    function kalkulasiOtomatisForm() {
+        let rows = document.querySelectorAll('#tableData tr');
+        let isHSE = currentUser && ROLE_HSE.includes(currentUser.nama.toUpperCase());
+        
+        let activeFormMH = 0;
+        let activeFormPeopleCount = 0;
 
-            if (poData && poData.length > 1) {
-                const labels = poData.slice(1).map(row => String(row[0] || ''));
-                const datasets = [];
-                
-                const colorPalette = [
-                    { border: '#06b6d4', bg: 'rgba(6, 182, 212, 0.1)' },
-                    { border: '#f59e0b', bg: 'rgba(245, 158, 11, 0.1)' },
-                    { border: '#10b981', bg: 'rgba(16, 185, 129, 0.1)' },
-                    { border: '#8b5cf6', bg: 'rgba(139, 92, 246, 0.1)' }
-                ];
+        rows.forEach((tr) => {
+            let waktu = tr.querySelector('.waktu-jam').value;
+            let nama = tr.querySelector('.nama-input').value;
+            let mh = hitungJamLembur(waktu);
+            let mhCol = tr.querySelector('.mh-col');
 
-                for (let i = 1; i < poData[0].length; i++) {
-                    let clientName = poData[0][i];
-                    if (!clientName) continue;
-                    
-                    let dataValues = poData.slice(1).map(row => parseFloat(row[i]) || 0);
-                    let theme = colorPalette[(i - 1) % colorPalette.length];
+            if (isHSE) {
+                mhCol.innerText = mh.toFixed(1);
+            } else {
+                mhCol.innerText = "";
+            }
 
-                    datasets.push({
-                        label: clientName,
-                        data: dataValues,
-                        backgroundColor: theme.bg,
-                        borderColor: theme.border,
-                        borderWidth: 3,
-                        pointBackgroundColor: document.body.classList.contains('light-theme') ? '#fff' : '#0a0e27',
-                        pointBorderColor: theme.border,
-                        pointBorderWidth: 2,
-                        pointRadius: 4,
-                        pointHoverRadius: 8,
-                        pointHoverBackgroundColor: theme.border,
-                        pointHoverBorderColor: '#fff',
-                        pointHoverBorderWidth: 2,
-                        fill: true,
-                        tension: 0.4
-                    });
-                }
+            if (nama && nama.trim() !== "") {
+                activeFormMH += mh;
+                activeFormPeopleCount++;
+            }
+        });
 
-                if (clientChartInstance) clientChartInstance.destroy();
-                const ctxPO = document.getElementById('clientProcessChart').getContext('2d');
-                
-                clientChartInstance = new Chart(ctxPO, {
-                    type: 'line',
-                    data: { labels: labels, datasets: datasets },
-                    options: { 
-                        responsive: true, 
-                        maintainAspectRatio: false, 
-                        interaction: { mode: 'index', intersect: false },
-                        plugins: { 
-                            legend: { labels: { color: textColor, font: { family: 'Inter', size: 12 }, usePointStyle: true, boxWidth: 8 } },
-                            tooltip: {
-                                backgroundColor: document.body.classList.contains('light-theme') ? 'rgba(255, 255, 255, 0.9)' : 'rgba(10, 14, 39, 0.9)',
-                                titleColor: document.body.classList.contains('light-theme') ? '#0f172a' : '#fff',
-                                bodyColor: document.body.classList.contains('light-theme') ? '#475569' : '#cbd5e1',
-                                borderColor: 'rgba(6, 182, 212, 0.3)',
-                                borderWidth: 1,
-                                padding: 12,
-                                usePointStyle: true,
-                                titleFont: { size: 13, family: 'Poppins', weight: 'bold' },
-                                bodyFont: { size: 12, family: 'Inter', weight: '500' },
-                                cornerRadius: 8,
-                                displayColors: true
-                            }
-                        }, 
-                        scales: { 
-                            x: { ticks: { color: textColor, font: {size: 11, family: 'Inter'} }, grid: { display: false } }, 
-                            y: { ticks: { color: textColor, font: {size: 11, family: 'Inter'} }, grid: { color: gridColor, borderDash: [5, 5] }, beginAtZero: true } 
+        if (isHSE) {
+            let selectedId = document.getElementById('reprintSelect').value || "Form Baru (Draft)";
+            document.getElementById('labelFormTerpilih').innerText = `Total MH (ID: ${selectedId})`;
+            document.getElementById('hseStatTodayMH').innerText = activeFormMH.toFixed(1) + " MH";
+            document.getElementById('hseStatTodayCount').innerText = activeFormPeopleCount + " Orang Terdaftar";
+        }
+    }
+
+    // FUNGSI RENDER GRAFIK MINGGUAN (HSE) - DIUBAH JADI TREND (LINE CHART) DENGAN EFEK VISUAL
+    function renderWeeklyChart(weeklyData) {
+        const ctx = document.getElementById('weeklyMHChart').getContext('2d');
+        if (weeklyChartInstance) { weeklyChartInstance.destroy(); }
+        
+        // Membuat efek gradien biru transparan di bawah garis trend
+        let gradient = ctx.createLinearGradient(0, 0, 0, 240);
+        gradient.addColorStop(0, 'rgba(6, 182, 212, 0.4)');
+        gradient.addColorStop(1, 'rgba(6, 182, 212, 0.0)');
+
+        weeklyChartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Object.keys(weeklyData),
+                datasets: [{
+                    label: 'Manhours Terakumulasi',
+                    data: Object.values(weeklyData),
+                    backgroundColor: gradient,
+                    borderColor: '#06b6d4', // Warna garis cyan
+                    borderWidth: 3,
+                    pointBackgroundColor: '#ffffff', // Warna dasar titik
+                    pointBorderColor: '#06b6d4',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 10, // Membesar saat di-hover
+                    pointHoverBackgroundColor: '#f59e0b', // Berubah orange saat di-hover
+                    pointHoverBorderColor: '#ffffff',
+                    pointHoverBorderWidth: 3,
+                    fill: true,
+                    tension: 0.4 // Membuat kurva mulus (smooth)
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.95)', // Background dark mode eksklusif
+                        titleColor: '#06b6d4',
+                        bodyColor: '#ffffff',
+                        borderColor: '#06b6d4',
+                        borderWidth: 1,
+                        titleFont: { family: 'Poppins', size: 13, weight: 'bold' },
+                        bodyFont: { family: 'Inter', size: 13, weight: '500' },
+                        padding: 12,
+                        cornerRadius: 8,
+                        displayColors: false, // Menghilangkan kotak warna pada tooltip
+                        callbacks: {
+                            label: function(context) { return `⏱️ ${context.parsed.y.toFixed(1)} Jam (MH)`; }
+                        },
+                        animation: {
+                            duration: 300,
+                            easing: 'easeOutQuart'
                         }
                     }
-                });
-            }
-
-            if (karData && karData.length > 1) {
-                let labels = [], values = [];
-                let deptColIdx = -1;
-                const headers = karData[0].map(h => String(h).toLowerCase());
-                for (let i = 0; i < headers.length; i++) {
-                    if (headers[i].includes('departemen') || headers[i].includes('dept') || headers[i].includes('bagian')) { deptColIdx = i; break; }
-                }
-
-                if (deptColIdx !== -1 && karData[0].length > 2) {
-                    let deptCounts = {};
-                    for (let i = 1; i < karData.length; i++) {
-                        let deptName = String(karData[i][deptColIdx]).trim();
-                        if (deptName) deptCounts[deptName] = (deptCounts[deptName] || 0) + 1;
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)', borderDash: [5, 5] }, ticks: { font: {family:'Inter'} } },
+                    x: { grid: { display: false }, ticks: { font: {family:'Inter', weight: '600'} } }
+                },
+                animation: {
+                    y: {
+                        duration: 1500,
+                        delay: 200
                     }
-                    labels = Object.keys(deptCounts); values = Object.values(deptCounts);
-                } else {
-                    labels = karData.slice(1).map(row => String(row[0] || ''));
-                    values = karData.slice(1).map(row => parseFloat(row[1]) || 0);
                 }
-
-                const bgColors = ['rgba(2,117,216,0.85)', 'rgba(16,185,129,0.85)', 'rgba(245,158,11,0.85)', 'rgba(139,92,246,0.85)', 'rgba(236,72,153,0.85)', 'rgba(239,68,68,0.85)', '#0ea5e9', '#84cc16'];
-                const hoverBgColors = ['#0275d8', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#ef4444', '#0284c7', '#65a30d'];
-
-                if (deptChartInstance) deptChartInstance.destroy();
-                const ctxDept = document.getElementById('karyawanDeptChart').getContext('2d');
-                deptChartInstance = new Chart(ctxDept, {
-                    type: 'doughnut',
-                    data: {
-                        labels: labels,
-                        datasets: [{ 
-                            data: values, 
-                            backgroundColor: bgColors.slice(0, Math.max(labels.length, bgColors.length)),
-                            hoverBackgroundColor: hoverBgColors.slice(0, Math.max(labels.length, hoverBgColors.length)),
-                            borderWidth: 2,
-                            borderColor: document.body.classList.contains('light-theme') ? '#ffffff' : '#0a0e27',
-                            hoverOffset: 10
-                        }]
-                    },
-                    options: { 
-                        responsive: true, maintainAspectRatio: false, cutout: '70%',
-                        plugins: { 
-                            legend: { position: 'right', labels: { color: textColor, font: { size: 11, family: 'Inter' }, padding: 15, usePointStyle: true } },
-                            tooltip: {
-                                backgroundColor: document.body.classList.contains('light-theme') ? 'rgba(255, 255, 255, 0.9)' : 'rgba(10, 14, 39, 0.9)',
-                                titleColor: document.body.classList.contains('light-theme') ? '#0f172a' : '#fff',
-                                bodyColor: document.body.classList.contains('light-theme') ? '#475569' : '#cbd5e1',
-                                borderColor: 'rgba(2, 117, 216, 0.3)', borderWidth: 1, padding: 12, cornerRadius: 8,
-                                callbacks: {
-                                    label: function(context) {
-                                        let total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                        let percentage = Math.round((context.parsed / total) * 100);
-                                        return ` ${context.label}: ${context.parsed} Orang (${percentage}%)`;
-                                    }
-                                }
-                            }
-                        } 
-                    }
-                });
-            }
-
-            myCharts = [clientChartInstance, deptChartInstance].filter(Boolean);
-        }
-
-        function animateValue(id, end, duration) {
-            const el = document.getElementById(id); if (!el) return;
-            const start = parseInt(el.textContent) || 0; if (start === end) return;
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                el.textContent = Math.floor(progress * (end - start) + start);
-                if (progress < 1) window.requestAnimationFrame(step); else el.textContent = end;
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        function showNotification(title, message, type = 'success') {
-            const container = document.getElementById('notification-container');
-            const notif = document.createElement('div');
-            notif.className = `notification ${type}`;
-            notif.setAttribute('role', 'alert');
-            const icon = type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation';
-            notif.innerHTML = `<i class="fa-solid ${icon}"></i><div class="notification-content"><div class="notification-title">${title}</div><div class="notification-message">${message}</div></div>`;
-            container.appendChild(notif);
-            setTimeout(() => { notif.style.animation = 'slideInRight 0.5s ease-out reverse'; setTimeout(() => notif.remove(), 500); }, 5000);
-        }
-
-        function enterSystem(e) {
-            e.preventDefault();
-            const btn = document.getElementById('enterBtn');
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> MEMUAT SISTEM...';
-            btn.style.pointerEvents = 'none';
-
-            setTimeout(() => {
-                const overlay = document.getElementById('login-overlay');
-                overlay.style.opacity = "0";
-                overlay.style.visibility = "hidden";
-                
-                setTimeout(() => {
-                    overlay.style.display = "none";
-                    document.getElementById('main-dashboard').style.display = "flex";
-                    
-                    fetchDashboardData(); 
-                    syncInterval = setInterval(fetchDashboardData, 30000); 
-
-                    showNotification('Akses Diberikan', 'Selamat datang di MSB ERP System', 'success');
-                }, 800); 
-            }, 1200);
-        }
-
-        function doLogout() {
-            showNotification('Logout', 'Anda telah keluar dari sistem', 'warning');
-            clearInterval(syncInterval);
-            setTimeout(() => location.reload(), 1000);
-        }
-
-        function toggleTheme() {
-            document.body.classList.toggle('light-theme');
-            const icon = document.querySelector('.theme-toggle i');
-            let isLight = document.body.classList.contains('light-theme');
-            icon.className = isLight ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-
-            let textColor = isLight ? '#475569' : '#e2e8f0';
-            let gridColor = isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
-
-            myCharts.forEach(chart => {
-                if(chart.options.plugins.legend.labels) chart.options.plugins.legend.labels.color = textColor;
-                if(chart.options.scales.x) { chart.options.scales.x.ticks.color = textColor; if(chart.options.scales.x.grid) chart.options.scales.x.grid.color = gridColor; }
-                if(chart.options.scales.y) { chart.options.scales.y.ticks.color = textColor; if(chart.options.scales.y.grid) chart.options.scales.y.grid.color = gridColor; }
-                chart.update();
-            });
-        }
-
-        function launch(url) {
-            if (url.includes("script.google.com")) { window.open(url, '_blank'); return; }
-            const vp = document.getElementById('viewport-container'), fr = document.getElementById('erp-frame'), b = document.getElementById('back-btn'), db = document.getElementById('main-dashboard');
-            vp.style.display = "block"; b.style.display = "flex"; fr.src = url;
-            void vp.offsetWidth;
-            vp.classList.add('active'); vp.setAttribute('aria-hidden', 'false'); b.classList.add('active'); db.classList.add('dashboard-dimmed');
-        }
-
-        function closeViewport() {
-            const vp = document.getElementById('viewport-container'), b = document.getElementById('back-btn'), fr = document.getElementById('erp-frame'), db = document.getElementById('main-dashboard');
-            vp.classList.remove('active'); vp.setAttribute('aria-hidden', 'true'); b.classList.remove('active'); db.classList.remove('dashboard-dimmed');
-            setTimeout(() => { vp.style.display = "none"; b.style.display = "none"; fr.src = ""; }, 700);
-        }
-
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('module-card') || e.target.closest('.module-card')) {
-                const card = e.target.classList.contains('module-card') ? e.target : e.target.closest('.module-card');
-                const ripple = document.createElement('span'); ripple.classList.add('ripple');
-                const rect = card.getBoundingClientRect(); const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2, y = e.clientY - rect.top - size / 2;
-                ripple.style.width = ripple.style.height = size + 'px'; ripple.style.left = x + 'px'; ripple.style.top = y + 'px';
-                card.appendChild(ripple); setTimeout(() => ripple.remove(), 600);
             }
         });
-    </script>
+    }
+
+    async function generateLaporanHSE() {
+        let period = document.getElementById('filterPeriodeHSE').value;
+        if(!period) return;
+        
+        let targetForms = serverListCache.filter(item => {
+            if(!item.tanggal) return false;
+            let d = new Date(item.tanggal);
+            return !isNaN(d) && getYYYYMM(d) === period;
+        });
+
+        document.getElementById('labelBulanTerpilih').innerText = `Grand Total Manhours (${formatBulanTahun(period)})`;
+        let tbody = document.getElementById('executiveSummaryBody');
+        
+        // Reset struktur data mingguan
+        let weeklyData = { "Minggu 1 (Tgl 1-7)": 0, "Minggu 2 (Tgl 8-14)": 0, "Minggu 3 (Tgl 15-21)": 0, "Minggu 4 (Tgl 22+)": 0 };
+
+        if(targetForms.length === 0) {
+            document.getElementById('hseStatAllMH').innerText = "0.0 MH";
+            document.getElementById('hseStatMonthCount').innerText = "Tidak ada form lembur di periode ini";
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:10px; color:#64748b;">Tidak ada data karyawan lembur pada periode ini.</td></tr>';
+            renderWeeklyChart(weeklyData);
+            return;
+        }
+
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">Mengambil rincian detail ${targetForms.length} form, mohon tunggu... ⏳</td></tr>`;
+        
+        let chunkSize = 5;
+        for (let i = 0; i < targetForms.length; i += chunkSize) {
+            let chunk = targetForms.slice(i, i + chunkSize);
+            let promises = chunk.map(async (form) => {
+                if (!formDetailsCache[form.id]) {
+                    try {
+                        const res = await fetch(WEB_APP_URL + "?action=getLemburDetail&id=" + encodeURIComponent(form.id));
+                        formDetailsCache[form.id] = await res.json();
+                    } catch(e) { console.error("Gagal mengambil detail:", form.id); }
+                }
+            });
+            await Promise.all(promises);
+        }
+
+        let totalMH = 0;
+        let mhPerPerson = {};
+
+        targetForms.forEach(form => {
+            let detailData = formDetailsCache[form.id];
+            if (detailData && detailData.details) {
+                
+                // Klasifikasi Minggu
+                let formDate = new Date(form.tanggal);
+                let dateNum = formDate.getDate();
+                let weekKey = "Minggu 1 (Tgl 1-7)";
+                if (dateNum > 7 && dateNum <= 14) weekKey = "Minggu 2 (Tgl 8-14)";
+                else if (dateNum > 14 && dateNum <= 21) weekKey = "Minggu 3 (Tgl 15-21)";
+                else if (dateNum > 21) weekKey = "Minggu 4 (Tgl 22+)";
+
+                detailData.details.forEach(det => {
+                    let mh = hitungJamLembur(det.waktu);
+                    totalMH += mh;
+                    weeklyData[weekKey] += mh;
+
+                    if(!mhPerPerson[det.nama]) {
+                        mhPerPerson[det.nama] = { nik: det.nik || "-", mh: 0 };
+                    }
+                    mhPerPerson[det.nama].mh += mh;
+                });
+            }
+        });
+
+        // Update Kartu Info & Grafik
+        document.getElementById('hseStatAllMH').innerText = `${totalMH.toFixed(1)} MH`;
+        document.getElementById('hseStatMonthCount').innerText = `Terakumulasi dari ${targetForms.length} Form Lembur`;
+        renderWeeklyChart(weeklyData);
+
+        let sortedPeople = Object.keys(mhPerPerson).map(nama => {
+            return { nama: nama, nik: mhPerPerson[nama].nik, mh: mhPerPerson[nama].mh };
+        }).sort((a,b) => b.mh - a.mh);
+
+        let detailedListHTML = '';
+        sortedPeople.forEach((p, i) => {
+            detailedListHTML += `
+                <tr>
+                    <td style="text-align:center;">${i+1}</td>
+                    <td>${p.nik}</td>
+                    <td><strong>${p.nama}</strong></td>
+                    <td style="text-align:center; font-weight:700; color:var(--primary-cyan);">${p.mh.toFixed(1)} MH</td>
+                </tr>
+            `;
+        });
+
+        tbody.innerHTML = detailedListHTML || '<tr><td colspan="4" style="text-align:center; padding:10px; color:#64748b;">Belum ada karyawan pada periode ini.</td></tr>';
+    }
+
+    function showRekapan() {
+        document.getElementById('adminScreen').style.display = 'none';
+        document.getElementById('rekapanScreen').style.display = 'block';
+        document.getElementById('rekapanInfo').innerText = `Nama: ${currentUser.nama} | ID: ${currentUser.nik}`;
+        loadRekapanUser(currentUser.nik);
+    }
+
+    function logout() {
+        currentUser = null;
+        document.getElementById('adminScreen').style.display = 'none';
+        document.getElementById('rekapanScreen').style.display = 'none';
+        document.getElementById('login-overlay').style.display = 'flex';
+        document.getElementById('login-overlay').style.opacity = '1';
+        document.getElementById('login-overlay').style.visibility = 'visible';
+        
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('loginPass').value = '';
+        document.getElementById('tableData').innerHTML = ''; 
+        
+        const btn = document.getElementById('enterBtn');
+        btn.innerHTML = '<i class="fa-solid fa-fingerprint"></i> MASUK SISTEM';
+        btn.style.pointerEvents = 'auto';
+    }
+
+    async function loadRekapanUser(nik) {
+        let tbody = document.getElementById('rekapanBody');
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Mengambil riwayat Anda... ⏳</td></tr>';
+        try {
+            const res = await fetch(WEB_APP_URL + "?action=getRekapan&nik=" + encodeURIComponent(nik));
+            let data = await res.json();
+            if (data.error || data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">Tidak ada riwayat lembur.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = '';
+            data.forEach((item, index) => {
+                let finalTgl = parseDateToLocalFriendly(item.tanggal);
+                tbody.innerHTML += `<tr><td>${index + 1}</td><td>${finalTgl}</td><td>${item.tugas || "-"}</td><td>${item.waktu || "-"}</td></tr>`;
+            });
+        } catch (error) {
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:red;">Gagal memuat data.</td></tr>`;
+        }
+    }
+
+    function markUnsaved() {
+        isSaved = false;
+        let btnPrint = document.getElementById('btnPrint');
+        btnPrint.disabled = true;
+        btnPrint.innerHTML = "🖨️ Cetak (Belum Disimpan)";
+        JsBarcode("#barcode", "DRAFT-BELUM-DISIMPAN", { height: 35, displayValue: true, fontSize: 11, margin: 0 });
+    }
+
+    function markSaved(idLembur) {
+        isSaved = true;
+        let btnPrint = document.getElementById('btnPrint');
+        btnPrint.disabled = false;
+        btnPrint.innerHTML = "🖨️ Cetak Dokumen";
+        JsBarcode("#barcode", idLembur, { height: 35, displayValue: true, fontSize: 12, margin: 0 });
+    }
+
+    function prosesTanggalFormat(el) {
+        if (el.value) {
+            el.dataset.rawDate = el.value; 
+            el.type = 'text';
+            el.value = formatTanggalIndo(el.dataset.rawDate);
+        } else {
+            el.type = 'text';
+            el.value = "";
+            el.dataset.rawDate = "";
+        }
+    }
+
+    function formatTanggalIndo(dateStr) {
+        if(!dateStr) return "";
+        let d = new Date(dateStr);
+        if(isNaN(d)) return dateStr;
+        const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+        const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nov','Des'];
+        return `${days[d.getDay()]}, ${String(d.getDate()).padStart(2, '0')}/${months[d.getMonth()]}/${String(d.getFullYear()).slice(-2)}`;
+    }
+
+    function tambahBaris() {
+        const tbody = document.getElementById('tableData');
+        const tr = document.createElement('tr');
+        
+        tr.innerHTML = `
+            <td class="row-number font-medium"></td>
+            <td><input type="text" class="nik-input" readonly placeholder="Otomatis"></td>
+            <td><input type="text" class="role-input" readonly placeholder="Otomatis"></td>
+            <td>
+                <select class="nama-input" onchange="onNamaChange(this); markUnsaved(); kalkulasiOtomatisForm();">
+                    ${optionsHTML}
+                </select>
+            </td>
+            <td><input type="text" class="tugas-input" placeholder="Ketik tugas..." oninput="markUnsaved()"></td>
+            <td>
+                <input list="jam-lembur-options" class="waktu-jam" placeholder="Pilih/Ketik Jam..." style="text-align:center;" oninput="markUnsaved(); kalkulasiOtomatisForm();">
+            </td>
+            <td class="mh-col"></td>
+            <td class="action-col">
+                <button class="btn-delete" onclick="hapusBaris(this)">✕</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+        recalculateRows();
+        if(currentUser) { markUnsaved(); terapkanRestriksi(); }
+    }
+
+    function hapusBaris(btn) {
+        const tbody = document.getElementById('tableData');
+        if(tbody.children.length === 1) return alert("Minimal harus ada 1 baris!");
+        btn.closest('tr').remove();
+        recalculateRows();
+        markUnsaved();
+        kalkulasiOtomatisForm();
+    }
+
+    function recalculateRows() {
+        document.querySelectorAll('#tableData tr').forEach((tr, index) => {
+            tr.querySelector('.row-number').innerText = index + 1;
+        });
+    }
+
+    function onNamaChange(selectElem) {
+        let namaDipilih = selectElem.value;
+        let emp = normalizedData.find(e => e.nama === namaDipilih);
+        let tr = selectElem.closest('tr');
+        if(emp) {
+            tr.querySelector('.nik-input').value = emp.nik;
+            tr.querySelector('.role-input').value = emp.role;
+        } else {
+            tr.querySelector('.nik-input').value = "";
+            tr.querySelector('.role-input').value = "";
+        }
+    }
+
+    async function simpanLemburan() {
+        const btnSave = document.getElementById('btnSave');
+        const displayTgl = document.getElementById('inpTanggal').dataset.rawDate || document.getElementById('inpTanggal').value; 
+        if (!displayTgl) return alert("Harap isi Tanggal Lembur!");
+
+        let payload = {
+            perihal: document.getElementById('inpPerihal').value,
+            tanggal: displayTgl, 
+            kepada: document.getElementById('inpKepada').value,
+            details: []
+        };
+
+        document.querySelectorAll('#tableData tr').forEach((tr, index) => {
+            let nama = tr.querySelector('.nama-input').value;
+            if (nama.trim() !== "") {
+                payload.details.push({
+                    no: index + 1,
+                    nik: tr.querySelector('.nik-input').value,
+                    role: tr.querySelector('.role-input').value,
+                    nama: nama,
+                    tugas: tr.querySelector('.tugas-input').value,
+                    waktu: tr.querySelector('.waktu-jam').value
+                });
+            }
+        });
+
+        if (payload.details.length === 0) return alert("Pilih minimal 1 karyawan!");
+
+        tunjukkanLoading("Menyimpan dokumen lembur... 🚀");
+        btnSave.disabled = true;
+
+        try {
+            const res = await fetch(WEB_APP_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify(payload)
+            });
+            const response = await res.json();
+            sembunyikanLoading();
+
+            if (response.status === 'success') {
+                alert("Berhasil disimpan!");
+                markSaved(response.id);
+                await loadLemburListForReprint(); 
+                kalkulasiOtomatisForm();
+            } else { alert("Error: " + response.message); }
+        } catch (error) {
+            sembunyikanLoading();
+            alert("Gagal terhubung ke server Google.");
+        }
+        btnSave.disabled = false;
+    }
+</script>
 </body>
 </html>
