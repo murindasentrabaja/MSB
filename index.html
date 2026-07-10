@@ -9,7 +9,8 @@
     <meta name="theme-color" content="#0a0e27">
     <title>ERP SYSTEM | PT MURINDA SENTRA BAJA - Advanced Dashboard</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Menambahkan Font Playfair Display untuk kesan elegan -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
@@ -63,19 +64,15 @@
             color: var(--text-dark); 
         }
         body.light-theme .top-info-bar, body.light-theme header, body.light-theme footer { background: rgba(255, 255, 255, 0.85); border-color: rgba(0, 0, 0, 0.1); color: #1e293b; }
-        body.light-theme .stat-card, body.light-theme .chart-card, body.light-theme .module-card, body.light-theme .notification, body.light-theme .login-card { background: rgba(255, 255, 255, 0.9); border-color: rgba(0, 0, 0, 0.1); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); }
-        body.light-theme .stat-value, body.light-theme .chart-title, body.light-theme .module-info h3, body.light-theme .section-title, body.light-theme .login-card h2 { color: #0f172a; }
+        body.light-theme .stat-card, body.light-theme .chart-card, body.light-theme .module-card, body.light-theme .notification { background: rgba(255, 255, 255, 0.9); border-color: rgba(0, 0, 0, 0.1); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); }
+        body.light-theme .stat-value, body.light-theme .chart-title, body.light-theme .module-info h3, body.light-theme .section-title { color: #0f172a; }
         body.light-theme .stat-label, body.light-theme .chart-subtitle, body.light-theme .module-info p, body.light-theme .footer-address, body.light-theme .footer-copy { color: #475569; }
         body.light-theme .footer-address strong, body.light-theme .footer-copy span:first-child { color: #0f172a; }
         body.light-theme .user-profile, body.light-theme .theme-toggle { background: #f1f5f9; color: #0f172a; border-color: #cbd5e1; }
         body.light-theme .header-divider { background: #cbd5e1; }
         body.light-theme .datetime { color: #1e293b; }
-        body.light-theme .input-group input { background: #f8fafc; border-color: #cbd5e1; color: #0f172a; }
-        body.light-theme .input-group input::placeholder { color: #94a3b8; }
         h1, h2, h3, h4, h5, button { font-family: 'Poppins', sans-serif; }
 
-        /* ==================== VISIBILITAS LOGO ==================== */
-        body:not(.light-theme) .login-card img.logo,
         body:not(.light-theme) header img.logo-small {
             background-color: rgba(255, 255, 255, 0.85);
             padding: 10px 20px;
@@ -84,7 +81,6 @@
             filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
         }
 
-        body.light-theme .login-card img.logo,
         body.light-theme header img.logo-small {
             background-color: transparent;
             padding: 0;
@@ -108,30 +104,169 @@
         .loading-text { margin-top: 25px; font-size: 1.2rem; font-weight: 600; color: var(--text-light); letter-spacing: 2px; }
         .loading-progress { margin-top: 15px; font-size: 0.9rem; color: var(--primary-cyan); }
 
-        /* ==================== LOGIN PAGE ==================== */
-        #login-page { display: flex; justify-content: center; align-items: center; min-height: 100vh; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-        .login-card { background: rgba(18, 24, 43, 0.75); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 50px 45px; border-radius: 30px; width: 100%; max-width: 480px; text-align: center; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); position: relative; overflow: hidden; animation: slideUp 0.8s ease-out; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-        .login-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent); animation: shimmer 3s infinite; }
-        @keyframes shimmer { 0% { left: -100%; } 100% { left: 200%; } }
-        .login-card img.logo { width: 65%; margin-bottom: 25px; object-fit: contain; }
-        .login-card h2 { font-size: 1.3rem; font-weight: 700; letter-spacing: 2px; background: linear-gradient(135deg, #0275d8, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 40px; text-transform: uppercase; }
-        .input-group { position: relative; margin-bottom: 25px; }
-        .input-group i { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.2rem; transition: all 0.3s; }
-        .input-group input { width: 100%; padding: 18px 25px 18px 60px; background: rgba(255, 255, 255, 0.05); border: 2px solid transparent; border-radius: 15px; color: var(--text-white); font-size: 1rem; font-family: 'Inter', sans-serif; font-weight: 500; transition: all 0.4s; }
-        .input-group input::placeholder { color: rgba(255, 255, 255, 0.4); }
-        .input-group input:focus { background: rgba(255, 255, 255, 0.1); border-color: rgba(6, 182, 212, 0.5); transform: translateY(-2px); }
-        .input-group input:focus + i { color: var(--primary-cyan); transform: translateY(-50%) scale(1.1); }
-        .login-btn { width: 100%; padding: 18px; margin-top: 15px; background: linear-gradient(135deg, #0275d8 0%, #06b6d4 100%); border: none; border-radius: 15px; color: #ffffff; font-weight: 700; font-size: 1.1rem; letter-spacing: 1.5px; cursor: pointer; box-shadow: 0 10px 25px rgba(2, 117, 216, 0.3); position: relative; overflow: hidden; transition: all 0.4s; }
-        .login-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent); transition: 0.6s; }
-        .login-btn:hover::before { left: 100%; } .login-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(2, 117, 216, 0.4); }
-        .login-footer { margin-top: 40px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); font-weight: 500; line-height: 1.8; }
-        .error-msg { color: #ef4444; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 12px; border-radius: 10px; font-size: 0.9rem; margin-top: 20px; font-weight: 600; display: none; animation: shake 0.5s; }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+        /* ==================== LOGIN OVERLAY (MEWAH & ANIMATIF) ==================== */
+        #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; display: flex; justify-content: center; align-items: center; z-index: 9998; transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out; }
+        
+        .login-wrapper { 
+            transform: scale(1); transition: transform 0.3s ease; 
+            animation: float-smooth 6s ease-in-out infinite;
+        }
+        @keyframes float-smooth {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @media (max-width: 768px) { .login-wrapper { transform: scale(0.8); animation: float-smooth-mobile 6s ease-in-out infinite; } }
+        @media (max-width: 500px) { .login-wrapper { transform: scale(0.55); animation: float-smooth-mobile-mini 6s ease-in-out infinite; } }
+        @keyframes float-smooth-mobile { 0%, 100% { transform: scale(0.8) translateY(0); } 50% { transform: scale(0.8) translateY(-10px); } }
+        @keyframes float-smooth-mobile-mini { 0%, 100% { transform: scale(0.55) translateY(0); } 50% { transform: scale(0.55) translateY(-8px); } }
+        
+        /* Modifikasi Card Login untuk area konten yang lebih luas */
+        .login-card { position: relative; width: 850px; height: 490px; display: flex; align-items: center; justify-content: flex-start; padding-left: 50px; background: transparent; border-radius: 20px; font-family: 'Poppins', sans-serif; cursor: pointer; outline: none; }
+        
+        .login-card .circle { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; pointer-events: none; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        
+        .login-card .circle::before { 
+            content: ''; position: absolute; width: 250px; height: 250px; background: transparent; 
+            border: 4px solid #124388; border-radius: 50%; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            animation: pulse-glow 3s infinite alternate;
+        }
+        
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 15px rgba(18, 67, 136, 0.3), inset 0 0 10px rgba(18, 67, 136, 0.2); }
+            100% { box-shadow: 0 0 45px rgba(18, 67, 136, 0.8), inset 0 0 25px rgba(18, 67, 136, 0.5); }
+        }
+        
+        .login-card .logo-wrapper { z-index: 12; text-align: center; transition: 0.5s ease-in-out; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
+        .login-card .logo-wrapper .logo_img { 
+            max-width: 180px; 
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            animation: logo-breath 4s ease-in-out infinite;
+        }
+        @keyframes logo-breath {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        /* Interaksi Hover/Focus */
+        .login-card:hover .circle::before, .login-card:focus-within .circle::before { 
+            width: 100%; height: 100%; border-radius: 20px; 
+            background: linear-gradient(135deg, #0a1930, #124388); 
+            box-shadow: 0 20px 60px rgba(18, 67, 136, 0.5); border: 0px solid transparent; 
+            animation: none;
+        }
+        .login-card:hover .logo-wrapper, .login-card:focus-within .logo-wrapper { opacity: 0; transform: scale(0.3); pointer-events: none; }
+        
+        .login-card .content { position: relative; z-index: 10; width: 100%; max-width: 380px; opacity: 0; visibility: hidden; transform: translateX(-50px); transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: default; }
+        .login-card:hover .content, .login-card:focus-within .content { opacity: 1; visibility: visible; transform: translateX(0); transition-delay: 0.3s; }
+        
+        .login-card .content h2 { 
+            color: #fff; font-size: 2rem; font-weight: 800; letter-spacing: 2px; margin-bottom: 12px; white-space: nowrap;
+            animation: text-glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes text-glow {
+            0% { text-shadow: 0 0 10px rgba(255,255,255,0.2); }
+            100% { text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 30px rgba(6, 182, 212, 0.6); }
+        }
+
+        /* ==================== ADDRESS BLOCK ELEGAN ==================== */
+        .login-address-block {
+            display: block;
+            text-decoration: none;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 3px solid var(--primary-cyan);
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 22px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .login-address-block:hover {
+            transform: translateX(8px);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+            border-left-color: var(--primary-orange);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .login-address-block .company-name {
+            font-family: 'Playfair Display', serif; /* Font Kalem dan Elegan */
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .login-address-block .address-text {
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 300;
+            color: #cbd5e1;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .login-address-block .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--primary-cyan);
+        }
+
+        .login-address-block .contact-info span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        
+        .login-address-block:hover .contact-info span {
+            color: #fff;
+        }
+
+        .login-address-block .contact-info i {
+            width: 14px;
+            text-align: center;
+            color: var(--primary-orange);
+        }
+        
+        .action-container { position: relative; margin-top: 10px; }
+        
+        .luxury-btn { 
+            display: flex; justify-content: center; align-items: center; gap: 15px; width: 100%; 
+            padding: 16px 25px; background: linear-gradient(45deg, #b92025, #e53935, #b92025); background-size: 200% auto;
+            color: #fff; font-weight: 800; font-size: 1.1rem; border: none; cursor: pointer; 
+            border-radius: 50px; text-transform: uppercase; letter-spacing: 2px; 
+            box-shadow: 0 10px 30px rgba(185, 32, 37, 0.4); 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            position: relative; overflow: hidden;
+            animation: gradient-shift 3s ease infinite;
+        }
+        @keyframes gradient-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        .luxury-btn::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transform: skewX(-20deg); transition: 0.7s;
+        }
+        
+        .luxury-btn:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 15px 40px rgba(185, 32, 37, 0.6); }
+        .luxury-btn:hover::after { left: 150%; }
+        .luxury-btn i { font-size: 1.3rem; }
+        
+        .login-card .factory_img { position: absolute; top: 50%; left: 50%; width: 350px; height: 230px; object-fit: cover; border-radius: 15px; border: 4px solid #fff; box-shadow: 0 20px 40px rgba(0,0,0,0.5); transform: translate(-50%, -50%) scale(0) rotate(-10deg); z-index: 11; transition: 0.7s cubic-bezier(0.25, 1, 0.5, 1.2); pointer-events: none; opacity: 0; }
+        .login-card:hover .factory_img, .login-card:focus-within .factory_img { top: 50%; left: 75%; transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; transition-delay: 0.2s; }
 
         /* ==================== MAIN DASHBOARD ==================== */
-        #main-dashboard { display: none; flex-direction: column; min-height: 100vh; transition: transform var(--transition-smooth), opacity var(--transition-smooth), filter var(--transition-smooth); transform-origin: top center; animation: fadeIn 0.8s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        #main-dashboard { display: none; flex-direction: column; min-height: 100vh; transition: transform var(--transition-smooth), opacity var(--transition-smooth), filter var(--transition-smooth); transform-origin: top center; animation: fadeIn 1s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.97) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
         .dashboard-dimmed { transform: scale(0.97) translateY(-10px); opacity: 0.5; filter: blur(6px); pointer-events: none; }
 
         /* ==================== TOP INFO BAR ==================== */
@@ -244,7 +379,7 @@
         @media (max-width: 1200px) { .charts-section { grid-template-columns: 1fr; } }
         @media (max-width: 992px) { .content-area { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } .hse-ticker-wrap { max-width: 50%; } .dashboard-stats { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
         @media (max-width: 768px) { .top-info-bar { flex-direction: column; align-items: flex-start; gap: 12px; padding: 15px 20px; } .hse-ticker-wrap { max-width: 100%; margin-left: 0; } header { padding: 15px 20px; flex-wrap: wrap; gap: 15px; } .header-divider { display: none; } .dashboard-stats, .charts-section, .content-area { padding: 20px; } .content-area { grid-template-columns: 1fr; } #viewport-container { top: 140px; height: calc(100vh - 140px); } footer { flex-direction: column; text-align: center; padding: 25px 20px; gap: 20px; } .footer-contact { flex-direction: column; gap: 10px; } .footer-copy { text-align: center; } .back-nav { bottom: 20px; left: 20px; right: 20px; justify-content: center; } }
-        @media (max-width: 480px) { .login-card { padding: 40px 30px; width: 92%; } header img.logo-small { height: 35px; } .dashboard-stats { grid-template-columns: 1fr; } }
+        @media (max-width: 480px) { header img.logo-small { height: 35px; } .dashboard-stats { grid-template-columns: 1fr; } }
 
         .ripple { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.3); transform: scale(0); animation: ripple-animation 0.6s ease-out; pointer-events: none; }
         @keyframes ripple-animation { to { transform: scale(4); opacity: 0; } }
@@ -254,7 +389,7 @@
     <div id="loading-screen" aria-live="polite">
         <div class="loader"></div>
         <div class="loading-text">MSB ERP System</div>
-        <div class="loading-progress">Kalijati, Subang...</div>
+        <div class="loading-progress">Memuat Modul Utama...</div>
     </div>
 
     <div class="bg-glow blob-1" aria-hidden="true"></div>
@@ -263,24 +398,42 @@
 
     <div class="notification-container" id="notification-container" aria-live="assertive"></div>
 
-    <div id="login-page">
-        <div class="login-card">
-            <img src="Murinda Logo.png" alt="Logo Murinda Sentra Baja" class="logo" onerror="this.style.display='none'">
-            <h2>MSB ERP SYSTEM</h2>
-            <form onsubmit="doLogin(event)">
-                <div class="input-group">
-                    <input type="text" id="user" placeholder="Nama Pengguna" required autocomplete="username" aria-label="Nama Pengguna">
-                    <i class="fa-solid fa-user-lock" aria-hidden="true"></i>
+    <div id="login-overlay">
+        <div class="login-wrapper">
+            <div class="login-card" tabindex="0">
+                <div class="circle">
+                    <div class="logo-wrapper">
+                        <!-- Petunjuk dan teks dihilangkan, menyisakan logo -->
+                        <img src="MSB Logo.png" class="logo_img" alt="Logo PT Murinda" onerror="this.src='https://via.placeholder.com/180x60?text=MSB+Logo'">
+                    </div>
                 </div>
-                <div class="input-group">
-                    <input type="password" id="pass" placeholder="Kata Sandi Keamanan" required autocomplete="current-password" aria-label="Kata Sandi">
-                    <i class="fa-solid fa-key" aria-hidden="true"></i>
+                
+                <div class="content">
+                    <h2>MSB ERP SYSTEM</h2>
+                    
+                    <!-- BLOK ALAMAT DENGAN LINK MAPS DI SINI -->
+                    <a href="https://maps.app.goo.gl/3DbQMsey9Bh2TC6S8" target="_blank" class="login-address-block">
+                        <div class="company-name">PT Murinda Sentra Baja</div>
+                        <div class="address-text">
+                            Jl. Raya Kalijati Purwadadi No. 123A RT 006/02<br>
+                            Desa Kalijati Barat, Kecamatan Kalijati<br>
+                            Kabupaten Subang, West Java 41271 (Exit Toll Gate Kalijati)
+                        </div>
+                        <div class="contact-info">
+                            <span><i class="fa-solid fa-phone"></i> (+62260) 7495467</span>
+                            <span><i class="fa-solid fa-fax"></i> (+62260) 7495222</span>
+                            <span><i class="fa-solid fa-envelope"></i> plant@murinda.com</span>
+                        </div>
+                    </a>
+
+                    <div class="action-container">
+                        <button class="luxury-btn" onclick="enterSystem(event)" id="enterBtn">
+                            <i class="fa-solid fa-fingerprint"></i> MASUK SISTEM
+                        </button>
+                    </div>
                 </div>
-                <button type="submit" class="login-btn">LOGIN SYSTEM</button>
-                <p id="err" class="error-msg" role="alert">Akses Ditolak: Kredensial Tidak Valid</p>
-            </form>
-            <div class="login-footer">
-                PT Murinda Sentra Baja <br> Developed by Aspuro Amarulloh Khoiri <br> © 2026
+
+                <img src="Plant MSB.jpg" class="factory_img" alt="Plant PT Murinda" onerror="this.src='https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600&auto=format&fit=crop'">
             </div>
         </div>
     </div>
@@ -301,7 +454,7 @@
 
         <header>
             <div class="header-left">
-                <img src="Murinda Logo.png" alt="Logo" class="logo-small" onerror="this.style.display='none'">
+                <img src="MSB Logo.png" alt="Logo" class="logo-small" onerror="this.style.display='none'">
                 <div class="header-divider"></div>
                 <div class="system-status" aria-label="System Status">
                     <div class="status-dot"></div>
@@ -314,10 +467,10 @@
                 </button>
                 <div class="user-profile">
                     <i class="fa-solid fa-circle-user" aria-hidden="true"></i>
-                    <span id="display-user">Kalijati</span>
+                    <span id="display-user">Kalijati Plant</span>
                 </div>
                 <button class="btn-logout" onclick="doLogout()" aria-label="Logout from System">
-                    <i class="fa-solid fa-power-off" aria-hidden="true"></i> Logout
+                    <i class="fa-solid fa-power-off" aria-hidden="true"></i> Keluar
                 </button>
             </nav>
         </header>
@@ -432,7 +585,6 @@
                 <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
             </div>
 
-            <!-- MODUL BARU: MASTER SCHEDULE -->
             <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/Master-Schedule/')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></div>
                 <div class="module-info"><h3>Master Schedule</h3><p>Pantau timeline dan alokasi waktu secara komprehensif.</p></div>
@@ -697,28 +849,26 @@
             setTimeout(() => { notif.style.animation = 'slideInRight 0.5s ease-out reverse'; setTimeout(() => notif.remove(), 500); }, 5000);
         }
 
-        function doLogin(e) {
+        function enterSystem(e) {
             e.preventDefault();
-            const u = document.getElementById('user').value, p = document.getElementById('pass').value;
-            const btn = document.querySelector('.login-btn'), err = document.getElementById('err');
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Memverifikasi...';
+            const btn = document.getElementById('enterBtn');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> MEMUAT SISTEM...';
+            btn.style.pointerEvents = 'none';
 
             setTimeout(() => {
-                if (u === "Kalijati" && p === "113300") {
-                    document.getElementById('login-page').style.opacity = "0";
-                    setTimeout(() => {
-                        document.getElementById('login-page').style.display = "none";
-                        document.getElementById('main-dashboard').style.display = "flex";
-                        
-                        fetchDashboardData(); 
-                        syncInterval = setInterval(fetchDashboardData, 30000); 
+                const overlay = document.getElementById('login-overlay');
+                overlay.style.opacity = "0";
+                overlay.style.visibility = "hidden";
+                
+                setTimeout(() => {
+                    overlay.style.display = "none";
+                    document.getElementById('main-dashboard').style.display = "flex";
+                    
+                    fetchDashboardData(); 
+                    syncInterval = setInterval(fetchDashboardData, 30000); 
 
-                        showNotification('Login Berhasil', 'Selamat datang, sistem disinkronkan', 'success');
-                    }, 500);
-                } else {
-                    err.style.display = "block"; btn.innerHTML = 'LOGIN SYSTEM';
-                    setTimeout(() => { err.style.display = "none"; }, 3000);
-                }
+                    showNotification('Akses Diberikan', 'Selamat datang di MSB ERP System', 'success');
+                }, 800); 
             }, 1200);
         }
 
