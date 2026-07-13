@@ -10,7 +10,7 @@
     <title>ERP SYSTEM | PT MURINDA SENTRA BAJA - Advanced Dashboard</title>
     
     <!-- Favicon ditambahkan -->
-    <link rel="icon" type="image/png" href="MSB Favicon.png">
+    <link rel="icon" type="image/png" href="Gemini_Generated_Image_l6ftldl6ftldl6ft.png">
     
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -99,8 +99,6 @@
             filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
         }
 
-        /* (CSS .footer-logo telah dihapus seluruhnya karena logo dihapus dari footer) */
-
         /* ==================== GRADIENT BLOBS ==================== */
         .bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.2; z-index: -1; animation: float 15s infinite alternate ease-in-out; pointer-events: none; will-change: transform; }
         .blob-1 { background: linear-gradient(135deg, #0275d8, #06b6d4); width: 600px; height: 600px; top: -15%; left: -10%; }
@@ -111,8 +109,15 @@
         /* ==================== LOADING SCREEN ==================== */
         #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0e27; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s, visibility 0.5s; }
         #loading-screen.hidden { opacity: 0; visibility: hidden; }
-        .loader { width: 80px; height: 80px; border: 6px solid rgba(2, 117, 216, 0.2); border-top: 6px solid #0275d8; border-radius: 50%; animation: spin 1s linear infinite; }
+        
+        /* Modifikasi Loader untuk menampilkan logo di dalam lingkaran */
+        .loader-container { position: relative; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; }
+        .loader { position: absolute; width: 100%; height: 100%; border: 6px solid rgba(2, 117, 216, 0.2); border-top: 6px solid #0275d8; border-radius: 50%; animation: spin 1s linear infinite; }
+        .loader-logo { width: 55px; height: 55px; object-fit: contain; z-index: 10; animation: pulse-logo 2s infinite alternate; filter: brightness(0) invert(1); }
+        
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse-logo { 0% { transform: scale(0.9); opacity: 0.8; } 100% { transform: scale(1.1); opacity: 1; } }
+        
         .loading-text { margin-top: 25px; font-size: 1.2rem; font-weight: 600; color: var(--text-light); letter-spacing: 2px; }
         .loading-progress { margin-top: 15px; font-size: 0.9rem; color: var(--primary-cyan); }
 
@@ -415,7 +420,10 @@
 </head>
 <body>
     <div id="loading-screen" aria-live="polite">
-        <div class="loader"></div>
+        <div class="loader-container">
+            <div class="loader"></div>
+            <img src="MSB Logo.png" class="loader-logo" alt="Logo PT Murinda" onerror="this.src='https://via.placeholder.com/60x60?text=MSB'">
+        </div>
         <div class="loading-text">MSB ERP System</div>
         <div class="loading-progress">Memuat Modul Utama...</div>
     </div>
@@ -613,6 +621,18 @@
             <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/Master-Schedule/')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></div>
                 <div class="module-info"><h3>Master Schedule</h3><p>Pantau timeline dan alokasi waktu secara komprehensif.</p></div>
+                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
+            </div>
+
+            <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/MSB-Approval/')" tabindex="0" role="button">
+                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-file-signature"></i></div>
+                <div class="module-info"><h3>MSB Approval</h3><p>Portal persetujuan digital lintas fungsi departemen dengan sinkronisasi database live.</p></div>
+                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
+            </div>
+
+            <div class="module-card green" onclick="launch('https://murindasentrabaja.github.io/Administration-System/')" tabindex="0" role="button">
+                <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-folder-tree"></i></div>
+                <div class="module-info"><h3>Administration System</h3><p>Manajemen alur kerja administratif dan pelacakan kontrol internal terpadu.</p></div>
                 <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
             </div>
             
