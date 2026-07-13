@@ -9,7 +9,9 @@
     <meta name="theme-color" content="#0a0e27">
     <title>ERP SYSTEM | PT MURINDA SENTRA BAJA - Advanced Dashboard</title>
     
-    <!-- Menambahkan Font Playfair Display untuk kesan elegan -->
+    <!-- Favicon ditambahkan -->
+    <link rel="icon" type="image/png" href="Gemini_Generated_Image_l6ftldl6ftldl6ft.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
@@ -73,12 +75,20 @@
         body.light-theme .datetime { color: #1e293b; }
         h1, h2, h3, h4, h5, button { font-family: 'Poppins', sans-serif; }
 
+        /* --- PERBAIKAN POIN 1: UKURAN & WARNA LOGO --- */
+        header img.logo-small {
+            height: 45px;
+            object-fit: contain;
+            transition: all 0.3s ease;
+        }
+
         body:not(.light-theme) header img.logo-small {
-            background-color: rgba(255, 255, 255, 0.85);
-            padding: 10px 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+            /* Filter ini akan mengubah logo menjadi putih di dark mode */
+            filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(255, 255, 255, 0.2));
         }
 
         body.light-theme header img.logo-small {
@@ -86,8 +96,10 @@
             padding: 0;
             border-radius: 0;
             box-shadow: none;
-            filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.15));
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
         }
+
+        /* (CSS .footer-logo telah dihapus seluruhnya karena logo dihapus dari footer) */
 
         /* ==================== GRADIENT BLOBS ==================== */
         .bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.2; z-index: -1; animation: float 15s infinite alternate ease-in-out; pointer-events: none; will-change: transform; }
@@ -104,7 +116,7 @@
         .loading-text { margin-top: 25px; font-size: 1.2rem; font-weight: 600; color: var(--text-light); letter-spacing: 2px; }
         .loading-progress { margin-top: 15px; font-size: 0.9rem; color: var(--primary-cyan); }
 
-        /* ==================== LOGIN OVERLAY (MEWAH & ANIMATIF) ==================== */
+        /* ==================== LOGIN OVERLAY ==================== */
         #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; display: flex; justify-content: center; align-items: center; z-index: 9998; transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out; }
         
         .login-wrapper { 
@@ -115,14 +127,8 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-15px); }
         }
-
-        @media (max-width: 768px) { .login-wrapper { transform: scale(0.8); animation: float-smooth-mobile 6s ease-in-out infinite; } }
-        @media (max-width: 500px) { .login-wrapper { transform: scale(0.55); animation: float-smooth-mobile-mini 6s ease-in-out infinite; } }
-        @keyframes float-smooth-mobile { 0%, 100% { transform: scale(0.8) translateY(0); } 50% { transform: scale(0.8) translateY(-10px); } }
-        @keyframes float-smooth-mobile-mini { 0%, 100% { transform: scale(0.55) translateY(0); } 50% { transform: scale(0.55) translateY(-8px); } }
         
-        /* Modifikasi Card Login untuk area konten yang lebih luas */
-        .login-card { position: relative; width: 850px; height: 490px; display: flex; align-items: center; justify-content: flex-start; padding-left: 50px; background: transparent; border-radius: 20px; font-family: 'Poppins', sans-serif; cursor: pointer; outline: none; }
+        .login-card { position: relative; width: 850px; min-height: 490px; display: flex; align-items: center; justify-content: flex-start; padding-left: 50px; background: transparent; border-radius: 20px; font-family: 'Poppins', sans-serif; cursor: pointer; outline: none; }
         
         .login-card .circle { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; pointer-events: none; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         
@@ -148,7 +154,6 @@
             50% { transform: scale(1.05); }
         }
         
-        /* Interaksi Hover/Focus */
         .login-card:hover .circle::before, .login-card:focus-within .circle::before { 
             width: 100%; height: 100%; border-radius: 20px; 
             background: linear-gradient(135deg, #0a1930, #124388); 
@@ -169,7 +174,6 @@
             100% { text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 30px rgba(6, 182, 212, 0.6); }
         }
 
-        /* ==================== ADDRESS BLOCK ELEGAN ==================== */
         .login-address-block {
             display: block;
             text-decoration: none;
@@ -192,50 +196,12 @@
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        .login-address-block .company-name {
-            font-family: 'Playfair Display', serif; /* Font Kalem dan Elegan */
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .login-address-block .address-text {
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 300;
-            color: #cbd5e1;
-            line-height: 1.5;
-            margin-bottom: 12px;
-        }
-
-        .login-address-block .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--primary-cyan);
-        }
-
-        .login-address-block .contact-info span {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s;
-        }
-        
-        .login-address-block:hover .contact-info span {
-            color: #fff;
-        }
-
-        .login-address-block .contact-info i {
-            width: 14px;
-            text-align: center;
-            color: var(--primary-orange);
-        }
+        .login-address-block .company-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 600; color: #ffffff; margin-bottom: 8px; letter-spacing: 0.5px; }
+        .login-address-block .address-text { font-family: 'Nunito', sans-serif; font-size: 0.75rem; font-weight: 300; color: #cbd5e1; line-height: 1.5; margin-bottom: 12px; }
+        .login-address-block .contact-info { display: flex; flex-direction: column; gap: 6px; font-family: 'Nunito', sans-serif; font-size: 0.75rem; font-weight: 500; color: var(--primary-cyan); }
+        .login-address-block .contact-info span { display: flex; align-items: center; gap: 8px; transition: color 0.3s; }
+        .login-address-block:hover .contact-info span { color: #fff; }
+        .login-address-block .contact-info i { width: 14px; text-align: center; color: var(--primary-orange); }
         
         .action-container { position: relative; margin-top: 10px; }
         
@@ -273,14 +239,15 @@
         .top-info-bar { background: rgba(10, 14, 39, 0.6); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 12px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; font-weight: 600; color: var(--text-light); z-index: 101; }
         .datetime { display: flex; align-items: center; gap: 15px; } .datetime i { color: var(--primary-cyan); }
         .hse-ticker-wrap { flex: 1; max-width: 60%; overflow: hidden; white-space: nowrap; position: relative; display: flex; align-items: center; background: rgba(245, 158, 11, 0.1); padding: 8px 20px; border-radius: 15px; border: 1px solid rgba(245, 158, 11, 0.2); margin-left: 30px; }
-        .hse-ticker { display: inline-block; padding-left: 100%; animation: ticker 35s linear infinite; font-weight: 700; color: #fbbf24; }
+        
+        /* Ticker Animation Diperlambat untuk teks yang lebih panjang */
+        .hse-ticker { display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; font-weight: 700; color: #fbbf24; }
         .hse-ticker i { margin-right: 10px; color: var(--primary-orange); }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
         /* ==================== HEADER ==================== */
         header { min-height: 85px; background: rgba(10, 14, 39, 0.6); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; z-index: 100; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15); position: sticky; top: 0; }
         .header-left { display: flex; align-items: center; gap: 30px; }
-        header img.logo-small { height: 40px; }
         .header-divider { width: 2px; height: 40px; background: rgba(255, 255, 255, 0.1); }
         .system-status { display: flex; align-items: center; gap: 10px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--primary-green); background: rgba(16, 185, 129, 0.1); padding: 10px 20px; border-radius: 25px; border: 1px solid rgba(16, 185, 129, 0.2); }
         .status-dot { width: 10px; height: 10px; background: var(--primary-green); border-radius: 50%; box-shadow: 0 0 15px var(--primary-green); animation: pulse 2s infinite; }
@@ -354,32 +321,93 @@
         .notification-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 3px; }
         .notification-message { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); }
 
-        /* ==================== VIEWPORT SYSTEM ==================== */
-        #viewport-container { display: none; position: fixed; top: 120px; left: 0; width: 100%; height: calc(100vh - 120px); background: #ffffff; z-index: 500; opacity: 0; transform: translateY(40px) scale(0.98); transition: transform var(--transition-smooth), opacity var(--transition-smooth); will-change: transform, opacity; border-top-left-radius: 25px; border-top-right-radius: 25px; box-shadow: 0 -15px 60px rgba(0, 0, 0, 0.4); overflow: hidden; }
+        /* --- PERBAIKAN POIN 5: UKURAN VIEWPORT ERP LEBIH LUAS KE ATAS --- */
+        #viewport-container { display: none; position: fixed; top: 70px; left: 0; width: 100%; height: calc(100vh - 70px); background: #ffffff; z-index: 500; opacity: 0; transform: translateY(40px) scale(0.98); transition: transform var(--transition-smooth), opacity var(--transition-smooth); will-change: transform, opacity; border-top-left-radius: 20px; border-top-right-radius: 20px; box-shadow: 0 -15px 60px rgba(0, 0, 0, 0.4); overflow: hidden; }
         #viewport-container.active { opacity: 1; transform: translateY(0) scale(1); }
         #erp-frame { width: 100%; height: 100%; border: none; background: #fff; }
-        .back-nav { position: fixed; bottom: 30px; right: 30px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); color: #fff; padding: 16px 28px; border-radius: 50px; border: 2px solid rgba(255, 255, 255, 0.2); font-weight: 700; cursor: pointer; z-index: 1000; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); font-size: 0.95rem; display: none; align-items: center; gap: 12px; opacity: 0; transform: translateY(20px); transition: all var(--transition-smooth); }
+        
+        /* --- PERBAIKAN POIN 4: TOMBOL KEMBALI DIPERKECIL --- */
+        .back-nav { position: fixed; bottom: 20px; right: 20px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); color: #fff; padding: 10px 20px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.2); font-weight: 600; cursor: pointer; z-index: 1000; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); font-size: 0.85rem; display: none; align-items: center; gap: 8px; opacity: 0; transform: translateY(20px); transition: all var(--transition-smooth); }
         .back-nav.active { opacity: 1; transform: translateY(0); }
-        .back-nav:hover { background: #000; transform: translateY(-5px) scale(1.05); border-color: var(--primary-cyan); }
+        .back-nav:hover { background: #000; transform: translateY(-3px) scale(1.05); border-color: var(--primary-cyan); }
+        .back-nav i { font-size: 1rem; }
 
-        /* ==================== FOOTER ==================== */
-        footer { background: rgba(10, 14, 39, 0.7); backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.05); padding: 30px 40px; display: flex; justify-content: space-between; align-items: center; color: rgba(255, 255, 255, 0.6); z-index: 100; }
-        .footer-address { font-size: 0.9rem; line-height: 1.8; }
-        .footer-address strong { color: var(--text-white); font-size: 1rem; display: block; margin-bottom: 5px; }
-        .footer-contact { margin-top: 10px; display: flex; gap: 20px; font-weight: 600; color: var(--primary-cyan); }
-        .footer-copy { text-align: right; font-size: 0.85rem; font-weight: 600; }
-        .footer-copy span:first-child { color: var(--text-white); display: block; margin-bottom: 5px; }
+        /* ==================== FOOTER (Diperbarui) ==================== */
+        footer { 
+            background: rgba(10, 14, 39, 0.7); 
+            backdrop-filter: blur(15px); 
+            border-top: 1px solid rgba(255, 255, 255, 0.05); 
+            padding: 15px 40px; /* Padding vertikal dikurangi */
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            color: rgba(255, 255, 255, 0.6); 
+            z-index: 100; 
+        }
+        .footer-address { font-size: 0.85rem; line-height: 1.5; } /* Font dan tinggi baris dirapatkan */
+        .footer-address strong { color: var(--text-white); font-size: 0.95rem; display: block; margin-bottom: 3px; }
+        .footer-contact { margin-top: 8px; display: flex; gap: 15px; font-weight: 600; color: var(--primary-cyan); }
+        .footer-copy { text-align: right; font-size: 0.8rem; font-weight: 600; }
+        .footer-copy span:first-child { color: var(--text-white); display: block; margin-bottom: 3px; }
 
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
         ::-webkit-scrollbar-thumb { background: rgba(2, 117, 216, 0.5); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary-cyan); }
 
-        /* ==================== RESPONSIVE DESIGN ==================== */
+        /* --- PERBAIKAN POIN 6: RESPONSIVE DESIGN UNTUK HP/MOBILE DITINGKATKAN --- */
         @media (max-width: 1200px) { .charts-section { grid-template-columns: 1fr; } }
-        @media (max-width: 992px) { .content-area { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } .hse-ticker-wrap { max-width: 50%; } .dashboard-stats { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
-        @media (max-width: 768px) { .top-info-bar { flex-direction: column; align-items: flex-start; gap: 12px; padding: 15px 20px; } .hse-ticker-wrap { max-width: 100%; margin-left: 0; } header { padding: 15px 20px; flex-wrap: wrap; gap: 15px; } .header-divider { display: none; } .dashboard-stats, .charts-section, .content-area { padding: 20px; } .content-area { grid-template-columns: 1fr; } #viewport-container { top: 140px; height: calc(100vh - 140px); } footer { flex-direction: column; text-align: center; padding: 25px 20px; gap: 20px; } .footer-contact { flex-direction: column; gap: 10px; } .footer-copy { text-align: center; } .back-nav { bottom: 20px; left: 20px; right: 20px; justify-content: center; } }
-        @media (max-width: 480px) { header img.logo-small { height: 35px; } .dashboard-stats { grid-template-columns: 1fr; } }
+        @media (max-width: 992px) { .content-area { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } .dashboard-stats { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
+        
+        /* Modifikasi Form Login Agar Rapih di HP */
+        @media (max-width: 900px) {
+            .login-card {
+                width: 90%; max-width: 450px; height: auto; min-height: 70vh;
+                padding: 40px 25px; display: flex; flex-direction: column; justify-content: center;
+                align-items: center; text-align: center; background: rgba(10, 25, 48, 0.9);
+                box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);
+            }
+            .login-card .circle { position: relative; height: auto; margin-bottom: 25px; }
+            .login-card .circle::before { display: none; }
+            .login-card .content { opacity: 1; visibility: visible; transform: translateX(0); width: 100%; max-width: 100%; padding-left: 0; }
+            .login-card .content h2 { font-size: 1.6rem; white-space: normal; }
+            .login-card .logo-wrapper { position: relative; opacity: 1; transform: scale(1); pointer-events: auto; }
+            .login-card:hover .logo-wrapper, .login-card:focus-within .logo-wrapper { opacity: 1; transform: scale(1); }
+            .login-card .factory_img { display: none; }
+            .login-address-block .contact-info span { justify-content: center; }
+            .login-wrapper { animation: float-smooth-mobile 6s ease-in-out infinite !important; transform: scale(1) !important; width: 100%; display: flex; justify-content: center;}
+            @keyframes float-smooth-mobile { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        }
+
+        /* Modifikasi Dashboard untuk Mobile */
+        @media (max-width: 768px) { 
+            .top-info-bar { flex-direction: column; align-items: center; gap: 8px; padding: 12px 15px; font-size: 0.75rem; text-align: center; } 
+            .datetime { justify-content: center; width: 100%; }
+            .hse-ticker-wrap { max-width: 100%; width: 100%; margin-left: 0; border-radius: 8px; } 
+            header { padding: 12px 15px; flex-direction: column; gap: 12px; } 
+            .header-left { width: 100%; justify-content: space-between; gap: 10px; }
+            .header-divider { display: none; } 
+            .system-status { font-size: 0.75rem; padding: 6px 12px; }
+            .nav-right { width: 100%; justify-content: space-between; }
+            .user-profile span { display: none; }
+            .user-profile { padding: 8px 15px; }
+            .dashboard-stats, .charts-section, .content-area { padding: 15px; } 
+            .content-area { grid-template-columns: 1fr; } 
+            #viewport-container { top: 60px; height: calc(100vh - 60px); border-radius: 15px 15px 0 0; } 
+            /* Jarak dan Padding Footer versi Mobile dirapatkan */
+            footer { flex-direction: column; text-align: center; padding: 15px 20px; gap: 12px; } 
+            .footer-contact { flex-direction: column; gap: 10px; align-items: center; } 
+            .footer-copy { text-align: center; } 
+            .back-nav { bottom: 15px; right: 15px; padding: 10px 15px; }
+            .back-nav span { display: none; }
+            .back-nav::after { content: "Kembali"; }
+        }
+        @media (max-width: 480px) { 
+            header img.logo-small { height: 35px; } 
+            .dashboard-stats { grid-template-columns: 1fr; }
+            .login-card { padding: 30px 20px; }
+            .login-address-block .company-name { font-size: 1rem; }
+        }
 
         .ripple { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.3); transform: scale(0); animation: ripple-animation 0.6s ease-out; pointer-events: none; }
         @keyframes ripple-animation { to { transform: scale(4); opacity: 0; } }
@@ -403,7 +431,6 @@
             <div class="login-card" tabindex="0">
                 <div class="circle">
                     <div class="logo-wrapper">
-                        <!-- Petunjuk dan teks dihilangkan, menyisakan logo -->
                         <img src="MSB Logo.png" class="logo_img" alt="Logo PT Murinda" onerror="this.src='https://via.placeholder.com/180x60?text=MSB+Logo'">
                     </div>
                 </div>
@@ -411,7 +438,6 @@
                 <div class="content">
                     <h2>MSB ERP SYSTEM</h2>
                     
-                    <!-- BLOK ALAMAT DENGAN LINK MAPS DI SINI -->
                     <a href="https://maps.app.goo.gl/3DbQMsey9Bh2TC6S8" target="_blank" class="login-address-block">
                         <div class="company-name">PT Murinda Sentra Baja</div>
                         <div class="address-text">
@@ -444,10 +470,10 @@
                 <span><i class="fa-regular fa-calendar" aria-hidden="true"></i> <span id="current-date">Memuat...</span></span>
                 <span><i class="fa-regular fa-clock" aria-hidden="true"></i> <span id="current-time">Memuat...</span></span>
             </div>
-            <div class="hse-ticker-wrap" aria-label="HSE Reminder Ticker">
+            <div class="hse-ticker-wrap" aria-label="HSE & Motivation Ticker">
                 <div class="hse-ticker">
-                    <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
-                    <strong>HSE REMINDER:</strong> Utamakan Keselamatan dan Kesehatan Kerja (K3) | Pastikan Area Kerja Aman Sebelum Memulai Aktivitas | Wajib Menggunakan APD Lengkap di Area Pabrik Kalijati | Zero Accident adalah Komitmen Kita Bersama!
+                    <i class="fa-solid fa-bullhorn" aria-hidden="true"></i>
+                    <strong>MSB INFO:</strong> Utamakan Keselamatan (K3) & Gunakan APD Lengkap! | Semangat Bekerja: Setiap keringat hari ini adalah langkah menuju kesuksesan! | Merasa Lelah/Ngantuk? Lakukan peregangan ringan, minum air putih, atau cuci muka sejenak. | Bosan? Tarik napas dalam dan ingat kembali tujuan besar Anda. | Zero Accident & Produktivitas Tinggi adalah Komitmen Bersama!
                 </div>
             </div>
         </div>
@@ -530,7 +556,6 @@
 
         <section class="content-area" aria-label="ERP Modules Application Navigation">
             <h2 class="section-title"><span>Modul ERP System</span></h2>
-
             <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/HR-System/')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-people-group"></i></div>
                 <div class="module-info"><h3>Human Resource</h3><p>Otomatisasi seluruh proses SDM termasuk Penilaian Kinerja. Sinkronisasi data real-time.</p></div>
@@ -617,7 +642,7 @@
     </div>
 
     <button class="back-nav" id="back-btn" onclick="closeViewport()" aria-label="Kembali ke Dashboard">
-        <i class="fa-solid fa-house" aria-hidden="true"></i> Kembali ke Dashboard
+        <i class="fa-solid fa-house" aria-hidden="true"></i> <span>Kembali</span>
     </button>
 
     <script>
