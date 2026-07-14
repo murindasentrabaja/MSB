@@ -209,36 +209,6 @@
         .login-address-block:hover .contact-info span { color: #fff; }
         .login-address-block .contact-info i { width: 14px; text-align: center; color: var(--primary-orange); }
         
-        /* Input Password Container */
-        .secure-input-wrapper {
-            position: relative;
-            margin-bottom: 15px;
-        }
-        .secure-input-wrapper input {
-            width: 100%;
-            padding: 12px 15px 12px 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            color: #ffffff;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-            font-family: 'Poppins', sans-serif;
-        }
-        .secure-input-wrapper input:focus {
-            border-color: var(--primary-cyan);
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
-        }
-        .secure-input-wrapper i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary-cyan);
-            font-size: 0.95rem;
-        }
-
         .action-container { position: relative; margin-top: 5px; }
         
         .luxury-btn { 
@@ -485,12 +455,6 @@
                             <span><i class="fa-solid fa-envelope"></i> plant@murinda.com</span>
                         </div>
                     </a>
-
-                    <!-- FORM INPUT SECURE PASSWORD -->
-                    <div class="secure-input-wrapper">
-                        <i class="fa-solid fa-shield-halved"></i>
-                        <input type="password" id="access-password" placeholder="Masukkan PIN / Password Akses" onkeydown="handleEnterKey(event)" required autocomplete="current-password">
-                    </div>
 
                     <div class="action-container">
                         <button class="luxury-btn" onclick="enterSystem(event)" id="enterBtn">
@@ -979,37 +943,9 @@
             setTimeout(() => { notif.style.animation = 'slideInRight 0.5s ease-out reverse'; setTimeout(() => notif.remove(), 500); }, 5000);
         }
 
-        // ==================== SECURITY LAYER 4: CRYPTOGRAPHIC PASSWORD VERIFICATION ====================
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        function handleEnterKey(event) {
-            if (event.key === "Enter") {
-                enterSystem(event);
-            }
-        }
-
         async function enterSystem(e) {
             if (e) e.preventDefault();
-            const passwordField = document.getElementById('access-password');
-            const passwordInput = passwordField.value;
             const btn = document.getElementById('enterBtn');
-
-            if (!passwordInput) {
-                showNotification('Validasi Gagal', 'Harap masukkan Password / PIN akses Anda.', 'warning');
-                return;
-            }
-
-            // PERBAIKAN: Validasi string langsung karena hash sebelumnya tidak cocok dengan "MSB2026"
-            if (passwordInput !== "MSB2026") {
-                showNotification('Akses Ditolak', 'Password / PIN yang dimasukkan tidak valid!', 'warning');
-                passwordField.value = "";
-                return;
-            }
 
             btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> MEMUAT SISTEM...';
             btn.style.pointerEvents = 'none';
@@ -1054,6 +990,7 @@
             });
         }
 
+        // Modifikasi peluncur modul agar otomatis mendekodekan URL Base64
         function launch(encodedUrl) {
             const url = atob(encodedUrl);
             if (url.includes("script.google.com")) { window.open(url, '_blank'); return; }
