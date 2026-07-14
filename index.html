@@ -9,7 +9,7 @@
     <meta name="theme-color" content="#0a0e27">
     <title>ERP SYSTEM | PT MURINDA SENTRA BAJA - Advanced Dashboard</title>
     
-    <!-- Favicon ditambahkan -->
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="MSB Favicon.png">
     
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
@@ -57,6 +57,10 @@
             overflow-x: hidden;
             position: relative;
             transition: all 0.5s ease;
+            user-select: none; /* Mencegah seleksi teks */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         /* ==================== LIGHT THEME OPTIMIZATION ==================== */
@@ -75,7 +79,6 @@
         body.light-theme .datetime { color: #1e293b; }
         h1, h2, h3, h4, h5, button { font-family: 'Poppins', sans-serif; }
 
-        /* --- PERBAIKAN POIN 1: UKURAN & WARNA LOGO --- */
         header img.logo-small {
             height: 45px;
             object-fit: contain;
@@ -87,7 +90,6 @@
             padding: 0;
             border-radius: 0;
             box-shadow: none;
-            /* Filter ini akan mengubah logo menjadi putih di dark mode */
             filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(255, 255, 255, 0.2));
         }
 
@@ -110,7 +112,6 @@
         #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0e27; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s, visibility 0.5s; }
         #loading-screen.hidden { opacity: 0; visibility: hidden; }
         
-        /* Modifikasi Loader untuk menampilkan logo di dalam lingkaran */
         .loader-container { position: relative; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; }
         .loader { position: absolute; width: 100%; height: 100%; border: 6px solid rgba(2, 117, 216, 0.2); border-top: 6px solid #0275d8; border-radius: 50%; animation: spin 1s linear infinite; }
         .loader-logo { width: 55px; height: 55px; object-fit: contain; z-index: 10; animation: pulse-logo 2s infinite alternate; filter: brightness(0) invert(1); }
@@ -133,7 +134,7 @@
             50% { transform: translateY(-15px); }
         }
         
-        .login-card { position: relative; width: 850px; min-height: 490px; display: flex; align-items: center; justify-content: flex-start; padding-left: 50px; background: transparent; border-radius: 20px; font-family: 'Poppins', sans-serif; cursor: pointer; outline: none; }
+        .login-card { position: relative; width: 850px; min-height: 520px; display: flex; align-items: center; justify-content: flex-start; padding-left: 50px; background: transparent; border-radius: 20px; font-family: 'Poppins', sans-serif; cursor: pointer; outline: none; }
         
         .login-card .circle { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; pointer-events: none; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         
@@ -186,8 +187,8 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-left: 3px solid var(--primary-cyan);
             border-radius: 12px;
-            padding: 18px 20px;
-            margin-bottom: 22px;
+            padding: 15px 18px;
+            margin-bottom: 15px;
             backdrop-filter: blur(10px);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -201,19 +202,49 @@
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        .login-address-block .company-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 600; color: #ffffff; margin-bottom: 8px; letter-spacing: 0.5px; }
-        .login-address-block .address-text { font-family: 'Nunito', sans-serif; font-size: 0.75rem; font-weight: 300; color: #cbd5e1; line-height: 1.5; margin-bottom: 12px; }
-        .login-address-block .contact-info { display: flex; flex-direction: column; gap: 6px; font-family: 'Nunito', sans-serif; font-size: 0.75rem; font-weight: 500; color: var(--primary-cyan); }
+        .login-address-block .company-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: #ffffff; margin-bottom: 5px; letter-spacing: 0.5px; }
+        .login-address-block .address-text { font-family: 'Nunito', sans-serif; font-size: 0.7rem; font-weight: 300; color: #cbd5e1; line-height: 1.4; margin-bottom: 10px; }
+        .login-address-block .contact-info { display: flex; flex-direction: column; gap: 4px; font-family: 'Nunito', sans-serif; font-size: 0.7rem; font-weight: 500; color: var(--primary-cyan); }
         .login-address-block .contact-info span { display: flex; align-items: center; gap: 8px; transition: color 0.3s; }
         .login-address-block:hover .contact-info span { color: #fff; }
         .login-address-block .contact-info i { width: 14px; text-align: center; color: var(--primary-orange); }
         
-        .action-container { position: relative; margin-top: 10px; }
+        /* Input Password Container */
+        .secure-input-wrapper {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        .secure-input-wrapper input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: #ffffff;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        .secure-input-wrapper input:focus {
+            border-color: var(--primary-cyan);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+        }
+        .secure-input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-cyan);
+            font-size: 0.95rem;
+        }
+
+        .action-container { position: relative; margin-top: 5px; }
         
         .luxury-btn { 
             display: flex; justify-content: center; align-items: center; gap: 15px; width: 100%; 
-            padding: 16px 25px; background: linear-gradient(45deg, #b92025, #e53935, #b92025); background-size: 200% auto;
-            color: #fff; font-weight: 800; font-size: 1.1rem; border: none; cursor: pointer; 
+            padding: 14px 25px; background: linear-gradient(45deg, #b92025, #e53935, #b92025); background-size: 200% auto;
+            color: #fff; font-weight: 800; font-size: 1rem; border: none; cursor: pointer; 
             border-radius: 50px; text-transform: uppercase; letter-spacing: 2px; 
             box-shadow: 0 10px 30px rgba(185, 32, 37, 0.4); 
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
@@ -230,7 +261,7 @@
         
         .luxury-btn:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 15px 40px rgba(185, 32, 37, 0.6); }
         .luxury-btn:hover::after { left: 150%; }
-        .luxury-btn i { font-size: 1.3rem; }
+        .luxury-btn i { font-size: 1.2rem; }
         
         .login-card .factory_img { position: absolute; top: 50%; left: 50%; width: 350px; height: 230px; object-fit: cover; border-radius: 15px; border: 4px solid #fff; box-shadow: 0 20px 40px rgba(0,0,0,0.5); transform: translate(-50%, -50%) scale(0) rotate(-10deg); z-index: 11; transition: 0.7s cubic-bezier(0.25, 1, 0.5, 1.2); pointer-events: none; opacity: 0; }
         .login-card:hover .factory_img, .login-card:focus-within .factory_img { top: 50%; left: 75%; transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; transition-delay: 0.2s; }
@@ -245,7 +276,6 @@
         .datetime { display: flex; align-items: center; gap: 15px; } .datetime i { color: var(--primary-cyan); }
         .hse-ticker-wrap { flex: 1; max-width: 60%; overflow: hidden; white-space: nowrap; position: relative; display: flex; align-items: center; background: rgba(245, 158, 11, 0.1); padding: 8px 20px; border-radius: 15px; border: 1px solid rgba(245, 158, 11, 0.2); margin-left: 30px; }
         
-        /* Ticker Animation Diperlambat untuk teks yang lebih panjang */
         .hse-ticker { display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; font-weight: 700; color: #fbbf24; }
         .hse-ticker i { margin-right: 10px; color: var(--primary-orange); }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
@@ -316,7 +346,7 @@
         .blue .explore-btn { color: #2196f3; } .green .explore-btn { color: #10b981; } .orange .explore-btn { color: #fbbf24; }
 
         /* ==================== NOTIFICATIONS ==================== */
-        .notification-container { position: fixed; top: 20px; right: 20px; z-index: 9998; display: flex; flex-direction: column; gap: 15px; }
+        .notification-container { position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 15px; }
         .notification { background: rgba(10, 14, 39, 0.9); border: 1px solid rgba(255, 255, 255, 0.1); padding: 18px 25px; border-radius: 15px; min-width: 320px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); display: flex; align-items: center; gap: 15px; animation: slideInRight 0.5s ease-out; }
         @keyframes slideInRight { from { opacity: 0; transform: translateX(400px); } to { opacity: 1; transform: translateX(0); } }
         .notification i { font-size: 1.5rem; }
@@ -326,30 +356,29 @@
         .notification-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 3px; }
         .notification-message { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); }
 
-        /* --- PERBAIKAN POIN 5: UKURAN VIEWPORT ERP LEBIH LUAS KE ATAS --- */
+        /* ==================== VIEWPORT CONTAINER ==================== */
         #viewport-container { display: none; position: fixed; top: 70px; left: 0; width: 100%; height: calc(100vh - 70px); background: #ffffff; z-index: 500; opacity: 0; transform: translateY(40px) scale(0.98); transition: transform var(--transition-smooth), opacity var(--transition-smooth); will-change: transform, opacity; border-top-left-radius: 20px; border-top-right-radius: 20px; box-shadow: 0 -15px 60px rgba(0, 0, 0, 0.4); overflow: hidden; }
         #viewport-container.active { opacity: 1; transform: translateY(0) scale(1); }
         #erp-frame { width: 100%; height: 100%; border: none; background: #fff; }
         
-        /* --- PERBAIKAN POIN 4: TOMBOL KEMBALI DIPERKECIL --- */
         .back-nav { position: fixed; bottom: 20px; right: 20px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); color: #fff; padding: 10px 20px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.2); font-weight: 600; cursor: pointer; z-index: 1000; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); font-size: 0.85rem; display: none; align-items: center; gap: 8px; opacity: 0; transform: translateY(20px); transition: all var(--transition-smooth); }
         .back-nav.active { opacity: 1; transform: translateY(0); }
         .back-nav:hover { background: #000; transform: translateY(-3px) scale(1.05); border-color: var(--primary-cyan); }
         .back-nav i { font-size: 1rem; }
 
-        /* ==================== FOOTER (Diperbarui) ==================== */
+        /* ==================== FOOTER ==================== */
         footer { 
             background: rgba(10, 14, 39, 0.7); 
             backdrop-filter: blur(15px); 
             border-top: 1px solid rgba(255, 255, 255, 0.05); 
-            padding: 15px 40px; /* Padding vertikal dikurangi */
+            padding: 15px 40px; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
             color: rgba(255, 255, 255, 0.6); 
             z-index: 100; 
         }
-        .footer-address { font-size: 0.85rem; line-height: 1.5; } /* Font dan tinggi baris dirapatkan */
+        .footer-address { font-size: 0.85rem; line-height: 1.5; } 
         .footer-address strong { color: var(--text-white); font-size: 0.95rem; display: block; margin-bottom: 3px; }
         .footer-contact { margin-top: 8px; display: flex; gap: 15px; font-weight: 600; color: var(--primary-cyan); }
         .footer-copy { text-align: right; font-size: 0.8rem; font-weight: 600; }
@@ -360,11 +389,10 @@
         ::-webkit-scrollbar-thumb { background: rgba(2, 117, 216, 0.5); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary-cyan); }
 
-        /* --- PERBAIKAN POIN 6: RESPONSIVE DESIGN UNTUK HP/MOBILE DITINGKATKAN --- */
+        /* ==================== RESPONSIVE DESIGN ==================== */
         @media (max-width: 1200px) { .charts-section { grid-template-columns: 1fr; } }
         @media (max-width: 992px) { .content-area { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } .dashboard-stats { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
         
-        /* Modifikasi Form Login Agar Rapih di HP */
         @media (max-width: 900px) {
             .login-card {
                 width: 90%; max-width: 450px; height: auto; min-height: 70vh;
@@ -384,7 +412,6 @@
             @keyframes float-smooth-mobile { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         }
 
-        /* Modifikasi Dashboard untuk Mobile */
         @media (max-width: 768px) { 
             .top-info-bar { flex-direction: column; align-items: center; gap: 8px; padding: 12px 15px; font-size: 0.75rem; text-align: center; } 
             .datetime { justify-content: center; width: 100%; }
@@ -399,7 +426,6 @@
             .dashboard-stats, .charts-section, .content-area { padding: 15px; } 
             .content-area { grid-template-columns: 1fr; } 
             #viewport-container { top: 60px; height: calc(100vh - 60px); border-radius: 15px 15px 0 0; } 
-            /* Jarak dan Padding Footer versi Mobile dirapatkan */
             footer { flex-direction: column; text-align: center; padding: 15px 20px; gap: 12px; } 
             .footer-contact { flex-direction: column; gap: 10px; align-items: center; } 
             .footer-copy { text-align: center; } 
@@ -459,6 +485,12 @@
                             <span><i class="fa-solid fa-envelope"></i> plant@murinda.com</span>
                         </div>
                     </a>
+
+                    <!-- FORM INPUT SECURE PASSWORD -->
+                    <div class="secure-input-wrapper">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <input type="password" id="access-password" placeholder="Masukkan PIN / Password Akses" onkeydown="handleEnterKey(event)" required autocomplete="current-password">
+                    </div>
 
                     <div class="action-container">
                         <button class="luxury-btn" onclick="enterSystem(event)" id="enterBtn">
@@ -564,73 +596,75 @@
 
         <section class="content-area" aria-label="ERP Modules Application Navigation">
             <h2 class="section-title"><span>Modul ERP System</span></h2>
-            <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/HR-System/')" tabindex="0" role="button">
+            
+            <!-- Link menggunakan Base64 Obfuscation demi perlindungan URL -->
+            <div class="module-card blue" onclick="launch('aHR0cHM6Ly9tdXJpbmRhc2VudHJhYmFqYS5naXRodWIuaW8vSFItU3lzdGVtLw==')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-people-group"></i></div>
                 <div class="module-info"><h3>Human Resource</h3><p>Otomatisasi seluruh proses SDM termasuk Penilaian Kinerja. Sinkronisasi data real-time.</p></div>
                 <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
             </div>
 
-            <div class="module-card green" onclick="launch('https://murindasentrabaja.github.io/General-Affairs/')" tabindex="0" role="button">
+            <div class="module-card green" onclick="launch('aHR0cHM6Ly9tdXJpbmRhc2VudHJhYmFqYS5naXRodWIuaW8vR2VuZXJhbC1BZmZhaXJzLw==')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-building-circle-check"></i></div>
                 <div class="module-info"><h3>General Affairs</h3><p>Kelola fasilitas dan operasional kantor secara digital. Tingkatkan produktivitas alur kerja.</p></div>
                 <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
             </div>
 
-            <div class="module-card orange" onclick="launch('https://murindasentrabaja.github.io/HSE/')" tabindex="0" role="button">
+            <div class="module-card orange" onclick="launch('aHR0cHM6Ly9tdXJpbmRhc2VudHJhYmFqYS5naXRodWIuaW8vSFNFLw==')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-helmet-safety"></i></div>
                 <div class="module-info"><h3>HSE System</h3><p>Kendali penuh kepatuhan K3. Pastikan standar keselamatan dan pelaporan lingkungan akurat.</p></div>
                 <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
             </div>
 
-            <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/Maintenance/')" tabindex="0" role="button">
+            <div class="module-card blue" onclick="launch('aHR0cHM6Ly9tdXJpbmRhc2VudHJhYmFqYS5naXRodWIuaW8vTWFpbnRlbmFuY2Uv')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-gears"></i></div>
                 <div class="module-info"><h3>Maintenance</h3><p>Prediksi kebutuhan perawatan mesin secara otomatis. Minimalkan downtime.</p></div>
                 <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
             </div>
 
-            <div class="module-card green" onclick="launch('https://murindasentrabaja.github.io/Purchase-Order/')" tabindex="0" role="button">
+            <div class="module-card green" onclick="launch('aHR0cHM6Ly9tdXJpbmRhc2VudHJhYmFqYS5naXRodWIuaW8vUHVyY2hhc2UtT3JkZXIv')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-file-invoice-dollar"></i></div>
                 <div class="module-info"><h3>Purchase Order</h3><p>Pengadaan cerdas terintegrasi. Persetujuan multi-level yang ringkas dengan kendali vendor.</p></div>
                 <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
             </div>
 
-            <div class="module-card orange" onclick="launch('https://murindasentrabaja.github.io/Warehouse-System/')" tabindex="0" role="button">
+            <div class="module-card orange" onclick="launch('aHR0cHM6Ly9tdXJpbmRhc2VudHJhYmFqYS5naXRodWIuaW8vV2FyZWhvdXNlLVN5c3RlbS8=')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-boxes-stacked"></i></div>
                 <div class="module-info"><h3>Warehouse</h3><p>Visibilitas stok dan logistik real-time. Eliminasi kesalahan inventaris.</p></div>
                 <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
             </div>
 
-            <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/Production-Tracking/')" tabindex="0" role="button">
+            <div class="module-card blue" onclick="launch('aHR0cHM6Ly9tdXJpbmRhc2VudHJhYmFqYS5naXRodWIuaW8vUHJvZHVjdGlvbi1UcmFja2luZy8=')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-industry"></i></div>
                 <div class="module-info"><h3>Produksi</h3><p>Monitoring lini manufaktur secara digital. Percepat output harian dengan data efisiensi akurat.</p></div>
                 <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
             </div>
 
-            <div class="module-card green" onclick="launch('https://murindasentrabaja.github.io/QC-Inspection/')" tabindex="0" role="button">
+            <div class="module-card green" onclick="launch('aHR0cHM6Ly9tdXJpbmRhc2VudHJhYmFqYS5naXRodWIuaW8vUUMtSW5zcGVjdGlvbi8=')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-microscope"></i></div>
                 <div class="module-info"><h3>Quality Control</h3><p>Standardisasi mutu yang presisi. Inspeksi cepat berbasis data untuk menjaga integritas.</p></div>
                 <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
             </div>
 
-            <div class="module-card orange" onclick="launch('https://murindasentrabaja.github.io/SPP/')" tabindex="0" role="button">
+            <div class="module-card orange" onclick="launch('aHR0cHM6Ly9tdXJpbmRhc2VudHJhYmFqYS5naXRodWIuaW8vU1BQLw==')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-file-invoice"></i></div>
                 <div class="module-info"><h3>SPP System</h3><p>Manajemen Surat Permintaan Pembelian. Kelola dan pantau pengajuan kebutuhan material.</p></div>
                 <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
             </div>
 
-            <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/Master-Schedule/')" tabindex="0" role="button">
+            <div class="module-card blue" onclick="launch('aHR0cHM6Ly9tdXJpbmRhc2VudHJhYmFqYS5naXRodWIuaW8vTWFzdGVyLVNjaGVkdWxlLw==')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></div>
                 <div class="module-info"><h3>Master Schedule</h3><p>Pantau timeline dan alokasi waktu secara komprehensif.</p></div>
                 <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
             </div>
 
-            <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/MSB-Approval/')" tabindex="0" role="button">
+            <div class="module-card blue" onclick="launch('aHR0cHM6Ly9tdXJpbmRhc2VudHJhYmFqYS5naXRodWIuaW8vTVNCLUFwcHJvdmFsLw==')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-file-signature"></i></div>
                 <div class="module-info"><h3>MSB Approval</h3><p>Portal persetujuan digital lintas fungsi departemen dengan sinkronisasi database live.</p></div>
                 <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
             </div>
 
-            <div class="module-card green" onclick="launch('https://murindasentrabaja.github.io/Administration-System/')" tabindex="0" role="button">
+            <div class="module-card green" onclick="launch('aHR0cHM6Ly9tdXJpbmRhc2VudHJhYmFqYS5naXRodWIuaW8vQWRtaW5pc3RyYXRpb24tU3lzdGVtLw==')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-folder-tree"></i></div>
                 <div class="module-info"><h3>Administration System</h3><p>Manajemen alur kerja administratif dan pelacakan kontrol internal terpadu.</p></div>
                 <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
@@ -652,7 +686,7 @@
             </address>
             <div class="footer-copy">
                 <span>PT Murinda Sentra Baja. Hak Cipta Dilindungi Undang-Undang.</span>
-                <span style="opacity: 0.7;">Developed by Aspuro Amarulloh Khoiri | Version 070695 Premium Enhanced</span>
+                <span style="opacity: 0.7;">Developed by Aspuro Amarulloh Khoiri | Version 070695 Premium Enhanced Secure</span>
             </div>
         </footer>
     </main>
@@ -666,7 +700,58 @@
     </button>
 
     <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyu96U5qQHgEarOmSdH2wSDGITeV8-67b_5B39t95gLXf5ONy9AA32gxPGYpDQkdww9xw/exec";
+        // ==================== SECURITY LAYER 1: DOMAIN LOCK & PROTOCOL VERIFICATION ====================
+        (function() {
+            const ALLOWED_HOSTS = [
+                "murindasentrabaja.github.io", 
+                "localhost", 
+                "127.0.0.1"
+            ];
+            const currentHost = window.location.hostname;
+            const currentProtocol = window.location.protocol;
+
+            // Kunci jika dijalankan lokal (file://) atau domain tidak sah
+            if (currentProtocol === "file:" || (currentHost && !ALLOWED_HOSTS.includes(currentHost))) {
+                document.body.innerHTML = `
+                    <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; background:#0a0e27; color:#fff; font-family:'Poppins', sans-serif; text-align:center; padding:20px;">
+                        <i class="fa-solid fa-shield-halved" style="font-size:5rem; color:#ef4444; margin-bottom:25px; filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.4));"></i>
+                        <h1 style="color:#ef4444; font-size:2rem; margin-bottom:15px; letter-spacing:2px; font-weight:800;">MSB ERP SYSTEM DIKUNCI</h1>
+                        <p style="font-size:1rem; color:#cbd5e1; max-width:600px; line-height:1.6; margin-bottom:10px;">
+                            Aplikasi ERP ini dilindungi oleh Sistem Keamanan Terpadu PT Murinda Sentra Baja.
+                        </p>
+                        <p style="font-size:0.85rem; color:#64748b; max-width:500px; line-height:1.5;">
+                            Penggunaan offline atau pengunggahan di server tidak resmi dilarang keras demi menjaga integritas data operasional.
+                        </p>
+                        <div style="margin-top:30px; font-size:0.75rem; color:rgba(6, 182, 212, 0.5); letter-spacing:1px;">PT Murinda Sentra Baja | Aspuro Amarulloh Khoiri</div>
+                    </div>
+                `;
+                throw new Error("Security Violation: Unauthorized domain or local offline execute is blocked.");
+            }
+        })();
+
+        // ==================== SECURITY LAYER 2: ANTI-INSPECT KEYBOARD & CLIK BLOCK ====================
+        document.addEventListener('contextmenu', event => event.preventDefault()); // Matikan Klik Kanan
+
+        document.addEventListener('keydown', function(e) {
+            // Blokir F12
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+            // Blokir Ctrl+Shift+I, Ctrl+Shift+C, Ctrl+Shift+J, Ctrl+U (View Source), Ctrl+S (Save As)
+            if (e.ctrlKey && (
+                (e.shiftKey && ['I', 'C', 'J'].includes(e.key.toUpperCase())) || 
+                ['U', 'S'].includes(e.key.toUpperCase())
+            )) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // ==================== SECURITY LAYER 3: OBFUSCATED GOOGLE SCRIPT URL ====================
+        // URL di bawah didekripsi menggunakan atob (Base64) saat runtime
+        const OBFUSCATED_URL = "aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5dTk2VTVxUUhnRWFyT21TZEgyd1NER0lUZVY4LTY3Yl81QjM5tDk1Z0xYeDVPbnl5QUEzMmd4UEd5cERRa2R3dzl4dy9leGVj";
+        const WEB_APP_URL = atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5dTk2VTVxUUhnRWFyT21TZEgyd1NER0lUZVY4LTY3Yl81QjM5dDk1Z0xYeDVPbnl5QUEzMmd4UEd5cERRa2R3dzl4dy9leGVj");
 
         let myCharts = [];
         let clientChartInstance = null;
@@ -894,9 +979,41 @@
             setTimeout(() => { notif.style.animation = 'slideInRight 0.5s ease-out reverse'; setTimeout(() => notif.remove(), 500); }, 5000);
         }
 
-        function enterSystem(e) {
-            e.preventDefault();
+        // ==================== SECURITY LAYER 4: CRYPTOGRAPHIC PASSWORD VERIFICATION ====================
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        function handleEnterKey(event) {
+            if (event.key === "Enter") {
+                enterSystem(event);
+            }
+        }
+
+        async function enterSystem(e) {
+            if (e) e.preventDefault();
+            const passwordField = document.getElementById('access-password');
+            const passwordInput = passwordField.value;
             const btn = document.getElementById('enterBtn');
+
+            if (!passwordInput) {
+                showNotification('Validasi Gagal', 'Harap masukkan Password / PIN akses Anda.', 'warning');
+                return;
+            }
+
+            // SHA-256 Hash untuk password "MSB2026"
+            const SECURE_HASH = "4e341075d0458b0907d88fb870fb8cf2df1a415a770cb1b6a15031b269bb2f35";
+            const computedHash = await sha256(passwordInput);
+
+            if (computedHash !== SECURE_HASH) {
+                showNotification('Akses Ditolak', 'Password / PIN yang dimasukkan tidak valid!', 'warning');
+                passwordField.value = "";
+                return;
+            }
+
             btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> MEMUAT SISTEM...';
             btn.style.pointerEvents = 'none';
 
@@ -940,7 +1057,9 @@
             });
         }
 
-        function launch(url) {
+        // Modifikasi peluncur modul agar otomatis mendekodekan URL Base64
+        function launch(encodedUrl) {
+            const url = atob(encodedUrl);
             if (url.includes("script.google.com")) { window.open(url, '_blank'); return; }
             const vp = document.getElementById('viewport-container'), fr = document.getElementById('erp-frame'), b = document.getElementById('back-btn'), db = document.getElementById('main-dashboard');
             vp.style.display = "block"; b.style.display = "flex"; fr.src = url;
