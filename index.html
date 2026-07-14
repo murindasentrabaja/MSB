@@ -1004,11 +1004,8 @@
                 return;
             }
 
-            // SHA-256 Hash untuk password "MSB2026"
-            const SECURE_HASH = "4e341075d0458b0907d88fb870fb8cf2df1a415a770cb1b6a15031b269bb2f35";
-            const computedHash = await sha256(passwordInput);
-
-            if (computedHash !== SECURE_HASH) {
+            // PERBAIKAN: Validasi string langsung karena hash sebelumnya tidak cocok dengan "MSB2026"
+            if (passwordInput !== "MSB2026") {
                 showNotification('Akses Ditolak', 'Password / PIN yang dimasukkan tidak valid!', 'warning');
                 passwordField.value = "";
                 return;
@@ -1057,7 +1054,6 @@
             });
         }
 
-        // Modifikasi peluncur modul agar otomatis mendekodekan URL Base64
         function launch(encodedUrl) {
             const url = atob(encodedUrl);
             if (url.includes("script.google.com")) { window.open(url, '_blank'); return; }
