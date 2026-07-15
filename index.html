@@ -189,13 +189,7 @@
         
         .nav-right { display: flex; align-items: center; gap: 15px; }
         
-        /* NEW INSTALL APP BUTTON */
-        .install-app-btn {
-            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-blue));
-            border: none; padding: 10px 18px; border-radius: 12px; cursor: pointer; color: #fff;
-            font-size: 0.95rem; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 8px;
-            transition: all 0.3s; box-shadow: 0 4px 15px rgba(2, 117, 216, 0.3); border: 1px solid rgba(255,255,255,0.2);
-        }
+        .install-app-btn { background: linear-gradient(135deg, var(--primary-cyan), var(--primary-blue)); border: none; padding: 10px 18px; border-radius: 12px; cursor: pointer; color: #fff; font-size: 0.95rem; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: all 0.3s; box-shadow: 0 4px 15px rgba(2, 117, 216, 0.3); border: 1px solid rgba(255,255,255,0.2); }
         .install-app-btn:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 6px 20px rgba(2, 117, 216, 0.5); color: #fff; }
         
         .theme-toggle { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 10px 15px; border-radius: 12px; cursor: pointer; color: var(--text-light); font-size: 1.1rem; transition: all 0.3s; }
@@ -234,24 +228,44 @@
         .sp-list-item { display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px; margin-bottom: 6px; }
         body.light-theme .sp-list-item { border-bottom-color: rgba(0,0,0,0.1); }
 
-        /* ==================== MODULE CARDS ==================== */
+        /* ==================== MODULE CARDS (DIPERBAIKI 100%) ==================== */
         .content-area { padding: 0 40px 40px 40px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px; align-content: start; position: relative; z-index: 10; }
         .section-title { grid-column: 1 / -1; font-size: 1.4rem; font-weight: 800; color: var(--text-white); margin-top: 15px; margin-bottom: 5px; display: flex; align-items: center; gap: 15px; }
         .section-title::before { content: ''; width: 5px; height: 32px; background: linear-gradient(180deg, var(--primary-cyan), var(--primary-blue)); border-radius: 10px; }
+        
         .module-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 22px; padding: 30px; cursor: pointer; display: flex; flex-direction: column; gap: 18px; position: relative; overflow: hidden; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: auto; }
-        .module-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent); transform: skewX(-20deg); transition: 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+        
+        /* Efek Shine (Kilap Kaca) */
+        .module-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent); transform: skewX(-20deg); transition: 0.7s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1; pointer-events: none; }
+        
         .module-card:hover { transform: translateY(-10px); background: rgba(255, 255, 255, 0.06); }
         .module-card:hover::before { left: 150%; }
-        .module-icon { width: 70px; height: 70px; border-radius: 18px; display: flex; justify-content: center; align-items: center; font-size: 2rem; transition: all 0.4s; }
+
+        /* Pewarnaan Khusus Ikon Modul */
+        .module-icon { width: 70px; height: 70px; border-radius: 18px; display: flex; justify-content: center; align-items: center; font-size: 2rem; transition: all 0.4s; z-index: 2; position: relative;}
         .module-card:hover .module-icon { transform: scale(1.1) rotate(5deg); }
-        .blue .module-icon { background: rgba(2, 117, 216, 0.1); color: #2196f3; }
-        .green .module-icon { background: rgba(16, 185, 129, 0.1); color: #10b981; }
-        .orange .module-icon { background: rgba(245, 158, 11, 0.1); color: #fbbf24; }
+        
+        .module-card.blue .module-icon { background: rgba(2, 117, 216, 0.15); color: #2196f3; }
+        .module-card.green .module-icon { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+        .module-card.orange .module-icon { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        
+        .module-info { z-index: 2; position: relative; }
         .module-info h3 { font-size: 1.25rem; margin-bottom: 8px; color: var(--text-white); font-weight: 700; }
         .module-info p { font-size: 0.95rem; color: rgba(255, 255, 255, 0.6); line-height: 1.6; }
-        .explore-btn { font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; margin-top: auto; transition: all 0.3s; }
+        
+        /* Pewarnaan Khusus Teks Button Modul */
+        .explore-btn { font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; margin-top: auto; transition: all 0.3s; z-index: 2; position: relative;}
         .module-card:hover .explore-btn { letter-spacing: 1px; }
         .module-card:hover .explore-btn i { transform: translateX(8px); }
+        
+        .module-card.blue .explore-btn { color: #2196f3; }
+        .module-card.green .explore-btn { color: #10b981; }
+        .module-card.orange .explore-btn { color: #fbbf24; }
+
+        /* EFEK GRADASI & GLOW BORDER SAAT HOVER (KEMBALI SEPERTI SEMULA + DIPERKUAT) */
+        .module-card.blue:hover { border-color: rgba(2, 117, 216, 0.8); box-shadow: 0 10px 30px rgba(2, 117, 216, 0.25), inset 0 0 20px rgba(2, 117, 216, 0.08); }
+        .module-card.green:hover { border-color: rgba(16, 185, 129, 0.8); box-shadow: 0 10px 30px rgba(16, 185, 129, 0.25), inset 0 0 20px rgba(16, 185, 129, 0.08); }
+        .module-card.orange:hover { border-color: rgba(245, 158, 11, 0.8); box-shadow: 0 10px 30px rgba(245, 158, 11, 0.25), inset 0 0 20px rgba(245, 158, 11, 0.08); }
 
         /* ==================== NOTIFICATIONS ==================== */
         .notification-container { position: fixed; top: 20px; right: 20px; z-index: 9998; display: flex; flex-direction: column; gap: 15px; }
@@ -382,7 +396,7 @@
             <div class="hse-ticker-wrap" aria-label="HSE & Motivation Ticker">
                 <div class="hse-ticker">
                     <i class="fa-solid fa-bullhorn" aria-hidden="true"></i>
-                    <strong>Hai Rekan MSB:</strong> Utamakan Keselamatan (K3) & Gunakan APD Lengkap! | Semangat Bekerja: Setiap keringat hari ini adalah langkah menuju kesuksesan! | Merasa Lelah/Ngantuk? Lakukan peregangan ringan, minum air putih, atau cuci muka sejenak. | Bosan? Tarik napas dalam dan ingat kembali tujuan besar Anda. | Zero Accident & Produktivitas Tinggi adalah Komitmen Bersama!
+                    <strong>MSB INFO:</strong> Utamakan Keselamatan (K3) & Gunakan APD Lengkap! | Semangat Bekerja: Setiap keringat hari ini adalah langkah menuju kesuksesan! | Merasa Lelah/Ngantuk? Lakukan peregangan ringan, minum air putih, atau cuci muka sejenak. | Bosan? Tarik napas dalam dan ingat kembali tujuan besar Anda. | Zero Accident & Produktivitas Tinggi adalah Komitmen Bersama!
                 </div>
             </div>
         </div>
@@ -399,7 +413,7 @@
             <nav class="nav-right" aria-label="User Navigation">
                 
                 <a href="https://www.appsheet.com/newshortcut/6e48cd55-11bb-451f-997c-1c48db68fe7b" target="_blank" class="install-app-btn" title="Install MSB Production App">
-                    <i class="fa-solid fa-mobile-screen-button"></i> <span class="install-text">MSB Production</span>
+                    <i class="fa-solid fa-mobile-screen-button"></i> <span class="install-text">Instal MSB Production</span>
                 </a>
 
                 <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Dark or Light Theme" title="Toggle Theme">
@@ -471,7 +485,7 @@
                 <div class="chart-header">
                     <div>
                         <h3 class="chart-title">Summary SPP</h3>
-                        <p class="chart-subtitle">Monitoring Material & Persentase (SPP)</p>
+                        <p class="chart-subtitle">Monitoring Material & Persentase (Data SPP)</p>
                     </div>
                 </div>
                 <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 15px; flex: 1; overflow-y: auto; max-height: 220px; padding-right: 5px;">
@@ -516,7 +530,7 @@
             <div class="module-card green" onclick="launch('https://murindasentrabaja.github.io/General-Affairs/')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-building-circle-check"></i></div>
                 <div class="module-info"><h3>General Affairs</h3><p>Kelola fasilitas dan operasional kantor secara digital. Tingkatkan produktivitas alur kerja.</p></div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
             </div>
 
             <div class="module-card orange" onclick="launch('https://murindasentrabaja.github.io/HSE/')" tabindex="0" role="button">
@@ -528,7 +542,7 @@
             <div class="module-card blue" onclick="launch('https://murindasentrabaja.github.io/Maintenance/')" tabindex="0" role="button">
                 <div class="module-icon" aria-hidden="true"><i class="fa-solid fa-gears"></i></div>
                 <div class="module-info"><h3>Maintenance</h3><p>Prediksi kebutuhan perawatan mesin secara otomatis. Minimalkan downtime.</p></div>
-                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                <div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div>
             </div>
 
             <div class="module-card green" onclick="launch('https://murindasentrabaja.github.io/Purchase-Order/')" tabindex="0" role="button">
@@ -611,10 +625,8 @@
     <script>
         // ==================== SECURITY ENHANCEMENTS: ADVANCED ANTI-INSPECT ====================
         
-        // 1. Mencegah Klik Kanan
         document.addEventListener('contextmenu', event => event.preventDefault());
 
-        // 2. Mencegah Shortcut Keyboard
         document.addEventListener('keydown', function (e) {
             if (e.key === 'F12' || e.keyCode === 123 || 
                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
@@ -623,7 +635,6 @@
             }
         });
 
-        // 3. Obfuscated Anti-Debugging Loop (Mendeteksi jeda inspeksi)
         (function() {
             setInterval(function(){
                 let _0xs = new Date();
@@ -637,9 +648,7 @@
         })();
 
         // ==================== OBFUSCATED URLS ====================
-        // URL Main Dashboard Web App
         const _0xMainUrl = atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5dTk2VTVxUUhnRWFyT21TZEgyd1NER0lUZVY4LTY3Yl81QjM5dDk1Z0xYZjVPTnk5QUEzMmd4UEdZcERRa2R3dzl4dy9leGVj");
-        // URL SPP Web App (Data APK)
         const _0xSPPUrl = atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5ZzBrMmw4NGtaQXdveERNdnlua2xHQWVIWDJOY3hmX0RfVUhETU1SUHBnQ0c4dk9qSE00VFdveHM5S1laYUhzdU4vZXhlYw==");
 
         // ==========================================================
@@ -705,7 +714,6 @@
             }
         }
 
-        // ==================== FUNGSI FETCH SUMMARY SPP ====================
         async function fetchSPPData() {
             try {
                 const response = await fetch(_0xSPPUrl);
@@ -745,7 +753,6 @@
                     }
                 });
 
-                // Update UI: Daftar Minus Material
                 const pendingList = document.getElementById('spp-pending-list');
                 if (Object.keys(minusMap).length === 0) {
                     pendingList.innerHTML = `
@@ -765,7 +772,6 @@
                     pendingList.innerHTML = htmlList;
                 }
 
-                // Update UI: Persentase Pemenuhan Global
                 let pct = totalSppGlobal > 0 ? Math.round((totalDatangGlobal / totalSppGlobal) * 100) : 0;
                 if (pct > 100) pct = 100;
                 
@@ -781,7 +787,6 @@
                     </li>`;
             }
         }
-        // ==================================================================
 
         function updateDynamicCharts(poData, karData) {
             let textColor = document.body.classList.contains('light-theme') ? '#475569' : '#e2e8f0';
@@ -960,7 +965,6 @@
                     overlay.style.display = "none";
                     document.getElementById('main-dashboard').style.display = "flex";
                     
-                    // Fetch data serentak untuk dashboard utama dan module SPP
                     fetchDashboardData(); 
                     fetchSPPData();
 
