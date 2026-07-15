@@ -7,9 +7,8 @@
     <meta name="keywords" content="ERP, Manufacturing, Steel, Industry 4.0, Business Intelligence, Dashboard">
     <meta name="author" content="Aspuro Amarulloh Khoiri">
     <meta name="theme-color" content="#0a0e27">
-    <title>ERP SYSTEM | PT MURINDA SENTRA BAJA - Advanced Dashboard</title>
+    <title>ERP SYSTEM MSB</title>
     
-    <!-- Favicon ditambahkan -->
     <link rel="icon" type="image/png" href="MSB Favicon.png">
     
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
@@ -17,6 +16,25 @@
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
     
+    <script>
+        // ==================== SECURITY ENHANCEMENTS: DOMAIN & PROTOCOL LOCK ====================
+        (function() {
+            // 1. Obfuscated Domain Checking
+            const _0xdomain = window.location.hostname;
+            // Masukkan domain yang diizinkan (kosongkan '' untuk allow local file testing)
+            const _0xallowed = ['murindasentrabaja.github.io', 'localhost', '127.0.0.1', '']; 
+            if (!_0xallowed.includes(_0xdomain)) {
+                document.documentElement.innerHTML = '<body style="background:#000; color:#fff; display:flex; justify-content:center; align-items:center; height:100vh; font-family:sans-serif;"><h1>Akses Ditolak: Domain Tidak Valid</h1></body>';
+                window.stop();
+            }
+
+            // 2. Protocol Lock (Force HTTPS in production)
+            if (window.location.protocol === 'http:' && _0xdomain !== 'localhost' && _0xdomain !== '127.0.0.1' && _0xdomain !== '') {
+                window.location.replace(window.location.href.replace('http:', 'https:'));
+            }
+        })();
+    </script>
+
     <style>
         :root {
             --primary-blue: #0275d8;
@@ -44,6 +62,20 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+
+        /* ==================== SECURITY ENHANCEMENTS: ANTI-DRAG & SELECTION ==================== */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        img, canvas, a {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+        }
 
         body {
             background-color: var(--bg-body);
@@ -75,29 +107,9 @@
         body.light-theme .datetime { color: #1e293b; }
         h1, h2, h3, h4, h5, button { font-family: 'Poppins', sans-serif; }
 
-        /* --- PERBAIKAN POIN 1: UKURAN & WARNA LOGO --- */
-        header img.logo-small {
-            height: 45px;
-            object-fit: contain;
-            transition: all 0.3s ease;
-        }
-
-        body:not(.light-theme) header img.logo-small {
-            background-color: transparent;
-            padding: 0;
-            border-radius: 0;
-            box-shadow: none;
-            /* Filter ini akan mengubah logo menjadi putih di dark mode */
-            filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(255, 255, 255, 0.2));
-        }
-
-        body.light-theme header img.logo-small {
-            background-color: transparent;
-            padding: 0;
-            border-radius: 0;
-            box-shadow: none;
-            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
-        }
+        header img.logo-small { height: 45px; object-fit: contain; transition: all 0.3s ease; }
+        body:not(.light-theme) header img.logo-small { filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(255, 255, 255, 0.2)); }
+        body.light-theme header img.logo-small { filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15)); }
 
         /* ==================== GRADIENT BLOBS ==================== */
         .bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.2; z-index: -1; animation: float 15s infinite alternate ease-in-out; pointer-events: none; will-change: transform; }
@@ -109,98 +121,35 @@
         /* ==================== LOADING SCREEN ==================== */
         #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0e27; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s, visibility 0.5s; }
         #loading-screen.hidden { opacity: 0; visibility: hidden; }
-        
-        /* Modifikasi Loader untuk menampilkan logo di dalam lingkaran */
         .loader-container { position: relative; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; }
         .loader { position: absolute; width: 100%; height: 100%; border: 6px solid rgba(2, 117, 216, 0.2); border-top: 6px solid #0275d8; border-radius: 50%; animation: spin 1s linear infinite; }
         .loader-logo { width: 55px; height: 55px; object-fit: contain; z-index: 10; animation: pulse-logo 2s infinite alternate; filter: brightness(0) invert(1); }
-        
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes pulse-logo { 0% { transform: scale(0.9); opacity: 0.8; } 100% { transform: scale(1.1); opacity: 1; } }
-        
         .loading-text { margin-top: 25px; font-size: 1.2rem; font-weight: 600; color: var(--text-light); letter-spacing: 2px; }
         .loading-progress { margin-top: 15px; font-size: 0.9rem; color: var(--primary-cyan); }
 
         /* ==================== LOGIN OVERLAY ==================== */
         #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; display: flex; justify-content: center; align-items: center; z-index: 9998; transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out; }
-        
-        .login-wrapper { 
-            transform: scale(1); transition: transform 0.3s ease; 
-            animation: float-smooth 6s ease-in-out infinite;
-        }
-        @keyframes float-smooth {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-        
+        .login-wrapper { transform: scale(1); transition: transform 0.3s ease; animation: float-smooth 6s ease-in-out infinite; }
+        @keyframes float-smooth { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         .login-card { position: relative; width: 850px; min-height: 490px; display: flex; align-items: center; justify-content: flex-start; padding-left: 50px; background: transparent; border-radius: 20px; font-family: 'Poppins', sans-serif; cursor: pointer; outline: none; }
-        
         .login-card .circle { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; pointer-events: none; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        
-        .login-card .circle::before { 
-            content: ''; position: absolute; width: 250px; height: 250px; background: transparent; 
-            border: 4px solid #124388; border-radius: 50%; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            animation: pulse-glow 3s infinite alternate;
-        }
-        
-        @keyframes pulse-glow {
-            0% { box-shadow: 0 0 15px rgba(18, 67, 136, 0.3), inset 0 0 10px rgba(18, 67, 136, 0.2); }
-            100% { box-shadow: 0 0 45px rgba(18, 67, 136, 0.8), inset 0 0 25px rgba(18, 67, 136, 0.5); }
-        }
-        
+        .login-card .circle::before { content: ''; position: absolute; width: 250px; height: 250px; background: transparent; border: 4px solid #124388; border-radius: 50%; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); animation: pulse-glow 3s infinite alternate; }
+        @keyframes pulse-glow { 0% { box-shadow: 0 0 15px rgba(18, 67, 136, 0.3), inset 0 0 10px rgba(18, 67, 136, 0.2); } 100% { box-shadow: 0 0 45px rgba(18, 67, 136, 0.8), inset 0 0 25px rgba(18, 67, 136, 0.5); } }
         .login-card .logo-wrapper { z-index: 12; text-align: center; transition: 0.5s ease-in-out; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
-        .login-card .logo-wrapper .logo_img { 
-            max-width: 180px; 
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
-            animation: logo-breath 4s ease-in-out infinite;
-        }
-        @keyframes logo-breath {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
+        .login-card .logo-wrapper .logo_img { max-width: 180px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); animation: logo-breath 4s ease-in-out infinite; }
+        @keyframes logo-breath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
         
-        .login-card:hover .circle::before, .login-card:focus-within .circle::before { 
-            width: 100%; height: 100%; border-radius: 20px; 
-            background: linear-gradient(135deg, #0a1930, #124388); 
-            box-shadow: 0 20px 60px rgba(18, 67, 136, 0.5); border: 0px solid transparent; 
-            animation: none;
-        }
+        .login-card:hover .circle::before, .login-card:focus-within .circle::before { width: 100%; height: 100%; border-radius: 20px; background: linear-gradient(135deg, #0a1930, #124388); box-shadow: 0 20px 60px rgba(18, 67, 136, 0.5); border: 0px solid transparent; animation: none; }
         .login-card:hover .logo-wrapper, .login-card:focus-within .logo-wrapper { opacity: 0; transform: scale(0.3); pointer-events: none; }
-        
         .login-card .content { position: relative; z-index: 10; width: 100%; max-width: 380px; opacity: 0; visibility: hidden; transform: translateX(-50px); transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: default; }
         .login-card:hover .content, .login-card:focus-within .content { opacity: 1; visibility: visible; transform: translateX(0); transition-delay: 0.3s; }
-        
-        .login-card .content h2 { 
-            color: #fff; font-size: 2rem; font-weight: 800; letter-spacing: 2px; margin-bottom: 12px; white-space: nowrap;
-            animation: text-glow 2s ease-in-out infinite alternate;
-        }
-        @keyframes text-glow {
-            0% { text-shadow: 0 0 10px rgba(255,255,255,0.2); }
-            100% { text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 30px rgba(6, 182, 212, 0.6); }
-        }
+        .login-card .content h2 { color: #fff; font-size: 2rem; font-weight: 800; letter-spacing: 2px; margin-bottom: 12px; white-space: nowrap; animation: text-glow 2s ease-in-out infinite alternate; }
+        @keyframes text-glow { 0% { text-shadow: 0 0 10px rgba(255,255,255,0.2); } 100% { text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 30px rgba(6, 182, 212, 0.6); } }
 
-        .login-address-block {
-            display: block;
-            text-decoration: none;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-left: 3px solid var(--primary-cyan);
-            border-radius: 12px;
-            padding: 18px 20px;
-            margin-bottom: 22px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .login-address-block:hover {
-            transform: translateX(8px);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
-            border-left-color: var(--primary-orange);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
+        .login-address-block { display: block; text-decoration: none; background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid var(--primary-cyan); border-radius: 12px; padding: 18px 20px; margin-bottom: 22px; backdrop-filter: blur(10px); box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .login-address-block:hover { transform: translateX(8px); background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03)); border-left-color: var(--primary-orange); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); border-color: rgba(255, 255, 255, 0.2); }
         .login-address-block .company-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 600; color: #ffffff; margin-bottom: 8px; letter-spacing: 0.5px; }
         .login-address-block .address-text { font-family: 'Nunito', sans-serif; font-size: 0.75rem; font-weight: 300; color: #cbd5e1; line-height: 1.5; margin-bottom: 12px; }
         .login-address-block .contact-info { display: flex; flex-direction: column; gap: 6px; font-family: 'Nunito', sans-serif; font-size: 0.75rem; font-weight: 500; color: var(--primary-cyan); }
@@ -209,28 +158,11 @@
         .login-address-block .contact-info i { width: 14px; text-align: center; color: var(--primary-orange); }
         
         .action-container { position: relative; margin-top: 10px; }
-        
-        .luxury-btn { 
-            display: flex; justify-content: center; align-items: center; gap: 15px; width: 100%; 
-            padding: 16px 25px; background: linear-gradient(45deg, #b92025, #e53935, #b92025); background-size: 200% auto;
-            color: #fff; font-weight: 800; font-size: 1.1rem; border: none; cursor: pointer; 
-            border-radius: 50px; text-transform: uppercase; letter-spacing: 2px; 
-            box-shadow: 0 10px 30px rgba(185, 32, 37, 0.4); 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            position: relative; overflow: hidden;
-            animation: gradient-shift 3s ease infinite;
-        }
+        .luxury-btn { display: flex; justify-content: center; align-items: center; gap: 15px; width: 100%; padding: 16px 25px; background: linear-gradient(45deg, #b92025, #e53935, #b92025); background-size: 200% auto; color: #fff; font-weight: 800; font-size: 1.1rem; border: none; cursor: pointer; border-radius: 50px; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 10px 30px rgba(185, 32, 37, 0.4); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; animation: gradient-shift 3s ease infinite; }
         @keyframes gradient-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        
-        .luxury-btn::after {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-            transform: skewX(-20deg); transition: 0.7s;
-        }
-        
+        .luxury-btn::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent); transform: skewX(-20deg); transition: 0.7s; }
         .luxury-btn:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 15px 40px rgba(185, 32, 37, 0.6); }
         .luxury-btn:hover::after { left: 150%; }
-        .luxury-btn i { font-size: 1.3rem; }
         
         .login-card .factory_img { position: absolute; top: 50%; left: 50%; width: 350px; height: 230px; object-fit: cover; border-radius: 15px; border: 4px solid #fff; box-shadow: 0 20px 40px rgba(0,0,0,0.5); transform: translate(-50%, -50%) scale(0) rotate(-10deg); z-index: 11; transition: 0.7s cubic-bezier(0.25, 1, 0.5, 1.2); pointer-events: none; opacity: 0; }
         .login-card:hover .factory_img, .login-card:focus-within .factory_img { top: 50%; left: 75%; transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; transition-delay: 0.2s; }
@@ -240,24 +172,32 @@
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.97) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
         .dashboard-dimmed { transform: scale(0.97) translateY(-10px); opacity: 0.5; filter: blur(6px); pointer-events: none; }
 
-        /* ==================== TOP INFO BAR ==================== */
         .top-info-bar { background: rgba(10, 14, 39, 0.6); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 12px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; font-weight: 600; color: var(--text-light); z-index: 101; }
         .datetime { display: flex; align-items: center; gap: 15px; } .datetime i { color: var(--primary-cyan); }
         .hse-ticker-wrap { flex: 1; max-width: 60%; overflow: hidden; white-space: nowrap; position: relative; display: flex; align-items: center; background: rgba(245, 158, 11, 0.1); padding: 8px 20px; border-radius: 15px; border: 1px solid rgba(245, 158, 11, 0.2); margin-left: 30px; }
-        
-        /* Ticker Animation Diperlambat untuk teks yang lebih panjang */
         .hse-ticker { display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; font-weight: 700; color: #fbbf24; }
         .hse-ticker i { margin-right: 10px; color: var(--primary-orange); }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* ==================== HEADER ==================== */
+        /* ==================== HEADER & APP BUTTON ==================== */
         header { min-height: 85px; background: rgba(10, 14, 39, 0.6); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; z-index: 100; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15); position: sticky; top: 0; }
         .header-left { display: flex; align-items: center; gap: 30px; }
         .header-divider { width: 2px; height: 40px; background: rgba(255, 255, 255, 0.1); }
         .system-status { display: flex; align-items: center; gap: 10px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--primary-green); background: rgba(16, 185, 129, 0.1); padding: 10px 20px; border-radius: 25px; border: 1px solid rgba(16, 185, 129, 0.2); }
         .status-dot { width: 10px; height: 10px; background: var(--primary-green); border-radius: 50%; box-shadow: 0 0 15px var(--primary-green); animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px var(--primary-green); } 50% { opacity: 0.6; transform: scale(1.3); box-shadow: 0 0 25px var(--primary-green); } }
-        .nav-right { display: flex; align-items: center; gap: 20px; }
+        
+        .nav-right { display: flex; align-items: center; gap: 15px; }
+        
+        /* NEW INSTALL APP BUTTON */
+        .install-app-btn {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-blue));
+            border: none; padding: 10px 18px; border-radius: 12px; cursor: pointer; color: #fff;
+            font-size: 0.95rem; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 8px;
+            transition: all 0.3s; box-shadow: 0 4px 15px rgba(2, 117, 216, 0.3); border: 1px solid rgba(255,255,255,0.2);
+        }
+        .install-app-btn:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 6px 20px rgba(2, 117, 216, 0.5); color: #fff; }
+        
         .theme-toggle { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 10px 15px; border-radius: 12px; cursor: pointer; color: var(--text-light); font-size: 1.1rem; transition: all 0.3s; }
         .theme-toggle:hover { background: rgba(255, 255, 255, 0.1); transform: scale(1.1); }
         .user-profile { display: flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.05); padding: 10px 20px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.1); font-weight: 700; color: var(--text-light); }
@@ -282,27 +222,26 @@
         .stat-label { font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .stat-value { font-size: 1.6rem; font-weight: 800; color: var(--text-white); line-height: 1; }
 
-        /* ==================== CHARTS SECTION ==================== */
+        /* ==================== CHARTS & SUMMARY SECTION ==================== */
         .charts-section { padding: 0 40px 25px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-        .chart-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 25px; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); position: relative; z-index: 1; }
+        .chart-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 25px; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); position: relative; z-index: 1; display: flex; flex-direction: column; }
         .chart-card:hover { transform: translateY(-8px) scale(1.01); background: rgba(255, 255, 255, 0.05); z-index: 10; }
-        .chart-card canvas:hover { cursor: crosshair; }
         .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .chart-title { font-size: 1rem; font-weight: 700; color: var(--text-white); }
         .chart-subtitle { font-size: 0.75rem; color: rgba(255, 255, 255, 0.5); margin-top: 1px; }
         .chart-card canvas { max-height: 220px; width: 100% !important; }
+        
+        .sp-list-item { display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px; margin-bottom: 6px; }
+        body.light-theme .sp-list-item { border-bottom-color: rgba(0,0,0,0.1); }
 
         /* ==================== MODULE CARDS ==================== */
         .content-area { padding: 0 40px 40px 40px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px; align-content: start; position: relative; z-index: 10; }
         .section-title { grid-column: 1 / -1; font-size: 1.4rem; font-weight: 800; color: var(--text-white); margin-top: 15px; margin-bottom: 5px; display: flex; align-items: center; gap: 15px; }
         .section-title::before { content: ''; width: 5px; height: 32px; background: linear-gradient(180deg, var(--primary-cyan), var(--primary-blue)); border-radius: 10px; }
-        .module-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 22px; padding: 30px; cursor: pointer; display: flex; flex-direction: column; gap: 18px; position: relative; overflow: hidden; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .module-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 22px; padding: 30px; cursor: pointer; display: flex; flex-direction: column; gap: 18px; position: relative; overflow: hidden; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: auto; }
         .module-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent); transform: skewX(-20deg); transition: 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
         .module-card:hover { transform: translateY(-10px); background: rgba(255, 255, 255, 0.06); }
         .module-card:hover::before { left: 150%; }
-        .module-card.blue:hover { border-color: rgba(2, 117, 216, 0.4); }
-        .module-card.green:hover { border-color: rgba(16, 185, 129, 0.4); }
-        .module-card.orange:hover { border-color: rgba(245, 158, 11, 0.4); }
         .module-icon { width: 70px; height: 70px; border-radius: 18px; display: flex; justify-content: center; align-items: center; font-size: 2rem; transition: all 0.4s; }
         .module-card:hover .module-icon { transform: scale(1.1) rotate(5deg); }
         .blue .module-icon { background: rgba(2, 117, 216, 0.1); color: #2196f3; }
@@ -313,7 +252,6 @@
         .explore-btn { font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; margin-top: auto; transition: all 0.3s; }
         .module-card:hover .explore-btn { letter-spacing: 1px; }
         .module-card:hover .explore-btn i { transform: translateX(8px); }
-        .blue .explore-btn { color: #2196f3; } .green .explore-btn { color: #10b981; } .orange .explore-btn { color: #fbbf24; }
 
         /* ==================== NOTIFICATIONS ==================== */
         .notification-container { position: fixed; top: 20px; right: 20px; z-index: 9998; display: flex; flex-direction: column; gap: 15px; }
@@ -326,30 +264,16 @@
         .notification-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 3px; }
         .notification-message { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); }
 
-        /* --- PERBAIKAN POIN 5: UKURAN VIEWPORT ERP LEBIH LUAS KE ATAS --- */
         #viewport-container { display: none; position: fixed; top: 70px; left: 0; width: 100%; height: calc(100vh - 70px); background: #ffffff; z-index: 500; opacity: 0; transform: translateY(40px) scale(0.98); transition: transform var(--transition-smooth), opacity var(--transition-smooth); will-change: transform, opacity; border-top-left-radius: 20px; border-top-right-radius: 20px; box-shadow: 0 -15px 60px rgba(0, 0, 0, 0.4); overflow: hidden; }
         #viewport-container.active { opacity: 1; transform: translateY(0) scale(1); }
         #erp-frame { width: 100%; height: 100%; border: none; background: #fff; }
         
-        /* --- PERBAIKAN POIN 4: TOMBOL KEMBALI DIPERKECIL --- */
         .back-nav { position: fixed; bottom: 20px; right: 20px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); color: #fff; padding: 10px 20px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.2); font-weight: 600; cursor: pointer; z-index: 1000; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); font-size: 0.85rem; display: none; align-items: center; gap: 8px; opacity: 0; transform: translateY(20px); transition: all var(--transition-smooth); }
         .back-nav.active { opacity: 1; transform: translateY(0); }
         .back-nav:hover { background: #000; transform: translateY(-3px) scale(1.05); border-color: var(--primary-cyan); }
-        .back-nav i { font-size: 1rem; }
-
-        /* ==================== FOOTER (Diperbarui) ==================== */
-        footer { 
-            background: rgba(10, 14, 39, 0.7); 
-            backdrop-filter: blur(15px); 
-            border-top: 1px solid rgba(255, 255, 255, 0.05); 
-            padding: 15px 40px; /* Padding vertikal dikurangi */
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            color: rgba(255, 255, 255, 0.6); 
-            z-index: 100; 
-        }
-        .footer-address { font-size: 0.85rem; line-height: 1.5; } /* Font dan tinggi baris dirapatkan */
+        
+        footer { background: rgba(10, 14, 39, 0.7); backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.05); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; color: rgba(255, 255, 255, 0.6); z-index: 100; }
+        .footer-address { font-size: 0.85rem; line-height: 1.5; }
         .footer-address strong { color: var(--text-white); font-size: 0.95rem; display: block; margin-bottom: 3px; }
         .footer-contact { margin-top: 8px; display: flex; gap: 15px; font-weight: 600; color: var(--primary-cyan); }
         .footer-copy { text-align: right; font-size: 0.8rem; font-weight: 600; }
@@ -360,58 +284,35 @@
         ::-webkit-scrollbar-thumb { background: rgba(2, 117, 216, 0.5); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary-cyan); }
 
-        /* --- PERBAIKAN POIN 6: RESPONSIVE DESIGN UNTUK HP/MOBILE DITINGKATKAN --- */
+        /* RESPONSIVE DESIGN */
         @media (max-width: 1200px) { .charts-section { grid-template-columns: 1fr; } }
         @media (max-width: 992px) { .content-area { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } .dashboard-stats { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
-        
-        /* Modifikasi Form Login Agar Rapih di HP */
         @media (max-width: 900px) {
-            .login-card {
-                width: 90%; max-width: 450px; height: auto; min-height: 70vh;
-                padding: 40px 25px; display: flex; flex-direction: column; justify-content: center;
-                align-items: center; text-align: center; background: rgba(10, 25, 48, 0.9);
-                box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);
-            }
+            .login-card { width: 90%; max-width: 450px; height: auto; min-height: 70vh; padding: 40px 25px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: rgba(10, 25, 48, 0.9); box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); }
             .login-card .circle { position: relative; height: auto; margin-bottom: 25px; }
             .login-card .circle::before { display: none; }
             .login-card .content { opacity: 1; visibility: visible; transform: translateX(0); width: 100%; max-width: 100%; padding-left: 0; }
-            .login-card .content h2 { font-size: 1.6rem; white-space: normal; }
             .login-card .logo-wrapper { position: relative; opacity: 1; transform: scale(1); pointer-events: auto; }
-            .login-card:hover .logo-wrapper, .login-card:focus-within .logo-wrapper { opacity: 1; transform: scale(1); }
             .login-card .factory_img { display: none; }
-            .login-address-block .contact-info span { justify-content: center; }
             .login-wrapper { animation: float-smooth-mobile 6s ease-in-out infinite !important; transform: scale(1) !important; width: 100%; display: flex; justify-content: center;}
             @keyframes float-smooth-mobile { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         }
-
-        /* Modifikasi Dashboard untuk Mobile */
         @media (max-width: 768px) { 
+            .install-text { display: none; }
+            .install-app-btn { padding: 10px 15px; }
             .top-info-bar { flex-direction: column; align-items: center; gap: 8px; padding: 12px 15px; font-size: 0.75rem; text-align: center; } 
             .datetime { justify-content: center; width: 100%; }
             .hse-ticker-wrap { max-width: 100%; width: 100%; margin-left: 0; border-radius: 8px; } 
             header { padding: 12px 15px; flex-direction: column; gap: 12px; } 
             .header-left { width: 100%; justify-content: space-between; gap: 10px; }
             .header-divider { display: none; } 
-            .system-status { font-size: 0.75rem; padding: 6px 12px; }
             .nav-right { width: 100%; justify-content: space-between; }
             .user-profile span { display: none; }
-            .user-profile { padding: 8px 15px; }
             .dashboard-stats, .charts-section, .content-area { padding: 15px; } 
             .content-area { grid-template-columns: 1fr; } 
-            #viewport-container { top: 60px; height: calc(100vh - 60px); border-radius: 15px 15px 0 0; } 
-            /* Jarak dan Padding Footer versi Mobile dirapatkan */
+            #viewport-container { top: 60px; height: calc(100vh - 60px); } 
             footer { flex-direction: column; text-align: center; padding: 15px 20px; gap: 12px; } 
             .footer-contact { flex-direction: column; gap: 10px; align-items: center; } 
-            .footer-copy { text-align: center; } 
-            .back-nav { bottom: 15px; right: 15px; padding: 10px 15px; }
-            .back-nav span { display: none; }
-            .back-nav::after { content: "Kembali"; }
-        }
-        @media (max-width: 480px) { 
-            header img.logo-small { height: 35px; } 
-            .dashboard-stats { grid-template-columns: 1fr; }
-            .login-card { padding: 30px 20px; }
-            .login-address-block .company-name { font-size: 1rem; }
         }
 
         .ripple { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.3); transform: scale(0); animation: ripple-animation 0.6s ease-out; pointer-events: none; }
@@ -424,8 +325,8 @@
             <div class="loader"></div>
             <img src="MSB Logo.png" class="loader-logo" alt="Logo PT Murinda" onerror="this.src='https://via.placeholder.com/60x60?text=MSB'">
         </div>
-        <div class="loading-text">MSB ERP System</div>
-        <div class="loading-progress">Memuat Modul Utama...</div>
+        <div class="loading-text">PT Murinda Sentra Baja</div>
+        <div class="loading-progress">Loading ERP System...</div>
     </div>
 
     <div class="bg-glow blob-1" aria-hidden="true"></div>
@@ -481,7 +382,7 @@
             <div class="hse-ticker-wrap" aria-label="HSE & Motivation Ticker">
                 <div class="hse-ticker">
                     <i class="fa-solid fa-bullhorn" aria-hidden="true"></i>
-                    <strong>MSB INFO:</strong> Utamakan Keselamatan (K3) & Gunakan APD Lengkap! | Semangat Bekerja: Setiap keringat hari ini adalah langkah menuju kesuksesan! | Merasa Lelah/Ngantuk? Lakukan peregangan ringan, minum air putih, atau cuci muka sejenak. | Bosan? Tarik napas dalam dan ingat kembali tujuan besar Anda. | Zero Accident & Produktivitas Tinggi adalah Komitmen Bersama!
+                    <strong>Hai Rekan MSB:</strong> Utamakan Keselamatan (K3) & Gunakan APD Lengkap! | Semangat Bekerja: Setiap keringat hari ini adalah langkah menuju kesuksesan! | Merasa Lelah/Ngantuk? Lakukan peregangan ringan, minum air putih, atau cuci muka sejenak. | Bosan? Tarik napas dalam dan ingat kembali tujuan besar Anda. | Zero Accident & Produktivitas Tinggi adalah Komitmen Bersama!
                 </div>
             </div>
         </div>
@@ -496,6 +397,11 @@
                 </div>
             </div>
             <nav class="nav-right" aria-label="User Navigation">
+                
+                <a href="https://www.appsheet.com/newshortcut/6e48cd55-11bb-451f-997c-1c48db68fe7b" target="_blank" class="install-app-btn" title="Install MSB Production App">
+                    <i class="fa-solid fa-mobile-screen-button"></i> <span class="install-text">MSB Production</span>
+                </a>
+
                 <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Dark or Light Theme" title="Toggle Theme">
                     <i class="fa-solid fa-moon" aria-hidden="true"></i>
                 </button>
@@ -560,6 +466,43 @@
                 </div>
                 <canvas id="karyawanDeptChart" aria-label="Doughnut Chart Distribusi Karyawan" role="img"></canvas>
             </div>
+            
+            <div class="chart-card" style="display: flex; flex-direction: column; justify-content: center;">
+                <div class="chart-header">
+                    <div>
+                        <h3 class="chart-title">Summary SPP</h3>
+                        <p class="chart-subtitle">Monitoring Material & Persentase (SPP)</p>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 15px; flex: 1; overflow-y: auto; max-height: 220px; padding-right: 5px;">
+                    
+                    <div style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); border-left: 4px solid var(--primary-red); border-radius: 12px; padding: 15px; cursor: default;">
+                        <h4 style="color: var(--text-white); font-size: 0.95rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-boxes-stacked" style="color: var(--primary-red);"></i> Barang Belum Datang
+                        </h4>
+                        <ul id="spp-pending-list" style="list-style: none; padding-left: 0; margin: 0; font-size: 0.85rem; color: var(--text-light); line-height: 1.6;">
+                            <li class="sp-list-item">
+                                <span>Menyinkronkan Data...</span> 
+                                <strong style="color: var(--primary-red);"><i class="fa-solid fa-spinner fa-spin"></i></strong>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-left: 4px solid var(--primary-green); border-radius: 12px; padding: 15px; margin-top: auto;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h4 style="color: var(--text-white); font-size: 0.95rem; margin: 0; display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-chart-pie" style="color: var(--primary-green);"></i> Pemenuhan Material
+                            </h4>
+                            <span id="spp-fulfillment-text" style="font-weight: 800; font-size: 1.1rem; color: var(--primary-green);">0%</span>
+                        </div>
+                        <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; position: relative;">
+                            <div id="spp-fulfillment-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--primary-cyan), var(--primary-green)); border-radius: 10px; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </section>
 
         <section class="content-area" aria-label="ERP Modules Application Navigation">
@@ -666,7 +609,40 @@
     </button>
 
     <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyu96U5qQHgEarOmSdH2wSDGITeV8-67b_5B39t95gLXf5ONy9AA32gxPGYpDQkdww9xw/exec";
+        // ==================== SECURITY ENHANCEMENTS: ADVANCED ANTI-INSPECT ====================
+        
+        // 1. Mencegah Klik Kanan
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // 2. Mencegah Shortcut Keyboard
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'F12' || e.keyCode === 123 || 
+               (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
+               (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's' || e.key === 'P' || e.key === 'p'))) {
+                e.preventDefault(); return false;
+            }
+        });
+
+        // 3. Obfuscated Anti-Debugging Loop (Mendeteksi jeda inspeksi)
+        (function() {
+            setInterval(function(){
+                let _0xs = new Date();
+                debugger;
+                let _0xe = new Date();
+                if (_0xe - _0xs > 100) {
+                    document.body.innerHTML = "<h2 style='color:white; text-align:center; margin-top:20vh;'>Security Restriction Enforced</h2>";
+                    window.location.replace("about:blank");
+                }
+            }, 1000);
+        })();
+
+        // ==================== OBFUSCATED URLS ====================
+        // URL Main Dashboard Web App
+        const _0xMainUrl = atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5dTk2VTVxUUhnRWFyT21TZEgyd1NER0lUZVY4LTY3Yl81QjM5dDk1Z0xYZjVPTnk5QUEzMmd4UEdZcERRa2R3dzl4dy9leGVj");
+        // URL SPP Web App (Data APK)
+        const _0xSPPUrl = atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5ZzBrMmw4NGtaQXdveERNdnlua2xHQWVIWDJOY3hmX0RfVUhETU1SUHBnQ0c4dk9qSE00VFdveHM5S1laYUhzdU4vZXhlYw==");
+
+        // ==========================================================
 
         let myCharts = [];
         let clientChartInstance = null;
@@ -687,10 +663,8 @@
         setInterval(updateDateTime, 1000); updateDateTime();
 
         async function fetchDashboardData() {
-            if (WEB_APP_URL.includes("MASUKKAN_LINK_DEPLOY")) return;
-
             try {
-                const response = await fetch(WEB_APP_URL);
+                const response = await fetch(_0xMainUrl);
                 const data = await response.json();
                 
                 let sheetMap = {};
@@ -726,11 +700,88 @@
                 animateValue('stat-spp', parseTarget('SPP Belum Datang'), 1200);
 
                 updateDynamicCharts(data.trendPO, data.karyawan);
-
             } catch (error) {
-                console.error("Gagal sinkronisasi data real-time Web App:", error);
+                console.error("Gagal sinkronisasi data real-time Web App utama:", error);
             }
         }
+
+        // ==================== FUNGSI FETCH SUMMARY SPP ====================
+        async function fetchSPPData() {
+            try {
+                const response = await fetch(_0xSPPUrl);
+                const result = await response.json();
+                
+                if (result.error) return;
+                
+                const headers = result.headers;
+                const allData = result.data;
+                
+                const materialIdx = headers.findIndex(h => h.toString().toLowerCase().trim() === 'nama material');
+                const sppTotalIdx = headers.findIndex(h => h.toString().toLowerCase().trim() === 'spp total');
+                const kedatanganIdx = headers.findIndex(h => h.toString().toLowerCase().trim() === 'kedatangan');
+
+                if (materialIdx === -1 || sppTotalIdx === -1 || kedatanganIdx === -1) return;
+
+                let minusMap = {};
+                let totalSppGlobal = 0;
+                let totalDatangGlobal = 0;
+
+                allData.forEach(row => {
+                    const isCompletelyEmpty = row.every(cell => cell === '' || cell === null || cell === undefined);
+                    if (isCompletelyEmpty) return;
+
+                    let matName = row[materialIdx];
+                    let sppQty = Number(row[sppTotalIdx]) || 0;
+                    let datangQty = Number(row[kedatanganIdx]) || 0;
+                    let sisa = datangQty - sppQty;
+
+                    if (matName) {
+                        if (sisa < 0) {
+                            minusMap[matName] = (minusMap[matName] || 0) + Math.abs(sisa);
+                        }
+                        let effectiveDatang = datangQty > sppQty ? sppQty : datangQty;
+                        totalSppGlobal += sppQty;
+                        totalDatangGlobal += effectiveDatang;
+                    }
+                });
+
+                // Update UI: Daftar Minus Material
+                const pendingList = document.getElementById('spp-pending-list');
+                if (Object.keys(minusMap).length === 0) {
+                    pendingList.innerHTML = `
+                        <li class="sp-list-item">
+                            <span style="color: var(--primary-green);">✨ Seluruh material telah terpenuhi sempurna</span> 
+                            <strong style="color: var(--primary-green);">-</strong>
+                        </li>`;
+                } else {
+                    let htmlList = '';
+                    for (let mat in minusMap) {
+                        htmlList += `
+                            <li class="sp-list-item">
+                                <span>${mat}</span> 
+                                <strong style="color: var(--primary-red);">- ${minusMap[mat]}</strong>
+                            </li>`;
+                    }
+                    pendingList.innerHTML = htmlList;
+                }
+
+                // Update UI: Persentase Pemenuhan Global
+                let pct = totalSppGlobal > 0 ? Math.round((totalDatangGlobal / totalSppGlobal) * 100) : 0;
+                if (pct > 100) pct = 100;
+                
+                document.getElementById('spp-fulfillment-text').innerText = pct + "%";
+                document.getElementById('spp-fulfillment-bar').style.width = pct + "%";
+
+            } catch (error) {
+                console.error("Gagal sinkronisasi data SPP:", error);
+                document.getElementById('spp-pending-list').innerHTML = `
+                    <li class="sp-list-item">
+                        <span style="color: var(--primary-red);">Gagal mengambil data sinkronisasi</span> 
+                        <strong style="color: var(--primary-red);">X</strong>
+                    </li>`;
+            }
+        }
+        // ==================================================================
 
         function updateDynamicCharts(poData, karData) {
             let textColor = document.body.classList.contains('light-theme') ? '#475569' : '#e2e8f0';
@@ -909,8 +960,14 @@
                     overlay.style.display = "none";
                     document.getElementById('main-dashboard').style.display = "flex";
                     
+                    // Fetch data serentak untuk dashboard utama dan module SPP
                     fetchDashboardData(); 
-                    syncInterval = setInterval(fetchDashboardData, 30000); 
+                    fetchSPPData();
+
+                    syncInterval = setInterval(() => {
+                        fetchDashboardData();
+                        fetchSPPData();
+                    }, 30000); 
 
                     showNotification('Akses Diberikan', 'Selamat datang di MSB ERP System', 'success');
                 }, 800); 
