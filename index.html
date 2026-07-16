@@ -16,45 +16,365 @@
         (function(){const d=window.location.hostname;const a=['murindasentrabaja.github.io','localhost','127.0.0.1',''];if(!a.includes(d)){document.documentElement.innerHTML='<body style="background:#000;color:#fff;display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;"><h1>Akses Ditolak: Domain Tidak Valid</h1></body>';window.stop();}if(window.location.protocol==='http:'&&d!=='localhost'&&d!=='127.0.0.1'&&d!==''){window.location.replace(window.location.href.replace('http:','https:'));}})();
     </script>
     <style>
-        :root{--primary-blue:#0275d8;--primary-blue-hover:#025aa5;--primary-green:#10b981;--primary-orange:#f59e0b;--primary-purple:#8b5cf6;--primary-cyan:#06b6d4;--primary-red:#ef4444;--bg-body:#0a0e27;--bg-body-light:#eef2f6;--bg-card:rgba(255,255,255,0.05);--bg-glass:rgba(255,255,255,0.08);--text-dark:#1e293b;--text-muted:#64748b;--text-light:#e2e8f0;--text-white:#ffffff;--shadow-soft:0 10px 40px rgba(0,0,0,0.1);--shadow-glass:0 8px 32px rgba(31,38,135,0.15);--transition-smooth:0.7s cubic-bezier(0.16,1,0.3,1)}*{margin:0;padding:0;box-sizing:border-box;outline:none}body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}img,canvas,a{-webkit-user-drag:none;-khtml-user-drag:none;-moz-user-drag:none;-o-user-drag:none}body{background-color:var(--bg-body);background-image:linear-gradient(135deg,rgba(10,14,39,0.90) 0%,rgba(10,14,39,0.95) 100%),url('https://images.unsplash.com/photo-1587843329241-7b00302b1fbb?q=80&w=1920&auto=format&fit=crop');background-size:cover;background-position:center;background-attachment:fixed;background-repeat:no-repeat;color:var(--text-light);font-family:'Inter','Nunito',sans-serif;overflow-x:hidden;position:relative;transition:all 0.5s ease}body.light-theme{background-color:var(--bg-body-light);background-image:linear-gradient(135deg,rgba(238,242,246,0.85) 0%,rgba(238,242,246,0.95) 100%),url('https://images.unsplash.com/photo-1587843329241-7b00302b1fbb?q=80&w=1920&auto=format&fit=crop');color:var(--text-dark)}body.light-theme .top-info-bar,body.light-theme header,body.light-theme footer{background:rgba(255,255,255,0.85);border-color:rgba(0,0,0,0.1);color:#1e293b}body.light-theme .stat-card,body.light-theme .chart-card,body.light-theme .module-card,body.light-theme .notification{background:rgba(255,255,255,0.9);border-color:rgba(0,0,0,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.05)}body.light-theme .stat-value,body.light-theme .chart-title,body.light-theme .module-info h3,body.light-theme .section-title{color:#0f172a}body.light-theme .stat-label,body.light-theme .chart-subtitle,body.light-theme .module-info p,body.light-theme .footer-address,body.light-theme .footer-copy{color:#475569}body.light-theme .footer-address strong,body.light-theme .footer-copy span:first-child{color:#0f172a}body.light-theme .user-profile,body.light-theme .theme-toggle{background:#f1f5f9;color:#0f172a;border-color:#cbd5e1}body.light-theme .header-divider{background:#cbd5e1}body.light-theme .datetime{color:#1e293b}h1,h2,h3,h4,h5,button{font-family:'Poppins',sans-serif}header img.logo-small{height:45px;object-fit:contain;transition:all 0.3s ease}body:not(.light-theme) header img.logo-small{filter:brightness(0) invert(1) drop-shadow(0 2px 4px rgba(255,255,255,0.2))}body.light-theme header img.logo-small{filter:drop-shadow(0 2px 6px rgba(0,0,0,0.15))}.bg-glow{position:fixed;border-radius:50%;filter:blur(120px);opacity:0.2;z-index:-1;animation:float 15s infinite alternate ease-in-out;pointer-events:none;will-change:transform}.blob-1{background:linear-gradient(135deg,#0275d8,#06b6d4);width:600px;height:600px;top:-15%;left:-10%}.blob-2{background:linear-gradient(135deg,#10b981,#059669);width:500px;height:500px;bottom:-10%;right:-10%;animation-delay:3s}.blob-3{background:linear-gradient(135deg,#f59e0b,#dc2626);width:550px;height:550px;top:35%;right:-5%;animation-delay:6s}@keyframes float{0%{transform:translate(0,0) scale(1) rotate(0deg)}50%{transform:translate(30px,-30px) scale(1.1) rotate(180deg)}100%{transform:translate(-20px,20px) scale(0.9) rotate(360deg)}}#loading-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0e27;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity 0.5s,visibility 0.5s}#loading-screen.hidden{opacity:0;visibility:hidden}.loader-container{position:relative;width:100px;height:100px;display:flex;justify-content:center;align-items:center}.loader{position:absolute;width:100%;height:100%;border:6px solid rgba(2,117,216,0.2);border-top:6px solid #0275d8;border-radius:50%;animation:spin 1s linear infinite}.loader-logo{width:55px;height:55px;object-fit:contain;z-index:10;animation:pulse-logo 2s infinite alternate;filter:brightness(0) invert(1)}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@keyframes pulse-logo{0%{transform:scale(0.9);opacity:0.8}100%{transform:scale(1.1);opacity:1}}.loading-text{margin-top:25px;font-size:1.2rem;font-weight:600;color:var(--text-light);letter-spacing:2px}.loading-progress{margin-top:15px;font-size:0.9rem;color:var(--primary-cyan)}#login-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:#ffffff;display:flex;justify-content:center;align-items:center;z-index:9998;transition:opacity 0.8s ease-in-out,visibility 0.8s ease-in-out}.login-wrapper{transform:scale(1);transition:transform 0.3s ease;animation:float-smooth 6s ease-in-out infinite}@keyframes float-smooth{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}.login-card{position:relative;width:850px;min-height:490px;display:flex;align-items:center;justify-content:flex-start;padding-left:50px;background:transparent;border-radius:20px;font-family:'Poppins',sans-serif;cursor:pointer;outline:none}.login-card .circle{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:1;pointer-events:none;transition:0.6s cubic-bezier(0.175,0.885,0.32,1.275)}.login-card .circle::before{content:'';position:absolute;width:250px;height:250px;background:transparent;border:4px solid #124388;border-radius:50%;transition:0.6s cubic-bezier(0.175,0.885,0.32,1.275);animation:pulse-glow 3s infinite alternate}@keyframes pulse-glow{0%{box-shadow:0 0 15px rgba(18,67,136,0.3),inset 0 0 10px rgba(18,67,136,0.2)}100%{box-shadow:0 0 45px rgba(18,67,136,0.8),inset 0 0 25px rgba(18,67,136,0.5)}}.login-card .logo-wrapper{z-index:12;text-align:center;transition:0.5s ease-in-out;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%}.login-card .logo-wrapper .logo_img{max-width:180px;filter:drop-shadow(0 10px 15px rgba(0,0,0,0.1));animation:logo-breath 4s ease-in-out infinite}@keyframes logo-breath{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}.login-card:hover .circle::before,.login-card:focus-within .circle::before{width:100%;height:100%;border-radius:20px;background:linear-gradient(135deg,#0a1930,#124388);box-shadow:0 20px 60px rgba(18,67,136,0.5);border:0px solid transparent;animation:none}.login-card:hover .logo-wrapper,.login-card:focus-within .logo-wrapper{opacity:0;transform:scale(0.3);pointer-events:none}.login-card .content{position:relative;z-index:10;width:100%;max-width:380px;opacity:0;visibility:hidden;transform:translateX(-50px);transition:0.6s cubic-bezier(0.175,0.885,0.32,1.275);cursor:default}.login-card:hover .content,.login-card:focus-within .content{opacity:1;visibility:visible;transform:translateX(0);transition-delay:0.3s}.login-card .content h2{color:#fff;font-size:2rem;font-weight:800;letter-spacing:2px;margin-bottom:12px;white-space:nowrap;animation:text-glow 2s ease-in-out infinite alternate}@keyframes text-glow{0%{text-shadow:0 0 10px rgba(255,255,255,0.2)}100%{text-shadow:0 0 20px rgba(255,255,255,0.8),0 0 30px rgba(6,182,212,0.6)}}.login-address-block{display:block;text-decoration:none;background:linear-gradient(135deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.1);border-left:3px solid var(--primary-cyan);border-radius:12px;padding:18px 20px;margin-bottom:22px;backdrop-filter:blur(10px);box-shadow:0 5px 20px rgba(0,0,0,0.15);transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275)}.login-address-block:hover{transform:translateX(8px);background:linear-gradient(135deg,rgba(255,255,255,0.1),rgba(255,255,255,0.03));border-left-color:var(--primary-orange);box-shadow:0 8px 30px rgba(0,0,0,0.3);border-color:rgba(255,255,255,0.2)}.login-address-block .company-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;color:#ffffff;margin-bottom:8px;letter-spacing:0.5px}.login-address-block .address-text{font-family:'Nunito',sans-serif;font-size:0.75rem;font-weight:300;color:#cbd5e1;line-height:1.5;margin-bottom:12px}.login-address-block .contact-info{display:flex;flex-direction:column;gap:6px;font-family:'Nunito',sans-serif;font-size:0.75rem;font-weight:500;color:var(--primary-cyan)}.login-address-block .contact-info span{display:flex;align-items:center;gap:8px;transition:color 0.3s}.login-address-block:hover .contact-info span{color:#fff}.login-address-block .contact-info i{width:14px;text-align:center;color:var(--primary-orange)}.action-container{position:relative;margin-top:10px}.luxury-btn{display:flex;justify-content:center;align-items:center;gap:15px;width:100%;padding:16px 25px;background:linear-gradient(45deg,#b92025,#e53935,#b92025);background-size:200% auto;color:#fff;font-weight:800;font-size:1.1rem;border:none;cursor:pointer;border-radius:50px;text-transform:uppercase;letter-spacing:2px;box-shadow:0 10px 30px rgba(185,32,37,0.4);transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);position:relative;overflow:hidden;animation:gradient-shift 3s ease infinite}@keyframes gradient-shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}.luxury-btn::after{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.5),transparent);transform:skewX(-20deg);transition:0.7s}.luxury-btn:hover{transform:translateY(-5px) scale(1.03);box-shadow:0 15px 40px rgba(185,32,37,0.6)}.luxury-btn:hover::after{left:150%}.login-card .factory_img{position:absolute;top:50%;left:50%;width:350px;height:230px;object-fit:cover;border-radius:15px;border:4px solid #fff;box-shadow:0 20px 40px rgba(0,0,0,0.5);transform:translate(-50%,-50%) scale(0) rotate(-10deg);z-index:11;transition:0.7s cubic-bezier(0.25,1,0.5,1.2);pointer-events:none;opacity:0}.login-card:hover .factory_img,.login-card:focus-within .factory_img{top:50%;left:75%;transform:translate(-50%,-50%) scale(1) rotate(0deg);opacity:1;transition-delay:0.2s}#main-dashboard{display:none;flex-direction:column;min-height:100vh;transition:transform var(--transition-smooth),opacity var(--transition-smooth),filter var(--transition-smooth);transform-origin:top center;animation:fadeIn 1s ease-out}@keyframes fadeIn{from{opacity:0;transform:scale(0.97) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}.dashboard-dimmed{transform:scale(0.97) translateY(-10px);opacity:0.5;filter:blur(6px);pointer-events:none}.top-info-bar{background:rgba(10,14,39,0.6);backdrop-filter:blur(15px);border-bottom:1px solid rgba(255,255,255,0.05);padding:12px 40px;display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;font-weight:600;color:var(--text-light);z-index:101}.datetime{display:flex;align-items:center;gap:15px}.datetime i{color:var(--primary-cyan)}.hse-ticker-wrap{flex:1;max-width:60%;overflow:hidden;white-space:nowrap;position:relative;display:flex;align-items:center;background:rgba(245,158,11,0.1);padding:8px 20px;border-radius:15px;border:1px solid rgba(245,158,11,0.2);margin-left:30px}.hse-ticker{display:inline-block;padding-left:100%;animation:ticker 40s linear infinite;font-weight:700;color:#fbbf24}.hse-ticker i{margin-right:10px;color:var(--primary-orange)}@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}header{min-height:85px;background:rgba(10,14,39,0.6);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;padding:15px 40px;z-index:100;box-shadow:0 4px 30px rgba(0,0,0,0.15);position:sticky;top:0}.header-left{display:flex;align-items:center;gap:30px}.header-divider{width:2px;height:40px;background:rgba(255,255,255,0.1)}.system-status{display:flex;align-items:center;gap:10px;font-family:'Poppins',sans-serif;font-weight:600;font-size:0.9rem;color:var(--primary-green);background:rgba(16,185,129,0.1);padding:10px 20px;border-radius:25px;border:1px solid rgba(16,185,129,0.2)}.status-dot{width:10px;height:10px;background:var(--primary-green);border-radius:50%;box-shadow:0 0 15px var(--primary-green);animation:pulse 2s infinite}@keyframes pulse{0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 10px var(--primary-green)}50%{opacity:0.6;transform:scale(1.3);box-shadow:0 0 25px var(--primary-green)}}.nav-right{display:flex;align-items:center;gap:15px}.install-app-btn{background:linear-gradient(135deg,var(--primary-cyan),var(--primary-blue));border:none;padding:10px 18px;border-radius:12px;cursor:pointer;color:#fff;font-size:0.95rem;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:8px;transition:all 0.3s;box-shadow:0 4px 15px rgba(2,117,216,0.3);border:1px solid rgba(255,255,255,0.2)}.install-app-btn:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 6px 20px rgba(2,117,216,0.5);color:#fff}.theme-toggle{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:10px 15px;border-radius:12px;cursor:pointer;color:var(--text-light);font-size:1.1rem;transition:all 0.3s}.theme-toggle:hover{background:rgba(255,255,255,0.1);transform:scale(1.1)}.user-profile{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.05);padding:10px 20px;border-radius:30px;border:1px solid rgba(255,255,255,0.1);font-weight:700;color:var(--text-light)}.user-profile i{font-size:1.3rem;color:var(--primary-cyan)}.btn-logout{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#ef4444;padding:10px 20px;border-radius:12px;cursor:pointer;font-weight:600;font-size:0.95rem;transition:all 0.3s;display:flex;align-items:center;gap:8px}.btn-logout:hover{background:#ef4444;color:white;transform:translateY(-2px)}.dashboard-stats{padding:30px 40px 15px 40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}.stat-card{background:rgba(255,255,255,0.03);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:20px;display:flex;align-items:center;gap:15px;box-shadow:0 8px 32px rgba(0,0,0,0.15);transition:all 0.4s;position:relative;overflow:hidden}.stat-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;transition:width 0.4s}.stat-card:hover{transform:translateY(-5px);background:rgba(255,255,255,0.06)}.stat-card:hover::before{width:100%;opacity:0.05}.stat-card.blue::before{background:var(--primary-blue)}.stat-card.green::before{background:var(--primary-green)}.stat-card.orange::before{background:var(--primary-orange)}.stat-card.purple::before{background:var(--primary-purple)}.stat-card.red::before{background:var(--primary-red)}.stat-icon{width:55px;height:55px;border-radius:15px;display:flex;justify-content:center;align-items:center;font-size:1.6rem;flex-shrink:0}.stat-card.blue .stat-icon{background:rgba(2,117,216,0.1);color:var(--primary-blue)}.stat-card.green .stat-icon{background:rgba(16,185,129,0.1);color:var(--primary-green)}.stat-card.orange .stat-icon{background:rgba(245,158,11,0.1);color:var(--primary-orange)}.stat-card.purple .stat-icon{background:rgba(139,92,246,0.1);color:var(--primary-purple)}.stat-card.red .stat-icon{background:rgba(239,68,68,0.1);color:var(--primary-red)}.stat-info{flex:1;min-width:0}.stat-label{font-size:0.8rem;color:rgba(255,255,255,0.6);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stat-value{font-size:1.6rem;font-weight:800;color:var(--text-white);line-height:1}.charts-section{padding:0 40px 25px 40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}.chart-card{background:rgba(255,255,255,0.03);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:25px;transition:all 0.5s cubic-bezier(0.16,1,0.3,1);position:relative;z-index:1;display:flex;flex-direction:column}.chart-card:hover{transform:translateY(-8px) scale(1.01);background:rgba(255,255,255,0.05);z-index:10}.chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.chart-title{font-size:1rem;font-weight:700;color:var(--text-white)}.chart-subtitle{font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:1px}.chart-card canvas{max-height:220px;width:100% !important}.sp-list-item{display:flex;justify-content:space-between;border-bottom:1px dashed rgba(255,255,255,0.1);padding-bottom:6px;margin-bottom:6px}body.light-theme .sp-list-item{border-bottom-color:rgba(0,0,0,0.1)}.content-area{padding:0 40px 40px 40px;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:25px;align-content:start;position:relative;z-index:10}.section-title{grid-column:1 / -1;font-size:1.4rem;font-weight:800;color:var(--text-white);margin-top:15px;margin-bottom:5px;display:flex;align-items:center;gap:15px}.section-title::before{content:'';width:5px;height:32px;background:linear-gradient(180deg,var(--primary-cyan),var(--primary-blue));border-radius:10px}.module-card{background:rgba(255,255,255,0.03);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.08);border-radius:22px;padding:30px;cursor:pointer;display:flex;flex-direction:column;gap:18px;position:relative;overflow:hidden;transition:all 0.5s cubic-bezier(0.16,1,0.3,1);pointer-events:auto}.module-card::before{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.05),transparent);transform:skewX(-20deg);transition:0.7s cubic-bezier(0.16,1,0.3,1);z-index:1;pointer-events:none}.module-card:hover{transform:translateY(-10px);background:rgba(255,255,255,0.06)}.module-card:hover::before{left:150%}.module-icon{width:70px;height:70px;border-radius:18px;display:flex;justify-content:center;align-items:center;font-size:2rem;transition:all 0.4s;z-index:2;position:relative}.module-card:hover .module-icon{transform:scale(1.1) rotate(5deg)}.module-card.blue .module-icon{background:rgba(2,117,216,0.15);color:#2196f3}.module-card.green .module-icon{background:rgba(16,185,129,0.15);color:#10b981}.module-card.orange .module-icon{background:rgba(245,158,11,0.15);color:#fbbf24}.module-info{z-index:2;position:relative}.module-info h3{font-size:1.25rem;margin-bottom:8px;color:var(--text-white);font-weight:700}.module-info p{font-size:0.95rem;color:rgba(255,255,255,0.6);line-height:1.6}.explore-btn{font-weight:700;font-size:0.95rem;display:flex;align-items:center;gap:10px;margin-top:auto;transition:all 0.3s;z-index:2;position:relative}.module-card:hover .explore-btn{letter-spacing:1px}.module-card:hover .explore-btn i{transform:translateX(8px)}.module-card.blue .explore-btn{color:#2196f3}.module-card.green .explore-btn{color:#10b981}.module-card.orange .explore-btn{color:#fbbf24}.module-card.blue:hover{border-color:rgba(2,117,216,0.8);box-shadow:0 10px 30px rgba(2,117,216,0.25),inset 0 0 20px rgba(2,117,216,0.08)}.module-card.green:hover{border-color:rgba(16,185,129,0.8);box-shadow:0 10px 30px rgba(16,185,129,0.25),inset 0 0 20px rgba(16,185,129,0.08)}.module-card.orange:hover{border-color:rgba(245,158,11,0.8);box-shadow:0 10px 30px rgba(245,158,11,0.25),inset 0 0 20px rgba(245,158,11,0.08)}.notification-container{position:fixed;top:20px;right:20px;z-index:9998;display:flex;flex-direction:column;gap:15px}.notification{background:rgba(10,14,39,0.9);border:1px solid rgba(255,255,255,0.1);padding:18px 25px;border-radius:15px;min-width:320px;box-shadow:0 10px 30px rgba(0,0,0,0.3);display:flex;align-items:center;gap:15px;animation:slideInRight 0.5s ease-out}@keyframes slideInRight{from{opacity:0;transform:translateX(400px)}to{opacity:1;transform:translateX(0)}}.notification i{font-size:1.5rem}.notification.success{border-left:4px solid var(--primary-green)}.notification.success i{color:var(--primary-green)}.notification.warning{border-left:4px solid var(--primary-orange)}.notification.warning i{color:var(--primary-orange)}.notification-content{flex:1}.notification-title{font-weight:700;font-size:0.95rem;margin-bottom:3px}.notification-message{font-size:0.85rem;color:rgba(255,255,255,0.7)}#viewport-container{display:none;position:fixed;top:70px;left:0;width:100%;height:calc(100vh - 70px);background:#ffffff;z-index:500;opacity:0;transform:translateY(40px) scale(0.98);transition:transform var(--transition-smooth),opacity var(--transition-smooth);will-change:transform,opacity;border-top-left-radius:20px;border-top-right-radius:20px;box-shadow:0 -15px 60px rgba(0,0,0,0.4);overflow:hidden}#viewport-container.active{opacity:1;transform:translateY(0) scale(1)}#erp-frame{width:100%;height:100%;border:none;background:#fff}.back-nav{position:fixed;bottom:20px;right:20px;background:rgba(15,23,42,0.95);backdrop-filter:blur(20px);color:#fff;padding:10px 20px;border-radius:30px;border:1px solid rgba(255,255,255,0.2);font-weight:600;cursor:pointer;z-index:1000;box-shadow:0 5px 20px rgba(0,0,0,0.4);font-size:0.85rem;display:none;align-items:center;gap:8px;opacity:0;transform:translateY(20px);transition:all var(--transition-smooth)}.back-nav.active{opacity:1;transform:translateY(0)}.back-nav:hover{background:#000;transform:translateY(-3px) scale(1.05);border-color:var(--primary-cyan)}footer{background:rgba(10,14,39,0.7);backdrop-filter:blur(15px);border-top:1px solid rgba(255,255,255,0.05);padding:15px 40px;display:flex;justify-content:space-between;align-items:center;color:rgba(255,255,255,0.6);z-index:100}.footer-address{font-size:0.85rem;line-height:1.5}.footer-address strong{color:var(--text-white);font-size:0.95rem;display:block;margin-bottom:3px}.footer-contact{margin-top:8px;display:flex;gap:15px;font-weight:600;color:var(--primary-cyan)}.footer-copy{text-align:right;font-size:0.8rem;font-weight:600}.footer-copy span:first-child{color:var(--text-white);display:block;margin-bottom:3px}::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:rgba(255,255,255,0.05)}::-webkit-scrollbar-thumb{background:rgba(2,117,216,0.5);border-radius:10px}::-webkit-scrollbar-thumb:hover{background:var(--primary-cyan)}@media (max-width:1200px){.charts-section{grid-template-columns:1fr}}@media (max-width:992px){.content-area{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}.dashboard-stats{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}}@media (max-width:900px){.login-card{width:90%;max-width:450px;height:auto;min-height:70vh;padding:40px 25px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:rgba(10,25,48,0.9);box-shadow:0 10px 40px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.1)}.login-card .circle{position:relative;height:auto;margin-bottom:25px}.login-card .circle::before{display:none}.login-card .content{opacity:1;visibility:visible;transform:translateX(0);width:100%;max-width:100%;padding-left:0}.login-card .logo-wrapper{position:relative;opacity:1;transform:scale(1);pointer-events:auto}.login-card .factory_img{display:none}.login-wrapper{animation:float-smooth-mobile 6s ease-in-out infinite !important;transform:scale(1) !important;width:100%;display:flex;justify-content:center}@keyframes float-smooth-mobile{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}}@media (max-width:768px){.install-text{display:none}.install-app-btn{padding:10px 15px}.top-info-bar{flex-direction:column;align-items:center;gap:8px;padding:12px 15px;font-size:0.75rem;text-align:center}.datetime{justify-content:center;width:100%}.hse-ticker-wrap{max-width:100%;width:100%;margin-left:0;border-radius:8px}header{padding:12px 15px;flex-direction:column;gap:12px}.header-left{width:100%;justify-content:space-between;gap:10px}.header-divider{display:none}.nav-right{width:100%;justify-content:space-between}.user-profile span{display:none}.dashboard-stats,.charts-section,.content-area{padding:15px}.content-area{grid-template-columns:1fr}#viewport-container{top:60px;height:calc(100vh - 60px)}footer{flex-direction:column;text-align:center;padding:15px 20px;gap:12px}.footer-contact{flex-direction:column;gap:10px;align-items:center}}.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,0.3);transform:scale(0);animation:ripple-animation 0.6s ease-out;pointer-events:none}@keyframes ripple-animation{to{transform:scale(4);opacity:0}}
+        /* CSS Variables - iOS Liquid Glass System */
+        :root {
+            --primary-blue: #0A84FF; /* iOS Blue */
+            --primary-blue-hover: #0070E0;
+            --primary-green: #30D158; /* iOS Green */
+            --primary-orange: #FF9F0A; /* iOS Orange */
+            --primary-purple: #BF5AF2; /* iOS Purple */
+            --primary-cyan: #64D2FF; /* iOS Cyan */
+            --primary-red: #FF453A; /* iOS Red */
+            
+            /* Glassmorphism Variables (Dark Mode Default) */
+            --glass-bg: rgba(20, 25, 40, 0.45);
+            --glass-bg-hover: rgba(30, 35, 55, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-border-light: rgba(255, 255, 255, 0.05);
+            --glass-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+            --glass-blur: blur(24px) saturate(180%);
+            
+            /* Typography (Dark Mode) */
+            --text-main: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.65);
+            --text-accent: rgba(255, 255, 255, 0.9);
+            
+            --transition-smooth: 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+        }
+
+        /* Light Mode Variables */
+        body.light-theme {
+            --primary-blue: #007AFF;
+            --primary-green: #34C759;
+            --primary-orange: #FF9500;
+            --primary-purple: #AF52DE;
+            --primary-cyan: #32ADE6;
+            --primary-red: #FF3B30;
+
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-bg-hover: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-border-light: rgba(255, 255, 255, 1);
+            --glass-shadow: 0 10px 40px -10px rgba(31, 38, 135, 0.15);
+            --glass-blur: blur(24px) saturate(200%);
+
+            --text-main: #1D1D1F; /* Apple Standard Dark Gray */
+            --text-muted: #86868B;
+            --text-accent: #515154;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+        body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+        img, canvas, a { -webkit-user-drag: none; -khtml-user-drag: none; -moz-user-drag: none; -o-user-drag: none; }
         
-        /* MINI CALENDAR WIDGET CSS */
-        .calendar-widget-container { flex: 1; display: flex; flex-direction: column; min-height: 230px; position: relative; margin-top: 15px; }
-        .mini-cal-header-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: bold; font-size: 0.9rem; }
-        .mini-cal-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 5px; font-size: 0.75rem; text-align: center; color: rgba(255,255,255,0.6); font-weight: 700; }
-        body.light-theme .mini-cal-days { color: #64748b; }
-        .mini-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; flex: 1; }
-        .mini-cal-cell { aspect-ratio: 1; background: rgba(255,255,255,0.03); border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 0.85rem; font-weight: 600; position: relative; cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(255,255,255,0.05); }
-        body.light-theme .mini-cal-cell { background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.05); }
-        .mini-cal-cell:hover { background: rgba(255,255,255,0.1); transform: scale(1.15) translateY(-2px); z-index: 10; border-color: var(--primary-cyan); box-shadow: 0 5px 15px rgba(6,182,212,0.3); }
+        body {
+            /* Abstract vibrant background for iOS glass effect */
+            background-color: #000;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(10, 132, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(191, 90, 242, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(48, 209, 88, 0.15) 0px, transparent 50%),
+                url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: var(--text-main);
+            font-family: 'Inter', 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+
+        body.light-theme {
+            background-color: #F5F5F7;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 122, 255, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(175, 82, 222, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(52, 199, 89, 0.1) 0px, transparent 50%),
+                url('https://images.unsplash.com/photo-1557682224-5b8590cd9ec5?q=80&w=1920&auto=format&fit=crop');
+        }
+
+        h1, h2, h3, h4, h5, button { font-family: 'Poppins', -apple-system, sans-serif; }
+
+        /* Generic Glass Class */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid var(--glass-border-light);
+            border-left: 1px solid var(--glass-border-light);
+            box-shadow: var(--glass-shadow);
+            border-radius: var(--radius-lg);
+            transition: transform var(--transition-smooth), background var(--transition-smooth), box-shadow var(--transition-smooth);
+        }
+
+        /* Logos */
+        header img.logo-small { height: 40px; object-fit: contain; transition: all 0.3s ease; }
+        body:not(.light-theme) header img.logo-small { filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(255,255,255,0.2)); }
+        body.light-theme header img.logo-small { filter: drop-shadow(0 2px 6px rgba(0,0,0,0.1)); }
+
+        /* Blobs for Background Depth */
+        .bg-glow { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.3; z-index: -1; animation: float 15s infinite alternate ease-in-out; pointer-events: none; }
+        .blob-1 { background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan)); width: 600px; height: 600px; top: -15%; left: -10%; }
+        .blob-2 { background: linear-gradient(135deg, var(--primary-green), #059669); width: 500px; height: 500px; bottom: -10%; right: -10%; animation-delay: 3s; }
+        .blob-3 { background: linear-gradient(135deg, var(--primary-orange), var(--primary-red)); width: 550px; height: 550px; top: 35%; right: -5%; animation-delay: 6s; }
+        @keyframes float { 0% { transform: translate(0, 0) scale(1) rotate(0deg); } 50% { transform: translate(30px, -30px) scale(1.1) rotate(180deg); } 100% { transform: translate(-20px, 20px) scale(0.9) rotate(360deg); } }
+
+        /* Loading Screen (Glass) */
+        #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s, visibility 0.5s; }
+        #loading-screen.hidden { opacity: 0; visibility: hidden; }
+        .loader-container { position: relative; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; }
+        .loader { position: absolute; width: 100%; height: 100%; border: 6px solid rgba(10, 132, 255, 0.1); border-top: 6px solid var(--primary-blue); border-radius: 50%; animation: spin 1s linear infinite; }
+        .loader-logo { width: 55px; height: 55px; object-fit: contain; z-index: 10; animation: pulse-logo 2s infinite alternate; filter: brightness(0) invert(1); }
+        body.light-theme .loader-logo { filter: none; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse-logo { 0% { transform: scale(0.9); opacity: 0.8; } 100% { transform: scale(1.1); opacity: 1; } }
+        .loading-text { margin-top: 25px; font-size: 1.2rem; font-weight: 700; color: var(--text-main); letter-spacing: 1px; }
+        .loading-progress { margin-top: 10px; font-size: 0.9rem; color: var(--primary-blue); font-weight: 600;}
+
+        /* Login Overlay */
+        #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: transparent; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); display: flex; justify-content: center; align-items: center; z-index: 9998; transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out; }
+        .login-wrapper { transform: scale(1); transition: transform 0.3s ease; animation: float-smooth 6s ease-in-out infinite; }
+        @keyframes float-smooth { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        
+        .login-card { @extend .glass-panel; position: relative; width: 850px; min-height: 490px; display: flex; align-items: center; justify-content: flex-start; padding-left: 50px; border-radius: 30px; font-family: 'Poppins', sans-serif; cursor: pointer; overflow: hidden; background: var(--glass-bg); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); }
+        .login-card .circle { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; pointer-events: none; transition: var(--transition-smooth); }
+        
+        .login-card .logo-wrapper { z-index: 12; text-align: center; transition: 0.5s ease-in-out; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
+        .login-card .logo-wrapper .logo_img { max-width: 180px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); animation: logo-breath 4s ease-in-out infinite; }
+        body:not(.light-theme) .login-card .logo-wrapper .logo_img { filter: brightness(0) invert(1) drop-shadow(0 10px 15px rgba(0,0,0,0.3)); }
+        
+        @keyframes logo-breath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+        
+        .login-card:hover .circle, .login-card:focus-within .circle { width: 100%; height: 100%; background: linear-gradient(135deg, rgba(10, 132, 255, 0.1), rgba(191, 90, 242, 0.1)); }
+        .login-card:hover .logo-wrapper, .login-card:focus-within .logo-wrapper { opacity: 0; transform: scale(0.8) translateX(-100px); pointer-events: none; }
+        
+        .login-card .content { position: relative; z-index: 10; width: 100%; max-width: 380px; opacity: 0; visibility: hidden; transform: translateX(-50px); transition: var(--transition-smooth); cursor: default; }
+        .login-card:hover .content, .login-card:focus-within .content { opacity: 1; visibility: visible; transform: translateX(0); transition-delay: 0.1s; }
+        .login-card .content h2 { color: var(--text-main); font-size: 2rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 15px; }
+        
+        /* Glass Info Block in Login */
+        .login-address-block { display: block; text-decoration: none; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); border-left: 4px solid var(--primary-cyan); border-radius: var(--radius-md); padding: 20px; margin-bottom: 25px; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: var(--transition-smooth); }
+        body.light-theme .login-address-block { background: rgba(255, 255, 255, 0.4); border-color: var(--glass-border-light); }
+        .login-address-block:hover { transform: translateX(5px); background: rgba(255, 255, 255, 0.1); border-left-color: var(--primary-blue); }
+        body.light-theme .login-address-block:hover { background: rgba(255, 255, 255, 0.7); }
+        .login-address-block .company-name { font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+        .login-address-block .address-text { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 400; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px; }
+        .login-address-block .contact-info { display: flex; flex-direction: column; gap: 8px; font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 600; color: var(--text-accent); }
+        .login-address-block .contact-info span { display: flex; align-items: center; gap: 10px; }
+        .login-address-block .contact-info i { width: 16px; text-align: center; color: var(--primary-blue); }
+
+        /* iOS Style Button */
+        .luxury-btn { display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; padding: 16px; background: var(--primary-blue); color: #fff; font-weight: 700; font-size: 1.05rem; border: none; cursor: pointer; border-radius: var(--radius-lg); letter-spacing: 0.5px; box-shadow: 0 8px 20px rgba(10, 132, 255, 0.3); transition: var(--transition-smooth); position: relative; overflow: hidden; }
+        .luxury-btn:hover { transform: translateY(-2px) scale(1.02); background: var(--primary-blue-hover); box-shadow: 0 12px 25px rgba(10, 132, 255, 0.4); }
+
+        .login-card .factory_img { position: absolute; top: 50%; left: 50%; width: 350px; height: 230px; object-fit: cover; border-radius: var(--radius-md); border: 2px solid var(--glass-border); box-shadow: var(--glass-shadow); transform: translate(-50%, -50%) scale(0.9) rotate(-5deg); z-index: 11; transition: var(--transition-smooth); pointer-events: none; opacity: 0; filter: brightness(0.9); }
+        .login-card:hover .factory_img, .login-card:focus-within .factory_img { top: 50%; left: 75%; transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; }
+
+        /* Main Dashboard Container */
+        #main-dashboard { display: none; flex-direction: column; min-height: 100vh; transition: transform var(--transition-smooth), opacity var(--transition-smooth), filter var(--transition-smooth); transform-origin: top center; animation: fadeIn 0.8s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98) translateY(15px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .dashboard-dimmed { transform: scale(0.96) translateY(-10px); opacity: 0.4; filter: blur(10px); pointer-events: none; }
+
+        /* Header & Nav (Glass Edge-to-Edge) */
+        .top-info-bar { background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-bottom: 1px solid var(--glass-border); padding: 10px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); z-index: 101; }
+        .datetime { display: flex; align-items: center; gap: 15px; }
+        .datetime i { color: var(--primary-blue); font-size: 0.9rem; }
+        
+        .hse-ticker-wrap { flex: 1; max-width: 50%; overflow: hidden; white-space: nowrap; position: relative; display: flex; align-items: center; background: rgba(255, 149, 0, 0.1); padding: 6px 15px; border-radius: var(--radius-sm); border: 1px solid rgba(255, 149, 0, 0.2); margin-left: 20px; }
+        .hse-ticker { display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; font-weight: 600; color: var(--primary-orange); font-size: 0.8rem; }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        header { min-height: 80px; background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; z-index: 100; box-shadow: 0 4px 30px rgba(0,0,0,0.05); position: sticky; top: 0; }
+        .header-left { display: flex; align-items: center; gap: 25px; }
+        .header-divider { width: 1px; height: 35px; background: var(--glass-border); }
+        
+        /* Status Pill */
+        .system-status { display: flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem; color: var(--primary-green); background: rgba(48, 209, 88, 0.1); padding: 8px 16px; border-radius: 20px; border: 1px solid rgba(48, 209, 88, 0.2); }
+        .status-dot { width: 8px; height: 8px; background: var(--primary-green); border-radius: 50%; box-shadow: 0 0 10px var(--primary-green); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.4); } }
+
+        .nav-right { display: flex; align-items: center; gap: 15px; }
+        
+        /* Glass Buttons for Nav */
+        .install-app-btn { background: rgba(10, 132, 255, 0.15); border: 1px solid rgba(10, 132, 255, 0.3); padding: 10px 16px; border-radius: 20px; cursor: pointer; color: var(--primary-blue); font-size: 0.9rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: var(--transition-smooth); backdrop-filter: blur(10px); }
+        body.light-theme .install-app-btn { background: rgba(0, 122, 255, 0.1); }
+        .install-app-btn:hover { background: var(--primary-blue); color: #fff; transform: translateY(-1px); }
+
+        .theme-toggle, .btn-logout { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); padding: 10px 14px; border-radius: 20px; cursor: pointer; color: var(--text-main); font-size: 1rem; transition: var(--transition-smooth); display: flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; font-weight: 600; }
+        body.light-theme .theme-toggle, body.light-theme .btn-logout { background: rgba(255, 255, 255, 0.5); }
+        .theme-toggle:hover, .btn-logout:hover { background: rgba(255, 255, 255, 0.1); transform: scale(1.05); }
+        body.light-theme .theme-toggle:hover, body.light-theme .btn-logout:hover { background: #fff; }
+        .btn-logout { color: var(--primary-red); background: rgba(255, 69, 58, 0.1); border-color: rgba(255, 69, 58, 0.2); }
+        .btn-logout:hover { background: var(--primary-red); color: #fff; }
+
+        .user-profile { display: flex; align-items: center; gap: 10px; padding: 8px 15px; font-weight: 600; color: var(--text-main); font-size: 0.9rem; }
+        .user-profile i { font-size: 1.2rem; color: var(--primary-blue); }
+
+        /* Stats Section */
+        .dashboard-stats { padding: 30px 40px 15px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+        .stat-card { @extend .glass-panel; background: var(--glass-bg); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-border-light); border-left: 1px solid var(--glass-border-light); border-radius: var(--radius-lg); padding: 22px; display: flex; align-items: center; gap: 18px; transition: var(--transition-smooth); position: relative; overflow: hidden; box-shadow: var(--glass-shadow); }
+        .stat-card:hover { transform: translateY(-5px) scale(1.01); background: var(--glass-bg-hover); }
+        
+        .stat-icon { width: 50px; height: 50px; border-radius: var(--radius-sm); display: flex; justify-content: center; align-items: center; font-size: 1.4rem; flex-shrink: 0; background: rgba(255,255,255,0.05); }
+        body.light-theme .stat-icon { background: rgba(0,0,0,0.03); }
+        .stat-card.blue .stat-icon { color: var(--primary-blue); }
+        .stat-card.green .stat-icon { color: var(--primary-green); }
+        .stat-card.orange .stat-icon { color: var(--primary-orange); }
+        .stat-card.purple .stat-icon { color: var(--primary-purple); }
+        .stat-card.red .stat-icon { color: var(--primary-red); }
+
+        .stat-info { flex: 1; min-width: 0; }
+        .stat-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Inter', sans-serif; }
+        .stat-value { font-size: 1.8rem; font-weight: 700; color: var(--text-main); line-height: 1; font-family: -apple-system, sans-serif; letter-spacing: -0.5px; }
+
+        /* Charts Section */
+        .charts-section { padding: 0 40px 25px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+        .chart-card { background: var(--glass-bg); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-border-light); border-left: 1px solid var(--glass-border-light); border-radius: var(--radius-lg); padding: 25px; transition: var(--transition-smooth); position: relative; z-index: 1; display: flex; flex-direction: column; box-shadow: var(--glass-shadow); }
+        .chart-card:hover { transform: translateY(-4px); background: var(--glass-bg-hover); z-index: 10; }
+        
+        .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .chart-title { font-size: 1.1rem; font-weight: 600; color: var(--text-main); font-family: 'Inter', sans-serif; }
+        .chart-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+        .chart-card canvas { max-height: 220px; width: 100% !important; }
+
+        /* SPP List inside Chart Card */
+        .sp-list-item { display: flex; justify-content: space-between; border-bottom: 1px solid var(--glass-border); padding-bottom: 8px; margin-bottom: 8px; font-family: 'Inter', sans-serif; }
+        .sp-list-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+        /* Content Area (Modules) */
+        .content-area { padding: 0 40px 40px 40px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; align-content: start; position: relative; z-index: 10; }
+        .section-title { grid-column: 1 / -1; font-size: 1.3rem; font-weight: 700; color: var(--text-main); margin-top: 15px; margin-bottom: 5px; display: flex; align-items: center; gap: 12px; font-family: 'Inter', sans-serif; }
+        .section-title::before { content: ''; width: 4px; height: 24px; background: var(--primary-blue); border-radius: 10px; }
+        
+        .module-card { background: var(--glass-bg); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-border-light); border-left: 1px solid var(--glass-border-light); border-radius: var(--radius-lg); padding: 25px; cursor: pointer; display: flex; flex-direction: column; gap: 15px; position: relative; overflow: hidden; transition: var(--transition-smooth); pointer-events: auto; box-shadow: var(--glass-shadow); }
+        .module-card:hover { transform: translateY(-6px) scale(1.02); background: var(--glass-bg-hover); box-shadow: 0 15px 40px rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.3); }
+        body.light-theme .module-card:hover { box-shadow: 0 15px 40px rgba(31,38,135,0.15); border-color: #fff; }
+        
+        .module-icon { width: 60px; height: 60px; border-radius: var(--radius-md); display: flex; justify-content: center; align-items: center; font-size: 1.8rem; transition: var(--transition-smooth); z-index: 2; position: relative; background: rgba(255,255,255,0.05); }
+        body.light-theme .module-icon { background: rgba(0,0,0,0.03); }
+        .module-card:hover .module-icon { transform: scale(1.1); }
+        .module-card.blue .module-icon { color: var(--primary-blue); }
+        .module-card.green .module-icon { color: var(--primary-green); }
+        .module-card.orange .module-icon { color: var(--primary-orange); }
+
+        .module-info { z-index: 2; position: relative; }
+        .module-info h3 { font-size: 1.15rem; margin-bottom: 6px; color: var(--text-main); font-weight: 600; font-family: 'Inter', sans-serif; }
+        .module-info p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; font-family: 'Inter', sans-serif; }
+        
+        .explore-btn { font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; margin-top: auto; transition: var(--transition-smooth); z-index: 2; position: relative; font-family: 'Inter', sans-serif; }
+        .module-card:hover .explore-btn { gap: 12px; }
+        .module-card.blue .explore-btn { color: var(--primary-blue); }
+        .module-card.green .explore-btn { color: var(--primary-green); }
+        .module-card.orange .explore-btn { color: var(--primary-orange); }
+
+        /* Notifications Glass */
+        .notification-container { position: fixed; top: 20px; right: 20px; z-index: 9998; display: flex; flex-direction: column; gap: 15px; }
+        .notification { background: var(--glass-bg); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); padding: 16px 20px; border-radius: var(--radius-md); min-width: 320px; box-shadow: var(--glass-shadow); display: flex; align-items: center; gap: 15px; animation: slideInRight 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); color: var(--text-main); }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(400px) scale(0.9); } to { opacity: 1; transform: translateX(0) scale(1); } }
+        .notification i { font-size: 1.5rem; }
+        .notification.success i { color: var(--primary-green); }
+        .notification.warning i { color: var(--primary-orange); }
+        .notification-content { flex: 1; font-family: 'Inter', sans-serif; }
+        .notification-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
+        .notification-message { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* Iframe Viewport */
+        #viewport-container { display: none; position: fixed; top: 80px; left: 0; width: 100%; height: calc(100vh - 80px); background: var(--glass-bg); backdrop-filter: var(--glass-blur); z-index: 500; opacity: 0; transform: translateY(40px) scale(0.98); transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); will-change: transform, opacity; border-top-left-radius: 30px; border-top-right-radius: 30px; box-shadow: 0 -10px 40px rgba(0,0,0,0.3); overflow: hidden; border-top: 1px solid var(--glass-border); }
+        body.light-theme #viewport-container { background: #fff; } /* Solid for actual app content visibility usually, but keeping glass structural */
+        #viewport-container.active { opacity: 1; transform: translateY(0) scale(1); }
+        #erp-frame { width: 100%; height: 100%; border: none; background: #fff; border-top-left-radius: 30px; border-top-right-radius: 30px; }
+        
+        .back-nav { position: fixed; bottom: 30px; right: 30px; background: rgba(0,0,0,0.6); backdrop-filter: blur(20px); color: #fff; padding: 12px 24px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.2); font-weight: 600; cursor: pointer; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); font-size: 0.9rem; display: none; align-items: center; gap: 8px; opacity: 0; transform: translateY(20px); transition: var(--transition-smooth); font-family: 'Inter', sans-serif; }
+        .back-nav.active { opacity: 1; transform: translateY(0); }
+        .back-nav:hover { background: rgba(0,0,0,0.8); transform: translateY(-5px) scale(1.05); }
+
+        /* Footer Glass */
+        footer { background: var(--glass-bg); backdrop-filter: var(--glass-blur); border-top: 1px solid var(--glass-border); padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); z-index: 100; font-family: 'Inter', sans-serif; }
+        .footer-address { font-size: 0.8rem; line-height: 1.6; font-style: normal; }
+        .footer-address strong { color: var(--text-main); font-size: 0.9rem; display: block; margin-bottom: 4px; font-weight: 600; }
+        .footer-contact { margin-top: 10px; display: flex; gap: 15px; font-weight: 600; color: var(--primary-blue); font-size: 0.8rem; }
+        .footer-copy { text-align: right; font-size: 0.75rem; font-weight: 500; }
+        .footer-copy span:first-child { color: var(--text-main); display: block; margin-bottom: 4px; font-weight: 600; font-size: 0.85rem; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(10, 132, 255, 0.4); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-blue); }
+
+        /* Media Queries */
+        @media (max-width: 1200px) { .charts-section { grid-template-columns: 1fr; } }
+        @media (max-width: 992px) { .content-area { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); } .dashboard-stats { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
+        @media (max-width: 900px) {
+            .login-card { width: 90%; max-width: 400px; height: auto; min-height: 60vh; padding: 40px 30px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+            .login-card .content { opacity: 1; visibility: visible; transform: translateX(0); width: 100%; max-width: 100%; padding-left: 0; }
+            .login-card .logo-wrapper { display: none; }
+            .login-card .factory_img { display: none; }
+            .login-wrapper { animation: float-smooth-mobile 6s ease-in-out infinite !important; transform: scale(1) !important; width: 100%; display: flex; justify-content: center; }
+        }
+        @media (max-width: 768px) {
+            .install-text { display: none; }
+            .top-info-bar { flex-direction: column; gap: 10px; text-align: center; }
+            .datetime { justify-content: center; width: 100%; }
+            .hse-ticker-wrap { max-width: 100%; width: 100%; margin-left: 0; }
+            header { padding: 15px; flex-direction: column; gap: 15px; }
+            .header-left { width: 100%; justify-content: space-between; }
+            .header-divider { display: none; }
+            .nav-right { width: 100%; justify-content: space-between; }
+            .dashboard-stats, .charts-section, .content-area { padding: 15px; }
+            .content-area { grid-template-columns: 1fr; }
+            #viewport-container { top: 70px; height: calc(100vh - 70px); border-radius: 20px 20px 0 0; }
+            footer { flex-direction: column; text-align: center; padding: 20px; gap: 15px; }
+            .footer-contact { flex-direction: column; gap: 5px; align-items: center; }
+        }
+
+        /* Ripple Effect */
+        .ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.4); transform: scale(0); animation: ripple-animation 0.6s ease-out; pointer-events: none; }
+        body.light-theme .ripple { background: rgba(0,0,0,0.1); }
+        @keyframes ripple-animation { to { transform: scale(4); opacity: 0; } }
+        
+        /* MINI CALENDAR WIDGET CSS (iOS Style) */
+        .calendar-widget-container { flex: 1; display: flex; flex-direction: column; min-height: 230px; position: relative; margin-top: 15px; font-family: 'Inter', sans-serif; }
+        .mini-cal-header-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-weight: 600; font-size: 0.9rem; }
+        .mini-cal-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 8px; font-size: 0.75rem; text-align: center; color: var(--text-muted); font-weight: 700; }
+        .mini-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; flex: 1; }
+        
+        .mini-cal-cell { aspect-ratio: 1; background: rgba(255,255,255,0.05); border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 0.85rem; font-weight: 600; position: relative; cursor: pointer; transition: var(--transition-smooth); border: 1px solid transparent; color: var(--text-main); }
+        body.light-theme .mini-cal-cell { background: rgba(0,0,0,0.03); }
+        .mini-cal-cell:hover { background: rgba(255,255,255,0.15); transform: scale(1.15) translateY(-2px); z-index: 10; border-color: var(--primary-blue); box-shadow: 0 5px 15px rgba(10, 132, 255, 0.3); }
+        body.light-theme .mini-cal-cell:hover { background: #fff; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
         .mini-cal-cell:hover::after { content: ''; position: absolute; bottom: 100%; left: 0; width: 100%; height: 20px; background: transparent; cursor: default; }
-        body.light-theme .mini-cal-cell:hover { background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .mini-cal-cell.has-data { border-bottom: 3px solid var(--primary-orange); color: var(--primary-orange); background: rgba(245,158,11,0.05); }
+        
+        .mini-cal-cell.has-data { border-bottom: 3px solid var(--primary-orange); color: var(--primary-orange); background: rgba(255, 149, 0, 0.1); }
         .mini-cal-cell.holiday { color: var(--primary-red); }
         
-        /* HOVER ZOOM TOOLTIP */
-        .mini-tooltip { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%) scale(0.5); opacity: 0; visibility: hidden; background: rgba(10,14,39,0.95); border: 1px solid var(--primary-cyan); padding: 12px; border-radius: 12px; min-width: 200px; z-index: 100; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 15px 35px rgba(0,0,0,0.6); backdrop-filter: blur(10px); max-height: 180px; overflow-y: auto; overscroll-behavior: contain; text-align: left; }
-        body.light-theme .mini-tooltip { background: rgba(255,255,255,0.98); box-shadow: 0 15px 35px rgba(0,0,0,0.15); border-color: rgba(6,182,212,0.4); }
+        /* HOVER ZOOM TOOLTIP (Glass) */
+        .mini-tooltip { position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%) scale(0.8); opacity: 0; visibility: hidden; background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 12px; border-radius: var(--radius-md); min-width: 200px; z-index: 100; transition: var(--transition-smooth); box-shadow: var(--glass-shadow); backdrop-filter: var(--glass-blur); max-height: 180px; overflow-y: auto; overscroll-behavior: contain; text-align: left; }
         .mini-cal-cell:hover .mini-tooltip { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); }
-        .mini-tooltip::-webkit-scrollbar { width: 4px; }
-        .mini-tooltip::-webkit-scrollbar-thumb { background: var(--primary-cyan); border-radius: 4px; }
-        .mini-tooltip-item { font-size: 0.8rem; padding: 8px 4px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; gap: 6px; }
-        body.light-theme .mini-tooltip-item { border-bottom: 1px solid rgba(0,0,0,0.05); }
+        
+        .mini-tooltip-item { font-size: 0.8rem; padding: 8px 4px; border-bottom: 1px solid var(--glass-border); display: flex; flex-direction: column; gap: 6px; }
         .mini-tooltip-item:last-child { border-bottom: none; }
-        .mini-sn { font-weight: 800; color: #fff; word-break: break-all; }
-        body.light-theme .mini-sn { color: #0f172a; }
-        .mini-status { font-size: 0.65rem; font-weight: 800; padding: 3px 8px; border-radius: 6px; width: max-content; text-transform: uppercase; letter-spacing: 0.5px; }
-        .mini-status.stock { background: #334155; color: #f8fafc; border: 1px solid #475569; }
-        body.light-theme .mini-status.stock { background: #f1f5f9; color: #475569; border-color: #cbd5e1; }
-        .mini-status.pending { background: rgba(202,138,4,0.2); color: #fef08a; border: 1px solid #ca8a04; }
-        body.light-theme .mini-status.pending { background: #fef9c3; color: #a16207; border-color: #fde047; }
-        .mini-status.sent { background: rgba(22,101,52,0.2); color: #dcfce7; border: 1px solid #166534; display: flex; align-items: center; gap: 4px; }
-        body.light-theme .mini-status.sent { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+        .mini-sn { font-weight: 700; color: var(--text-main); word-break: break-all; }
+        .mini-status { font-size: 0.65rem; font-weight: 700; padding: 4px 8px; border-radius: 8px; width: max-content; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .mini-status.stock { background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid var(--glass-border); }
+        body.light-theme .mini-status.stock { background: #E5E5EA; color: #1D1D1F; border-color: #D1D1D6; }
+        .mini-status.pending { background: rgba(255, 149, 0, 0.15); color: var(--primary-orange); border: 1px solid rgba(255, 149, 0, 0.3); }
+        .mini-status.sent { background: rgba(48, 209, 88, 0.15); color: var(--primary-green); border: 1px solid rgba(48, 209, 88, 0.3); display: flex; align-items: center; gap: 4px; }
     </style>
 </head>
 <body oncontextmenu="return false;">
-    <div id="loading-screen" aria-live="polite"><div class="loader-container"><div class="loader"></div><img src="MSB Logo.png" class="loader-logo" alt="Logo PT Murinda" onerror="this.src='https://via.placeholder.com/60x60?text=MSB'"></div><div class="loading-text">PT Murinda Sentra Baja</div><div class="loading-progress">Loading ERP System...</div></div>
-    <div class="bg-glow blob-1" aria-hidden="true"></div><div class="bg-glow blob-2" aria-hidden="true"></div><div class="bg-glow blob-3" aria-hidden="true"></div>
+    <div id="loading-screen" aria-live="polite"><div class="loader-container"><div class="loader"></div><img src="MSB Logo.png" class="loader-logo" alt="Logo PT Murinda" onerror="this.src='https://via.placeholder.com/60x60?text=MSB'"></div><div class="loading-text">PT Murinda Sentra Baja</div><div class="loading-progress">Memuat ERP System...</div></div>
+    
+    <div class="bg-glow blob-1" aria-hidden="true"></div>
+    <div class="bg-glow blob-2" aria-hidden="true"></div>
+    <div class="bg-glow blob-3" aria-hidden="true"></div>
+    
     <div class="notification-container" id="notification-container" aria-live="assertive"></div>
 
     <div id="login-overlay">
@@ -63,7 +383,14 @@
                 <div class="circle"><div class="logo-wrapper"><img src="MSB Logo.png" class="logo_img" alt="Logo PT Murinda" onerror="this.src='https://via.placeholder.com/180x60?text=MSB+Logo'"></div></div>
                 <div class="content">
                     <h2>MSB ERP SYSTEM</h2>
-                    <a href="https://maps.app.goo.gl/3DbQMsey9Bh2TC6S8" target="_blank" class="login-address-block"><div class="company-name">PT Murinda Sentra Baja</div><div class="address-text">Jl. Raya Kalijati Purwadadi No. 123A RT 006/02<br>Desa Kalijati Barat, Kecamatan Kalijati<br>Kabupaten Subang, West Java 41271 (Exit Toll Gate Kalijati)</div><div class="contact-info"><span><i class="fa-solid fa-phone"></i> (+62260) 7495467</span><span><i class="fa-solid fa-fax"></i> (+62260) 7495222</span><span><i class="fa-solid fa-envelope"></i> plant@murinda.com</span></div></a>
+                    <a href="https://maps.app.goo.gl/3DbQMsey9Bh2TC6S8" target="_blank" class="login-address-block">
+                        <div class="company-name">PT Murinda Sentra Baja</div>
+                        <div class="address-text">Jl. Raya Kalijati Purwadadi No. 123A RT 006/02<br>Desa Kalijati Barat, Kecamatan Kalijati<br>Kabupaten Subang, West Java 41271</div>
+                        <div class="contact-info">
+                            <span><i class="fa-solid fa-phone"></i> (+62260) 7495467</span>
+                            <span><i class="fa-solid fa-envelope"></i> plant@murinda.com</span>
+                        </div>
+                    </a>
                     <div class="action-container"><button class="luxury-btn" onclick="window._eSys(event)" id="enterBtn"><i class="fa-solid fa-fingerprint"></i> MASUK SISTEM</button></div>
                 </div>
                 <img src="Plant MSB.jpg" class="factory_img" alt="Plant PT Murinda" onerror="this.src='https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600&auto=format&fit=crop'">
@@ -72,8 +399,26 @@
     </div>
 
     <main id="main-dashboard" style="display: none;">
-        <div class="top-info-bar"><div class="datetime"><span><i class="fa-regular fa-calendar" aria-hidden="true"></i> <span id="current-date">Memuat...</span></span><span><i class="fa-regular fa-clock" aria-hidden="true"></i> <span id="current-time">Memuat...</span></span></div><div class="hse-ticker-wrap" aria-label="HSE & Motivation Ticker"><div class="hse-ticker"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i> <strong>Hai Sobat MSB:</strong> Utamakan Keselamatan (K3) & Gunakan APD Lengkap! | Semangat Bekerja: Setiap keringat hari ini adalah langkah menuju kesuksesan! | Merasa Lelah/Ngantuk? Lakukan peregangan ringan, minum air putih, atau cuci muka sejenak. | Bosan? Tarik napas dalam dan ingat kembali tujuan besar Anda. | Zero Accident & Produktivitas Tinggi adalah Komitmen Bersama!</div></div></div>
-        <header><div class="header-left"><img src="MSB Logo.png" alt="Logo" class="logo-small" onerror="this.style.display='none'"><div class="header-divider"></div><div class="system-status" aria-label="System Status"><div class="status-dot"></div><span>Online MSB ERP System</span></div></div><nav class="nav-right" aria-label="User Navigation"><a href="https://www.appsheet.com/newshortcut/6e48cd55-11bb-451f-997c-1c48db68fe7b" target="_blank" class="install-app-btn" title="Install MSB Production App"><i class="fa-solid fa-mobile-screen-button"></i> <span class="install-text">Instal MSB Production</span></a><button class="theme-toggle" onclick="window._tTheme()" aria-label="Toggle Dark or Light Theme" title="Toggle Theme"><i class="fa-solid fa-moon" aria-hidden="true"></i></button><div class="user-profile"><i class="fa-solid fa-circle-user" aria-hidden="true"></i><span id="display-user">Kalijati Plant</span></div><button class="btn-logout" onclick="window._dOut()" aria-label="Logout from System"><i class="fa-solid fa-power-off" aria-hidden="true"></i> Keluar</button></nav></header>
+        <div class="top-info-bar">
+            <div class="datetime"><span><i class="fa-regular fa-calendar" aria-hidden="true"></i> <span id="current-date">Memuat...</span></span><span><i class="fa-regular fa-clock" aria-hidden="true"></i> <span id="current-time">Memuat...</span></span></div>
+            <div class="hse-ticker-wrap" aria-label="HSE & Motivation Ticker">
+                <div class="hse-ticker"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i> <strong>Hai Sobat MSB:</strong> Utamakan Keselamatan (K3) & Gunakan APD Lengkap! | Semangat Bekerja: Setiap keringat hari ini adalah langkah menuju kesuksesan! | Zero Accident & Produktivitas Tinggi adalah Komitmen Bersama!</div>
+            </div>
+        </div>
+        
+        <header>
+            <div class="header-left">
+                <img src="MSB Logo.png" alt="Logo" class="logo-small" onerror="this.style.display='none'">
+                <div class="header-divider"></div>
+                <div class="system-status" aria-label="System Status"><div class="status-dot"></div><span>Online MSB ERP</span></div>
+            </div>
+            <nav class="nav-right" aria-label="User Navigation">
+                <a href="https://www.appsheet.com/newshortcut/6e48cd55-11bb-451f-997c-1c48db68fe7b" target="_blank" class="install-app-btn" title="Install MSB Production App"><i class="fa-solid fa-cloud-arrow-down"></i> <span class="install-text">Instal App</span></a>
+                <button class="theme-toggle" onclick="window._tTheme()" aria-label="Toggle Dark or Light Theme" title="Ubah Tema"><i class="fa-solid fa-sun" aria-hidden="true"></i></button>
+                <div class="user-profile"><i class="fa-solid fa-circle-user" aria-hidden="true"></i><span id="display-user">Kalijati Plant</span></div>
+                <button class="btn-logout" onclick="window._dOut()" aria-label="Logout from System"><i class="fa-solid fa-power-off" aria-hidden="true"></i> Keluar</button>
+            </nav>
+        </header>
 
         <section class="dashboard-stats" aria-label="Key Performance Indicators">
             <div class="stat-card blue"><div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-users"></i></div><div class="stat-info"><div class="stat-label">Karyawan</div><div class="stat-value" id="stat-karyawan">0</div></div></div>
@@ -86,60 +431,92 @@
         </section>
 
         <section class="charts-section" aria-label="Data Analytics Charts">
-            <div class="chart-card"><div class="chart-header"><div><h3 class="chart-title">Trend PO Bulanan</h3><p class="chart-subtitle">Data Rekapitulasi Purchase Order per Bulan</p></div></div><canvas id="clientProcessChart" aria-label="Line Chart Trend PO" role="img"></canvas></div>
-            
-            <div class="chart-card"><div class="chart-header"><div><h3 class="chart-title">Distribusi Karyawan</h3><p class="chart-subtitle">Perbandingan per Departemen</p></div></div><canvas id="karyawanDeptChart" aria-label="Doughnut Chart Distribusi Karyawan" role="img"></canvas></div>
-            
-            <div class="chart-card" style="display:flex;flex-direction:column;justify-content:center;"><div class="chart-header"><div><h3 class="chart-title">Summary SPP</h3><p class="chart-subtitle">Monitoring Material & Persentase (Data SPP)</p></div></div><div style="margin-top:15px;display:flex;flex-direction:column;gap:15px;flex:1;overflow-y:auto;max-height:220px;padding-right:5px;"><div style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.2);border-left:4px solid var(--primary-red);border-radius:12px;padding:15px;cursor:default;"><h4 style="color:var(--text-white);font-size:0.95rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-boxes-stacked" style="color:var(--primary-red);"></i> Barang Belum Datang</h4><ul id="spp-pending-list" style="list-style:none;padding-left:0;margin:0;font-size:0.85rem;color:var(--text-light);line-height:1.6;"><li class="sp-list-item"><span>Menyinkronkan Data...</span><strong style="color:var(--primary-red);"><i class="fa-solid fa-spinner fa-spin"></i></strong></li></ul></div><div style="background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.2);border-left:4px solid var(--primary-green);border-radius:12px;padding:15px;margin-top:auto;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h4 style="color:var(--text-white);font-size:0.95rem;margin:0;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-chart-pie" style="color:var(--primary-green);"></i> Pemenuhan Material</h4><span id="spp-fulfillment-text" style="font-weight:800;font-size:1.1rem;color:var(--primary-green);">0%</span></div><div style="width:100%;height:8px;background:rgba(255,255,255,0.1);border-radius:10px;overflow:hidden;position:relative;"><div id="spp-fulfillment-bar" style="width:0%;height:100%;background:linear-gradient(90deg,var(--primary-cyan),var(--primary-green));border-radius:10px;box-shadow:0 0 10px rgba(16,185,129,0.5);transition:width 1.5s cubic-bezier(0.16,1,0.3,1);"></div></div></div></div></div>
+            <div class="chart-card">
+                <div class="chart-header"><div><h3 class="chart-title">Trend PO Bulanan</h3><p class="chart-subtitle">Rekapitulasi Purchase Order per Bulan</p></div></div>
+                <canvas id="clientProcessChart" aria-label="Line Chart Trend PO" role="img"></canvas>
+            </div>
             
             <div class="chart-card">
-                <div class="chart-header">
-                    <div>
-                        <h3 class="chart-title">Jadwal Pengiriman</h3>
-                        <p class="chart-subtitle">Master Schedule (Live Data)</p>
+                <div class="chart-header"><div><h3 class="chart-title">Distribusi Karyawan</h3><p class="chart-subtitle">Perbandingan per Departemen</p></div></div>
+                <canvas id="karyawanDeptChart" aria-label="Doughnut Chart Distribusi Karyawan" role="img"></canvas>
+            </div>
+            
+            <div class="chart-card" style="display:flex;flex-direction:column;justify-content:center;">
+                <div class="chart-header"><div><h3 class="chart-title">Summary SPP</h3><p class="chart-subtitle">Monitoring Material & Persentase</p></div></div>
+                <div style="margin-top:10px;display:flex;flex-direction:column;gap:15px;flex:1;overflow-y:auto;max-height:220px;padding-right:5px;">
+                    <div style="background:rgba(255, 69, 58, 0.1); border:1px solid rgba(255, 69, 58, 0.2); border-left:4px solid var(--primary-red); border-radius:var(--radius-sm); padding:15px;">
+                        <h4 style="color:var(--text-main); font-size:0.95rem; margin-bottom:12px; display:flex; align-items:center; gap:8px; font-family:'Inter', sans-serif;"><i class="fa-solid fa-boxes-stacked" style="color:var(--primary-red);"></i> Barang Belum Datang</h4>
+                        <ul id="spp-pending-list" style="list-style:none; padding-left:0; margin:0; font-size:0.85rem; color:var(--text-muted); line-height:1.6;">
+                            <li class="sp-list-item"><span>Menyinkronkan Data...</span><strong style="color:var(--primary-red);"><i class="fa-solid fa-spinner fa-spin"></i></strong></li>
+                        </ul>
+                    </div>
+                    <div style="background:rgba(48, 209, 88, 0.1); border:1px solid rgba(48, 209, 88, 0.2); border-left:4px solid var(--primary-green); border-radius:var(--radius-sm); padding:15px; margin-top:auto;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                            <h4 style="color:var(--text-main); font-size:0.95rem; margin:0; display:flex; align-items:center; gap:8px; font-family:'Inter', sans-serif;"><i class="fa-solid fa-chart-pie" style="color:var(--primary-green);"></i> Pemenuhan Material</h4>
+                            <span id="spp-fulfillment-text" style="font-weight:700; font-size:1.1rem; color:var(--primary-green);">0%</span>
+                        </div>
+                        <div style="width:100%; height:8px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; position:relative;">
+                            <div id="spp-fulfillment-bar" style="width:0%; height:100%; background:linear-gradient(90deg, var(--primary-cyan), var(--primary-green)); border-radius:10px; box-shadow:0 0 10px rgba(48, 209, 88, 0.5); transition:width 1.5s cubic-bezier(0.25, 0.8, 0.25, 1);"></div>
+                        </div>
                     </div>
                 </div>
+            </div>
+            
+            <div class="chart-card">
+                <div class="chart-header"><div><h3 class="chart-title">Jadwal Pengiriman</h3><p class="chart-subtitle">Master Schedule (Live Data)</p></div></div>
                 <div class="calendar-widget-container">
                     <div class="mini-cal-header-info">
-                        <span id="mini-cal-month" style="color: var(--primary-cyan);"><i class="fa-solid fa-spinner fa-spin"></i> Memuat Jadwal...</span>
+                        <span id="mini-cal-month" style="color: var(--primary-blue);"><i class="fa-solid fa-spinner fa-spin"></i> Memuat Jadwal...</span>
                     </div>
                     <div class="mini-cal-days">
                         <div style="color: var(--primary-red);">Min</div><div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div>
                     </div>
-                    <div class="mini-cal-grid" id="mini-cal-grid">
-                        </div>
+                    <div class="mini-cal-grid" id="mini-cal-grid"></div>
                 </div>
             </div>
         </section>
 
         <section class="content-area" aria-label="ERP Modules Application Navigation">
             <h2 class="section-title"><span>Modul ERP System</span></h2>
-            <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/HR-System/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-people-group"></i></div><div class="module-info"><h3>Human Resource</h3><p>Otomatisasi seluruh proses SDM termasuk Penilaian Kinerja.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div></div>
-            <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/General-Affairs/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-building-circle-check"></i></div><div class="module-info"><h3>General Affairs</h3><p>Kelola fasilitas dan operasional kantor secara digital.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div></div>
-            <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/HSE/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-helmet-safety"></i></div><div class="module-info"><h3>HSE System</h3><p>Kendali penuh kepatuhan K3. Pastikan standar keselamatan.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div></div>
-            <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Maintenance/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-gears"></i></div><div class="module-info"><h3>Maintenance</h3><p>Prediksi kebutuhan perawatan mesin secara otomatis.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div></div>
-            <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/Purchase-Order/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div><div class="module-info"><h3>Purchase Order</h3><p>Pengadaan cerdas terintegrasi. Persetujuan multi-level.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div></div>
-            <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/Warehouse-System/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-boxes-stacked"></i></div><div class="module-info"><h3>Warehouse</h3><p>Visibilitas stok dan logistik real-time. Eliminasi kesalahan.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div></div>
-            <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Production-Tracking/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-industry"></i></div><div class="module-info"><h3>Produksi</h3><p>Monitoring lini manufaktur digital. Percepat output harian.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div></div>
-            <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/QC-Inspection/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-microscope"></i></div><div class="module-info"><h3>Quality Control</h3><p>Standardisasi mutu yang presisi. Inspeksi cepat berbasis data.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div></div>
-            <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/SPP/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-file-invoice"></i></div><div class="module-info"><h3>SPP System</h3><p>Manajemen Surat Permintaan Pembelian dan pantau pengajuan.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div></div>
-            <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Master-Schedule/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-calendar-days"></i></div><div class="module-info"><h3>Master Schedule</h3><p>Pantau timeline dan alokasi waktu secara komprehensif.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div></div>
-            <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/MSB-Approval/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-file-signature"></i></div><div class="module-info"><h3>MSB Approval</h3><p>Portal persetujuan digital lintas fungsi dengan database live.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div></div>
-            <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/Administration-System/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-folder-tree"></i></div><div class="module-info"><h3>Administration System</h3><p>Manajemen alur kerja administratif dan kontrol internal.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div></div>
-            <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/Filling-Material/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-layer-group"></i></div><div class="module-info"><h3>Filling Material</h3><p>Manajemen dan pencatatan data filling material terintegrasi.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-arrow-right"></i></div></div>
+            <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/HR-System/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-people-group"></i></div><div class="module-info"><h3>Human Resource</h3><p>Otomatisasi seluruh proses SDM termasuk Penilaian Kinerja.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/General-Affairs/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-building-circle-check"></i></div><div class="module-info"><h3>General Affairs</h3><p>Kelola fasilitas dan operasional kantor secara digital.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/HSE/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-helmet-safety"></i></div><div class="module-info"><h3>HSE System</h3><p>Kendali penuh kepatuhan K3. Pastikan standar keselamatan.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Maintenance/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-gears"></i></div><div class="module-info"><h3>Maintenance</h3><p>Prediksi kebutuhan perawatan mesin secara otomatis.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/Purchase-Order/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div><div class="module-info"><h3>Purchase Order</h3><p>Pengadaan cerdas terintegrasi. Persetujuan multi-level.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/Warehouse-System/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-boxes-stacked"></i></div><div class="module-info"><h3>Warehouse</h3><p>Visibilitas stok dan logistik real-time. Eliminasi kesalahan.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Production-Tracking/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-industry"></i></div><div class="module-info"><h3>Produksi</h3><p>Monitoring lini manufaktur digital. Percepat output harian.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/QC-Inspection/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-microscope"></i></div><div class="module-info"><h3>Quality Control</h3><p>Standardisasi mutu yang presisi. Inspeksi cepat berbasis data.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/SPP/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-file-invoice"></i></div><div class="module-info"><h3>SPP System</h3><p>Manajemen Surat Permintaan Pembelian dan pantau pengajuan.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Master-Schedule/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-calendar-days"></i></div><div class="module-info"><h3>Master Schedule</h3><p>Pantau timeline dan alokasi waktu secara komprehensif.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/MSB-Approval/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-file-signature"></i></div><div class="module-info"><h3>MSB Approval</h3><p>Portal persetujuan digital lintas fungsi dengan database live.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/Administration-System/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-folder-tree"></i></div><div class="module-info"><h3>Administration</h3><p>Manajemen alur kerja administratif dan kontrol internal.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/Filling-Material/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-layer-group"></i></div><div class="module-info"><h3>Filling Material</h3><p>Manajemen dan pencatatan data filling material terintegrasi.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
         </section>
+        
         <footer>
-            <address class="footer-address"><strong>PT MURINDA SENTRA BAJA</strong>Jl. Raya Kalijati Purwadadi No. 123A RT 006/02<br>Desa Kalijati Barat, Kecamatan Kalijati<br>Kabupaten Subang, West Java 41271 (Exit Toll Gate Kalijati)<div class="footer-contact"><span><i class="fa-solid fa-phone"></i> (+62260) 7495467</span><span><i class="fa-solid fa-fax"></i> (+62260) 7495222</span><span><i class="fa-solid fa-envelope"></i> plant@murinda.com</span></div></address>
-            <div class="footer-copy"><span>PT Murinda Sentra Baja. Hak Cipta Dilindungi Undang-Undang.</span><span style="opacity:0.7;">Developed by Aspuro Amarulloh Khoiri | Version 070695 Premium Enhanced</span></div>
+            <address class="footer-address">
+                <strong>PT MURINDA SENTRA BAJA</strong>
+                Jl. Raya Kalijati Purwadadi No. 123A RT 006/02<br>
+                Desa Kalijati Barat, Kecamatan Kalijati<br>
+                Kabupaten Subang, West Java 41271
+                <div class="footer-contact">
+                    <span><i class="fa-solid fa-phone"></i> (+62260) 7495467</span>
+                    <span><i class="fa-solid fa-envelope"></i> plant@murinda.com</span>
+                </div>
+            </address>
+            <div class="footer-copy">
+                <span>PT Murinda Sentra Baja. Hak Cipta Dilindungi Undang-Undang.</span>
+                <span style="opacity:0.7;">Developed by Aspuro Amarulloh Khoiri | Version iOS Glass Edition</span>
+            </div>
         </footer>
     </main>
 
     <div id="viewport-container" aria-hidden="true"><iframe id="erp-frame" title="Embedded ERP Module Viewport"></iframe></div>
-    <button class="back-nav" id="back-btn" onclick="window._cView()" aria-label="Kembali ke Dashboard"><i class="fa-solid fa-house" aria-hidden="true"></i> <span>Kembali</span></button>
+    <button class="back-nav" id="back-btn" onclick="window._cView()" aria-label="Kembali ke Dashboard"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> <span>Kembali</span></button>
 
     <script>
         (function(_0xabc){
-            // Advanced Anti-Inspect & Anti-Shortcuts
+            // Security Restrictions
             document.addEventListener('contextmenu',e=>e.preventDefault());
             document.addEventListener('keydown',function(e){
                 if(e.keyCode===123||e.key==='F12'||
@@ -147,33 +524,57 @@
                   (e.ctrlKey&&(e.key==='U'||e.key==='u'||e.key==='S'||e.key==='s'||e.key==='P'||e.key==='p'))||
                   (e.metaKey&&e.altKey&&(e.key==='I'||e.key==='J'||e.key==='U'))){e.preventDefault();return false;}
             });
-            setInterval(function(){const s=new Date().getTime();debugger;const e=new Date().getTime();if(e-s>100){document.body.innerHTML="<h2 style='color:red;text-align:center;margin-top:20vh;'>Security Restriction Enforced</h2>";window.location.replace("about:blank");}},1000);
+            setInterval(function(){const s=new Date().getTime();debugger;const e=new Date().getTime();if(e-s>100){document.body.innerHTML="<h2 style='color:red;text-align:center;margin-top:20vh;font-family:-apple-system,sans-serif;'>Security Restriction Enforced</h2>";window.location.replace("about:blank");}},1000);
 
             const m=atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5dTk2VTVxUUhnRWFyT21TZEgyd1NER0lUZVY4LTY3Yl81QjM5dDk1Z0xYZjVPTnk5QUEzMmd4UEdZcERRa2R3dzl4dy9leGVj");
             const s=atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5ZzBrMmw4NGtaQXdveERNdnlua2xHQWVIWDJOY3hmX0RfVUhETU1SUHBnQ0c4dk9qSE00VFdveHM5S1laYUhzdU4vZXhlYw==");
             const schUrl="https://script.google.com/macros/s/AKfycbwIN-kg3cjvdHV7pStMbRIpCJtQeo9j80ncjDPCZ5TosPcJaZPxpRrhUDkwzgVyor_gig/exec";
             let c=[],i1=null,i2=null,sy, deliveriesData = [];
 
-            window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loading-screen').classList.add('hidden'),1500));
+            window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loading-screen').classList.add('hidden'),1000));
+            
             const uD=()=>{const n=new Date(),dy=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'],mo=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];document.getElementById('current-date').innerText=`${dy[n.getDay()]}, ${n.getDate()} ${mo[n.getMonth()]} ${n.getFullYear()}`;document.getElementById('current-time').innerText=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}:${String(n.getSeconds()).padStart(2,'0')} WIB`;};setInterval(uD,1000);uD();
 
             async function fD(){try{const r=await fetch(m),d=await r.json();let sM={};if(d.summary&&d.summary.length>0){let h=d.summary[0].length>2;if(h&&d.summary.length>1){d.summary[0].forEach((he,i)=>{if(he)sM[String(he).trim().toLowerCase()]=d.summary[1][i];});}else{d.summary.forEach(ro=>{if(ro.length>=2&&ro[0]!=null&&ro[0]!=='')sM[String(ro[0]).trim().toLowerCase()]=ro[1];});}}const pT=(l)=>{let ma=sM[l.toLowerCase().trim()];if(ma===undefined||ma===null||ma==='')return 0;if(typeof ma==='string')return parseFloat(ma.replace(/[^0-9.-]/g,''))||0;return ma;};aV('stat-karyawan',pT('Karyawan'),1200);aV('stat-po',pT('Purchase Order'),1200);aV('stat-pengiriman',pT('Pengiriman'),1200);aV('stat-stok',pT('Stok Produksi'),1200);aV('stat-lkp',pT('Jumlah LKP'),1200);aV('stat-insiden',pT('Total Insiden'),1200);aV('stat-spp',pT('SPP Belum Datang'),1200);uC(d.trendPO,d.karyawan);}catch(e){}}
             async function fS(){try{const r=await fetch(s),res=await r.json();if(res.error)return;const h=res.headers,d=res.data,mI=h.findIndex(x=>x.toString().toLowerCase().trim()==='nama material'),sI=h.findIndex(x=>x.toString().toLowerCase().trim()==='spp total'),kI=h.findIndex(x=>x.toString().toLowerCase().trim()==='kedatangan');if(mI===-1||sI===-1||kI===-1)return;let mM={},tS=0,tD=0;d.forEach(ro=>{if(ro.every(ce=>ce===''||ce===null||ce===undefined))return;let mN=ro[mI],sQ=Number(ro[sI])||0,dQ=Number(ro[kI])||0,si=dQ-sQ;if(mN){if(si<0)mM[mN]=(mM[mN]||0)+Math.abs(si);tS+=sQ;tD+=dQ>sQ?sQ:dQ;}});const pL=document.getElementById('spp-pending-list');if(Object.keys(mM).length===0){pL.innerHTML=`<li class="sp-list-item"><span style="color:var(--primary-green);">✨ Seluruh material telah terpenuhi</span><strong style="color:var(--primary-green);">-</strong></li>`;}else{let hL='';for(let mat in mM)hL+=`<li class="sp-list-item"><span>${mat}</span><strong style="color:var(--primary-red);">- ${mM[mat]}</strong></li>`;pL.innerHTML=hL;}let pt=tS>0?Math.round((tD/tS)*100):0;if(pt>100)pt=100;document.getElementById('spp-fulfillment-text').innerText=pt+"%";document.getElementById('spp-fulfillment-bar').style.width=pt+"%";}catch(e){document.getElementById('spp-pending-list').innerHTML=`<li class="sp-list-item"><span style="color:var(--primary-red);">Gagal mengambil data sinkronisasi</span><strong style="color:var(--primary-red);">X</strong></li>`;}}
             
-            // FUNGSI JADWAL PENGIRIMAN
             async function fetchSchedule(){try{const r=await fetch(schUrl);const d=await r.json();if(!d.error){deliveriesData=d;buildMiniCalendar();}}catch(e){console.error("Gagal memuat jadwal:",e);document.getElementById('mini-cal-month').innerHTML="Gagal Sinkronisasi";}}
             
             function buildMiniCalendar(){const grid=document.getElementById('mini-cal-grid');const mLabel=document.getElementById('mini-cal-month');if(!grid)return;grid.innerHTML='';const now=new Date();const y=now.getFullYear();const m=now.getMonth();const monthNames=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];mLabel.innerHTML=`<i class="fa-solid fa-calendar-check"></i> ${monthNames[m]} ${y}`;const firstDay=new Date(y,m,1).getDay();const daysInMonth=new Date(y,m+1,0).getDate();for(let i=0;i<firstDay;i++){let empty=document.createElement('div');grid.appendChild(empty);}for(let i=1;i<=daysInMonth;i++){let cell=document.createElement('div');cell.className='mini-cal-cell';cell.innerText=i;const isSunday=new Date(y,m,i).getDay()===0;if(isSunday)cell.classList.add('holiday');const todaysItems=deliveriesData.filter(item=>{const dateKey=Object.keys(item).find(k=>k.toLowerCase().includes('delivery date')||k.toLowerCase().includes('tanggal'));if(dateKey&&item[dateKey]){const itemDate=new Date(item[dateKey]);return itemDate.getDate()===i&&itemDate.getMonth()===m&&itemDate.getFullYear()===y;}return false;});if(todaysItems.length>0){cell.classList.add('has-data');let tooltip=document.createElement('div');tooltip.className='mini-tooltip';let tooltipHtml='';todaysItems.forEach(item=>{const exactSerialKey=Object.keys(item).find(k=>k.toLowerCase()==='serial number');const poKey=Object.keys(item).find(k=>k.toLowerCase().includes('po'));const statusKey=Object.keys(item).find(k=>k.toLowerCase()==='status delivery'||k.toLowerCase().includes('status'));const sn=exactSerialKey&&item[exactSerialKey]?item[exactSerialKey]:'No Serial';const poVal=poKey&&item[poKey]?String(item[poKey]).trim():'';const statusVal=statusKey&&item[statusKey]?String(item[statusKey]).trim():'';let statusHtml='';if(statusVal&&statusVal!=='-'&&statusVal!=='0'&&statusVal!=='undefined'&&statusVal!=='null'){statusHtml=`<span class="mini-status sent"><i class="fa-solid fa-check"></i> Terkirim</span>`;}else if(!poVal||poVal==='-'||poVal==='0'||poVal==='undefined'||poVal==='null'){statusHtml=`<span class="mini-status stock">Stock</span>`;}else{statusHtml=`<span class="mini-status pending">Pending</span>`;}tooltipHtml+=`<div class="mini-tooltip-item"><span class="mini-sn">${sn}</span>${statusHtml}</div>`;});tooltip.innerHTML=tooltipHtml;cell.appendChild(tooltip);}grid.appendChild(cell);}}
 
-            function uC(pO,kR){let tC=document.body.classList.contains('light-theme')?'#475569':'#e2e8f0',gC=document.body.classList.contains('light-theme')?'rgba(0,0,0,0.05)':'rgba(255,255,255,0.05)';if(pO&&pO.length>1){const la=pO.slice(1).map(r=>String(r[0]||'')),ds=[];const cP=[{b:'#06b6d4',bg:'rgba(6, 182, 212, 0.1)'},{b:'#f59e0b',bg:'rgba(245, 158, 11, 0.1)'},{b:'#10b981',bg:'rgba(16, 185, 129, 0.1)'},{b:'#8b5cf6',bg:'rgba(139, 92, 246, 0.1)'}];for(let i=1;i<pO[0].length;i++){let cN=pO[0][i];if(!cN)continue;let dV=pO.slice(1).map(r=>parseFloat(r[i])||0),th=cP[(i-1)%cP.length];ds.push({label:cN,data:dV,backgroundColor:th.bg,borderColor:th.b,borderWidth:3,pointBackgroundColor:document.body.classList.contains('light-theme')?'#fff':'#0a0e27',pointBorderColor:th.b,pointBorderWidth:2,pointRadius:4,pointHoverRadius:8,pointHoverBackgroundColor:th.b,pointHoverBorderColor:'#fff',pointHoverBorderWidth:2,fill:true,tension:0.4});}if(i1)i1.destroy();i1=new Chart(document.getElementById('clientProcessChart').getContext('2d'),{type:'line',data:{labels:la,datasets:ds},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{color:tC,font:{family:'Inter',size:12},usePointStyle:true,boxWidth:8}},tooltip:{backgroundColor:document.body.classList.contains('light-theme')?'rgba(255,255,255,0.9)':'rgba(10,14,39,0.9)',titleColor:document.body.classList.contains('light-theme')?'#0f172a':'#fff',bodyColor:document.body.classList.contains('light-theme')?'#475569':'#cbd5e1',borderColor:'rgba(6,182,212,0.3)',borderWidth:1,padding:12,usePointStyle:true,titleFont:{size:13,family:'Poppins',weight:'bold'},bodyFont:{size:12,family:'Inter',weight:'500'},cornerRadius:8,displayColors:true}},scales:{x:{ticks:{color:tC,font:{size:11,family:'Inter'}},grid:{display:false}},y:{ticks:{color:tC,font:{size:11,family:'Inter'}},grid:{color:gC,borderDash:[5,5]},beginAtZero:true}}}});}if(kR&&kR.length>1){let la=[],va=[],dI=-1,he=kR[0].map(h=>String(h).toLowerCase());for(let i=0;i<he.length;i++){if(he[i].includes('departemen')||he[i].includes('dept')||he[i].includes('bagian')){dI=i;break;}}if(dI!==-1&&kR[0].length>2){let dC={};for(let i=1;i<kR.length;i++){let dN=String(kR[i][dI]).trim();if(dN)dC[dN]=(dC[dN]||0)+1;}la=Object.keys(dC);va=Object.values(dC);}else{la=kR.slice(1).map(r=>String(r[0]||''));va=kR.slice(1).map(r=>parseFloat(r[1])||0);}const bG=['rgba(2,117,216,0.85)','rgba(16,185,129,0.85)','rgba(245,158,11,0.85)','rgba(139,92,246,0.85)','rgba(236,72,153,0.85)','rgba(239,68,68,0.85)','#0ea5e9','#84cc16'],hG=['#0275d8','#10b981','#f59e0b','#8b5cf6','#ec4899','#ef4444','#0284c7','#65a30d'];if(i2)i2.destroy();i2=new Chart(document.getElementById('karyawanDeptChart').getContext('2d'),{type:'doughnut',data:{labels:la,datasets:[{data:va,backgroundColor:bG.slice(0,Math.max(la.length,bG.length)),hoverBackgroundColor:hG.slice(0,Math.max(la.length,hG.length)),borderWidth:2,borderColor:document.body.classList.contains('light-theme')?'#ffffff':'#0a0e27',hoverOffset:10}]},options:{responsive:true,maintainAspectRatio:false,cutout:'70%',plugins:{legend:{position:'right',labels:{color:tC,font:{size:11,family:'Inter'},padding:15,usePointStyle:true}},tooltip:{backgroundColor:document.body.classList.contains('light-theme')?'rgba(255,255,255,0.9)':'rgba(10,14,39,0.9)',titleColor:document.body.classList.contains('light-theme')?'#0f172a':'#fff',bodyColor:document.body.classList.contains('light-theme')?'#475569':'#cbd5e1',borderColor:'rgba(2,117,216,0.3)',borderWidth:1,padding:12,cornerRadius:8,callbacks:{label:function(cx){let t=cx.dataset.data.reduce((a,b)=>a+b,0),p=Math.round((cx.parsed/t)*100);return ` ${cx.label}: ${cx.parsed} Orang (${p}%)`;}}}}}});}c=[i1,i2].filter(Boolean);}
-            function aV(id,en,du){const el=document.getElementById(id);if(!el)return;const st=parseInt(el.textContent)||0;if(st===en)return;let sT=null;const sp=(t)=>{if(!sT)sT=t;const pg=Math.min((t-sT)/du,1);el.textContent=Math.floor(pg*(en-st)+st);if(pg<1)window.requestAnimationFrame(sp);else el.textContent=en;};window.requestAnimationFrame(sp);}
-            function sN(t,m,ty='success'){const co=document.getElementById('notification-container'),n=document.createElement('div');n.className=`notification ${ty}`;n.setAttribute('role','alert');const ic=ty==='success'?'fa-circle-check':'fa-triangle-exclamation';n.innerHTML=`<i class="fa-solid ${ic}"></i><div class="notification-content"><div class="notification-title">${t}</div><div class="notification-message">${m}</div></div>`;co.appendChild(n);setTimeout(()=>{n.style.animation='slideInRight 0.5s ease-out reverse';setTimeout(()=>n.remove(),500);},5000);}
+            function uC(pO,kR){
+                let isLight = document.body.classList.contains('light-theme');
+                let tC = isLight ? '#86868B' : 'rgba(255,255,255,0.65)';
+                let gC = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
+                let bG_chart = isLight ? '#ffffff' : 'rgba(20, 25, 40, 0.45)';
+                let titleC = isLight ? '#1D1D1F' : '#ffffff';
+
+                if(pO&&pO.length>1){const la=pO.slice(1).map(r=>String(r[0]||'')),ds=[];const cP=[{b:'#64D2FF',bg:'rgba(100, 210, 255, 0.2)'},{b:'#FF9F0A',bg:'rgba(255, 159, 10, 0.2)'},{b:'#30D158',bg:'rgba(48, 209, 88, 0.2)'},{b:'#BF5AF2',bg:'rgba(191, 90, 242, 0.2)'}];for(let i=1;i<pO[0].length;i++){let cN=pO[0][i];if(!cN)continue;let dV=pO.slice(1).map(r=>parseFloat(r[i])||0),th=cP[(i-1)%cP.length];ds.push({label:cN,data:dV,backgroundColor:th.bg,borderColor:th.b,borderWidth:3,pointBackgroundColor:isLight?'#fff':'#000',pointBorderColor:th.b,pointBorderWidth:2,pointRadius:4,pointHoverRadius:6,pointHoverBackgroundColor:th.b,pointHoverBorderColor:'#fff',pointHoverBorderWidth:2,fill:true,tension:0.4});}if(i1)i1.destroy();i1=new Chart(document.getElementById('clientProcessChart').getContext('2d'),{type:'line',data:{labels:la,datasets:ds},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{color:tC,font:{family:'Inter',size:12},usePointStyle:true,boxWidth:8}},tooltip:{backgroundColor:isLight?'rgba(255,255,255,0.85)':'rgba(20,25,40,0.85)',titleColor:titleC,bodyColor:isLight?'#515154':'rgba(255,255,255,0.8)',borderColor:isLight?'rgba(0,0,0,0.1)':'rgba(255,255,255,0.1)',borderWidth:1,padding:12,usePointStyle:true,titleFont:{size:13,family:'Inter',weight:'600'},bodyFont:{size:12,family:'Inter',weight:'500'},cornerRadius:12,displayColors:true,backdropFilter:'blur(10px)'}},scales:{x:{ticks:{color:tC,font:{size:11,family:'Inter'}},grid:{display:false}},y:{ticks:{color:tC,font:{size:11,family:'Inter'}},grid:{color:gC,borderDash:[5,5]},beginAtZero:true}}}});}if(kR&&kR.length>1){let la=[],va=[],dI=-1,he=kR[0].map(h=>String(h).toLowerCase());for(let i=0;i<he.length;i++){if(he[i].includes('departemen')||he[i].includes('dept')||he[i].includes('bagian')){dI=i;break;}}if(dI!==-1&&kR[0].length>2){let dC={};for(let i=1;i<kR.length;i++){let dN=String(kR[i][dI]).trim();if(dN)dC[dN]=(dC[dN]||0)+1;}la=Object.keys(dC);va=Object.values(dC);}else{la=kR.slice(1).map(r=>String(r[0]||''));va=kR.slice(1).map(r=>parseFloat(r[1])||0);}const bG=['rgba(10,132,255,0.8)','rgba(48,209,88,0.8)','rgba(255,159,10,0.8)','rgba(191,90,242,0.8)','rgba(255,69,58,0.8)','rgba(100,210,255,0.8)','#0ea5e9','#84cc16'],hG=['#0A84FF','#30D158','#FF9F0A','#BF5AF2','#FF453A','#64D2FF','#0284c7','#65a30d'];if(i2)i2.destroy();i2=new Chart(document.getElementById('karyawanDeptChart').getContext('2d'),{type:'doughnut',data:{labels:la,datasets:[{data:va,backgroundColor:bG.slice(0,Math.max(la.length,bG.length)),hoverBackgroundColor:hG.slice(0,Math.max(la.length,hG.length)),borderWidth:2,borderColor:bG_chart,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,cutout:'75%',plugins:{legend:{position:'right',labels:{color:tC,font:{size:11,family:'Inter'},padding:15,usePointStyle:true}},tooltip:{backgroundColor:isLight?'rgba(255,255,255,0.85)':'rgba(20,25,40,0.85)',titleColor:titleC,bodyColor:isLight?'#515154':'rgba(255,255,255,0.8)',borderColor:isLight?'rgba(0,0,0,0.1)':'rgba(255,255,255,0.1)',borderWidth:1,padding:12,cornerRadius:12,callbacks:{label:function(cx){let t=cx.dataset.data.reduce((a,b)=>a+b,0),p=Math.round((cx.parsed/t)*100);return ` ${cx.label}: ${cx.parsed} (${p}%)`;}}}}}});}c=[i1,i2].filter(Boolean);}
             
-            window._eSys=(e)=>{e.preventDefault();const b=document.getElementById('enterBtn');b.innerHTML='<i class="fa-solid fa-circle-notch fa-spin"></i> MEMUAT...';b.style.pointerEvents='none';setTimeout(()=>{const o=document.getElementById('login-overlay');o.style.opacity="0";o.style.visibility="hidden";setTimeout(()=>{o.style.display="none";document.getElementById('main-dashboard').style.display="flex";fD();fS();fetchSchedule();sy=setInterval(()=>{fD();fS();fetchSchedule();},30000);sN('Akses Diberikan','Selamat datang di MSB ERP System','success');},800);},1200);};
+            function aV(id,en,du){const el=document.getElementById(id);if(!el)return;const st=parseInt(el.textContent)||0;if(st===en)return;let sT=null;const sp=(t)=>{if(!sT)sT=t;const pg=Math.min((t-sT)/du,1);el.textContent=Math.floor(pg*(en-st)+st);if(pg<1)window.requestAnimationFrame(sp);else el.textContent=en;};window.requestAnimationFrame(sp);}
+            
+            function sN(t,m,ty='success'){const co=document.getElementById('notification-container'),n=document.createElement('div');n.className=`notification ${ty}`;n.setAttribute('role','alert');const ic=ty==='success'?'fa-circle-check':'fa-triangle-exclamation';n.innerHTML=`<i class="fa-solid ${ic}"></i><div class="notification-content"><div class="notification-title">${t}</div><div class="notification-message">${m}</div></div>`;co.appendChild(n);setTimeout(()=>{n.style.animation='slideInRight 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) reverse';setTimeout(()=>n.remove(),500);},4000);}
+            
+            window._eSys=(e)=>{e.preventDefault();const b=document.getElementById('enterBtn');b.innerHTML='<i class="fa-solid fa-circle-notch fa-spin"></i> MEMUAT...';b.style.pointerEvents='none';setTimeout(()=>{const o=document.getElementById('login-overlay');o.style.opacity="0";o.style.visibility="hidden";setTimeout(()=>{o.style.display="none";document.getElementById('main-dashboard').style.display="flex";fD();fS();fetchSchedule();sy=setInterval(()=>{fD();fS();fetchSchedule();},30000);sN('Berhasil Masuk','Selamat datang di Dashboard Utama','success');},800);},1200);};
             window._dOut=()=>{sN('Logout','Anda telah keluar dari sistem','warning');clearInterval(sy);setTimeout(()=>location.reload(),1000);};
-            window._tTheme=()=>{document.body.classList.toggle('light-theme');const i=document.querySelector('.theme-toggle i'),iL=document.body.classList.contains('light-theme');i.className=iL?'fa-solid fa-sun':'fa-solid fa-moon';let tC=iL?'#475569':'#e2e8f0',gC=iL?'rgba(0,0,0,0.1)':'rgba(255,255,255,0.1)';c.forEach(ch=>{if(ch.options.plugins.legend.labels)ch.options.plugins.legend.labels.color=tC;if(ch.options.scales.x){ch.options.scales.x.ticks.color=tC;if(ch.options.scales.x.grid)ch.options.scales.x.grid.color=gC;}if(ch.options.scales.y){ch.options.scales.y.ticks.color=tC;if(ch.options.scales.y.grid)ch.options.scales.y.grid.color=gC;}ch.update();});};
+            window._tTheme=()=>{
+                document.body.classList.toggle('light-theme');
+                const i=document.querySelector('.theme-toggle i'),iL=document.body.classList.contains('light-theme');
+                i.className=iL?'fa-solid fa-moon':'fa-solid fa-sun';
+                
+                let tC=iL?'#86868B':'rgba(255,255,255,0.65)',gC=iL?'rgba(0,0,0,0.05)':'rgba(255,255,255,0.05)';
+                let bG_chart=iL?'#ffffff':'rgba(20, 25, 40, 0.45)';
+
+                c.forEach(ch=>{
+                    if(ch.options.plugins.legend.labels)ch.options.plugins.legend.labels.color=tC;
+                    if(ch.options.scales?.x){ch.options.scales.x.ticks.color=tC;if(ch.options.scales.x.grid)ch.options.scales.x.grid.color=gC;}
+                    if(ch.options.scales?.y){ch.options.scales.y.ticks.color=tC;if(ch.options.scales.y.grid)ch.options.scales.y.grid.color=gC;}
+                    if(ch.config.type === 'doughnut') { ch.data.datasets[0].borderColor = bG_chart; }
+                    ch.update();
+                });
+            };
             window._lNch=(u)=>{if(u.includes("script.google.com")){window.open(u,'_blank');return;}const v=document.getElementById('viewport-container'),f=document.getElementById('erp-frame'),b=document.getElementById('back-btn'),d=document.getElementById('main-dashboard');v.style.display="block";b.style.display="flex";f.src=u;void v.offsetWidth;v.classList.add('active');v.setAttribute('aria-hidden','false');b.classList.add('active');d.classList.add('dashboard-dimmed');};
-            window._cView=()=>{const v=document.getElementById('viewport-container'),b=document.getElementById('back-btn'),f=document.getElementById('erp-frame'),d=document.getElementById('main-dashboard');v.classList.remove('active');v.setAttribute('aria-hidden','true');b.classList.remove('active');d.classList.remove('dashboard-dimmed');setTimeout(()=>{v.style.display="none";b.style.display="none";f.src="";},700);};
+            window._cView=()=>{const v=document.getElementById('viewport-container'),b=document.getElementById('back-btn'),f=document.getElementById('erp-frame'),d=document.getElementById('main-dashboard');v.classList.remove('active');v.setAttribute('aria-hidden','true');b.classList.remove('active');d.classList.remove('dashboard-dimmed');setTimeout(()=>{v.style.display="none";b.style.display="none";f.src="";},600);};
             
             document.addEventListener('click',e=>{if(e.target.classList.contains('module-card')||e.target.closest('.module-card')){const ca=e.target.classList.contains('module-card')?e.target:e.target.closest('.module-card'),r=document.createElement('span');r.classList.add('ripple');const re=ca.getBoundingClientRect(),s=Math.max(re.width,re.height),x=e.clientX-re.left-s/2,y=e.clientY-re.top-s/2;r.style.width=r.style.height=s+'px';r.style.left=x+'px';r.style.top=y+'px';ca.appendChild(r);setTimeout(()=>r.remove(),600);}});
         })();
