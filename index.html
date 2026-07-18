@@ -212,9 +212,16 @@
         @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.35); } }
 
         .nav-right { display: flex; align-items: center; gap: 15px; }
+        
+        /* Base Button Styles */
         .install-app-btn { background: rgba(10, 132, 255, 0.12); border: 1px solid rgba(10, 132, 255, 0.2); padding: 10px 18px; border-radius: 20px; cursor: pointer; color: var(--primary-blue); font-size: 0.88rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: var(--transition-smooth); backdrop-filter: blur(10px); white-space: nowrap; }
         body.light-theme .install-app-btn { background: rgba(0, 122, 255, 0.08); border-color: rgba(0, 122, 255, 0.15); }
         .install-app-btn:hover { background: var(--primary-blue); color: #fff; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(10, 132, 255, 0.25); border-color: transparent; }
+        
+        /* Organization Button Styles */
+        .install-app-btn.org-btn { background: rgba(191, 90, 242, 0.12); border-color: rgba(191, 90, 242, 0.2); color: var(--primary-purple); }
+        body.light-theme .install-app-btn.org-btn { background: rgba(175, 82, 222, 0.08); border-color: rgba(175, 82, 222, 0.15); color: var(--primary-purple); }
+        .install-app-btn.org-btn:hover { background: var(--primary-purple); color: #fff; box-shadow: 0 4px 12px rgba(191, 90, 242, 0.25); }
 
         .theme-toggle, .btn-logout { background: rgba(255, 255, 255, 0.04); border: 1px solid var(--glass-border); padding: 10px 15px; border-radius: 20px; cursor: pointer; color: var(--text-main); font-size: 1rem; transition: var(--transition-smooth); display: flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; font-weight: 600; flex-shrink: 0; }
         body.light-theme .theme-toggle, body.light-theme .btn-logout { background: rgba(255, 255, 255, 0.5); }
@@ -333,6 +340,15 @@
         .back-nav.active { opacity: 1; transform: translateY(0); }
         .back-nav:hover { background: #000; transform: translateY(-4px) scale(1.04); box-shadow: 0 14px 40px rgba(0,0,0,0.5); border-color: rgba(255,255,255,0.4); }
 
+        /* Curtain Overlay System for Org Structure */
+        #curtain-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); z-index: 2000; transform-origin: top center; transform: scaleY(0); opacity: 0; transition: transform 0.6s cubic-bezier(0.86, 0, 0.07, 1), opacity 0.4s ease; display: flex; flex-direction: column; overflow: hidden; }
+        body.light-theme #curtain-container { background: #fff; }
+        #curtain-container.active { transform: scaleY(1); opacity: 1; }
+        #curtain-frame { width: 100%; height: 100%; border: none; background: transparent; }
+        .curtain-close-btn { position: absolute; top: 25px; right: 40px; background: rgba(255, 69, 58, 0.2); backdrop-filter: blur(10px); color: var(--primary-red); border: 1px solid rgba(255, 69, 58, 0.3); padding: 12px 24px; border-radius: 30px; font-weight: 700; cursor: pointer; z-index: 2001; transition: var(--transition-smooth); display: flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; font-size: 0.9rem; }
+        body.light-theme .curtain-close-btn { background: rgba(255, 69, 58, 0.1); }
+        .curtain-close-btn:hover { background: var(--primary-red); color: #fff; transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 25px rgba(255, 69, 58, 0.4); border-color: transparent; }
+
         /* Institutional Footer Structure */
         footer { background: var(--glass-bg); backdrop-filter: var(--glass-blur); border-top: 1px solid var(--glass-border); padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); z-index: 100; font-family: 'Inter', sans-serif; width: 100%; }
         .footer-address { font-size: 0.82rem; line-height: 1.6; font-style: normal; }
@@ -413,6 +429,7 @@
             .chart-card, .module-card { padding: 20px; }
             
             #viewport-container { top: 75px; height: calc(100vh - 75px); border-radius: 24px 24px 0 0; }
+            .curtain-close-btn { top: 15px; right: 15px; padding: 10px 16px; font-size: 0.8rem; }
             
             footer { flex-direction: column; text-align: center; padding: 25px 20px; gap: 20px; }
             .footer-contact { flex-direction: column; gap: 8px; align-items: center; }
@@ -509,6 +526,7 @@
                 <div class="system-status" aria-label="System Status"><div class="status-dot"></div><span>Online MSB ERP</span></div>
             </div>
             <nav class="nav-right" aria-label="User Navigation">
+                <button class="install-app-btn org-btn" onclick="window._openCurtain('https://murindasentrabaja.github.io/Struktur-Organisasi-MSB/')" title="Buka Struktur Organisasi"><i class="fa-solid fa-sitemap"></i> <span class="install-text">Organizational Structure</span></button>
                 <a href="https://www.appsheet.com/newshortcut/6e48cd55-11bb-451f-997c-1c48db68fe7b" target="_blank" class="install-app-btn" title="Install MSB Production App"><i class="fa-solid fa-cloud-arrow-down"></i> <span class="install-text">Instal MSB Production</span></a>
                 <button class="theme-toggle" onclick="window._tTheme()" aria-label="Toggle Dark or Light Theme" title="Ubah Tema"><i class="fa-solid fa-sun" aria-hidden="true"></i></button>
                 <div class="user-profile"><i class="fa-solid fa-circle-user" aria-hidden="true"></i><span id="display-user">Kalijati Plant</span></div>
@@ -607,8 +625,15 @@
         </footer>
     </main>
 
+    <!-- Original ERP Viewport -->
     <div id="viewport-container" aria-hidden="true"><iframe id="erp-frame" title="Embedded ERP Module Viewport"></iframe></div>
     <button class="back-nav" id="back-btn" onclick="window._cView()" aria-label="Kembali ke Dashboard"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> <span>Kembali</span></button>
+
+    <!-- NEW: Curtain Effect Container untuk Struktur Organisasi -->
+    <div id="curtain-container" aria-hidden="true">
+        <button class="curtain-close-btn" onclick="window._closeCurtain()" aria-label="Tutup Struktur Organisasi"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Tutup</button>
+        <iframe id="curtain-frame" title="Embedded Organizational Structure"></iframe>
+    </div>
 
     <script>
         (function(_0xabc){
@@ -674,6 +699,10 @@
             };
             window._lNch=(u)=>{const m=document.getElementById('main-dashboard'),v=document.getElementById('viewport-container'),f=document.getElementById('erp-frame'),b=document.getElementById('back-btn');m.classList.add('dashboard-dimmed');f.src=u;v.style.display='block';b.style.display='flex';setTimeout(()=>{v.classList.add('active');b.classList.add('active');},50);};
             window._cView=()=>{const m=document.getElementById('main-dashboard'),v=document.getElementById('viewport-container'),f=document.getElementById('erp-frame'),b=document.getElementById('back-btn');v.classList.remove('active');b.classList.remove('active');m.classList.remove('dashboard-dimmed');setTimeout(()=>{v.style.display='none';b.style.display='none';f.src='';},550);};
+            
+            /* NEW: Script animasi gorden turun (Scale Y) */
+            window._openCurtain=(u)=>{const m=document.getElementById('main-dashboard'),c=document.getElementById('curtain-container'),f=document.getElementById('curtain-frame');m.classList.add('dashboard-dimmed');f.src=u;setTimeout(()=>{c.classList.add('active');},50);};
+            window._closeCurtain=()=>{const m=document.getElementById('main-dashboard'),c=document.getElementById('curtain-container'),f=document.getElementById('curtain-frame');c.classList.remove('active');m.classList.remove('dashboard-dimmed');setTimeout(()=>{f.src='';},600);};
         })(window);
     </script>
 </body>
