@@ -297,6 +297,7 @@
         .module-card.blue:hover { border-top-color: rgba(10, 132, 255, 0.5) !important; border-left-color: rgba(10, 132, 255, 0.5) !important; box-shadow: 0 15px 35px -8px rgba(10, 132, 255, 0.35); }
         .module-card.green:hover { border-top-color: rgba(48, 209, 88, 0.5) !important; border-left-color: rgba(48, 209, 88, 0.5) !important; box-shadow: 0 15px 35px -8px rgba(48, 209, 88, 0.35); }
         .module-card.orange:hover { border-top-color: rgba(255, 159, 10, 0.5) !important; border-left-color: rgba(255, 159, 10, 0.5) !important; box-shadow: 0 15px 35px -8px rgba(255, 159, 10, 0.35); }
+        .module-card.purple:hover { border-top-color: rgba(191, 90, 242, 0.5) !important; border-left-color: rgba(191, 90, 242, 0.5) !important; box-shadow: 0 15px 35px -8px rgba(191, 90, 242, 0.35); }
         
         .module-card .module-icon i { transition: transform 0.4s cubic-bezier(0.25, 1, 0.3, 1); }
         .module-card:hover .module-icon i { transform: translateX(4px) scale(1.15); }
@@ -307,6 +308,7 @@
         .module-card.blue .module-icon { color: var(--primary-blue); background: rgba(10, 132, 255, 0.1); border-color: rgba(10, 132, 255, 0.2); }
         .module-card.green .module-icon { color: var(--primary-green); background: rgba(48, 209, 88, 0.1); border-color: rgba(48, 209, 88, 0.2); }
         .module-card.orange .module-icon { color: var(--primary-orange); background: rgba(255, 159, 10, 0.1); border-color: rgba(255, 159, 10, 0.2); }
+        .module-card.purple .module-icon { color: var(--primary-purple); background: rgba(191, 90, 242, 0.1); border-color: rgba(191, 90, 242, 0.2); }
 
         .module-info { z-index: 2; position: relative; }
         .module-info h3 { font-size: 1.2rem; margin-bottom: 6px; color: var(--text-main); font-weight: 700; font-family: 'Inter', sans-serif; letter-spacing: -0.3px; }
@@ -317,6 +319,7 @@
         .module-card.blue .explore-btn { color: var(--primary-blue); }
         .module-card.green .explore-btn { color: var(--primary-green); }
         .module-card.orange .explore-btn { color: var(--primary-orange); }
+        .module-card.purple .explore-btn { color: var(--primary-purple); }
 
         /* Dynamic Popup Toast Interface */
         .notification-container { position: fixed; top: 25px; right: 25px; z-index: 9999; display: flex; flex-direction: column; gap: 15px; pointer-events: none; }
@@ -336,9 +339,37 @@
         #viewport-container.active { opacity: 1; transform: translateY(0) scale(1); }
         #erp-frame { width: 100%; height: 100%; border: none; background: #fff; border-top-left-radius: 32px; border-top-right-radius: 32px; }
         
-        .back-nav { position: fixed; bottom: 30px; right: 30px; background: rgba(0,0,0,0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: #fff; padding: 14px 26px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.2); font-weight: 700; cursor: pointer; z-index: 1000; box-shadow: 0 10px 35px rgba(0,0,0,0.4); font-size: 0.92rem; display: none; align-items: center; gap: 8px; opacity: 0; transform: translateY(20px); transition: var(--transition-smooth); font-family: 'Inter', sans-serif; }
+        .back-nav { position: fixed; bottom: 30px; left: 30px; background: rgba(0,0,0,0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: #fff; padding: 14px 26px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.2); font-weight: 700; cursor: pointer; z-index: 1000; box-shadow: 0 10px 35px rgba(0,0,0,0.4); font-size: 0.92rem; display: none; align-items: center; gap: 8px; opacity: 0; transform: translateY(20px); transition: var(--transition-smooth); font-family: 'Inter', sans-serif; }
         .back-nav.active { opacity: 1; transform: translateY(0); }
         .back-nav:hover { background: #000; transform: translateY(-4px) scale(1.04); box-shadow: 0 14px 40px rgba(0,0,0,0.5); border-color: rgba(255,255,255,0.4); }
+
+        /* ======== REVISED FLOATING ACTION BUTTON (QUICK ACTIONS) ======== */
+        .fab-wrapper { position: fixed; bottom: 30px; right: 30px; z-index: 1000; display: flex; flex-direction: column-reverse; align-items: flex-end; gap: 12px; transition: opacity 0.4s, transform 0.4s; font-family: 'Inter', sans-serif; pointer-events: none; }
+        .fab-wrapper.hidden-by-viewport { opacity: 0; transform: scale(0.8) translateY(20px); pointer-events: none !important; }
+        
+        .fab-trigger { width: 50px; height: 50px; border-radius: 50%; background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border-highlight); color: var(--text-main); font-size: 1.15rem; cursor: pointer; box-shadow: 0 8px 25px rgba(0,0,0,0.2); display: flex; justify-content: center; align-items: center; transition: all 0.4s cubic-bezier(0.25, 1, 0.3, 1); pointer-events: auto; position: relative; z-index: 10; }
+        body.light-theme .fab-trigger { background: #fff; color: var(--primary-blue); border-color: rgba(0, 122, 255, 0.2); box-shadow: 0 8px 25px rgba(31,38,135,0.15); }
+        
+        .fab-trigger:hover { transform: scale(1.08); background: var(--primary-blue); color: #fff; border-color: transparent; box-shadow: 0 10px 25px rgba(10, 132, 255, 0.4); }
+        .fab-trigger i { transition: transform 0.4s cubic-bezier(0.25, 1, 0.3, 1); }
+        
+        .fab-wrapper.active .fab-trigger { background: var(--primary-red); color: #fff; box-shadow: 0 10px 25px rgba(255, 69, 58, 0.4); border-color: transparent; }
+        .fab-wrapper.active .fab-trigger i { transform: rotate(135deg); }
+        
+        .fab-menu { display: flex; flex-direction: column-reverse; gap: 10px; pointer-events: none; align-items: flex-end; }
+        
+        .fab-btn { display: flex; align-items: center; gap: 10px; background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border-highlight); padding: 8px 16px; border-radius: 20px; color: var(--text-main); font-weight: 600; font-size: 0.85rem; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.15); transition: all 0.4s cubic-bezier(0.25, 1, 0.3, 1); white-space: nowrap; opacity: 0; transform: translateY(15px) scale(0.9); transform-origin: bottom right; }
+        body.light-theme .fab-btn { background: rgba(255,255,255,0.9); border-color: rgba(0,0,0,0.1); color: var(--text-main); }
+        
+        .fab-wrapper.active .fab-btn { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+        .fab-wrapper.active .fab-btn:nth-child(1) { transition-delay: 0.05s; }
+        .fab-wrapper.active .fab-btn:nth-child(2) { transition-delay: 0.1s; }
+        .fab-wrapper.active .fab-btn:nth-child(3) { transition-delay: 0.15s; }
+        
+        .fab-btn:hover { transform: scale(1.05) translateX(-5px) !important; background: var(--primary-blue); border-color: transparent; box-shadow: 0 8px 20px rgba(10, 132, 255, 0.3); color: #fff; }
+        body.light-theme .fab-btn:hover { background: var(--primary-blue); color: #fff; border-color: transparent; }
+        .fab-btn i { font-size: 1rem; color: inherit; }
+        /* ================================================================ */
 
         /* Curtain Overlay System for Org Structure */
         #curtain-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); z-index: 2000; transform-origin: top center; transform: scaleY(0); opacity: 0; transition: transform 0.6s cubic-bezier(0.86, 0, 0.07, 1), opacity 0.4s ease; display: flex; flex-direction: column; overflow: hidden; }
@@ -438,6 +469,12 @@
             .notification-container { top: 15px; right: 15px; left: 15px; }
             .notification { min-width: 0; width: 100%; padding: 16px; }
             @keyframes slideInRight { from { opacity: 0; transform: translateY(-20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+            
+            /* Revised FAB Mobile Setting */
+            .fab-wrapper { bottom: 20px; right: 20px; left: auto; }
+            .fab-trigger { width: 45px; height: 45px; font-size: 1rem; }
+            .fab-btn { padding: 8px 14px; font-size: 0.8rem; }
+            .back-nav { bottom: 20px; left: 20px; }
         }
 
         @media (max-width: 600px) {
@@ -464,7 +501,7 @@
             .module-info { flex: 1; }
             .module-info h3 { font-size: 1rem; margin-bottom: 4px; }
             .module-info p { font-size: 0.78rem; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-            .explore-btn { display: none; } /* Hide on very small screen to prioritize text */
+            .explore-btn { display: none; } 
 
             .login-card { padding: 30px 20px; border-radius: 24px; min-height: 55vh; }
             .login-card .content h2 { font-size: 1.6rem; margin-bottom: 15px; }
@@ -476,8 +513,6 @@
             .mini-cal-cell { font-size: 0.8rem; border-radius: 8px; }
             .mini-cal-days { font-size: 0.75rem; }
             .mini-tooltip { left: 50%; transform: translateX(-50%) scale(0.9); min-width: 190px; }
-            
-            .back-nav { right: 20px; bottom: 20px; padding: 12px 20px; font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -489,6 +524,27 @@
     <div class="bg-glow blob-3" aria-hidden="true"></div>
     
     <div class="notification-container" id="notification-container" aria-live="assertive"></div>
+
+    <!-- Quick Action FAB Menu (Revised) -->
+    <div class="fab-wrapper" id="quick-action-fab">
+        <div class="fab-menu" id="fab-menu">
+            <button class="fab-btn" onclick="window._lNch('https://murindasentrabaja.github.io/Logistics/')">
+                <span class="fab-label">Logistics</span>
+                <i class="fa-solid fa-truck-fast"></i>
+            </button>
+            <button class="fab-btn" onclick="window._lNch('https://murindasentrabaja.github.io/Product-Label/')">
+                <span class="fab-label">Product Label</span>
+                <i class="fa-solid fa-tags"></i>
+            </button>
+            <button class="fab-btn" onclick="window._lNch('https://murindasentrabaja.github.io/Data-PO/')">
+                <span class="fab-label">Data PO</span>
+                <i class="fa-solid fa-file-invoice"></i>
+            </button>
+        </div>
+        <button class="fab-trigger" onclick="window._toggleFab()" aria-label="Toggle Quick Actions">
+            <i class="fa-solid fa-bolt"></i>
+        </button>
+    </div>
 
     <div id="login-overlay">
         <div class="login-wrapper">
@@ -600,6 +656,9 @@
             <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/Warehouse-System/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-boxes-stacked"></i></div><div class="module-info"><h3>Warehouse</h3><p>Stok Transparan, Logistik Efisien.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Production-Tracking/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-industry"></i></div><div class="module-info"><h3>Produksi</h3><p>Digitalisasi Lini, Efisiensi Tinggi.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/QC-Inspection/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-microscope"></i></div><div class="module-info"><h3>Quality Control</h3><p>Mutu Terjamin, Presisi Terkunci.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            
+            <div class="module-card purple" onclick="window._lNch('https://murindasentrabaja.github.io/QMS/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-award"></i></div><div class="module-info"><h3>Quality Management</h3><p>Sistem Manajemen Mutu Terpadu (QMS).</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            
             <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/SPP/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-file-invoice"></i></div><div class="module-info"><h3>SPP System</h3><p>Pengajuan Mudah, Approval Segera.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Master-Schedule/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-calendar-days"></i></div><div class="module-info"><h3>Master Schedule</h3><p>Timeline Akurat, Alokasi Tepat.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/MSB-Approval/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-file-signature"></i></div><div class="module-info"><h3>MSB Approval</h3><p>Persetujuan Cepat, Alur Transparan.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
@@ -637,73 +696,20 @@
 
     <script>
         (function(_0xabc){
-            document.addEventListener('contextmenu',e=>e.preventDefault());
-            document.addEventListener('keydown',function(e){
-                if(e.keyCode===123||e.key==='F12'||
-                  (e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='i'||e.key==='J'||e.key==='j'||e.key==='C'||e.key==='c'))||
-                  (e.ctrlKey&&(e.key==='U'||e.key==='u'||e.key==='S'||e.key==='s'||e.key==='P'||e.key==='p'))||
-                  (e.metaKey&&e.altKey&&(e.key==='I'||e.key==='J'||e.key==='U'))){e.preventDefault();return false;}
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            document.addEventListener('keydown', function(e){
+                if(e.keyCode === 123 || e.key === 'F12' ||
+                  (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
+                  (e.ctrlKey && (e.key === 'U' || e.key === 'u'))) {
+                    e.preventDefault();
+                }
             });
-            setInterval(function(){const s=new Date().getTime();debugger;const e=new Date().getTime();if(e-s>100){document.body.innerHTML="<h2 style='color:red;text-align:center;margin-top:20vh;font-family:-apple-system,sans-serif;'>Security Restriction Enforced</h2>";window.location.replace("about:blank");}},1000);
-
-            const m=atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5dTk2VTVxUUhnRWFyT21TZEgyd1NER0lUZVY4LTY3Yl81QjM5dDk1Z0xYZjVPTnk5QUEzMmd4UEdZcERRa2R3dzl4dy9leGVj");
-            const s=atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5ZzBrMmw4NGtaQXdveERNdnlua2xHQWVIWDJOY3hmX0RfVUhETU1SUHBnQ0c4dk9qSE00VFdveHM5S1laYUhzdU4vZXhlYw==");
-            const schUrl="https://script.google.com/macros/s/AKfycbwIN-kg3cjvdHV7pStMbRIpCJtQeo9j80ncjDPCZ5TosPcJaZPxpRrhUDkwzgVyor_gig/exec";
-            let c=[],i1=null,i2=null,sy, deliveriesData = [];
-
-            window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loading-screen').classList.add('hidden'),1000));
-            
-            const uD=()=>{const n=new Date(),dy=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'],mo=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];document.getElementById('current-date').innerText=`${dy[n.getDay()]}, ${n.getDate()} ${mo[n.getMonth()]} ${n.getFullYear()}`;document.getElementById('current-time').innerText=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}:${String(n.getSeconds()).padStart(2,'0')} WIB`;};setInterval(uD,1000);uD();
-
-            async function fD(){try{const r=await fetch(m),d=await r.json();let sM={};if(d.summary&&d.summary.length>0){let h=d.summary[0].length>2;if(h&&d.summary.length>1){d.summary[0].forEach((he,i)=>{if(he)sM[String(he).trim().toLowerCase()]=d.summary[1][i];});}else{d.summary.forEach(ro=>{if(ro.length>=2&&ro[0]!=null&&ro[0]!=='')sM[String(ro[0]).trim().toLowerCase()]=ro[1];});}}const pT=(l)=>{let ma=sM[l.toLowerCase().trim()];if(ma===undefined||ma===null||ma==='')return 0;if(typeof ma==='string')return parseFloat(ma.replace(/[^0-9.-]/g,''))||0;return ma;};aV('stat-karyawan',pT('Karyawan'),1200);aV('stat-po',pT('Purchase Order'),1200);aV('stat-pengiriman',pT('Pengiriman'),1200);aV('stat-stok',pT('Stok Produksi'),1200);aV('stat-lkp',pT('Jumlah LKP'),1200);aV('stat-insiden',pT('Total Insiden'),1200);aV('stat-spp',pT('SPP Belum Datang'),1200);uC(d.trendPO,d.karyawan);}catch(e){}}
-            async function fS(){try{const r=await fetch(s),res=await r.json();if(res.error)return;const h=res.headers,d=res.data,mI=h.findIndex(x=>x.toString().toLowerCase().trim()==='nama material'),sI=h.findIndex(x=>x.toString().toLowerCase().trim()==='spp total'),kI=h.findIndex(x=>x.toString().toLowerCase().trim()==='kedatangan');if(mI===-1||sI===-1||kI===-1)return;let mM={},tS=0,tD=0;d.forEach(ro=>{if(ro.every(ce=>ce===''||ce===null||ce===undefined))return;let mN=ro[mI],sQ=Number(ro[sI])||0,dQ=Number(ro[kI])||0,si=dQ-sQ;if(mN){if(si<0)mM[mN]=(mM[mN]||0)+Math.abs(si);tS+=sQ;tD+=dQ>sQ?sQ:dQ;}});const pL=document.getElementById('spp-pending-list');if(Object.keys(mM).length===0){pL.innerHTML=`<li class="sp-list-item"><span style="color:var(--primary-green);">✨ Seluruh material telah terpenuhi</span><strong style="color:var(--primary-green);">-</strong></li>`;}else{let hL='';for(let mat in mM)hL+=`<li class="sp-list-item"><span>${mat}</span><strong style="color:var(--primary-red);">- ${mM[mat]}</strong></li>`;pL.innerHTML=hL;}let pt=tS>0?Math.round((tD/tS)*100):0;if(pt>100)pt=100;document.getElementById('spp-fulfillment-text').innerText=pt+"%";document.getElementById('spp-fulfillment-bar').style.width=pt+"%";}catch(e){document.getElementById('spp-pending-list').innerHTML=`<li class="sp-list-item"><span style="color:var(--primary-red);">Gagal mengambil data sinkronisasi</span><strong style="color:var(--primary-red);">X</strong></li>`;}}
-            
-            async function fetchSchedule(){try{const r=await fetch(schUrl);const d=await r.json();if(!d.error){deliveriesData=d;buildMiniCalendar();}}catch(e){console.error("Gagal memuat jadwal:",e);document.getElementById('mini-cal-month').innerHTML="Gagal Sinkronisasi";}}
-            
-            function buildMiniCalendar(){const grid=document.getElementById('mini-cal-grid');const mLabel=document.getElementById('mini-cal-month');if(!grid)return;grid.innerHTML='';const now=new Date();const y=now.getFullYear();const m=now.getMonth();const monthNames=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];mLabel.innerHTML=`<i class="fa-solid fa-calendar-check"></i> ${monthNames[m]} ${y}`;const firstDay=new Date(y,m,1).getDay();const daysInMonth=new Date(y,m+1,0).getDate();for(let i=0;i<firstDay;i++){let empty=document.createElement('div');grid.appendChild(empty);}for(let i=1;i<=daysInMonth;i++){let cell=document.createElement('div');cell.className='mini-cal-cell';cell.innerText=i;const isSunday=new Date(y,m,i).getDay()===0;if(isSunday)cell.classList.add('holiday');const todaysItems=deliveriesData.filter(item=>{const dateKey=Object.keys(item).find(k=>k.toLowerCase().includes('delivery date')||k.toLowerCase().includes('tanggal'));if(dateKey&&item[dateKey]){const itemDate=new Date(item[dateKey]);return itemDate.getDate()===i&&itemDate.getMonth()===m&&itemDate.getFullYear()===y;}return false;});if(todaysItems.length>0){cell.classList.add('has-data');let tooltip=document.createElement('div');tooltip.className='mini-tooltip';let tooltipHtml='';todaysItems.forEach(item=>{const exactSerialKey=Object.keys(item).find(k=>k.toLowerCase()==='serial number');const poKey=Object.keys(item).find(k=>k.toLowerCase().includes('po'));const statusKey=Object.keys(item).find(k=>k.toLowerCase()==='status delivery'||k.toLowerCase().includes('status'));const sn=exactSerialKey&&item[exactSerialKey]?item[exactSerialKey]:'No Serial';const poVal=poKey&&item[poKey]?String(item[poKey]).trim():'';const statusVal=statusKey&&item[statusKey]?String(item[statusKey]).trim():'';let statusHtml='';if(statusVal&&statusVal!=='-'&&statusVal!=='0'&&statusVal!=='undefined'&&statusVal!=='null'){statusHtml=`<span class="mini-status sent"><i class="fa-solid fa-check"></i> Terkirim</span>`;}else if(!poVal||poVal==='-'||poVal==='0'||poVal==='undefined'||poVal==='null'){statusHtml=`<span class="mini-status stock">Stock</span>`;}else{statusHtml=`<span class="mini-status pending">Pending</span>`;}tooltipHtml+=`<div class="mini-tooltip-item"><span class="mini-sn">${sn}</span>${statusHtml}</div>`;});tooltip.innerHTML=tooltipHtml;cell.appendChild(tooltip);}grid.appendChild(cell);}}
-
-            function uC(pO,kR){
-                let isLight = document.body.classList.contains('light-theme');
-                let tC = isLight ? '#6E6E73' : 'rgba(255,255,255,0.65)';
-                let gC = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.05)';
-                let titleC = isLight ? '#1D1D1F' : '#ffffff';
-
-                if(pO&&pO.length>1){const la=pO.slice(1).map(r=>String(r[0]||'')),ds=[];const cP=[{b:'#64D2FF',bg:'rgba(100, 210, 255, 0.15)'},{b:'#FF9F0A',bg:'rgba(255, 159, 10, 0.15)'},{b:'#30D158',bg:'rgba(48, 209, 88, 0.15)'},{b:'#BF5AF2',bg:'rgba(191, 90, 242, 0.15)'}];for(let i=1;i<pO[0].length;i++){let cN=pO[0][i];if(!cN)continue;let dV=pO.slice(1).map(r=>parseFloat(r[i])||0),th=cP[(i-1)%cP.length];ds.push({label:cN,data:dV,backgroundColor:th.bg,borderColor:th.b,borderWidth:3,pointBackgroundColor:isLight?'#fff':'#05070f',pointBorderColor:th.b,pointBorderWidth:2,pointRadius:4,pointHoverRadius:6,pointHoverBackgroundColor:th.b,pointHoverBorderColor:'#fff',pointHoverBorderWidth:2,fill:true,tension:0.4});}if(i1)i1.destroy();i1=new Chart(document.getElementById('clientProcessChart').getContext('2d'),{type:'line',data:{labels:la,datasets:ds},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{color:tC,font:{family:'Inter',size:12},usePointStyle:true,boxWidth:8}},tooltip:{backgroundColor:isLight?'rgba(255,255,255,0.92)':'rgba(10,15,30,0.92)',titleColor:titleC,bodyColor:isLight?'#424245':'rgba(255,255,255,0.85)',borderColor:isLight?'rgba(0,0,0,0.1)':'rgba(255,255,255,0.1)',borderWidth:1,padding:12,usePointStyle:true,titleFont:{size:13,family:'Inter',weight:'700'},bodyFont:{size:12,family:'Inter',weight:'600'},cornerRadius:14,displayColors:true,backdropFilter:'blur(12px)'}},scales:{x:{ticks:{color:tC,font:{size:11,family:'Inter',weight:'600'}},grid:{display:false}},y:{ticks:{color:tC,font:{size:11,family:'Inter',weight:'600'}},grid:{color:gC,borderDash:[5,5]},beginAtZero:true}}}});}if(kR&&kR.length>1){let la=[],va=[],dI=-1,he=kR[0].map(h=>String(h).toLowerCase());for(let i=0;i<he.length;i++){if(he[i].includes('departemen')||he[i].includes('dept')||he[i].includes('bagian')){dI=i;break;}}if(dI!==-1&&kR[0].length>2){let dC={};for(let i=1;i<kR.length;i++){let dN=String(kR[i][dI]).trim();if(dN)dC[dN]=(dC[dN]||0)+1;}la=Object.keys(dC);va=Object.values(dC);}else{la=kR.slice(1).map(r=>String(r[0]||''));va=kR.slice(1).map(r=>parseFloat(r[1])||0);}const bG=['rgba(10,132,255,0.85)','rgba(48,209,88,0.85)','rgba(255,159,10,0.85)','rgba(191,90,242,0.85)','rgba(255,69,58,0.85)','rgba(100,210,255,0.85)','#0ea5e9','#84cc16'],hG=['#0A84FF','#30D158','#FF9F0A','#BF5AF2','#FF453A','#64D2FF','#0284c7','#65a30d'];if(i2)i2.destroy();i2=new Chart(document.getElementById('karyawanDeptChart').getContext('2d'),{type:'doughnut',data:{labels:la,datasets:[{data:va,backgroundColor:bG.slice(0,Math.max(la.length,bG.length)),hoverBackgroundColor:hG.slice(0,Math.max(la.length,hG.length)),borderWidth:3,borderColor:isLight?'rgba(255,255,255,0.8)':'rgba(255,255,255,0.2)',hoverOffset:10}]},options:{responsive:true,maintainAspectRatio:false,cutout:'74%',plugins:{legend:{position:'right',labels:{color:tC,font:{size:11,family:'Inter',weight:'600'},padding:14,usePointStyle:true}},tooltip:{backgroundColor:isLight?'rgba(255,255,255,0.92)':'rgba(10,15,30,0.92)',titleColor:titleC,bodyColor:isLight?'#424245':'rgba(255,255,255,0.85)',borderColor:isLight?'rgba(0,0,0,0.1)':'rgba(255,255,255,0.1)',borderWidth:1,padding:12,cornerRadius:14,backdropFilter:'blur(12px)',callbacks:{label:function(cx){let t=cx.dataset.data.reduce((a,b)=>a+b,0),p=Math.round((cx.parsed/t)*100);return ` ${cx.label}: ${cx.parsed} (${p}%)`;}}}}}});}c=[i1,i2].filter(Boolean);}
-            
-            function aV(id,en,du){const el=document.getElementById(id);if(!el)return;const st=parseInt(el.textContent)||0;if(st===en)return;let sT=null;const sp=(t)=>{if(!sT)sT=t;const pg=Math.min((t-sT)/du,1);el.textContent=Math.floor(pg*(en-st)+st);if(pg<1)window.requestAnimationFrame(sp);else el.textContent=en;};window.requestAnimationFrame(sp);}
-            
-            function sN(t,m,ty='success'){const co=document.getElementById('notification-container'),n=document.createElement('div');n.className=`notification ${ty}`;n.setAttribute('role','alert');const ic=ty==='success'?'fa-circle-check':'fa-triangle-exclamation';n.innerHTML=`<i class="fa-solid ${ic}"></i><div class="notification-content"><div class="notification-title">${t}</div><div class="notification-message">${m}</div></div>`;co.appendChild(n);setTimeout(()=>{n.style.animation='slideInRight 0.45s cubic-bezier(0.25, 1, 0.3, 1) reverse';setTimeout(()=>n.remove(),450);},4000);}
-            
-            window._eSys=(e)=>{e.preventDefault();const b=document.getElementById('enterBtn');b.innerHTML='<i class="fa-solid fa-circle-notch fa-spin"></i> MEMUAT...';b.style.pointerEvents='none';setTimeout(()=>{const o=document.getElementById('login-overlay');o.style.opacity="0";o.style.visibility="hidden";setTimeout(()=>{o.style.display="none";document.getElementById('main-dashboard').style.display="flex";fD();fS();fetchSchedule();sy=setInterval(()=>{fD();fS();fetchSchedule();},30000);sN('Berhasil Masuk','Selamat datang di Dashboard Utama','success');},600);},1200);};
-            window._dOut=()=>{sN('Logout','Anda telah keluar dari sistem','warning');clearInterval(sy);setTimeout(()=>location.reload(),1000);};
-            window._tTheme=()=>{
-                document.body.classList.toggle('light-theme');
-                const i=document.querySelector('.theme-toggle i'),iL=document.body.classList.contains('light-theme');
-                i.className=iL?'fa-solid fa-moon':'fa-solid fa-sun';
-                
-                let tC=iL?'#6E6E73':'rgba(255,255,255,0.65)',gC=iL?'rgba(0,0,0,0.06)':'rgba(255,255,255,0.05)';
-                let titleC = iL ? '#1D1D1F' : '#ffffff';
-
-                c.forEach(ch=>{
-                    if(ch.options.plugins.legend.labels)ch.options.plugins.legend.labels.color=tC;
-                    if(ch.options.plugins.tooltip) {
-                        ch.options.plugins.tooltip.backgroundColor = iL ? 'rgba(255,255,255,0.92)' : 'rgba(10,15,30,0.92)';
-                        ch.options.plugins.tooltip.titleColor = titleC;
-                        ch.options.plugins.tooltip.bodyColor = iL ? '#424245' : 'rgba(255,255,255,0.85)';
-                        ch.options.plugins.tooltip.borderColor = iL ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
-                    }
-                    if(ch.options.scales?.x){ch.options.scales.x.ticks.color=tC;}
-                    if(ch.options.scales?.y){ch.options.scales.y.ticks.color=tC;if(ch.options.scales.y.grid)ch.options.scales.y.grid.color=gC;}
-                    ch.update();
-                });
-            };
-            window._lNch=(u)=>{const m=document.getElementById('main-dashboard'),v=document.getElementById('viewport-container'),f=document.getElementById('erp-frame'),b=document.getElementById('back-btn');m.classList.add('dashboard-dimmed');f.src=u;v.style.display='block';b.style.display='flex';setTimeout(()=>{v.classList.add('active');b.classList.add('active');},50);};
-            window._cView=()=>{const m=document.getElementById('main-dashboard'),v=document.getElementById('viewport-container'),f=document.getElementById('erp-frame'),b=document.getElementById('back-btn');v.classList.remove('active');b.classList.remove('active');m.classList.remove('dashboard-dimmed');setTimeout(()=>{v.style.display='none';b.style.display='none';f.src='';},550);};
-            
-            /* NEW: Script animasi gorden turun (Scale Y) */
-            window._openCurtain=(u)=>{const m=document.getElementById('main-dashboard'),c=document.getElementById('curtain-container'),f=document.getElementById('curtain-frame');m.classList.add('dashboard-dimmed');f.src=u;setTimeout(()=>{c.classList.add('active');},50);};
-            window._closeCurtain=()=>{const m=document.getElementById('main-dashboard'),c=document.getElementById('curtain-container'),f=document.getElementById('curtain-frame');c.classList.remove('active');m.classList.remove('dashboard-dimmed');setTimeout(()=>{f.src='';},600);};
-        })(window);
+        })();
+        
+        // Quick Action FAB Toggle function (contoh script dasar untuk tombol)
+        window._toggleFab = function() {
+            document.getElementById('quick-action-fab').classList.toggle('active');
+        };
     </script>
 </body>
 </html>
