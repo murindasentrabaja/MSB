@@ -858,7 +858,7 @@
                         for(let mat in mM)hL+=`<li class="sp-list-item"><span>${mat}</span><strong style="color:var(--primary-red);">- ${mM[mat]}</strong></li>`;
                         pL.innerHTML=hL;
                     }
-                    let pt=tS>0?Math.round((tD/tS)*100):0;if(pt>100)pt=100;
+                    let pt=tS>0?Math.floor((tD/tS)*100):0;if(pt>100)pt=100;
                     document.getElementById('spp-fulfillment-text').innerText=pt+"%";
                     document.getElementById('spp-fulfillment-bar').style.width=pt+"%";
                 }catch(e){
