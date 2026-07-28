@@ -308,7 +308,6 @@
         .module-card.green:hover { border-top-color: rgba(48, 209, 88, 0.5) !important; border-left-color: rgba(48, 209, 88, 0.5) !important; box-shadow: 0 15px 35px -8px rgba(48, 209, 88, 0.35); }
         .module-card.orange:hover { border-top-color: rgba(255, 159, 10, 0.5) !important; border-left-color: rgba(255, 159, 10, 0.5) !important; box-shadow: 0 15px 35px -8px rgba(255, 159, 10, 0.35); }
         .module-card.purple:hover { border-top-color: rgba(191, 90, 242, 0.5) !important; border-left-color: rgba(191, 90, 242, 0.5) !important; box-shadow: 0 15px 35px -8px rgba(191, 90, 242, 0.35); }
-        .module-card.red:hover { border-top-color: rgba(255, 69, 58, 0.5) !important; border-left-color: rgba(255, 69, 58, 0.5) !important; box-shadow: 0 15px 35px -8px rgba(255, 69, 58, 0.35); }
         
         .module-card .module-icon i { transition: transform 0.4s cubic-bezier(0.25, 1, 0.3, 1); }
         .module-card:hover .module-icon i { transform: scale(1.1); }
@@ -319,7 +318,6 @@
         .module-card.green .module-icon { color: var(--primary-green); background: rgba(48, 209, 88, 0.1); border-color: rgba(48, 209, 88, 0.2); }
         .module-card.orange .module-icon { color: var(--primary-orange); background: rgba(255, 159, 10, 0.1); border-color: rgba(255, 159, 10, 0.2); }
         .module-card.purple .module-icon { color: var(--primary-purple); background: rgba(191, 90, 242, 0.1); border-color: rgba(191, 90, 242, 0.2); }
-        .module-card.red .module-icon { color: var(--primary-red); background: rgba(255, 69, 58, 0.1); border-color: rgba(255, 69, 58, 0.2); }
 
         .module-info { z-index: 2; position: relative; flex: 1; }
         .module-info h3 { font-size: 1.15rem; margin-bottom: 5px; color: var(--text-main); font-weight: 700; font-family: 'Inter', sans-serif; letter-spacing: -0.3px; }
@@ -331,7 +329,6 @@
         .module-card.green .explore-btn { color: var(--primary-green); }
         .module-card.orange .explore-btn { color: var(--primary-orange); }
         .module-card.purple .explore-btn { color: var(--primary-purple); }
-        .module-card.red .explore-btn { color: var(--primary-red); }
 
         /* Dynamic Popup Toast Interface */
         .notification-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; pointer-events: none; }
@@ -710,23 +707,6 @@
                     <div class="mini-cal-grid" id="mini-cal-grid"></div>
                 </div>
             </div>
-
-            <!-- SECURITY GUARD SUMMARY CARD -->
-            <div class="chart-card" style="display:flex;flex-direction:column;justify-content:center;">
-                <div class="chart-header"><div><h3 class="chart-title">Security & Access</h3><p class="chart-subtitle">Monitoring Tamu & Kendaraan Aktif</p></div></div>
-                <div style="margin-top:5px;display:flex;flex-direction:column;gap:12px;flex:1;">
-                    <div style="background:rgba(10, 132, 255, 0.06); border:1px solid rgba(10, 132, 255, 0.15); border-left:4px solid var(--primary-blue); border-radius:var(--radius-sm); padding:12px; backdrop-filter:blur(5px);">
-                        <h4 style="color:var(--text-main); font-size:0.88rem; margin-bottom:10px; display:flex; align-items:center; gap:8px; font-family:'Inter', sans-serif;"><i class="fa-solid fa-id-badge" style="color:var(--primary-blue);"></i> Jumlah Tamu Di Dalam Pabrik</h4>
-                        <div style="font-size:1.8rem; font-weight:800; color:var(--text-main);" id="sec-tamu-count"><i class="fa-solid fa-spinner fa-spin" style="font-size:1rem;"></i></div>
-                    </div>
-                    <div style="background:rgba(255, 159, 10, 0.06); border:1px solid rgba(255, 159, 10, 0.15); border-left:4px solid var(--primary-orange); border-radius:var(--radius-sm); padding:12px; margin-top:auto; backdrop-filter:blur(5px);">
-                        <h4 style="color:var(--text-main); font-size:0.88rem; margin-bottom:10px; display:flex; align-items:center; gap:8px; font-family:'Inter', sans-serif;"><i class="fa-solid fa-truck-moving" style="color:var(--primary-orange);"></i> Kendaraan Masuk & Di Dalam Pabrik</h4>
-                        <div style="font-size:1.8rem; font-weight:800; color:var(--text-main);" id="sec-kendaraan-count"><i class="fa-solid fa-spinner fa-spin" style="font-size:1rem;"></i></div>
-                    </div>
-                </div>
-            </div>
-            <!-- END SECURITY GUARD SUMMARY CARD -->
-
         </section>
 
         <section class="content-area" aria-label="ERP Modules Application Navigation">
@@ -734,10 +714,6 @@
             <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/HR-System/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-people-group"></i></div><div class="module-info"><h3>Human Resource</h3><p>Talenta Terkelola, Kinerja Optimal.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/General-Affairs/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-building-circle-check"></i></div><div class="module-info"><h3>General Affairs</h3><p>Fasilitas Terdata, Operasional Prima.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/HSE/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-helmet-safety"></i></div><div class="module-info"><h3>HSE System</h3><p>K3 Terpantau, Standar Terjaga.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            
-            <!-- NEW SECURITY GUARD MODULE -->
-            <div class="module-card red" onclick="window._lNch('https://murindasentrabaja.github.io/Security-Guard/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-shield-halved"></i></div><div class="module-info"><h3>Security Guard</h3><p>Keamanan Terpantau, Akses Terkendali.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            
             <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Maintenance/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-gears"></i></div><div class="module-info"><h3>Maintenance</h3><p>Perawatan Preventif, Mesin Responsif.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/Purchase-Order/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div><div class="module-info"><h3>Purchase Order</h3><p>Pengadaan Cepat, Transaksi Akurat.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/Warehouse-System/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-boxes-stacked"></i></div><div class="module-info"><h3>Warehouse</h3><p>Stok Transparan, Logistik Efisien.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
@@ -900,39 +876,6 @@
                     document.getElementById('mini-cal-month').innerHTML="Gagal Sinkronisasi";
                 }
             }
-
-            /* --- FUNGSI BARU UNTUK FETCH DATA SECURITY GUARD --- */
-            async function fetchSecurityData() {
-                try {
-                    // Silakan ganti nilai 'securityApiUrl' dengan URL Endpoint JSON/Apps Script resmi Security Guard MSB Anda
-                    // Karena URL Security-Guard (GitHub Pages) tidak memaparkan API, berikut adalah logic fetching standarnya
-                    const securityApiUrl = ""; // Ganti dengan URL script/API Data Security 
-                    
-                    // (Mockup UI Data jika API belum dipasang, agar animasi angka langsung terlihat saat sistem di run)
-                    const mockData = true; 
-                    if(mockData) {
-                        setTimeout(() => {
-                            aV('sec-tamu-count', 12, 1000);       // Angka dummy Tamu: 12
-                            aV('sec-kendaraan-count', 45, 1000);  // Angka dummy Kendaraan: 45
-                        }, 1200);
-                        return;
-                    }
-
-                    // Logika aslinya (Uncomment dan hapus block mockup di atas jika endpoint sudah valid)
-                    /*
-                    const response = await fetch(securityApiUrl);
-                    const data = await response.json();
-                    // Anggaplah data balikan: { tamuDiDalam: 12, kendaraanAktif: 45 }
-                    aV('sec-tamu-count', data.tamuDiDalam || 0, 1000);
-                    aV('sec-kendaraan-count', data.kendaraanAktif || 0, 1000);
-                    */
-                } catch (e) {
-                    console.error("Gagal memuat data Security:", e);
-                    document.getElementById('sec-tamu-count').innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color:var(--primary-red);font-size:1rem;"></i>';
-                    document.getElementById('sec-kendaraan-count').innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color:var(--primary-red);font-size:1rem;"></i>';
-                }
-            }
-            /* ------------------------------------------------ */
             
             function buildMiniCalendar(){
                 const grid=document.getElementById('mini-cal-grid');
@@ -1002,7 +945,6 @@
                 });
             }
 
-            /* --- BAGIAN KODE SCRIPT CHART YANG DIPERBAIKI (MENYAMBUNG YANG TERPOTONG) --- */
             function uC(pO,kR){
                 let isLight = document.body.classList.contains('light-theme');
                 let tC = isLight ? '#6E6E73' : 'rgba(255,255,255,0.65)';
@@ -1051,52 +993,75 @@
                         la=kR.slice(1).map(r=>String(r[0]||''));
                         va=kR.slice(1).map(r=>parseFloat(r[1])||0);
                     }
-                    
-                    const bG=['rgba(10,132,255,0.7)','rgba(48,209,88,0.7)','rgba(255,159,10,0.7)','rgba(191,90,242,0.7)','rgba(100,210,255,0.7)','rgba(255,69,58,0.7)'];
-                    const bC=['rgba(10,132,255,1)','rgba(48,209,88,1)','rgba(255,159,10,1)','rgba(191,90,242,1)','rgba(100,210,255,1)','rgba(255,69,58,1)'];
-                    
+                    const bG=['rgba(10,132,255,0.85)','rgba(48,209,88,0.85)','rgba(255,159,10,0.85)','rgba(191,90,242,0.85)','rgba(255,69,58,0.85)','rgba(100,210,255,0.85)','#0ea5e9','#84cc16'];
                     if(i2)i2.destroy();
                     const ctx2 = document.getElementById('karyawanDeptChart');
                     if(ctx2) {
                         i2=new Chart(ctx2.getContext('2d'),{
                             type:'doughnut',
-                            data:{
-                                labels: la,
-                                datasets: [{
-                                    data: va,
-                                    backgroundColor: bG,
-                                    borderColor: bC,
-                                    borderWidth: 1
-                                }]
-                            },
+                            data:{labels:la,datasets:[{data:va,backgroundColor:bG.slice(0,Math.max(la.length,bG.length)),borderWidth:2,borderColor:isLight?'#fff':'rgba(255,255,255,0.1)'}]},
                             options:{
                                 responsive:true,
                                 maintainAspectRatio:false,
-                                cutout:'65%',
+                                cutout:'70%',
                                 plugins:{
-                                    legend:{position:'right',labels:{color:tC,font:{family:'Inter',size:10},usePointStyle:true,boxWidth:6}},
-                                    tooltip:{backgroundColor:isLight?'rgba(255,255,255,0.95)':'rgba(10,15,30,0.95)',titleColor:titleC,bodyColor:isLight?'#424245':'rgba(255,255,255,0.85)',borderColor:isLight?'rgba(0,0,0,0.1)':'rgba(255,255,255,0.1)',borderWidth:1,padding:10,cornerRadius:12}
+                                    legend:{position:window.innerWidth < 480 ? 'bottom' : 'right',labels:{color:tC,font:{size:10,family:'Inter'},padding:10,usePointStyle:true}},
+                                    tooltip:{backgroundColor:isLight?'rgba(255,255,255,0.95)':'rgba(10,15,30,0.95)',titleColor:titleC,bodyColor:isLight?'#424245':'rgba(255,255,255,0.85)',borderColor:isLight?'rgba(0,0,0,0.1)':'rgba(255,255,255,0.1)',borderWidth:1,padding:10,cornerRadius:12,displayColors:true}
                                 }
                             }
                         });
                     }
                 }
-            } // END Fungsi uC
+            }
 
-            // --- Fungsi Kontrol UI Sistem ---
+            window._eSys = function(e) {
+                if(e) e.preventDefault();
+                document.getElementById('login-overlay').style.opacity = '0';
+                document.getElementById('login-overlay').style.visibility = 'hidden';
+                setTimeout(() => {
+                    document.getElementById('login-overlay').style.display = 'none';
+                    document.getElementById('main-dashboard').style.display = 'flex';
+                    sN('Selamat Datang', 'Login ke MSB ERP System berhasil', 'success');
+                    fD();
+                    fS();
+                    fetchSchedule();
+                }, 400);
+            };
+
+            window._dOut = function() {
+                document.getElementById('main-dashboard').style.display = 'none';
+                document.getElementById('login-overlay').style.display = 'flex';
+                setTimeout(() => {
+                    document.getElementById('login-overlay').style.opacity = '1';
+                    document.getElementById('login-overlay').style.visibility = 'visible';
+                    sN('Terima Kasih', 'Anda telah keluar dari sistem', 'warning');
+                }, 50);
+            };
+
+            window._tTheme = function() {
+                document.body.classList.toggle('light-theme');
+                const isLight = document.body.classList.contains('light-theme');
+                const icon = document.querySelector('.theme-toggle i');
+                if(icon) {
+                    icon.className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+                }
+                fD();
+            };
+
             window._lNch = function(url) {
                 const vp = document.getElementById('viewport-container');
                 const frame = document.getElementById('erp-frame');
                 const backBtn = document.getElementById('back-btn');
                 const fab = document.getElementById('quick-action-fab');
-                
+
                 frame.src = url;
                 vp.style.display = 'block';
-                void vp.offsetWidth; // Trigger reflow
-                vp.classList.add('active');
-                backBtn.style.display = 'flex';
-                setTimeout(() => backBtn.classList.add('active'), 100);
-                if(fab) fab.classList.add('hidden-by-viewport');
+                setTimeout(() => {
+                    vp.classList.add('active');
+                    backBtn.style.display = 'flex';
+                    setTimeout(() => backBtn.classList.add('active'), 50);
+                    if(fab) fab.classList.add('hidden-by-viewport');
+                }, 50);
             };
 
             window._cView = function() {
@@ -1104,14 +1069,14 @@
                 const frame = document.getElementById('erp-frame');
                 const backBtn = document.getElementById('back-btn');
                 const fab = document.getElementById('quick-action-fab');
-                
-                vp.classList.remove('active');
+
                 backBtn.classList.remove('active');
-                if(fab) fab.classList.remove('hidden-by-viewport');
+                vp.classList.remove('active');
                 setTimeout(() => {
                     vp.style.display = 'none';
-                    frame.src = '';
                     backBtn.style.display = 'none';
+                    frame.src = '';
+                    if(fab) fab.classList.remove('hidden-by-viewport');
                 }, 450);
             };
 
@@ -1129,44 +1094,12 @@
                 setTimeout(() => { frame.src = ''; }, 500);
             };
 
-            window._eSys = function(e) {
-                if(e) e.preventDefault();
-                const overlay = document.getElementById('login-overlay');
-                const main = document.getElementById('main-dashboard');
-                overlay.style.opacity = '0';
-                overlay.style.visibility = 'hidden';
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                    main.style.display = 'flex';
-                    // Fetch data dashboard master 
-                    fD();
-                    fS();
-                    fetchSchedule();
-                    fetchSecurityData(); // Menjalankan fungsi Security Summary 
-                }, 600);
-            };
-
-            window._dOut = function() {
-                const overlay = document.getElementById('login-overlay');
-                const main = document.getElementById('main-dashboard');
-                main.style.display = 'none';
-                overlay.style.display = 'flex';
-                void overlay.offsetWidth;
-                overlay.style.opacity = '1';
-                overlay.style.visibility = 'visible';
-            };
-
-            window._tTheme = function() {
-                document.body.classList.toggle('light-theme');
-                fD(); // Render ulang chart saat tema berganti
-            };
-
             window._toggleFab = function() {
                 const fab = document.getElementById('quick-action-fab');
-                fab.classList.toggle('active');
+                if(fab) fab.classList.toggle('active');
             };
 
-        })();
+        })({});
     </script>
 </body>
 </html>
