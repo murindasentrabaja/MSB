@@ -660,10 +660,6 @@
             <div class="stat-card blue"><div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-clipboard-check"></i></div><div class="stat-info"><div class="stat-label">Jumlah LKP</div><div class="stat-value" id="stat-lkp">0</div></div></div>
             <div class="stat-card red"><div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-triangle-exclamation"></i></div><div class="stat-info"><div class="stat-label">Total Insiden</div><div class="stat-value" id="stat-insiden">0</div></div></div>
             <div class="stat-card green"><div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-clock"></i></div><div class="stat-info"><div class="stat-label">SPP Kurang</div><div class="stat-value" id="stat-spp">0</div></div></div>
-            
-            <!-- TAMBAHAN CARD SUMMARY TAMU & KENDARAAN -->
-            <div class="stat-card purple"><div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-user-shield"></i></div><div class="stat-info"><div class="stat-label">Tamu (In-Plant)</div><div class="stat-value" id="stat-tamu">0</div></div></div>
-            <div class="stat-card orange"><div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-car-side"></i></div><div class="stat-info"><div class="stat-label">Kendaraan (In-Plant)</div><div class="stat-value" id="stat-kendaraan">0</div></div></div>
         </section>
 
         <section class="charts-section" aria-label="Data Analytics Charts">
@@ -714,6 +710,23 @@
                     <div class="mini-cal-grid" id="mini-cal-grid"></div>
                 </div>
             </div>
+
+            <!-- SECURITY GUARD SUMMARY CARD -->
+            <div class="chart-card" style="display:flex;flex-direction:column;justify-content:center;">
+                <div class="chart-header"><div><h3 class="chart-title">Security & Access</h3><p class="chart-subtitle">Monitoring Tamu & Kendaraan Aktif</p></div></div>
+                <div style="margin-top:5px;display:flex;flex-direction:column;gap:12px;flex:1;">
+                    <div style="background:rgba(10, 132, 255, 0.06); border:1px solid rgba(10, 132, 255, 0.15); border-left:4px solid var(--primary-blue); border-radius:var(--radius-sm); padding:12px; backdrop-filter:blur(5px);">
+                        <h4 style="color:var(--text-main); font-size:0.88rem; margin-bottom:10px; display:flex; align-items:center; gap:8px; font-family:'Inter', sans-serif;"><i class="fa-solid fa-id-badge" style="color:var(--primary-blue);"></i> Jumlah Tamu Di Dalam Pabrik</h4>
+                        <div style="font-size:1.8rem; font-weight:800; color:var(--text-main);" id="sec-tamu-count"><i class="fa-solid fa-spinner fa-spin" style="font-size:1rem;"></i></div>
+                    </div>
+                    <div style="background:rgba(255, 159, 10, 0.06); border:1px solid rgba(255, 159, 10, 0.15); border-left:4px solid var(--primary-orange); border-radius:var(--radius-sm); padding:12px; margin-top:auto; backdrop-filter:blur(5px);">
+                        <h4 style="color:var(--text-main); font-size:0.88rem; margin-bottom:10px; display:flex; align-items:center; gap:8px; font-family:'Inter', sans-serif;"><i class="fa-solid fa-truck-moving" style="color:var(--primary-orange);"></i> Kendaraan Masuk & Di Dalam Pabrik</h4>
+                        <div style="font-size:1.8rem; font-weight:800; color:var(--text-main);" id="sec-kendaraan-count"><i class="fa-solid fa-spinner fa-spin" style="font-size:1rem;"></i></div>
+                    </div>
+                </div>
+            </div>
+            <!-- END SECURITY GUARD SUMMARY CARD -->
+
         </section>
 
         <section class="content-area" aria-label="ERP Modules Application Navigation">
@@ -721,6 +734,10 @@
             <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/HR-System/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-people-group"></i></div><div class="module-info"><h3>Human Resource</h3><p>Talenta Terkelola, Kinerja Optimal.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/General-Affairs/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-building-circle-check"></i></div><div class="module-info"><h3>General Affairs</h3><p>Fasilitas Terdata, Operasional Prima.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/HSE/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-helmet-safety"></i></div><div class="module-info"><h3>HSE System</h3><p>K3 Terpantau, Standar Terjaga.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            
+            <!-- NEW SECURITY GUARD MODULE -->
+            <div class="module-card red" onclick="window._lNch('https://murindasentrabaja.github.io/Security-Guard/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-shield-halved"></i></div><div class="module-info"><h3>Security Guard</h3><p>Keamanan Terpantau, Akses Terkendali.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            
             <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Maintenance/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-gears"></i></div><div class="module-info"><h3>Maintenance</h3><p>Perawatan Preventif, Mesin Responsif.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/Purchase-Order/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div><div class="module-info"><h3>Purchase Order</h3><p>Pengadaan Cepat, Transaksi Akurat.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/Warehouse-System/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-boxes-stacked"></i></div><div class="module-info"><h3>Warehouse</h3><p>Stok Transparan, Logistik Efisien.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
@@ -735,10 +752,6 @@
             <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/MSB-Approval/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-file-signature"></i></div><div class="module-info"><h3>MSB Approval</h3><p>Persetujuan Cepat, Alur Transparan.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/Administration-System/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-folder-tree"></i></div><div class="module-info"><h3>Administration</h3><p>Administrasi Terstruktur, Kerja Terukur.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/Filling-Material/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-layer-group"></i></div><div class="module-info"><h3>Filling Material</h3><p>Data Terintegrasi, Material Filling Rapi.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            
-            <!-- TAMBAHAN MODUL SECURITY GUARD -->
-            <div class="module-card red" onclick="window._lNch('https://murindasentrabaja.github.io/Security-Guard/')" tabindex="0"><div class="module-icon"><i class="fa-solid fa-shield-halved"></i></div><div class="module-info"><h3>Security Guard</h3><p>Keamanan Terpadu, Akses Terkontrol.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-
         </section>
         
         <footer>
@@ -769,10 +782,8 @@
         <iframe id="curtain-frame" title="Embedded Organizational Structure"></iframe>
     </div>
 
-    <!-- SCRIPT YANG SUDAH DIPERBAIKI SECARA PENUH -->
     <script>
         (function(_0xabc){
-            // Security Protocol
             document.addEventListener('contextmenu',e=>e.preventDefault());
             document.addEventListener('keydown',function(e){
                 if(e.keyCode===123||e.key==='F12'||
@@ -787,80 +798,374 @@
             const schUrl="https://script.google.com/macros/s/AKfycbwIN-kg3cjvdHV7pStMbRIpCJtQeo9j80ncjDPCZ5TosPcJaZPxpRrhUDkwzgVyor_gig/exec";
             let c=[],i1=null,i2=null,sy, deliveriesData = [];
 
-            // Loading screen logic
             window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loading-screen').classList.add('hidden'),800));
             
-            // Jam & Tanggal Sistem
-            const uD=()=>{
-                const n=new Date();
-                const dy=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
-                const mt=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-                
-                if(document.getElementById('current-date')){
-                    document.getElementById('current-date').innerText = `${dy[n.getDay()]}, ${n.getDate()} ${mt[n.getMonth()]} ${n.getFullYear()}`;
-                }
-                
-                if(document.getElementById('current-time')){
-                    document.getElementById('current-time').innerText = n.toLocaleTimeString('id-ID', { hour12: false });
-                }
-            };
-            
-            setInterval(uD, 1000);
-            uD(); // Initialize immediately
+            const uD=()=>{const n=new Date(),dy=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'],mo=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];document.getElementById('current-date').innerText=`${dy[n.getDay()]}, ${n.getDate()} ${mo[n.getMonth()]} ${n.getFullYear()}`;document.getElementById('current-time').innerText=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}:${String(n.getSeconds()).padStart(2,'0')} WIB`;};setInterval(uD,1000);uD();
 
-            // Window Functions (Global Control System)
-            window._eSys = function(e) {
-                if(e) e.preventDefault();
-                document.getElementById('login-overlay').style.opacity = '0';
-                document.getElementById('login-overlay').style.visibility = 'hidden';
-                document.getElementById('main-dashboard').style.display = 'flex';
-                setTimeout(() => { document.getElementById('login-overlay').style.display = 'none'; }, 600);
-            };
+            function aV(id, target, duration) {
+                const el = document.getElementById(id);
+                if(!el) return;
+                let start = 0;
+                const increment = target / (duration / 16);
+                const timer = setInterval(() => {
+                    start += increment;
+                    if(start >= target) {
+                        el.innerText = Math.round(target).toLocaleString('id-ID');
+                        clearInterval(timer);
+                    } else {
+                        el.innerText = Math.round(start).toLocaleString('id-ID');
+                    }
+                }, 16);
+            }
 
-            window._lNch = function(url) {
-                document.getElementById('erp-frame').src = url;
-                document.getElementById('viewport-container').style.display = 'block';
+            function sN(title, msg, type='success'){
+                const container = document.getElementById('notification-container');
+                if(!container) return;
+                const notif = document.createElement('div');
+                notif.className = `notification ${type}`;
+                const icon = type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation';
+                notif.innerHTML = `<i class="fa-solid ${icon}"></i><div class="notification-content"><div class="notification-title">${title}</div><div class="notification-message">${msg}</div></div>`;
+                container.appendChild(notif);
                 setTimeout(() => {
-                    document.getElementById('viewport-container').classList.add('active');
-                    document.getElementById('back-btn').style.display = 'flex';
-                    setTimeout(() => { document.getElementById('back-btn').classList.add('active'); }, 100);
-                    document.getElementById('quick-action-fab').classList.add('hidden-by-viewport');
-                }, 50);
+                    notif.style.opacity = '0';
+                    notif.style.transform = 'translateX(100px)';
+                    setTimeout(() => notif.remove(), 400);
+                }, 3500);
+            }
+
+            async function fD(){
+                try{
+                    const r=await fetch(m),d=await r.json();
+                    let sM={};
+                    if(d.summary&&d.summary.length>0){
+                        let h=d.summary[0].length>2;
+                        if(h&&d.summary.length>1){
+                            d.summary[0].forEach((he,i)=>{if(he)sM[String(he).trim().toLowerCase()]=d.summary[1][i];});
+                        }else{
+                            d.summary.forEach(ro=>{if(ro.length>=2&&ro[0]!=null&&ro[0]!=='')sM[String(ro[0]).trim().toLowerCase()]=ro[1];});
+                        }
+                    }
+                    const pT=(l)=>{
+                        let ma=sM[l.toLowerCase().trim()];
+                        if(ma===undefined||ma===null||ma==='')return 0;
+                        if(typeof ma==='string')return parseFloat(ma.replace(/[^0-9.-]/g,''))||0;
+                        return ma;
+                    };
+                    aV('stat-karyawan',pT('Karyawan'),1200);
+                    aV('stat-po',pT('Purchase Order'),1200);
+                    aV('stat-pengiriman',pT('Pengiriman'),1200);
+                    aV('stat-stok',pT('Stok Produksi'),1200);
+                    aV('stat-lkp',pT('Jumlah LKP'),1200);
+                    aV('stat-insiden',pT('Total Insiden'),1200);
+                    aV('stat-spp',pT('SPP Belum Datang'),1200);
+                    uC(d.trendPO,d.karyawan);
+                }catch(e){console.error("Data Fetch Error:",e);}
+            }
+
+            async function fS(){
+                try{
+                    const r=await fetch(s),res=await r.json();
+                    if(res.error)return;
+                    const h=res.headers,d=res.data,mI=h.findIndex(x=>x.toString().toLowerCase().trim()==='nama material'),sI=h.findIndex(x=>x.toString().toLowerCase().trim()==='spp total'),kI=h.findIndex(x=>x.toString().toLowerCase().trim()==='kedatangan');
+                    if(mI===-1||sI===-1||kI===-1)return;
+                    let mM={},tS=0,tD=0;
+                    d.forEach(ro=>{
+                        if(ro.every(ce=>ce===''||ce===null||ce===undefined))return;
+                        let mN=ro[mI],sQ=Number(ro[sI])||0,dQ=Number(ro[kI])||0,si=dQ-sQ;
+                        if(mN){if(si<0)mM[mN]=(mM[mN]||0)+Math.abs(si);tS+=sQ;tD+=dQ>sQ?sQ:dQ;}
+                    });
+                    const pL=document.getElementById('spp-pending-list');
+                    if(Object.keys(mM).length===0){
+                        pL.innerHTML=`<li class="sp-list-item"><span style="color:var(--primary-green);">✨ Seluruh material telah terpenuhi</span><strong style="color:var(--primary-green);">-</strong></li>`;
+                    }else{
+                        let hL='';
+                        for(let mat in mM)hL+=`<li class="sp-list-item"><span>${mat}</span><strong style="color:var(--primary-red);">- ${mM[mat]}</strong></li>`;
+                        pL.innerHTML=hL;
+                    }
+                    let pt=tS>0?Math.floor((tD/tS)*100):0;if(pt>100)pt=100;
+                    document.getElementById('spp-fulfillment-text').innerText=pt+"%";
+                    document.getElementById('spp-fulfillment-bar').style.width=pt+"%";
+                }catch(e){
+                    document.getElementById('spp-pending-list').innerHTML=`<li class="sp-list-item"><span style="color:var(--primary-red);">Gagal mengambil data sinkronisasi</span><strong style="color:var(--primary-red);">X</strong></li>`;
+                }
+            }
+            
+            async function fetchSchedule(){
+                try{
+                    const r=await fetch(schUrl);
+                    const d=await r.json();
+                    if(!d.error){deliveriesData=d;buildMiniCalendar();}
+                }catch(e){
+                    console.error("Gagal memuat jadwal:",e);
+                    document.getElementById('mini-cal-month').innerHTML="Gagal Sinkronisasi";
+                }
+            }
+
+            /* --- FUNGSI BARU UNTUK FETCH DATA SECURITY GUARD --- */
+            async function fetchSecurityData() {
+                try {
+                    // Silakan ganti nilai 'securityApiUrl' dengan URL Endpoint JSON/Apps Script resmi Security Guard MSB Anda
+                    // Karena URL Security-Guard (GitHub Pages) tidak memaparkan API, berikut adalah logic fetching standarnya
+                    const securityApiUrl = ""; // Ganti dengan URL script/API Data Security 
+                    
+                    // (Mockup UI Data jika API belum dipasang, agar animasi angka langsung terlihat saat sistem di run)
+                    const mockData = true; 
+                    if(mockData) {
+                        setTimeout(() => {
+                            aV('sec-tamu-count', 12, 1000);       // Angka dummy Tamu: 12
+                            aV('sec-kendaraan-count', 45, 1000);  // Angka dummy Kendaraan: 45
+                        }, 1200);
+                        return;
+                    }
+
+                    // Logika aslinya (Uncomment dan hapus block mockup di atas jika endpoint sudah valid)
+                    /*
+                    const response = await fetch(securityApiUrl);
+                    const data = await response.json();
+                    // Anggaplah data balikan: { tamuDiDalam: 12, kendaraanAktif: 45 }
+                    aV('sec-tamu-count', data.tamuDiDalam || 0, 1000);
+                    aV('sec-kendaraan-count', data.kendaraanAktif || 0, 1000);
+                    */
+                } catch (e) {
+                    console.error("Gagal memuat data Security:", e);
+                    document.getElementById('sec-tamu-count').innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color:var(--primary-red);font-size:1rem;"></i>';
+                    document.getElementById('sec-kendaraan-count').innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color:var(--primary-red);font-size:1rem;"></i>';
+                }
+            }
+            /* ------------------------------------------------ */
+            
+            function buildMiniCalendar(){
+                const grid=document.getElementById('mini-cal-grid');
+                const mLabel=document.getElementById('mini-cal-month');
+                if(!grid)return;
+                grid.innerHTML='';
+                const now=new Date();
+                const y=now.getFullYear();
+                const m=now.getMonth();
+                const monthNames=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+                mLabel.innerHTML=`<i class="fa-solid fa-calendar-check"></i> ${monthNames[m]} ${y}`;
+                const firstDay=new Date(y,m,1).getDay();
+                const daysInMonth=new Date(y,m+1,0).getDate();
+                for(let i=0;i<firstDay;i++){let empty=document.createElement('div');grid.appendChild(empty);}
+                for(let i=1;i<=daysInMonth;i++){
+                    let cell=document.createElement('div');
+                    cell.className='mini-cal-cell';
+                    cell.innerText=i;
+                    const isSunday=new Date(y,m,i).getDay()===0;
+                    if(isSunday)cell.classList.add('holiday');
+                    const todaysItems=deliveriesData.filter(item=>{
+                        const dateKey=Object.keys(item).find(k=>k.toLowerCase().includes('delivery date')||k.toLowerCase().includes('tanggal'));
+                        if(dateKey&&item[dateKey]){
+                            const itemDate=new Date(item[dateKey]);
+                            return itemDate.getDate()===i&&itemDate.getMonth()===m&&itemDate.getFullYear()===y;
+                        }
+                        return false;
+                    });
+                    if(todaysItems.length>0){
+                        cell.classList.add('has-data');
+                        let tooltip=document.createElement('div');
+                        tooltip.className='mini-tooltip';
+                        let tooltipHtml='';
+                        todaysItems.forEach(item=>{
+                            const exactSerialKey=Object.keys(item).find(k=>k.toLowerCase()==='serial number');
+                            const poKey=Object.keys(item).find(k=>k.toLowerCase().includes('po'));
+                            const statusKey=Object.keys(item).find(k=>k.toLowerCase()==='status delivery'||k.toLowerCase().includes('status'));
+                            const sn=exactSerialKey&&item[exactSerialKey]?item[exactSerialKey]:'No Serial';
+                            const poVal=poKey&&item[poKey]?String(item[poKey]).trim():'';
+                            const statusVal=statusKey&&item[statusKey]?String(item[statusKey]).trim():'';
+                            let statusHtml='';
+                            if(statusVal&&statusVal!=='-'&&statusVal!=='0'&&statusVal!=='undefined'&&statusVal!=='null'){
+                                statusHtml=`<span class="mini-status sent"><i class="fa-solid fa-check"></i> Terkirim</span>`;
+                            }else if(!poVal||poVal==='-'||poVal==='0'||poVal==='undefined'||poVal==='null'){
+                                statusHtml=`<span class="mini-status stock">Stock</span>`;
+                            }else{
+                                statusHtml=`<span class="mini-status pending">Pending</span>`;
+                            }
+                            tooltipHtml+=`<div class="mini-tooltip-item"><span class="mini-sn">${sn}</span>${statusHtml}</div>`;
+                        });
+                        tooltip.innerHTML=tooltipHtml;
+                        cell.appendChild(tooltip);
+
+                        // Mobile tap handler for tooltips
+                        cell.addEventListener('click', (ev) => {
+                            ev.stopPropagation();
+                            document.querySelectorAll('.mini-cal-cell').forEach(c => {
+                                if(c !== cell) c.classList.remove('active-tooltip');
+                            });
+                            cell.classList.toggle('active-tooltip');
+                        });
+                    }
+                    grid.appendChild(cell);
+                }
+                document.addEventListener('click', () => {
+                    document.querySelectorAll('.mini-cal-cell').forEach(c => c.classList.remove('active-tooltip'));
+                });
+            }
+
+            /* --- BAGIAN KODE SCRIPT CHART YANG DIPERBAIKI (MENYAMBUNG YANG TERPOTONG) --- */
+            function uC(pO,kR){
+                let isLight = document.body.classList.contains('light-theme');
+                let tC = isLight ? '#6E6E73' : 'rgba(255,255,255,0.65)';
+                let gC = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.05)';
+                let titleC = isLight ? '#1D1D1F' : '#ffffff';
+
+                if(pO&&pO.length>1){
+                    const la=pO.slice(1).map(r=>String(r[0]||'')),ds=[];
+                    const cP=[{b:'#64D2FF',bg:'rgba(100, 210, 255, 0.15)'},{b:'#FF9F0A',bg:'rgba(255, 159, 10, 0.15)'},{b:'#30D158',bg:'rgba(48, 209, 88, 0.15)'},{b:'#BF5AF2',bg:'rgba(191, 90, 242, 0.15)'}];
+                    for(let i=1;i<pO[0].length;i++){
+                        let cN=pO[0][i];if(!cN)continue;
+                        let dV=pO.slice(1).map(r=>parseFloat(r[i])||0),th=cP[(i-1)%cP.length];
+                        ds.push({label:cN,data:dV,backgroundColor:th.bg,borderColor:th.b,borderWidth:2.5,pointBackgroundColor:isLight?'#fff':'#05070f',pointBorderColor:th.b,pointBorderWidth:2,pointRadius:3,pointHoverRadius:5,fill:true,tension:0.4});
+                    }
+                    if(i1)i1.destroy();
+                    const ctx1 = document.getElementById('clientProcessChart');
+                    if(ctx1) {
+                        i1=new Chart(ctx1.getContext('2d'),{
+                            type:'line',
+                            data:{labels:la,datasets:ds},
+                            options:{
+                                responsive:true,
+                                maintainAspectRatio:false,
+                                interaction:{mode:'index',intersect:false},
+                                plugins:{
+                                    legend:{labels:{color:tC,font:{family:'Inter',size:11},usePointStyle:true,boxWidth:6}},
+                                    tooltip:{backgroundColor:isLight?'rgba(255,255,255,0.95)':'rgba(10,15,30,0.95)',titleColor:titleC,bodyColor:isLight?'#424245':'rgba(255,255,255,0.85)',borderColor:isLight?'rgba(0,0,0,0.1)':'rgba(255,255,255,0.1)',borderWidth:1,padding:10,cornerRadius:12,displayColors:true}
+                                },
+                                scales:{
+                                    x:{ticks:{color:tC,font:{size:10,family:'Inter'}},grid:{display:false}},
+                                    y:{ticks:{color:tC,font:{size:10,family:'Inter'}},grid:{color:gC,borderDash:[4,4]},beginAtZero:true}
+                                }
+                            }
+                        });
+                    }
+                }
+
+                if(kR&&kR.length>1){
+                    let la=[],va=[],dI=-1,he=kR[0].map(h=>String(h).toLowerCase());
+                    for(let i=0;i<he.length;i++){if(he[i].includes('departemen')||he[i].includes('dept')||he[i].includes('bagian')){dI=i;break;}}
+                    if(dI!==-1&&kR[0].length>2){
+                        let dC={};
+                        for(let i=1;i<kR.length;i++){let dN=String(kR[i][dI]).trim();if(dN)dC[dN]=(dC[dN]||0)+1;}
+                        la=Object.keys(dC);va=Object.values(dC);
+                    }else{
+                        la=kR.slice(1).map(r=>String(r[0]||''));
+                        va=kR.slice(1).map(r=>parseFloat(r[1])||0);
+                    }
+                    
+                    const bG=['rgba(10,132,255,0.7)','rgba(48,209,88,0.7)','rgba(255,159,10,0.7)','rgba(191,90,242,0.7)','rgba(100,210,255,0.7)','rgba(255,69,58,0.7)'];
+                    const bC=['rgba(10,132,255,1)','rgba(48,209,88,1)','rgba(255,159,10,1)','rgba(191,90,242,1)','rgba(100,210,255,1)','rgba(255,69,58,1)'];
+                    
+                    if(i2)i2.destroy();
+                    const ctx2 = document.getElementById('karyawanDeptChart');
+                    if(ctx2) {
+                        i2=new Chart(ctx2.getContext('2d'),{
+                            type:'doughnut',
+                            data:{
+                                labels: la,
+                                datasets: [{
+                                    data: va,
+                                    backgroundColor: bG,
+                                    borderColor: bC,
+                                    borderWidth: 1
+                                }]
+                            },
+                            options:{
+                                responsive:true,
+                                maintainAspectRatio:false,
+                                cutout:'65%',
+                                plugins:{
+                                    legend:{position:'right',labels:{color:tC,font:{family:'Inter',size:10},usePointStyle:true,boxWidth:6}},
+                                    tooltip:{backgroundColor:isLight?'rgba(255,255,255,0.95)':'rgba(10,15,30,0.95)',titleColor:titleC,bodyColor:isLight?'#424245':'rgba(255,255,255,0.85)',borderColor:isLight?'rgba(0,0,0,0.1)':'rgba(255,255,255,0.1)',borderWidth:1,padding:10,cornerRadius:12}
+                                }
+                            }
+                        });
+                    }
+                }
+            } // END Fungsi uC
+
+            // --- Fungsi Kontrol UI Sistem ---
+            window._lNch = function(url) {
+                const vp = document.getElementById('viewport-container');
+                const frame = document.getElementById('erp-frame');
+                const backBtn = document.getElementById('back-btn');
+                const fab = document.getElementById('quick-action-fab');
+                
+                frame.src = url;
+                vp.style.display = 'block';
+                void vp.offsetWidth; // Trigger reflow
+                vp.classList.add('active');
+                backBtn.style.display = 'flex';
+                setTimeout(() => backBtn.classList.add('active'), 100);
+                if(fab) fab.classList.add('hidden-by-viewport');
             };
 
             window._cView = function() {
-                document.getElementById('viewport-container').classList.remove('active');
-                document.getElementById('back-btn').classList.remove('active');
+                const vp = document.getElementById('viewport-container');
+                const frame = document.getElementById('erp-frame');
+                const backBtn = document.getElementById('back-btn');
+                const fab = document.getElementById('quick-action-fab');
+                
+                vp.classList.remove('active');
+                backBtn.classList.remove('active');
+                if(fab) fab.classList.remove('hidden-by-viewport');
                 setTimeout(() => {
-                    document.getElementById('viewport-container').style.display = 'none';
-                    document.getElementById('back-btn').style.display = 'none';
-                    document.getElementById('erp-frame').src = '';
-                    document.getElementById('quick-action-fab').classList.remove('hidden-by-viewport');
+                    vp.style.display = 'none';
+                    frame.src = '';
+                    backBtn.style.display = 'none';
                 }, 450);
             };
 
             window._openCurtain = function(url) {
-                document.getElementById('curtain-frame').src = url;
-                document.getElementById('curtain-container').classList.add('active');
+                const curtain = document.getElementById('curtain-container');
+                const frame = document.getElementById('curtain-frame');
+                frame.src = url;
+                curtain.classList.add('active');
             };
 
             window._closeCurtain = function() {
-                document.getElementById('curtain-container').classList.remove('active');
-                setTimeout(() => { document.getElementById('curtain-frame').src = ''; }, 500);
+                const curtain = document.getElementById('curtain-container');
+                const frame = document.getElementById('curtain-frame');
+                curtain.classList.remove('active');
+                setTimeout(() => { frame.src = ''; }, 500);
+            };
+
+            window._eSys = function(e) {
+                if(e) e.preventDefault();
+                const overlay = document.getElementById('login-overlay');
+                const main = document.getElementById('main-dashboard');
+                overlay.style.opacity = '0';
+                overlay.style.visibility = 'hidden';
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    main.style.display = 'flex';
+                    // Fetch data dashboard master 
+                    fD();
+                    fS();
+                    fetchSchedule();
+                    fetchSecurityData(); // Menjalankan fungsi Security Summary 
+                }, 600);
+            };
+
+            window._dOut = function() {
+                const overlay = document.getElementById('login-overlay');
+                const main = document.getElementById('main-dashboard');
+                main.style.display = 'none';
+                overlay.style.display = 'flex';
+                void overlay.offsetWidth;
+                overlay.style.opacity = '1';
+                overlay.style.visibility = 'visible';
             };
 
             window._tTheme = function() {
                 document.body.classList.toggle('light-theme');
-            };
-
-            window._dOut = function() {
-                location.reload();
+                fD(); // Render ulang chart saat tema berganti
             };
 
             window._toggleFab = function() {
-                document.getElementById('quick-action-fab').classList.toggle('active');
+                const fab = document.getElementById('quick-action-fab');
+                fab.classList.toggle('active');
             };
-            
+
         })();
     </script>
 </body>
