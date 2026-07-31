@@ -143,7 +143,7 @@
         body.light-theme header img.logo-small { filter: drop-shadow(0 2px 6px rgba(0,0,0,0.08)); }
 
         #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease, visibility 0.5s ease; }
-        #loading-screen.hidden { opacity: 0; visibility: hidden; }
+        #loading-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; /* FIX: Added pointer-events none */ }
         .loader-container { position: relative; width: 110px; height: 110px; display: flex; justify-content: center; align-items: center; }
         .loader { position: absolute; width: 100%; height: 100%; border: 6px solid rgba(10, 132, 255, 0.08); border-top: 6px solid var(--primary-blue); border-radius: 50%; animation: spin 0.85s linear infinite; }
         .loader-logo { width: 60px; height: 60px; object-fit: contain; z-index: 10; animation: pulse-logo 1.8s infinite alternate; filter: brightness(0) invert(1); }
@@ -710,32 +710,26 @@
             const gridColor = isLightTheme ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
             const tickColor = isLightTheme ? '#6E6E73' : 'rgba(255,255,255,0.6)';
 
-            // --- 1. PROSES DATA DISTRIBUSI KARYAWAN (Berdasarkan Sheet 'Karyawan') ---
             let deptLabels = [];
             let deptData = [];
             
             if (karyawan && karyawan.length > 1) {
-                // Mencari index kolom yang mengandung kata 'departemen' atau 'dept' (case insensitive)
                 const headers = karyawan[0].map(h => String(h).toLowerCase().trim());
                 let deptIndex = headers.findIndex(h => h.includes('departemen') || h.includes('dept'));
-                
-                // Jika tidak ditemukan secara eksplisit, asumsikan index 1 (sebagai fallback umum)
                 if (deptIndex === -1) deptIndex = 1;
 
                 const deptCounts = {};
                 for (let i = 1; i < karyawan.length; i++) {
                     const baris = karyawan[i];
-                    if (baris && baris[0] && baris[0] !== '') { // Pastikan baris tidak kosong
+                    if (baris && baris[0] && baris[0] !== '') { 
                         let dept = String(baris[deptIndex] || 'Lainnya').trim();
                         if (dept === '') dept = 'Lainnya';
                         deptCounts[dept] = (deptCounts[dept] || 0) + 1;
                     }
                 }
-                
                 deptLabels = Object.keys(deptCounts);
                 deptData = Object.values(deptCounts);
             } else {
-                // Dummy Data Fallback jika gagal muat API
                 deptLabels = ['Engineering', 'Produksi', 'PPIC', 'QA/QC', 'HR/GA'];
                 deptData = [12, 45, 8, 10, 5];
             }
@@ -767,14 +761,12 @@
                 }
             });
 
-            // --- 2. PROSES DATA TREND PO (Perbaikan Legend Point Style) ---
             let poLabels = [];
             let poDatasets = [];
             
             if (trendPO && trendPO.length > 1) {
-                // Asumsi: Baris 1 = Header, Kolom 1 = Bulan. (Misal: ["Bulan", "Sumitomo", "Client B"])
-                poLabels = trendPO.slice(1).map(row => row[0]); // Ambil semua baris kolom 0
-                const clients = trendPO[0].slice(1); // Ambil header klien mulai dari kolom 1
+                poLabels = trendPO.slice(1).map(row => row[0]); 
+                const clients = trendPO[0].slice(1); 
                 const colors = ['#0A84FF', '#30D158', '#FF9F0A', '#BF5AF2', '#FF453A'];
 
                 poDatasets = clients.map((client, i) => {
@@ -790,7 +782,6 @@
                     };
                 });
             } else {
-                 // Dummy Data Fallback jika gagal muat API
                 poLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'];
                 poDatasets = [{
                     label: 'Sumitomo', data: [15, 25, 20, 35, 45, 40], borderColor: '#0A84FF', backgroundColor: '#0A84FF', borderWidth: 2, tension: 0.4
@@ -811,8 +802,8 @@
                             position: 'top',
                             labels: {
                                 color: textColor,
-                                usePointStyle: true, // INI YANG MENGUBAH JADI TITIK / GARIS ALIH-ALIH KOTAK
-                                pointStyle: 'circle', // Menentukan style lingkaran / garis pada legend
+                                usePointStyle: true, 
+                                pointStyle: 'circle', 
                                 font: { family: 'Inter', size: 11 }
                             }
                         },
@@ -830,8 +821,6 @@
             try{
                 const r = await fetch(m);
                 const d = await r.json();
-                
-                // Simpan global untuk bisa digambar ulang saat ganti tema
                 globalTrendPO = d.trendPO;
                 globalKaryawan = d.karyawan;
 
@@ -865,12 +854,9 @@
                 
                 aV('stat-tamu-aktif', tamuAktif, 1200);
                 aV('stat-kendaraan-aktif', kendaraanAktif, 1200);
-
-                // Render Chart 
                 uC(globalTrendPO, globalKaryawan);
             } catch(e) {
                 console.error("Data Fetch Error:", e);
-                // Render Dummy jika error
                 uC(null, null);
             }
         }
@@ -977,13 +963,23 @@
         }
 
         // ==========================================
-        // WINDOW UI CONTROLLERS 
+        // WINDOW UI CONTROLLERS (FIXED)
         // ==========================================
 
         window._eSys = function(e) {
             e.preventDefault();
-            document.getElementById('login-overlay').style.opacity = '0';
-            document.getElementById('login-overlay').style.visibility = 'hidden';
+            const overlay = document.getElementById('login-overlay');
+            
+            // 1. Buat menjadi transparan dan matikan interaksi klik sepenuhnya
+            overlay.style.opacity = '0';
+            overlay.style.pointerEvents = 'none';
+            
+            // 2. Hapus dari UI layar seutuhnya setelah transisinya selesai (600ms)
+            setTimeout(() => {
+                overlay.style.visibility = 'hidden';
+                overlay.style.display = 'none'; 
+            }, 600);
+            
             document.getElementById('main-dashboard').style.display = 'flex';
             sN('Berhasil Masuk', 'Selamat datang di MSB ERP System.', 'success');
             fD(); 
@@ -996,15 +992,23 @@
             const isLight = document.body.classList.contains('light-theme');
             const icon = document.querySelector('.theme-toggle i');
             icon.className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-            
-            // Render ulang chart agar warnanya beradaptasi dengan mode terang/gelap
             uC(globalTrendPO, globalKaryawan);
         };
 
         window._dOut = function() {
             document.getElementById('main-dashboard').style.display = 'none';
-            document.getElementById('login-overlay').style.opacity = '1';
-            document.getElementById('login-overlay').style.visibility = 'visible';
+            const overlay = document.getElementById('login-overlay');
+            
+            // 1. Panggil elemen ke layar kembali dan aktifkan interaksi klik
+            overlay.style.display = 'flex';
+            overlay.style.pointerEvents = 'auto';
+            
+            // 2. Beri jeda sangat kecil agar browser sempat memuat ulang 'display: flex' sebelum CSS berubah
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+                overlay.style.visibility = 'visible';
+            }, 10);
+            
             sN('Sistem Terkunci', 'Sesi telah ditutup dengan aman.', 'warning');
         };
 
@@ -1057,13 +1061,7 @@
             const curtain = document.getElementById('curtain-container');
             const frame = document.getElementById('curtain-frame');
             curtain.classList.remove('active');
-            setTimeout(() => { frame.src = ''; }, 500);
         };
-
-        window._toggleFab = function() {
-            document.getElementById('quick-action-fab').classList.toggle('active');
-        };
-
     </script>
 </body>
 </html>
