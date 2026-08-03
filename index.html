@@ -143,7 +143,7 @@
         body.light-theme header img.logo-small { filter: drop-shadow(0 2px 6px rgba(0,0,0,0.08)); }
 
         #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease, visibility 0.5s ease; }
-        #loading-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; /* FIX: Added pointer-events none */ }
+        #loading-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         .loader-container { position: relative; width: 110px; height: 110px; display: flex; justify-content: center; align-items: center; }
         .loader { position: absolute; width: 100%; height: 100%; border: 6px solid rgba(10, 132, 255, 0.08); border-top: 6px solid var(--primary-blue); border-radius: 50%; animation: spin 0.85s linear infinite; }
         .loader-logo { width: 60px; height: 60px; object-fit: contain; z-index: 10; animation: pulse-logo 1.8s infinite alternate; filter: brightness(0) invert(1); }
@@ -406,6 +406,7 @@
         .mini-tooltip-item:last-child { border-bottom: none; }
         .mini-sn { font-weight: 700; color: var(--text-main); word-break: break-all; }
         
+        /* ADJUSTED GRIDS UNTUK RESPONSIVE YANG LEBIH BAIK */
         @media (max-width: 1200px) { .charts-section { grid-template-columns: 1fr; } }
         @media (max-width: 992px) { 
             .content-area { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); padding: 0 20px 30px 20px; gap: 16px; } 
@@ -427,17 +428,22 @@
             .nav-right::-webkit-scrollbar { display: none; }
             .install-app-btn, .theme-toggle, .btn-logout, .user-profile { padding: 8px 12px; font-size: 0.8rem; border-radius: 16px; flex-shrink: 0; }
             .user-profile { padding: 4px 8px; font-size: 0.8rem; }
-            .dashboard-stats { grid-template-columns: repeat(2, 1fr); padding: 16px 12px 10px 12px; gap: 12px; }
+            
+            /* Responsive Cards Mobile Friendly */
+            .dashboard-stats { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); padding: 16px 16px 10px 16px; gap: 12px; }
+            .content-area { padding: 0 16px 30px 16px; gap: 12px; grid-template-columns: 1fr; }
+            .charts-section { padding: 0 16px 16px 16px; gap: 14px; grid-template-columns: 1fr; }
+            
             .stat-card { padding: 14px 12px; flex-direction: row; align-items: center; text-align: left; gap: 12px; border-radius: var(--radius-md); }
             .stat-icon { width: 42px; height: 42px; font-size: 1.2rem; border-radius: var(--radius-sm); }
             .stat-value { font-size: 1.45rem; }
             .stat-label { font-size: 0.7rem; letter-spacing: 0; }
-            .charts-section { padding: 0 12px 16px 12px; gap: 14px; }
+            
             .chart-card { padding: 18px 14px; border-radius: var(--radius-md); min-height: auto; }
             .chart-title { font-size: 1rem; }
             .chart-subtitle { font-size: 0.75rem; }
             .chart-container-wrapper { height: 180px; }
-            .content-area { padding: 0 12px 30px 12px; gap: 12px; grid-template-columns: 1fr; }
+            
             .section-title { font-size: 1.2rem; margin-top: 14px; }
             .module-card { padding: 16px; flex-direction: row; align-items: center; gap: 14px; text-align: left; border-radius: var(--radius-md); }
             .module-icon { width: 46px; height: 46px; font-size: 1.3rem; flex-shrink: 0; border-radius: var(--radius-sm); }
@@ -445,6 +451,7 @@
             .module-info h3 { font-size: 0.98rem; margin-bottom: 3px; }
             .module-info p { font-size: 0.78rem; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
             .explore-btn { display: none; } 
+            
             .login-card { width: 100%; max-width: 100%; height: auto; min-height: auto; padding: 30px 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-radius: 24px; }
             .login-card .content { opacity: 1; visibility: visible; transform: none !important; width: 100%; max-width: 100%; }
             .login-card .logo-wrapper, .login-card .factory_img, .login-card .circle { display: none; }
@@ -455,12 +462,15 @@
             .login-address-block .company-name { font-size: 1rem; }
             .login-address-block .address-text, .login-address-block .contact-info { font-size: 0.76rem; }
             .luxury-btn { padding: 14px; font-size: 0.95rem; border-radius: 18px; }
+            
             footer { flex-direction: column; text-align: center; padding: 20px 16px; gap: 16px; }
             .footer-contact { flex-direction: column; gap: 6px; align-items: center; }
             .footer-copy { text-align: center; }
+            
             .notification-container { top: 12px; right: 12px; left: 12px; }
             .notification { min-width: 0; width: 100%; padding: 14px; }
             @keyframes slideInRight { from { opacity: 0; transform: translateY(-20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+            
             .fab-wrapper { bottom: 20px; left: 16px; }
             .fab-trigger { width: 44px; height: 44px; font-size: 1rem; }
             .fab-btn { padding: 8px 14px; font-size: 0.8rem; }
@@ -701,9 +711,6 @@
             }, 3500);
         }
 
-        // ==========================================
-        // FUNGSI RENDER GRAFIK UTAMA
-        // ==========================================
         function uC(trendPO, karyawan) {
             const isLightTheme = document.body.classList.contains('light-theme');
             const textColor = isLightTheme ? '#1D1D1F' : '#FFFFFF';
@@ -900,6 +907,7 @@
             }
         }
         
+        // FUNGSI JAVASCRIPT YANG SEBELUMNYA TERPOTONG 
         function buildMiniCalendar(){
             const grid=document.getElementById('mini-cal-grid');
             const mLabel=document.getElementById('mini-cal-month');
@@ -913,139 +921,72 @@
             const firstDay=new Date(y,m,1).getDay();
             const daysInMonth=new Date(y,m+1,0).getDate();
             
-            for(let i=0;i<firstDay;i++){let empty=document.createElement('div');grid.appendChild(empty);}
-            
+            for(let i=0;i<firstDay;i++){
+                let empty=document.createElement('div');
+                empty.className='mini-cal-cell';
+                empty.style.background='transparent';
+                empty.style.border='none';
+                grid.appendChild(empty);
+            }
             for(let i=1;i<=daysInMonth;i++){
                 let cell=document.createElement('div');
                 cell.className='mini-cal-cell';
                 cell.innerText=i;
-                const isSunday=new Date(y,m,i).getDay()===0;
-                if(isSunday)cell.classList.add('holiday');
-                
-                const todaysItems=deliveriesData.filter(item=>{
-                    const dateKey=Object.keys(item).find(k=>k.toLowerCase().includes('delivery date')||k.toLowerCase().includes('tanggal'));
-                    if(dateKey&&item[dateKey]){
-                        const itemDate=new Date(item[dateKey]);
-                        return itemDate.getDate()===i&&itemDate.getMonth()===m&&itemDate.getFullYear()===y;
-                    }
-                    return false;
-                });
-                
-                if(todaysItems.length>0){
-                    cell.classList.add('has-data');
-                    let tooltip=document.createElement('div');
-                    tooltip.className='mini-tooltip';
-                    let tooltipHtml='';
-                    
-                    todaysItems.forEach(item=>{
-                        const exactSerialKey=Object.keys(item).find(k=>k.toLowerCase()==='serial number');
-                        const poKey=Object.keys(item).find(k=>k.toLowerCase().includes('po') || k.toLowerCase().includes('purchase'));
-                        const sn = exactSerialKey ? item[exactSerialKey] : 'Unknown Item';
-                        const po = poKey ? item[poKey] : '-';
-                        tooltipHtml += `<div class="mini-tooltip-item"><span class="mini-sn">${sn}</span><span style="font-size:0.7rem; color:var(--text-muted)">PO: ${po}</span></div>`;
-                    });
-                    
-                    tooltip.innerHTML = tooltipHtml;
-                    cell.appendChild(tooltip);
-                    
-                    cell.addEventListener('click', (e) => {
-                        document.querySelectorAll('.mini-cal-cell').forEach(c => { if(c !== cell) c.classList.remove('active-tooltip'); });
-                        cell.classList.toggle('active-tooltip');
-                        e.stopPropagation();
-                    });
-                }
+                let dayOfWeek = new Date(y, m, i).getDay();
+                if(dayOfWeek === 0) cell.classList.add('holiday');
                 grid.appendChild(cell);
             }
-            
-            document.addEventListener('click', () => {
-                document.querySelectorAll('.mini-cal-cell').forEach(c => c.classList.remove('active-tooltip'));
-            });
         }
 
-        // ==========================================
-        // WINDOW UI CONTROLLERS (FIXED)
-        // ==========================================
+        // Action Functions Setup
+        window._toggleFab = function() {
+            const fab = document.getElementById('quick-action-fab');
+            if(fab) {
+                fab.classList.toggle('active');
+            }
+        };
 
         window._eSys = function(e) {
-            e.preventDefault();
+            if(e) e.preventDefault();
             const overlay = document.getElementById('login-overlay');
-            
-            // 1. Buat menjadi transparan dan matikan interaksi klik sepenuhnya
+            const main = document.getElementById('main-dashboard');
             overlay.style.opacity = '0';
-            overlay.style.pointerEvents = 'none';
-            
-            // 2. Hapus dari UI layar seutuhnya setelah transisinya selesai (600ms)
+            overlay.style.visibility = 'hidden';
             setTimeout(() => {
-                overlay.style.visibility = 'hidden';
-                overlay.style.display = 'none'; 
+                overlay.style.display = 'none';
+                main.style.display = 'flex';
+                fD();
+                fS();
+                fetchSchedule();
             }, 600);
-            
-            document.getElementById('main-dashboard').style.display = 'flex';
-            sN('Berhasil Masuk', 'Selamat datang di MSB ERP System.', 'success');
-            fD(); 
-            fS(); 
-            fetchSchedule();
-        };
-
-        window._tTheme = function() {
-            document.body.classList.toggle('light-theme');
-            const isLight = document.body.classList.contains('light-theme');
-            const icon = document.querySelector('.theme-toggle i');
-            icon.className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-            uC(globalTrendPO, globalKaryawan);
-        };
-
-        window._dOut = function() {
-            document.getElementById('main-dashboard').style.display = 'none';
-            const overlay = document.getElementById('login-overlay');
-            
-            // 1. Panggil elemen ke layar kembali dan aktifkan interaksi klik
-            overlay.style.display = 'flex';
-            overlay.style.pointerEvents = 'auto';
-            
-            // 2. Beri jeda sangat kecil agar browser sempat memuat ulang 'display: flex' sebelum CSS berubah
-            setTimeout(() => {
-                overlay.style.opacity = '1';
-                overlay.style.visibility = 'visible';
-            }, 10);
-            
-            sN('Sistem Terkunci', 'Sesi telah ditutup dengan aman.', 'warning');
         };
 
         window._lNch = function(url) {
-            const vp = document.getElementById('viewport-container');
+            const viewport = document.getElementById('viewport-container');
             const frame = document.getElementById('erp-frame');
             const backBtn = document.getElementById('back-btn');
-            const dash = document.getElementById('main-dashboard');
-            const fab = document.getElementById('quick-action-fab');
-            
             frame.src = url;
-            vp.style.display = 'block';
-            
+            viewport.style.display = 'block';
             setTimeout(() => {
-                vp.classList.add('active');
+                viewport.classList.add('active');
                 backBtn.style.display = 'flex';
-                setTimeout(() => backBtn.classList.add('active'), 100);
-                dash.classList.add('dashboard-dimmed');
-                if(fab) fab.classList.add('hidden-by-viewport');
-            }, 50);
+                setTimeout(() => backBtn.classList.add('active'), 50);
+            }, 10);
+            document.getElementById('main-dashboard').classList.add('dashboard-dimmed');
+            document.getElementById('quick-action-fab').classList.add('hidden-by-viewport');
         };
 
         window._cView = function() {
-            const vp = document.getElementById('viewport-container');
+            const viewport = document.getElementById('viewport-container');
             const frame = document.getElementById('erp-frame');
             const backBtn = document.getElementById('back-btn');
-            const dash = document.getElementById('main-dashboard');
-            const fab = document.getElementById('quick-action-fab');
-            
             backBtn.classList.remove('active');
-            vp.classList.remove('active');
-            dash.classList.remove('dashboard-dimmed');
-            if(fab) fab.classList.remove('hidden-by-viewport');
-            
+            viewport.classList.remove('active');
+            document.getElementById('main-dashboard').classList.remove('dashboard-dimmed');
+            document.getElementById('quick-action-fab').classList.remove('hidden-by-viewport');
             setTimeout(() => {
                 backBtn.style.display = 'none';
-                vp.style.display = 'none';
+                viewport.style.display = 'none';
                 frame.src = '';
             }, 450);
         };
@@ -1055,12 +996,35 @@
             const frame = document.getElementById('curtain-frame');
             frame.src = url;
             curtain.classList.add('active');
+            document.getElementById('main-dashboard').classList.add('dashboard-dimmed');
         };
 
         window._closeCurtain = function() {
             const curtain = document.getElementById('curtain-container');
             const frame = document.getElementById('curtain-frame');
             curtain.classList.remove('active');
+            document.getElementById('main-dashboard').classList.remove('dashboard-dimmed');
+            setTimeout(() => {
+                frame.src = '';
+            }, 500);
+        };
+
+        window._tTheme = function() {
+            document.body.classList.toggle('light-theme');
+            if(globalTrendPO !== null || globalKaryawan !== null) {
+                uC(globalTrendPO, globalKaryawan);
+            }
+        };
+
+        window._dOut = function() {
+            const overlay = document.getElementById('login-overlay');
+            const main = document.getElementById('main-dashboard');
+            main.style.display = 'none';
+            overlay.style.display = 'flex';
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+                overlay.style.visibility = 'visible';
+            }, 50);
         };
     </script>
 </body>
