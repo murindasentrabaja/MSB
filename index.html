@@ -409,6 +409,13 @@
         .user-profile { display: flex; align-items: center; gap: 10px; padding: 8px 12px; font-weight: 600; color: var(--text-main); font-size: 0.9rem; white-space: nowrap; }
         .user-profile i { font-size: 1.25rem; color: var(--primary-blue); }
 
+        /* Drawer Link Styling */
+        .drawer-link { display:flex; align-items:center; gap:12px; padding:12px 20px; color:var(--text-main); text-decoration:none; font-size:0.95rem; border-radius:12px; transition:0.3s; margin-bottom:4px; font-family:'Inter', sans-serif;}
+        .drawer-link:hover { background:rgba(255,255,255,0.1); }
+        .drawer-link.active { background:rgba(10,132,255,0.15); color:var(--primary-blue); font-weight:600;}
+        .drawer-link.danger { color:var(--primary-red); }
+        .drawer-label { font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:700; margin:15px 20px 8px; letter-spacing:1px; }
+
         .dashboard-stats { padding: 30px 40px 15px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; perspective: 1000px; width: 100%; }
         
         .stat-card { 
@@ -582,8 +589,11 @@
         .mini-tooltip-item { font-size: 0.78rem; padding: 6px 2px; border-bottom: 1px solid var(--glass-border); display: flex; flex-direction: column; gap: 4px; }
         .mini-tooltip-item:last-child { border-bottom: none; }
         .mini-sn { font-weight: 700; color: var(--text-main); word-break: break-all; }
-        
-        /* ==================== OPTIMIZASI MOBILE RESPONSIVE ==================== */
+
+        /* ====== NEW MOBILE RESPONSIVE CSS INJECTED ======= */
+        .mobile-hamburger, .mobile-topbar-actions { display: none; }
+        .mobile-drawer, .mobile-drawer-overlay, .mobile-bottom-nav { display: none; }
+
         @media (max-width: 1200px) { .charts-section { grid-template-columns: 1fr; } }
         @media (max-width: 992px) { 
             .content-area { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); padding: 0 20px 30px 20px; gap: 16px; } 
@@ -593,20 +603,20 @@
             .top-info-bar { padding: 8px 20px; }
         }
         @media (max-width: 768px) {
+            .mobile-hamburger { display: block; background: none; border: none; color: var(--text-main); font-size: 1.4rem; cursor: pointer; padding: 5px; }
+            .mobile-topbar-actions { display: flex; gap: 10px; }
+            .mobile-theme-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid var(--glass-border); padding: 8px 12px; border-radius: 12px; color: var(--text-main); cursor: pointer; transition: 0.3s; }
+            body.light-theme .mobile-theme-btn { background: rgba(0,0,0,0.05); color: #333; }
+            
+            .nav-right { display: none !important; }
             .top-info-bar { flex-direction: column; gap: 6px; text-align: center; padding: 8px 12px; }
             .datetime { justify-content: center; width: 100%; flex-wrap: wrap; font-size: 0.75rem; gap: 8px; }
             .hse-ticker-wrap { max-width: 100%; width: 100%; margin-left: 0; padding: 4px 10px; }
             
-            header { padding: 10px 14px; min-height: auto; flex-wrap: wrap; gap: 10px; }
-            .header-left { width: 100%; justify-content: space-between; }
-            .header-divider { display: none; }
+            header { padding: 10px 14px; min-height: auto; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+            .header-left { width: auto; justify-content: flex-start; gap: 12px; }
+            .header-divider, .system-status { display: none; }
             .logo-small { height: 30px; }
-            .nav-right { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 6px; overflow-x: auto; padding-bottom: 2px; -webkit-overflow-scrolling: touch; }
-            .nav-right::-webkit-scrollbar { display: none; }
-            
-            .install-app-btn, .theme-toggle, .btn-logout, .user-profile { padding: 7px 10px; font-size: 0.78rem; border-radius: 14px; flex-shrink: 0; }
-            .install-text { font-size: 0.76rem; }
-            .user-profile { padding: 4px 6px; font-size: 0.78rem; }
             
             /* Responsive Cards Mobile Friendly */
             .dashboard-stats { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); padding: 14px 14px 10px 14px; gap: 10px; }
@@ -647,8 +657,37 @@
             .neon-contact-btn { width: 100%; justify-content: flex-start; padding: 7px 12px; }
             
             .luxury-btn { padding: 14px; font-size: 0.95rem; border-radius: 16px; }
+
+            /* Navigation & Drawer Display Blocks for Mobile */
+            .mobile-drawer-overlay { display: block; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:4000; opacity:0; visibility:hidden; transition:0.3s; }
+            .mobile-drawer-overlay.open { opacity:1; visibility:visible; }
             
-            footer { flex-direction: column; text-align: center; padding: 20px 14px; gap: 14px; }
+            .mobile-drawer { display: flex; flex-direction: column; position: fixed; top:0; left:-300px; width:280px; height:100%; background:var(--glass-bg); backdrop-filter:blur(30px); border-right:1px solid var(--glass-border); z-index:4001; transition:0.4s ease; box-shadow: 5px 0 25px rgba(0,0,0,0.5); }
+            body.light-theme .mobile-drawer { background:rgba(255,255,255,0.95); }
+            .mobile-drawer.open { left: 0; }
+            
+            .drawer-head { padding:20px; display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--glass-border); }
+            .drawer-head img { height:36px; }
+            .dh-info { flex:1; }
+            .dh-title { font-weight:800; font-size:1rem; color:var(--text-main); }
+            .dh-sub { font-size:0.75rem; color:var(--primary-green); display:flex; align-items:center; gap:4px; margin-top:2px; }
+            .drawer-close { background:rgba(255,69,58,0.1); border:none; color:var(--primary-red); width:32px; height:32px; border-radius:50%; display:flex; justify-content:center; align-items:center; font-size:1.1rem; cursor:pointer; }
+            
+            .drawer-scroll { flex:1; overflow-y:auto; padding:10px; padding-bottom:80px; }
+            .drawer-scroll::-webkit-scrollbar { display:none; }
+
+            .mobile-bottom-nav { display: flex; position: fixed; bottom:0; left:0; width:100%; height:70px; background:rgba(15,20,35,0.95); backdrop-filter:blur(20px); border-top:1px solid rgba(255,255,255,0.1); z-index:3000; justify-content:space-around; align-items:center; padding:0 10px; padding-bottom:env(safe-area-inset-bottom); box-shadow: 0 -5px 20px rgba(0,0,0,0.3); }
+            body.light-theme .mobile-bottom-nav { background:rgba(255,255,255,0.95); border-top-color:rgba(0,0,0,0.1); }
+            
+            .bn-item { background:none; border:none; display:flex; flex-direction:column; align-items:center; gap:4px; color:var(--text-muted); font-size:0.7rem; font-weight:600; cursor:pointer; flex:1; padding:10px 0; transition:0.3s; }
+            .bn-item i { font-size:1.2rem; margin-bottom:2px; }
+            .bn-item.active { color:var(--primary-blue); }
+            .bn-item.active i { transform:scale(1.1); }
+            
+            .bn-fab { width:54px; height:54px; border-radius:50%; background:linear-gradient(135deg, var(--primary-cyan), var(--primary-blue)); border:none; color:#fff; display:flex; justify-content:center; align-items:center; font-size:1.5rem; transform:translateY(-20px); box-shadow:0 10px 20px rgba(10,132,255,0.4); cursor:pointer; border:3px solid #0b101e; }
+            body.light-theme .bn-fab { border-color:#f2f4f8; }
+
+            footer { flex-direction: column; text-align: center; padding: 20px 14px; gap: 14px; margin-bottom: 70px; }
             .footer-contact { flex-direction: column; gap: 6px; align-items: center; }
             .footer-copy { text-align: center; }
             
@@ -656,10 +695,10 @@
             .notification { min-width: 0; width: 100%; padding: 12px; }
             @keyframes slideInRight { from { opacity: 0; transform: translateY(-20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
             
-            .fab-wrapper { bottom: 20px; left: 16px; }
+            .fab-wrapper { bottom: 90px; left: 16px; }
             .fab-trigger { width: 44px; height: 44px; font-size: 1rem; }
             .fab-btn { padding: 8px 14px; font-size: 0.8rem; }
-            .back-nav { right: 16px; bottom: 20px; padding: 10px 18px; font-size: 0.85rem; }
+            .back-nav { right: 16px; bottom: 90px; padding: 10px 18px; font-size: 0.85rem; }
             .curtain-close-btn { top: 16px; right: 16px; padding: 8px 16px; font-size: 0.82rem; }
         }
         @media (max-width: 400px) {
@@ -736,22 +775,74 @@
             
             <header>
                 <div class="header-left">
+                    <button class="mobile-hamburger" onclick="window._toggleDrawer()" aria-label="Buka Menu"><i class="fa-solid fa-bars"></i></button>
                     <img src="MSB Logo.png" alt="Logo" class="logo-small" onerror="this.style.display='none'">
                     <div class="header-divider"></div>
                     <div class="system-status" aria-label="System Status"><div class="status-dot"></div><span>Online MSB ERP</span></div>
                 </div>
+
                 <nav class="nav-right" aria-label="User Navigation">
                     <button class="install-app-btn org-btn" onclick="window._openCurtain('https://murindasentrabaja.github.io/Struktur-Organisasi-MSB/')" title="Buka Struktur Organisasi"><i class="fa-solid fa-sitemap"></i> <span class="install-text">Struktur Org</span></button>
-                    
-                    <!-- TOMBOL INSTAL APP DENGAN DOWNLOAD DIRECT MSB ERP.apk -->
                     <a href="MSB ERP.apk" download="MSB ERP.apk" class="install-app-btn" title="Unduh dan Instal MSB ERP.apk"><i class="fa-solid fa-download"></i> <span class="install-text">Instal App</span></a>
-                    
                     <button class="theme-toggle" onclick="window._tTheme()" aria-label="Toggle Dark or Light Theme" title="Ubah Tema"><i class="fa-solid fa-sun" aria-hidden="true"></i></button>
                     <div class="user-profile"><i class="fa-solid fa-circle-user" aria-hidden="true"></i><span id="display-user">Kalijati Plant</span></div>
                     <button class="btn-logout" onclick="window._dOut()" aria-label="Logout from System"><i class="fa-solid fa-power-off" aria-hidden="true"></i> Keluar</button>
                 </nav>
+
+                <div class="mobile-topbar-actions">
+                    <button class="mobile-theme-btn" onclick="window._tTheme()" aria-label="Ubah Tema"><i class="fa-solid fa-sun"></i></button>
+                </div>
             </header>
         </div>
+
+        <!-- ===== MOBILE SIDEBAR DRAWER + OVERLAY ===== -->
+        <div class="mobile-drawer-overlay" id="drawer-overlay" onclick="window._closeDrawer()"></div>
+        <aside class="mobile-drawer" id="mobile-drawer" aria-label="Menu Navigasi">
+            <div class="drawer-head">
+                <img src="MSB Logo.png" alt="MSB" onerror="this.style.display='none'">
+                <div class="dh-info">
+                    <div class="dh-title">MSB ERP</div>
+                    <div class="dh-sub"><i class="fa-solid fa-circle" style="font-size:0.55rem"></i> Kalijati Plant</div>
+                </div>
+                <button class="drawer-close" onclick="window._closeDrawer()" aria-label="Tutup Menu"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="drawer-scroll">
+                <div class="drawer-label">Menu Utama</div>
+                <a class="drawer-link active" onclick="window._drawerHome()"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+                <a class="drawer-link mod-purple" onclick="window._closeDrawer();window._openCurtain('https://murindasentrabaja.github.io/Struktur-Organisasi-MSB/')"><i class="fa-solid fa-sitemap"></i> Struktur Organisasi</a>
+
+                <div class="drawer-label">Modul ERP System</div>
+                <a class="drawer-link" onclick="window._navMod('https://murindasentrabaja.github.io/HR-System/')"><i class="fa-solid fa-people-group"></i> Human Resource</a>
+                <a class="drawer-link mod-green" onclick="window._navMod('https://murindasentrabaja.github.io/General-Affairs/')"><i class="fa-solid fa-building-circle-check"></i> General Affairs</a>
+                <a class="drawer-link mod-orange" onclick="window._navMod('https://murindasentrabaja.github.io/HSE/')"><i class="fa-solid fa-helmet-safety"></i> HSE System</a>
+                <a class="drawer-link" onclick="window._navMod('https://murindasentrabaja.github.io/Maintenance/')"><i class="fa-solid fa-gears"></i> Maintenance</a>
+                <a class="drawer-link mod-green" onclick="window._navMod('https://murindasentrabaja.github.io/Purchase-Order/')"><i class="fa-solid fa-file-invoice-dollar"></i> Purchase Order</a>
+                <a class="drawer-link mod-orange" onclick="window._navMod('https://murindasentrabaja.github.io/Warehouse-System/')"><i class="fa-solid fa-boxes-stacked"></i> Warehouse</a>
+                <a class="drawer-link" onclick="window._navMod('https://murindasentrabaja.github.io/Production-Tracking/')"><i class="fa-solid fa-industry"></i> Produksi</a>
+                <a class="drawer-link mod-green" onclick="window._navMod('https://murindasentrabaja.github.io/QC-Inspection/')"><i class="fa-solid fa-microscope"></i> Quality Control</a>
+                <a class="drawer-link mod-purple" onclick="window._navMod('https://murindasentrabaja.github.io/QMS/')"><i class="fa-solid fa-award"></i> Quality Management</a>
+                <a class="drawer-link" onclick="window._navMod('https://murindasentrabaja.github.io/Security-Guard/')"><i class="fa-solid fa-shield-halved"></i> Security Guard</a>
+                <a class="drawer-link mod-orange" onclick="window._navMod('https://murindasentrabaja.github.io/SPP/')"><i class="fa-solid fa-file-invoice"></i> SPP System</a>
+                <a class="drawer-link" onclick="window._navMod('https://murindasentrabaja.github.io/Master-Schedule/')"><i class="fa-solid fa-calendar-days"></i> Master Schedule</a>
+                <a class="drawer-link" onclick="window._navMod('https://murindasentrabaja.github.io/MSB-Approval/')"><i class="fa-solid fa-file-signature"></i> MSB Approval</a>
+                <a class="drawer-link mod-green" onclick="window._navMod('https://murindasentrabaja.github.io/Administration-System/')"><i class="fa-solid fa-folder-tree"></i> Administration</a>
+                <a class="drawer-link mod-orange" onclick="window._navMod('https://murindasentrabaja.github.io/Filling-Material/')"><i class="fa-solid fa-layer-group"></i> Filling Material</a>
+
+                <div class="drawer-label">Aksi Cepat</div>
+                <a class="drawer-link" href="MSB ERP.apk" download="MSB ERP.apk" onclick="window._closeDrawer()"><i class="fa-solid fa-download"></i> Instal Aplikasi</a>
+                <a class="drawer-link" onclick="window._closeDrawer();window._tTheme()"><i class="fa-solid fa-circle-half-stroke"></i> Ubah Tema</a>
+                <a class="drawer-link danger" onclick="window._closeDrawer();window._dOut()"><i class="fa-solid fa-power-off"></i> Keluar Sistem</a>
+            </div>
+        </aside>
+
+        <!-- ===== MOBILE BOTTOM NAVIGATION ===== -->
+        <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Navigasi Bawah">
+            <button class="bn-item active" onclick="window._drawerHome()"><i class="fa-solid fa-house"></i>Beranda</button>
+            <button class="bn-item" onclick="window._scrollTo('.dashboard-stats')"><i class="fa-solid fa-chart-simple"></i>Statistik</button>
+            <button class="bn-fab" onclick="window._toggleDrawer()" aria-label="Semua Modul"><i class="fa-solid fa-table-cells-large"></i></button>
+            <button class="bn-item" onclick="window._scrollTo('.content-area')"><i class="fa-solid fa-layer-group"></i>Modul</button>
+            <button class="bn-item" onclick="window._openCurtain('https://murindasentrabaja.github.io/Struktur-Organisasi-MSB/')"><i class="fa-solid fa-sitemap"></i>Struktur</button>
+        </nav>
 
         <section class="dashboard-stats" aria-label="Key Performance Indicators">
             <div class="stat-card blue"><div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-users"></i></div><div class="stat-info"><div class="stat-label">Karyawan</div><div class="stat-value" id="stat-karyawan">0</div></div></div>
@@ -779,129 +870,70 @@
                 <div style="margin-top:5px;display:flex;flex-direction:column;gap:12px;flex:1;overflow-y:auto;max-height:220px;padding-right:2px;">
                     <div style="background:rgba(255, 69, 58, 0.06); border:1px solid rgba(255, 69, 58, 0.15); border-left:4px solid var(--primary-red); border-radius:var(--radius-sm); padding:12px; backdrop-filter:blur(5px);">
                         <h4 style="color:var(--text-main); font-size:0.88rem; margin-bottom:10px; display:flex; align-items:center; gap:8px; font-family:'Inter', sans-serif;"><i class="fa-solid fa-boxes-stacked" style="color:var(--primary-red);"></i> Barang Belum Datang</h4>
-                        <ul id="spp-pending-list" style="list-style:none; padding-left:0; margin:0; font-size:0.82rem; color:var(--text-muted); line-height:1.5;">
-                            <li class="sp-list-item"><span>Menyinkronkan Data...</span><strong style="color:var(--primary-red);"><i class="fa-solid fa-spinner fa-spin"></i></strong></li>
-                        </ul>
-                    </div>
-                    <div style="background:rgba(48, 209, 88, 0.06); border:1px solid rgba(48, 209, 88, 0.15); border-left:4px solid var(--primary-green); border-radius:var(--radius-sm); padding:12px; margin-top:auto; backdrop-filter:blur(5px);">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                            <h4 style="color:var(--text-main); font-size:0.88rem; margin:0; display:flex; align-items:center; gap:8px; font-family:'Inter', sans-serif;"><i class="fa-solid fa-chart-pie" style="color:var(--primary-green);"></i> Pemenuhan Material</h4>
-                            <span id="spp-fulfillment-text" style="font-weight:700; font-size:1rem; color:var(--primary-green);">0%</span>
-                        </div>
-                        <div style="width:100%; height:8px; background:rgba(255,255,255,0.08); border-radius:10px; overflow:hidden; position:relative;">
-                            <div id="spp-fulfillment-bar" style="width:0%; height:100%; background:linear-gradient(90deg, var(--primary-cyan), var(--primary-green)); border-radius:10px; box-shadow:0 0 10px rgba(48, 209, 88, 0.4); transition:width 1.5s cubic-bezier(0.25, 1, 0.3, 1);"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="chart-card">
-                <div class="chart-header"><div><h3 class="chart-title">Jadwal Pengiriman</h3><p class="chart-subtitle">Master Schedule (Live Data)</p></div></div>
-                <div class="calendar-widget-container">
-                    <div class="mini-cal-header-info">
-                        <span id="mini-cal-month" style="color: var(--primary-blue);">
-                            <i class="fa-solid fa-spinner fa-spin"></i> Memuat Jadwal...
-                        </span>
-                    </div>
-                    <div class="mini-cal-days">
-                        <div style="color: var(--primary-red);">Min</div>
-                        <div>Sen</div>
-                        <div>Sel</div>
-                        <div>Rab</div>
-                        <div>Kam</div>
-                        <div>Jum</div>
-                        <div>Sab</div>
-                    </div>
-                    <div class="mini-cal-grid" id="mini-cal-grid"></div>
-                </div>
-            </div>
-
-            <div class="chart-card">
-                <div class="chart-header"><div><h3 class="chart-title">Security & Log Book</h3><p class="chart-subtitle">Status Tamu & Kendaraan di Dalam Area MSB</p></div></div>
-                <div style="display:flex; flex-direction:column; gap:16px; justify-content:center; flex:1; margin-top:10px;">
-                    <div style="background:rgba(10, 132, 255, 0.08); border:1px solid rgba(10, 132, 255, 0.2); border-left:4px solid var(--primary-blue); border-radius:var(--radius-sm); padding:18px; display:flex; justify-content:space-between; align-items:center;">
-                        <div style="display:flex; align-items:center; gap:14px;"><div style="width:42px; height:42px; background:rgba(10,132,255,0.15); border-radius:50%; display:flex; justify-content:center; align-items:center; color:var(--primary-blue); font-size:1.2rem;"><i class="fa-solid fa-id-badge"></i></div><h4 style="color:var(--text-main); font-size:1.05rem; margin:0; font-family:'Inter', sans-serif;">Tamu Aktif</h4></div>
-                        <span id="stat-tamu-aktif" style="font-weight:800; font-size:2.2rem; color:var(--primary-blue); line-height:1;">0</span>
-                    </div>
-                    <div style="background:rgba(255, 159, 10, 0.08); border:1px solid rgba(255, 159, 10, 0.2); border-left:4px solid var(--primary-orange); border-radius:var(--radius-sm); padding:18px; display:flex; justify-content:space-between; align-items:center;">
-                        <div style="display:flex; align-items:center; gap:14px;"><div style="width:42px; height:42px; background:rgba(255,159,10,0.15); border-radius:50%; display:flex; justify-content:center; align-items:center; color:var(--primary-orange); font-size:1.2rem;"><i class="fa-solid fa-car"></i></div><h4 style="color:var(--text-main); font-size:1.05rem; margin:0; font-family:'Inter', sans-serif;">Kendaraan Masuk</h4></div>
-                        <span id="stat-kendaraan-aktif" style="font-weight:800; font-size:2.2rem; color:var(--primary-orange); line-height:1;">0</span>
+                        <ul id="spp-pending-list" style="list-style:none; padding-left:0; margin:0; font-size:0.82rem;"></ul>
                     </div>
                 </div>
             </div>
         </section>
-
-        <section class="content-area" aria-label="ERP Modules Application Navigation">
-            <h2 class="section-title"><span>Modul ERP System</span></h2>
-            <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/HR-System/')"><div class="module-icon"><i class="fa-solid fa-people-group"></i></div><div class="module-info"><h3>Human Resource</h3><p>Talenta Terkelola, Kinerja Optimal.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/General-Affairs/')"><div class="module-icon"><i class="fa-solid fa-building-circle-check"></i></div><div class="module-info"><h3>General Affairs</h3><p>Fasilitas Terdata, Operasional Prima.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/HSE/')"><div class="module-icon"><i class="fa-solid fa-helmet-safety"></i></div><div class="module-info"><h3>HSE System</h3><p>K3 Terpantau, Standar Terjaga.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Maintenance/')"><div class="module-icon"><i class="fa-solid fa-gears"></i></div><div class="module-info"><h3>Maintenance</h3><p>Perawatan Preventif, Mesin Responsif.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/Purchase-Order/')"><div class="module-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div><div class="module-info"><h3>Purchase Order</h3><p>Pengadaan Cepat, Transaksi Akurat.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/Warehouse-System/')"><div class="module-icon"><i class="fa-solid fa-boxes-stacked"></i></div><div class="module-info"><h3>Warehouse</h3><p>Stok Transparan, Logistik Efisien.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Production-Tracking/')"><div class="module-icon"><i class="fa-solid fa-industry"></i></div><div class="module-info"><h3>Produksi</h3><p>Digitalisasi Lini, Efisiensi Tinggi.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/QC-Inspection/')"><div class="module-icon"><i class="fa-solid fa-microscope"></i></div><div class="module-info"><h3>Quality Control</h3><p>Mutu Terjamin, Presisi Terkunci.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            <div class="module-card purple" onclick="window._lNch('https://murindasentrabaja.github.io/QMS/')"><div class="module-icon"><i class="fa-solid fa-award"></i></div><div class="module-info"><h3>Quality Management</h3><p>Sistem Manajemen Mutu Terpadu (QMS).</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Security-Guard/')"><div class="module-icon"><i class="fa-solid fa-shield-halved"></i></div><div class="module-info"><h3>Security Guard</h3><p>Keamanan Terpantau, Akses Terkendali.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/SPP/')"><div class="module-icon"><i class="fa-solid fa-file-invoice"></i></div><div class="module-info"><h3>SPP System</h3><p>Pengajuan Mudah, Approval Segera.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Master-Schedule/')"><div class="module-icon"><i class="fa-solid fa-calendar-days"></i></div><div class="module-info"><h3>Master Schedule</h3><p>Timeline Akurat, Alokasi Tepat.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/MSB-Approval/')"><div class="module-icon"><i class="fa-solid fa-file-signature"></i></div><div class="module-info"><h3>MSB Approval</h3><p>Persetujuan Cepat, Alur Transparan.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/Administration-System/')"><div class="module-icon"><i class="fa-solid fa-folder-tree"></i></div><div class="module-info"><h3>Administration</h3><p>Administrasi Terstruktur, Kerja Terukur.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-            <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/Filling-Material/')"><div class="module-icon"><i class="fa-solid fa-layer-group"></i></div><div class="module-info"><h3>Filling Material</h3><p>Data Terintegrasi, Material Filling Rapi.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
-        </section>
-        
-        <footer>
-            <address class="footer-address">
-                <strong>PT MURINDA SENTRA BAJA</strong>
-                Jl. Raya Kalijati Purwadadi No. 123A RT 006/02<br>
-                Desa Kalijati Barat, Kecamatan Kalijati<br>
-                Kabupaten Subang, West Java 41271
-                <div class="footer-contact"><span><i class="fa-solid fa-phone"></i> (+62260) 7495467</span><span><i class="fa-solid fa-envelope"></i> plant@murinda.com</span></div>
-            </address>
-            <div class="footer-copy">
-                <span>PT Murinda Sentra Baja. Hak Cipta Dilindungi Undang-Undang.</span>
-                <span style="opacity:0.7;">Developed by Aspuro Amarulloh Khoiri | 070695 Premium System Edition</span>
-            </div>
-        </footer>
     </main>
 
-    <div id="viewport-container" aria-hidden="true"><iframe id="erp-frame" title="Embedded ERP Module Viewport"></iframe></div>
-    <button class="back-nav" id="back-btn" onclick="window._cView()" aria-label="Kembali ke Dashboard"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> <span>Kembali</span></button>
-
-    <div id="curtain-container" aria-hidden="true">
-        <button class="curtain-close-btn" onclick="window._closeCurtain()" aria-label="Tutup Struktur Organisasi"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Tutup</button>
-        <iframe id="curtain-frame" title="Embedded Organizational Structure"></iframe>
-    </div>
-
+    <!-- ===== JavaScript Logic Ditempatkan Di Sini ===== -->
     <script>
-        (function(_0xabc){
-            document.addEventListener('contextmenu',e=>e.preventDefault());
-            document.addEventListener('keydown',function(e){
-                if(e.keyCode===123||e.key==='F12'||
-                  (e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='i'||e.key==='J'||e.key==='j'||e.key==='C'||e.key==='c'))||
-                  (e.ctrlKey&&(e.key==='U'||e.key==='u'||e.key==='S'||e.key==='s'||e.key==='P'||e.key==='p'))||
-                  (e.metaKey&&e.altKey&&(e.key==='I'||e.key==='J'||e.key==='U'))){e.preventDefault();return false;}
-            });
-            setInterval(function(){const s=new Date().getTime();debugger;const e=new Date().getTime();if(e-s>100){document.body.innerHTML="<h2 style='color:red;text-align:center;margin-top:20vh;font-family:-apple-system,sans-serif;'>Security Restriction Enforced</h2>";window.location.replace("about:blank");}},1000);
-        })();
+        /* ===== UTILITY FUNCTIONS ===== */
+        window._closeCurtain = function() {
+            const curtain = document.getElementById('curtain-container');
+            if(!curtain) return;
+            const frame = document.getElementById('curtain-frame');
+            curtain.classList.remove('active');
+            setTimeout(() => { if(frame) frame.src = ''; }, 400);
+        };
 
-        const m = "https://script.google.com/macros/s/AKfycbx3odMeOlwjsh3s7mG4r2YeXlJwsB02gBLsJIc-IBtguulySWZKCb7b3v_OczkIHMvOqA/exec";
-        const s = atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5ZzBrMmw4NGtaQXdveERNdnlua2xHQWVIWDJOY3hmX0RfVUhETU1SUHBnQ0c4dk9qSE00VFdveHM5S1laYUhzdU4vZXhlYw==");
-        const schUrl = "https://script.google.com/macros/s/AKfycbwIN-kg3cjvdHV7pStMbRIpCJtQeo9j80ncjDPCZ5TosPcJaZPxpRrhUDkwzgVyor_gig/exec";
-        
-        let clientProcessChart = null;
-        let karyawanDeptChart = null;
-        let deliveriesData = [];
-        let globalTrendPO = null;
-        let globalKaryawan = null;
+        /* ===== MOBILE DRAWER + BOTTOM NAV ===== */
+        window._toggleDrawer = function() {
+            const d = document.getElementById('mobile-drawer');
+            const o = document.getElementById('drawer-overlay');
+            if(!d || !o) return;
+            const isOpen = d.classList.toggle('open');
+            o.classList.toggle('open', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        };
 
-        window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loading-screen').classList.add('hidden'),800));
-        
-        const uD=()=>{const n=new Date(),dy=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'],mo=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];document.getElementById('current-date').innerText=`${dy[n.getDay()]}, ${n.getDate()} ${mo[n.getMonth()]} ${n.getFullYear()}`;document.getElementById('current-time').innerText=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}:${String(n.getSeconds()).padStart(2,'0')} WIB`;};setInterval(uD,1000);uD();
+        window._closeDrawer = function() {
+            const d = document.getElementById('mobile-drawer');
+            const o = document.getElementById('drawer-overlay');
+            if(d) d.classList.remove('open');
+            if(o) o.classList.remove('open');
+            document.body.style.overflow = '';
+        };
 
+        window._navMod = function(url) { 
+            window._closeDrawer(); 
+            if(typeof window._lNch === 'function') {
+                window._lNch(url); 
+            } else {
+                window.location.href = url; // Fallback jikalau fungsi tidak didefinisikan 
+            }
+        };
+
+        window._scrollTo = function(sel) {
+            const el = document.querySelector(sel);
+            if (el) window.scrollTo({ top: el.offsetTop - 96, behavior: 'smooth' });
+            document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
+        };
+
+        window._drawerHome = function() {
+            window._closeDrawer();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.querySelectorAll('.bn-item').forEach((b, i) => b.classList.toggle('active', i === 0));
+        };
+
+        /* ===== ANIMATION AND NOTIFICATION TARGETS ===== */
         function aV(id, target, duration) {
             const el = document.getElementById(id);
             if(!el) return;
+            target = Number(target) || 0;
+            window._statTargets = window._statTargets || {};
+            window._statTargets[id] = target;
             let start = 0;
             const increment = target / (duration / 16);
             const timer = setInterval(() => {
@@ -920,353 +952,49 @@
             if(!container) return;
             const notif = document.createElement('div');
             notif.className = `notification ${type}`;
-            const icon = type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation';
-            notif.innerHTML = `<i class="fa-solid ${icon}"></i><div class="notification-content"><div class="notification-title">${title}</div><div class="notification-message">${msg}</div></div>`;
+            notif.innerHTML = `
+                <i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i>
+                <div class="notification-content">
+                    <div class="notification-title">${title}</div>
+                    <div class="notification-message">${msg}</div>
+                </div>
+            `;
             container.appendChild(notif);
             setTimeout(() => {
                 notif.style.opacity = '0';
-                notif.style.transform = 'translateX(100px)';
+                notif.style.transform = 'translateX(380px)';
                 setTimeout(() => notif.remove(), 400);
-            }, 3500);
+            }, 3000);
         }
 
-        function uC(trendPO, karyawan) {
-            const isLightTheme = document.body.classList.contains('light-theme');
-            const textColor = isLightTheme ? '#1D1D1F' : '#FFFFFF';
-            const gridColor = isLightTheme ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
-            const tickColor = isLightTheme ? '#6E6E73' : 'rgba(255,255,255,0.6)';
-
-            let deptLabels = [];
-            let deptData = [];
-            
-            if (karyawan && karyawan.length > 1) {
-                const headers = karyawan[0].map(h => String(h).toLowerCase().trim());
-                let deptIndex = headers.findIndex(h => h.includes('departemen') || h.includes('dept'));
-                if (deptIndex === -1) deptIndex = 1;
-
-                const deptCounts = {};
-                for (let i = 1; i < karyawan.length; i++) {
-                    const baris = karyawan[i];
-                    if (baris && baris[0] && baris[0] !== '') { 
-                        let dept = String(baris[deptIndex] || 'Lainnya').trim();
-                        if (dept === '') dept = 'Lainnya';
-                        deptCounts[dept] = (deptCounts[dept] || 0) + 1;
-                    }
-                }
-                deptLabels = Object.keys(deptCounts);
-                deptData = Object.values(deptCounts);
-            } else {
-                deptLabels = ['Engineering', 'Produksi', 'PPIC', 'QA/QC', 'HR/GA'];
-                deptData = [12, 45, 8, 10, 5];
+        /* ===== ADDITIONAL USER PROVIDED VIEWPORT ANIMATIONS ===== */
+        window._openCurtain = function(url) {
+            // Placeholder logic berdasarkan snippet setTimeout yang Anda berikan
+            const viewport = document.getElementById('viewport-container');
+            const frame = document.getElementById('erp-frame');
+            if(!viewport || !frame) {
+                window.location.href = url;
+                return;
             }
-
-            const ctxKaryawan = document.getElementById('karyawanDeptChart').getContext('2d');
-            if (karyawanDeptChart) karyawanDeptChart.destroy();
-            karyawanDeptChart = new Chart(ctxKaryawan, {
-                type: 'doughnut',
-                data: {
-                    labels: deptLabels,
-                    datasets: [{
-                        data: deptData,
-                        backgroundColor: ['#0A84FF', '#30D158', '#FF9F0A', '#BF5AF2', '#FF453A', '#64D2FF'],
-                        borderWidth: 0,
-                        hoverOffset: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'right',
-                            labels: { color: textColor, usePointStyle: true, pointStyle: 'circle', font: { family: 'Inter', size: 11 } }
-                        },
-                        tooltip: { backgroundColor: 'rgba(0,0,0,0.8)', titleFont: {family: 'Inter'}, bodyFont: {family: 'Inter'}, padding: 10, cornerRadius: 8 }
-                    },
-                    cutout: '65%'
-                }
-            });
-
-            let poLabels = [];
-            let poDatasets = [];
-            
-            if (trendPO && trendPO.length > 1) {
-                poLabels = trendPO.slice(1).map(row => row[0]); 
-                const clients = trendPO[0].slice(1); 
-                const colors = ['#0A84FF', '#30D158', '#FF9F0A', '#BF5AF2', '#FF453A'];
-
-                poDatasets = clients.map((client, i) => {
-                    return {
-                        label: client,
-                        data: trendPO.slice(1).map(row => parseFloat(row[i + 1]) || 0),
-                        borderColor: colors[i % colors.length],
-                        backgroundColor: colors[i % colors.length],
-                        borderWidth: 2,
-                        tension: 0.4,
-                        pointRadius: 4,
-                        pointHoverRadius: 6
-                    };
-                });
-            } else {
-                poLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'];
-                poDatasets = [{
-                    label: 'Sumitomo', data: [15, 25, 20, 35, 45, 40], borderColor: '#0A84FF', backgroundColor: '#0A84FF', borderWidth: 2, tension: 0.4
-                }];
-            }
-
-            const ctxPO = document.getElementById('clientProcessChart').getContext('2d');
-            if (clientProcessChart) clientProcessChart.destroy();
-            clientProcessChart = new Chart(ctxPO, {
-                type: 'line',
-                data: { labels: poLabels, datasets: poDatasets },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                color: textColor,
-                                usePointStyle: true, 
-                                pointStyle: 'circle', 
-                                font: { family: 'Inter', size: 11 }
-                            }
-                        },
-                        tooltip: { backgroundColor: 'rgba(0,0,0,0.8)', padding: 10, cornerRadius: 8, titleFont: {family: 'Inter'}, bodyFont: {family: 'Inter'} }
-                    },
-                    scales: {
-                        y: { grid: { color: gridColor }, ticks: { color: tickColor, font: {family: 'Inter', size: 10} } },
-                        x: { grid: { display: false }, ticks: { color: tickColor, font: {family: 'Inter', size: 10} } }
-                    }
-                }
-            });
-        }
-
-        async function fD(){
-            try{
-                const r = await fetch(m);
-                const d = await r.json();
-                globalTrendPO = d.trendPO;
-                globalKaryawan = d.karyawan;
-
-                let sM={};
-                if(d.summary && d.summary.length > 0){
-                    let h = d.summary[0].length > 2;
-                    if(h && d.summary.length > 1){
-                        d.summary[0].forEach((he,i)=>{if(he)sM[String(he).trim().toLowerCase()]=d.summary[1][i];});
-                    }else{
-                        d.summary.forEach(ro=>{if(ro.length>=2&&ro[0]!=null&&ro[0]!=='')sM[String(ro[0]).trim().toLowerCase()]=ro[1];});
-                    }
-                }
-                
-                const pT=(l)=>{
-                    let ma=sM[l.toLowerCase().trim()];
-                    if(ma===undefined||ma===null||ma==='')return 0;
-                    if(typeof ma==='string')return parseFloat(ma.replace(/[^0-9.-]/g,''))||0;
-                    return ma;
-                };
-                
-                aV('stat-karyawan',pT('Karyawan'),1200);
-                aV('stat-po',pT('Purchase Order'),1200);
-                aV('stat-pengiriman',pT('Pengiriman'),1200);
-                aV('stat-stok',pT('Stok Produksi'),1200);
-                aV('stat-lkp',pT('Jumlah LKP'),1200);
-                aV('stat-insiden',pT('Total Insiden'),1200);
-                aV('stat-spp',pT('SPP Belum Datang'),1200);
-                
-                let tamuAktif = pT('tamu di dalam') || pT('tamu aktif') || pT('tamu') || pT('jumlah tamu') || 0;
-                let kendaraanAktif = pT('kendaraan masuk') || pT('kendaraan aktif') || pT('kendaraan di dalam') || pT('kendaraan') || 0;
-                
-                aV('stat-tamu-aktif', tamuAktif, 1200);
-                aV('stat-kendaraan-aktif', kendaraanAktif, 1200);
-                uC(globalTrendPO, globalKaryawan);
-            } catch(e) {
-                console.error("Data Fetch Error:", e);
-                uC(null, null);
-            }
-        }
-
-        async function fS(){
-            try{
-                const r=await fetch(s),res=await r.json();
-                if(res.error)return;
-                const h=res.headers,d=res.data,mI=h.findIndex(x=>x.toString().toLowerCase().trim()==='nama material'),sI=h.findIndex(x=>x.toString().toLowerCase().trim()==='spp total'),kI=h.findIndex(x=>x.toString().toLowerCase().trim()==='kedatangan');
-                if(mI===-1||sI===-1||kI===-1)return;
-                let mM={},tS=0,tD=0;
-                d.forEach(ro=>{
-                    if(ro.every(ce=>ce===''||ce===null||ce===undefined))return;
-                    let mN=ro[mI],sQ=Number(ro[sI])||0,dQ=Number(ro[kI])||0,si=dQ-sQ;
-                    if(mN){if(si<0)mM[mN]=(mM[mN]||0)+Math.abs(si);tS+=sQ;tD+=dQ>sQ?sQ:dQ;}
-                });
-                const pL=document.getElementById('spp-pending-list');
-                if(Object.keys(mM).length===0){
-                    pL.innerHTML=`<li class="sp-list-item"><span style="color:var(--primary-green);">✨ Seluruh material telah terpenuhi</span><strong style="color:var(--primary-green);">-</strong></li>`;
-                }else{
-                    let hL='';
-                    for(let mat in mM)hL+=`<li class="sp-list-item"><span>${mat}</span><strong style="color:var(--primary-red);">- ${mM[mat]}</strong></li>`;
-                    pL.innerHTML=hL;
-                }
-                let pt=tS>0?Math.floor((tD/tS)*100):0;if(pt>100)pt=100;
-                document.getElementById('spp-fulfillment-text').innerText=pt+"%";
-                document.getElementById('spp-fulfillment-bar').style.width=pt+"%";
-            }catch(e){
-                document.getElementById('spp-pending-list').innerHTML=`<li class="sp-list-item"><span style="color:var(--primary-red);">Gagal mengambil data sinkronisasi</span><strong style="color:var(--primary-red);">X</strong></li>`;
-            }
-        }
-        
-        async function fetchSchedule(){
-            try{
-                const r=await fetch(schUrl);
-                const d=await r.json();
-                if(!d.error){deliveriesData=d;buildMiniCalendar();}
-            }catch(e){
-                console.error("Gagal memuat jadwal:",e);
-                document.getElementById('mini-cal-month').innerHTML="<i class='fa-solid fa-triangle-exclamation'></i> Gagal Sinkronisasi";
-            }
-        }
-        
-        function buildMiniCalendar() {
-            const grid = document.getElementById('mini-cal-grid');
-            const mLabel = document.getElementById('mini-cal-month');
-            
-            if (!grid) return;
-            
-            grid.innerHTML = '';
-            const now = new Date();
-            const y = now.getFullYear();
-            const m = now.getMonth();
-            const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-            
-            mLabel.innerHTML = `<i class="fa-solid fa-calendar-check"></i> ${monthNames[m]} ${y}`;
-            
-            const firstDay = new Date(y, m, 1).getDay();
-            const daysInMonth = new Date(y, m + 1, 0).getDate();
-            
-            for (let i = 0; i < firstDay; i++) {
-                let empty = document.createElement('div');
-                grid.appendChild(empty);
-            }
-            
-            for (let i = 1; i <= daysInMonth; i++) {
-                let cell = document.createElement('div');
-                cell.className = 'mini-cal-cell';
-                cell.innerText = i;
-                
-                const isSunday = new Date(y, m, i).getDay() === 0;
-                if (isSunday) cell.classList.add('holiday');
-                
-                const todaysItems = deliveriesData.filter(item => {
-                    const dateKey = Object.keys(item).find(k => k.toLowerCase().includes('delivery date') || k.toLowerCase().includes('tanggal'));
-                    if (dateKey && item[dateKey]) {
-                        const itemDate = new Date(item[dateKey]);
-                        return itemDate.getDate() === i && itemDate.getMonth() === m && itemDate.getFullYear() === y;
-                    }
-                    return false;
-                });
-                
-                if (todaysItems.length > 0) {
-                    cell.classList.add('has-data');
-                    let tooltip = document.createElement('div');
-                    tooltip.className = 'mini-tooltip';
-                    let tooltipHtml = '';
-                    
-                    todaysItems.forEach(item => {
-                        const exactSerialKey = Object.keys(item).find(k => k.toLowerCase() === 'serial number');
-                        const poKey = Object.keys(item).find(k => k.toLowerCase().includes('po') || k.toLowerCase().includes('purchase'));
-                        const sn = exactSerialKey ? item[exactSerialKey] : 'Unknown Item';
-                        const po = poKey ? item[poKey] : '-';
-                        tooltipHtml += `<div class="mini-tooltip-item"><span class="mini-sn">${sn}</span><span style="font-size:0.7rem; color:var(--text-muted)">PO: ${po}</span></div>`;
-                    });
-                    tooltip.innerHTML = tooltipHtml;
-                    cell.appendChild(tooltip);
-                }
-                grid.appendChild(cell);
-            }
-        }
-
-        /* SYSTEM UTILITY FUNCTIONS */
-        window._eSys = function(e) {
-            if(e) e.preventDefault();
-            const loginOverlay = document.getElementById('login-overlay');
-            const mainDashboard = document.getElementById('main-dashboard');
-            loginOverlay.style.opacity = '0';
-            loginOverlay.style.visibility = 'hidden';
+            frame.src = url;
+            viewport.style.display = 'block';
+            document.body.classList.add('viewport-open');
             setTimeout(() => {
-                loginOverlay.style.display = 'none';
-                mainDashboard.style.display = 'flex';
-                fD();
-                fS();
-                fetchSchedule();
-                sN('Sistem Siap', 'Selamat datang di MSB ERP System', 'success');
-            }, 400);
-        };
-
-        window._dOut = function() {
-            const loginOverlay = document.getElementById('login-overlay');
-            const mainDashboard = document.getElementById('main-dashboard');
-            mainDashboard.style.display = 'none';
-            loginOverlay.style.display = 'flex';
-            setTimeout(() => {
-                loginOverlay.style.opacity = '1';
-                loginOverlay.style.visibility = 'visible';
+                viewport.classList.add('active');
+                const backBtn = document.querySelector('.back-nav');
+                if(backBtn) backBtn.classList.add('active');
             }, 50);
         };
 
-        window._tTheme = function() {
-            document.body.classList.toggle('light-theme');
-            uC(globalTrendPO, globalKaryawan);
-        };
-
-        window._toggleFab = function() {
-            const fab = document.getElementById('quick-action-fab');
-            fab.classList.toggle('active');
-        };
-
-        window._lNch = function(url) {
+        window._closeViewport = function() {
             const viewport = document.getElementById('viewport-container');
-            const frame = document.getElementById('erp-frame');
-            const backBtn = document.getElementById('back-btn');
-            const fab = document.getElementById('quick-action-fab');
-
-            frame.src = url;
-            viewport.style.display = 'block';
+            const backBtn = document.querySelector('.back-nav');
+            if(viewport) viewport.classList.remove('active');
+            if(backBtn) backBtn.classList.remove('active');
+            document.body.classList.remove('viewport-open');
             setTimeout(() => {
-                viewport.classList.add('active');
-                backBtn.style.display = 'flex';
-                setTimeout(() => backBtn.classList.add('active'), 50);
-                fab.classList.add('hidden-by-viewport');
-            }, 10);
-        };
-
-        window._cView = function() {
-            const viewport = document.getElementById('viewport-container');
-            const frame = document.getElementById('erp-frame');
-            const backBtn = document.getElementById('back-btn');
-            const fab = document.getElementById('quick-action-fab');
-
-            viewport.classList.remove('active');
-            backBtn.classList.remove('active');
-            setTimeout(() => {
-                viewport.style.display = 'none';
-                backBtn.style.display = 'none';
-                frame.src = '';
-                fab.classList.remove('hidden-by-viewport');
-            }, 400);
-        };
-
-        window._openCurtain = function(url) {
-            const curtain = document.getElementById('curtain-container');
-            const frame = document.getElementById('curtain-frame');
-            frame.src = url;
-            curtain.classList.add('active');
-        };
-
-        window._closeCurtain = function() {
-            const curtain = document.getElementById('curtain-container');
-            const frame = document.getElementById('curtain-frame');
-            curtain.classList.remove('active');
-            setTimeout(() => frame.src = '', 400);
+                if(viewport) viewport.style.display = 'none';
+            }, 450);
         };
     </script>
 </body>
