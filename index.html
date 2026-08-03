@@ -1,314 +1,1001 @@
 <!DOCTYPE html>
-<html lang="id">
+<!--
+  =====================================================================
+  MSB ERP SYSTEM - PT Murinda Sentra Baja
+  Liquid Glass 3D Dashboard (iOS-inspired)
+  ---------------------------------------------------------------------
+  Lisensi   : Aspuro Amarulloh Khoiri
+  Hak Cipta : (c) 2026 Aspuro Amarulloh Khoiri. Seluruh hak dilindungi.
+  =====================================================================
+-->
+<html lang="id" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 17. Meta Tags & PWA Setup -->
     <title>MSB ERP SYSTEM - PT Murinda Sentra Baja</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome Pro / Free Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Custom Styles & Glassmorphism for MSB ERP */
-        :root {
-            --bg-primary: #0f172a;
-            --bg-card: rgba(30, 41, 59, 0.7);
-            --text-main: #f8fafc;
-            --accent: #3b82f6;
-        }
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding-bottom: 70px; /* Space for mobile bottom nav */
-        }
-        /* Mobile Drawer & Curtain Styles */
-        .mobile-drawer-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 998;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-        }
-        .mobile-drawer-overlay.open { opacity: 1; pointer-events: auto; }
-        
-        .mobile-drawer {
-            position: fixed; top: 0; left: -300px; width: 280px; height: 100%;
-            background: #1e293b; z-index: 999; transition: left 0.3s ease;
-            display: flex; flex-direction: column; box-shadow: 4px 0 15px rgba(0,0,0,0.5);
-        }
-        .mobile-drawer.open { left: 0; }
-        
-        .drawer-head {
-            padding: 1rem; display: flex; align-items: center; border-bottom: 1px solid #334155;
-        }
-        .drawer-head img { width: 36px; height: 36px; object-fit: contain; margin-right: 10px; }
-        .dh-info { flex: 1; }
-        .dh-title { font-weight: bold; font-size: 0.95rem; color: #fff; }
-        .dh-sub { font-size: 0.75rem; color: #94a3b8; display: flex; align-items: center; gap: 4px; }
-        .drawer-close { background: none; border: none; color: #94a3b8; font-size: 1.2rem; cursor: pointer; }
-        
-        .drawer-scroll { flex: 1; overflow-y: auto; padding: 1rem; }
-        .drawer-label { font-size: 0.7rem; text-transform: uppercase; color: #64748b; font-weight: bold; margin: 10px 0 5px 0; letter-spacing: 0.05em; }
-        .drawer-link {
-            display: flex; align-items: center; gap: 10px; padding: 10px 12px; color: #cbd5e1;
-            text-decoration: none; border-radius: 6px; margin-bottom: 4px; font-size: 0.88rem; transition: background 0.2s; cursor: pointer;
-        }
-        .drawer-link:hover, .drawer-link.active { background: #334155; color: #fff; }
-        .drawer-link i { width: 20px; text-align: center; color: #3b82f6; }
-        .drawer-link.danger { color: #f87171; }
-        .drawer-link.danger i { color: #f87171; }
+    <meta name="description" content="Dashboard ERP PT Murinda Sentra Baja - Liquid Glass 3D">
+    <meta name="author" content="Aspuro Amarulloh Khoiri">
 
-        /* Mobile Bottom Nav */
+    <!-- PWA: Bisa dipasang di beranda HP seperti aplikasi -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MSB ERP">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+    <!-- Favicon (inline SVG) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Cpath d='M14 46V18h8l10 14 10-14h8v28h-8V30l-10 14-10-14v16z' fill='%23ffffff'/%3E%3Cpath d='M18 48l30-24 4 3-30 24z' fill='%23fb923c'/%3E%3C/svg%3E">
+
+    <!-- Font External -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome & Chart.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+    <style>
+        /* ============================================================
+           1. DESIGN TOKENS — TEMA TERANG & GELAP (Kode 8, 9)
+        ============================================================ */
+        :root {
+            --blue:   #3b82f6;
+            --teal:   #2dd4bf;
+            --orange: #fb923c;
+            --green:  #4ade80;
+            --font-ui: 'Plus Jakarta Sans', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --ease-spring: cubic-bezier(.34,1.56,.64,1);
+        }
+
+        /* Mode Dark (Kode 9) */
+        html[data-theme="dark"] {
+            --bg: #060b18;
+            --text: #eef3fb;
+            --text-dim: #93a1b8;
+            --glass-bg: linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.03));
+            --glass-solid: rgba(17, 25, 44, .55);
+            --glass-border: rgba(255,255,255,.16);
+            --glass-border-soft: rgba(255,255,255,.09);
+            --specular: rgba(255,255,255,.28);
+            --shadow: 0 18px 45px rgba(2, 6, 18, .55);
+            --logo-bg: #ffffff; /* Logo jadi putih di dark mode */
+            --logo-m: #1d4ed8;
+            --logo-arrow: #f97316;
+            --chart-grid: rgba(255,255,255,.07);
+            --scroll-thumb: rgba(255,255,255,.18);
+        }
+
+        /* Mode Light (Kode 8) */
+        html[data-theme="light"] {
+            --bg: #e8eef6;
+            --text: #101a2c;
+            --text-dim: #5c6b82;
+            --glass-bg: linear-gradient(135deg, rgba(255,255,255,.75), rgba(255,255,255,.45));
+            --glass-solid: rgba(255, 255, 255, .6);
+            --glass-border: rgba(255,255,255,.9);
+            --glass-border-soft: rgba(16, 26, 44, .08);
+            --specular: rgba(255,255,255,.95);
+            --shadow: 0 18px 45px rgba(70, 96, 140, .22);
+            --logo-bg: #2563eb;
+            --logo-m: #ffffff;
+            --logo-arrow: #ef4444;
+            --chart-grid: rgba(16, 26, 44, .08);
+            --scroll-thumb: rgba(16, 26, 44, .18);
+        }
+
+        /* 5 & 6. Reset & Body Base */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-ui);
+            min-height: 100vh;
+            padding-bottom: 86px;
+            overflow-x: hidden;
+            transition: background .5s ease, color .5s ease;
+        }
+
+        /* 4. Custom Scrollbar & Text Selection */
+        ::-webkit-scrollbar { width: 9px; height: 9px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 99px; }
+        ::selection { background: rgba(59,130,246,.4); color: #fff; }
+
+        /* ============================================================
+           2. LATAR — AURORA BLOB 4 WARNA + TEKSTUR NOISE (Kode 3, 4)
+        ============================================================ */
+        .aurora {
+            position: fixed; inset: 0; z-index: -2; overflow: hidden;
+            background: var(--bg); transition: background .5s ease;
+        }
+        .blob {
+            position: absolute; border-radius: 50%;
+            filter: blur(90px); opacity: .45; will-change: transform;
+            animation: drift 22s ease-in-out infinite alternate;
+        }
+        html[data-theme="light"] .blob { opacity: .3; }
+        .blob.b-blue   { width: 46vw; height: 46vw; background: var(--blue);   top: -12%; left: -8%; }
+        .blob.b-teal   { width: 38vw; height: 38vw; background: var(--teal);   top: 28%; right: -12%; animation-delay: -6s; }
+        .blob.b-orange { width: 32vw; height: 32vw; background: var(--orange); bottom: -10%; left: 22%; animation-delay: -12s; opacity: .32; }
+        .blob.b-green  { width: 30vw; height: 30vw; background: var(--green);  bottom: 16%; right: 16%; animation-delay: -17s; opacity: .3; }
+        @keyframes drift {
+            0%   { transform: translate(0,0) scale(1); }
+            100% { transform: translate(6vw, -5vh) scale(1.18); }
+        }
+        .noise {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .05;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* 7 & 12. Dynamic Logo Styling */
+        .logo-wrap svg { width: 42px; height: 42px; }
+        .drawer-head svg { width: 38px; height: 38px; }
+        .logo-svg .lbg { fill: var(--logo-bg); transition: fill .4s ease; }
+        .logo-svg .lm  { fill: var(--logo-m);  transition: fill .4s ease; }
+        .logo-svg .lar { fill: var(--logo-arrow); transition: fill .4s ease; }
+
+        /* ============================================================
+           3. LIQUID GLASS 3D (iOS-style)
+        ============================================================ */
+        .glass {
+            position: relative;
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: blur(22px) saturate(170%);
+            backdrop-filter: blur(22px) saturate(170%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow), inset 0 1px 0 var(--specular);
+            transition: border-color .35s ease, box-shadow .35s ease, transform .35s var(--ease-spring);
+        }
+        .glass::before {
+            content: ''; position: absolute; inset: 0 0 auto 0; height: 46%;
+            border-radius: var(--radius-lg) var(--radius-lg) 60% 60%;
+            background: linear-gradient(180deg, var(--specular), transparent 70%);
+            opacity: .16; pointer-events: none;
+        }
+        .glass.shine::after {
+            content: ''; position: absolute; inset: 0; border-radius: inherit;
+            background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.22) 50%, transparent 65%);
+            transform: translateX(-120%); pointer-events: none;
+        }
+        .glass.shine:hover::after { animation: sweep .9s ease; }
+        @keyframes sweep { to { transform: translateX(120%); } }
+
+        /* ============================================================
+           4. NEON GLOW 4 WARNA
+        ============================================================ */
+        .neon-blue   { --neon: var(--blue); }
+        .neon-teal   { --neon: var(--teal); }
+        .neon-orange { --neon: var(--orange); }
+        .neon-green  { --neon: var(--green); }
+
+        .neonable { --neon: var(--blue); }
+        .neonable:hover, .neonable:focus-visible {
+            border-color: var(--neon);
+            box-shadow: var(--shadow),
+                0 0 12px color-mix(in srgb, var(--neon) 65%, transparent),
+                0 0 34px color-mix(in srgb, var(--neon) 35%, transparent),
+                inset 0 0 10px color-mix(in srgb, var(--neon) 14%, transparent),
+                inset 0 1px 0 var(--specular);
+            transform: translateY(-3px);
+        }
+        .neonable.neon-click { animation: neonPulse .55s ease; }
+        @keyframes neonPulse {
+            0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--neon) 80%, transparent); border-color: var(--neon); }
+            70%  { box-shadow: 0 0 22px 14px transparent; }
+            100% { box-shadow: var(--shadow), 0 0 14px color-mix(in srgb, var(--neon) 55%, transparent); border-color: var(--neon); }
+        }
+
+        /* ============================================================
+           5. HEADER & NAVIGASI
+        ============================================================ */
+        header.topbar {
+            position: sticky; top: 12px; z-index: 900;
+            margin: 12px 16px 0; padding: 10px 18px;
+            display: flex; align-items: center; gap: 14px;
+            border-radius: 20px;
+        }
+        .logo-wrap { display: flex; align-items: center; gap: 12px; }
+        .brand { line-height: 1.15; }
+        .brand b { font-size: 1.02rem; letter-spacing: .04em; }
+        .brand small { display: block; font-size: .68rem; color: var(--text-dim); letter-spacing: .12em; text-transform: uppercase; }
+
+        .clock-chip {
+            margin-left: auto; display: flex; align-items: center; gap: 12px;
+            padding: 8px 16px; border-radius: 14px;
+            background: var(--glass-solid); border: 1px solid var(--glass-border-soft);
+            -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+        }
+        .clock-chip .day  { font-weight: 700; font-size: .82rem; }
+        .clock-chip .date { font-size: .76rem; color: var(--text-dim); }
+        .clock-chip .time {
+            font-family: var(--font-mono); font-weight: 700; font-size: 1rem;
+            background: linear-gradient(90deg, var(--blue), var(--teal));
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+            min-width: 108px; text-align: right;
+        }
+
+        .icon-btn {
+            width: 42px; height: 42px; border-radius: 13px; border: 1px solid var(--glass-border-soft);
+            background: var(--glass-solid); color: var(--text); cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center; font-size: 1rem;
+            -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+            transition: transform .3s var(--ease-spring), box-shadow .3s ease, border-color .3s ease, color .3s ease;
+        }
+        .icon-btn:hover { transform: translateY(-2px) rotate(6deg); }
+        .icon-btn:active { transform: scale(.92); }
+
+        .btn-logout {
+            display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px;
+            border-radius: 13px; border: 1px solid rgba(248,113,113,.4); cursor: pointer;
+            background: rgba(248,113,113,.12); color: #f87171; font-family: var(--font-ui);
+            font-weight: 600; font-size: .82rem; transition: all .3s ease;
+        }
+        .btn-logout:hover { background: rgba(248,113,113,.25); box-shadow: 0 0 16px rgba(248,113,113,.4); }
+
+        #theme-toggle .fa-sun { display: none; }
+        html[data-theme="light"] #theme-toggle .fa-sun { display: inline; }
+        html[data-theme="light"] #theme-toggle .fa-moon { display: none; }
+
+        /* ============================================================
+           6. KONTEN UTAMA & KARTU STATISTIK
+        ============================================================ */
+        main { max-width: 1280px; margin: 26px auto 0; padding: 0 18px; }
+
+        .hero { padding: 30px 32px; margin-bottom: 26px; overflow: hidden; }
+        .hero h1 { font-size: clamp(1.5rem, 3.4vw, 2.3rem); font-weight: 800; letter-spacing: -.01em; }
+        .hero h1 .grad {
+            background: linear-gradient(90deg, var(--blue), var(--teal), var(--green));
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p { margin-top: 8px; color: var(--text-dim); font-size: .92rem; max-width: 640px; }
+        .live-badge {
+            display: inline-flex; align-items: center; gap: 8px; margin-top: 16px;
+            padding: 6px 14px; border-radius: 99px; font-size: .74rem; font-weight: 600;
+            border: 1px solid color-mix(in srgb, var(--green) 45%, transparent);
+            color: var(--green); background: color-mix(in srgb, var(--green) 10%, transparent);
+        }
+        .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: blink 1.4s ease infinite; }
+        @keyframes blink { 50% { opacity: .25; transform: scale(.75); } }
+
+        .section-title {
+            display: flex; align-items: center; gap: 12px; margin: 30px 4px 16px;
+            font-size: 1.05rem; font-weight: 700; letter-spacing: .02em;
+        }
+        .section-title i { color: var(--neon, var(--blue)); }
+        .section-title .spacer { flex: 1; }
+        .refresh-btn { font-size: .76rem; padding: 8px 14px; width: auto; height: auto; border-radius: 10px; gap: 7px; }
+
+        .stat-grid {
+            display: grid; gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        }
+        .stat-card {
+            padding: 20px 20px 18px; cursor: pointer; overflow: hidden;
+            transform-style: preserve-3d; will-change: transform;
+        }
+        .stat-icon {
+            width: 46px; height: 46px; border-radius: 14px; margin-bottom: 14px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.15rem;
+            color: var(--neon);
+            background: color-mix(in srgb, var(--neon) 14%, transparent);
+            border: 1px solid color-mix(in srgb, var(--neon) 35%, transparent);
+            box-shadow: inset 0 1px 0 var(--specular);
+            transition: transform .35s var(--ease-spring), box-shadow .35s ease;
+        }
+        .stat-card:hover .stat-icon {
+            transform: translateZ(30px) scale(1.1) rotate(-6deg);
+            box-shadow: 0 0 18px color-mix(in srgb, var(--neon) 55%, transparent);
+        }
+        .stat-label { font-size: .76rem; color: var(--text-dim); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
+        .stat-value {
+            font-family: var(--font-mono); font-size: 2rem; font-weight: 700; margin-top: 4px;
+            color: var(--text); transition: color .3s ease, text-shadow .3s ease;
+        }
+        .stat-card:hover .stat-value { color: var(--neon); text-shadow: 0 0 18px color-mix(in srgb, var(--neon) 70%, transparent); }
+        .stat-sub { font-size: .7rem; color: var(--text-dim); margin-top: 6px; }
+
+        .charts-grid { display: grid; gap: 18px; grid-template-columns: 1.35fr 1fr; }
+        @media (max-width: 900px) { .charts-grid { grid-template-columns: 1fr; } }
+        .chart-panel { padding: 24px; }
+        .chart-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+        .chart-head h3 { font-size: .95rem; font-weight: 700; }
+        .chart-head p { font-size: .74rem; color: var(--text-dim); width: 100%; }
+        .chart-wrap { position: relative; height: 340px; margin-top: 10px; border-radius: var(--radius-md); transition: box-shadow .35s ease; padding: 6px; }
+        .chart-wrap.glow-blue   { box-shadow: 0 0 26px color-mix(in srgb, var(--blue) 45%, transparent), inset 0 0 20px color-mix(in srgb, var(--blue) 10%, transparent); }
+        .chart-wrap.glow-orange { box-shadow: 0 0 26px color-mix(in srgb, var(--orange) 45%, transparent), inset 0 0 20px color-mix(in srgb, var(--orange) 10%, transparent); }
+        .chart-wrap.glow-multi  { box-shadow: 0 0 26px color-mix(in srgb, var(--teal) 45%, transparent), inset 0 0 20px color-mix(in srgb, var(--teal) 10%, transparent); }
+
+        /* ============================================================
+           7. DRAWER & MOBILE NAV
+        ============================================================ */
+        .drawer-overlay {
+            position: fixed; inset: 0; z-index: 998;
+            background: rgba(3, 7, 16, .55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+            opacity: 0; pointer-events: none; transition: opacity .35s ease;
+        }
+        .drawer-overlay.open { opacity: 1; pointer-events: auto; }
+        .mobile-drawer {
+            position: fixed; top: 14px; bottom: 14px; left: -330px; width: 302px; z-index: 999;
+            display: flex; flex-direction: column; overflow: hidden;
+            transition: left .45s var(--ease-spring);
+        }
+        .mobile-drawer.open { left: 14px; }
+        .drawer-head { padding: 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--glass-border-soft); }
+        .dh-info { flex: 1; line-height: 1.2; }
+        .dh-title { font-weight: 800; font-size: .95rem; }
+        .dh-sub { font-size: .72rem; color: var(--text-dim); display: flex; align-items: center; gap: 6px; }
+        .drawer-scroll { flex: 1; overflow-y: auto; padding: 14px; }
+        .drawer-label { font-size: .66rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700; margin: 14px 4px 8px; letter-spacing: .14em; }
+        .drawer-link {
+            display: flex; align-items: center; gap: 12px; padding: 11px 13px; margin-bottom: 6px;
+            color: var(--text); text-decoration: none; font-size: .85rem; font-weight: 500;
+            border-radius: 13px; border: 1px solid transparent; cursor: pointer;
+            transition: border-color .3s ease, box-shadow .3s ease, transform .25s ease, background .3s ease;
+        }
+        .drawer-link:hover { background: color-mix(in srgb, var(--neon, var(--blue)) 8%, transparent); transform: translateX(4px); }
+        .drawer-link i {
+            width: 30px; height: 30px; border-radius: 99px; display: flex; align-items: center; justify-content: center;
+            font-size: .82rem; color: var(--neon, var(--blue));
+            background: color-mix(in srgb, var(--neon, var(--blue)) 13%, transparent);
+            transition: transform .3s var(--ease-spring);
+        }
+        .drawer-link:hover i { transform: scale(1.15) rotate(-8deg); }
+        .drawer-link.danger { --neon: #f87171; }
+
         .mobile-bottom-nav {
-            position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: #1e293b;
-            border-top: 1px solid #334155; display: flex; justify-content: space-around; align-items: center; z-index: 997;
+            position: fixed; bottom: 14px; left: 14px; right: 14px; height: 64px; z-index: 997;
+            display: flex; justify-content: space-around; align-items: center;
+            border-radius: 20px;
         }
         .bn-item {
-            background: none; border: none; color: #94a3b8; font-size: 0.7rem; display: flex;
-            flex-direction: column; align-items: center; gap: 2px; cursor: pointer; flex: 1;
+            background: none; border: none; color: var(--text-dim); font-size: .64rem; font-weight: 600;
+            display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; flex: 1;
+            font-family: var(--font-ui); transition: color .3s ease, transform .3s var(--ease-spring);
         }
-        .bn-item i { font-size: 1.1rem; }
-        .bn-item.active { color: #3b82f6; }
+        .bn-item i { font-size: 1.05rem; transition: transform .3s var(--ease-spring); }
+        .bn-item:hover { color: var(--teal); }
+        .bn-item:hover i { transform: translateY(-3px) scale(1.15); }
+        .bn-item.active { color: var(--blue); text-shadow: 0 0 12px color-mix(in srgb, var(--blue) 60%, transparent); }
         .bn-fab {
-            background: #3b82f6; border: none; width: 45px; height: 45px; border-radius: 50%;
-            color: white; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
-            margin-top: -20px; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.5); cursor: pointer;
+            border: 1px solid rgba(255,255,255,.35); width: 52px; height: 52px; border-radius: 17px;
+            color: #fff; font-size: 1.15rem; cursor: pointer; margin-top: -30px;
+            background: linear-gradient(135deg, var(--blue), var(--teal));
+            box-shadow: 0 8px 24px color-mix(in srgb, var(--blue) 55%, transparent), inset 0 1px 0 rgba(255,255,255,.5);
+            display: flex; align-items: center; justify-content: center;
+            transition: transform .35s var(--ease-spring), box-shadow .35s ease;
         }
+        .bn-fab:hover { transform: translateY(-5px) rotate(90deg); box-shadow: 0 12px 32px color-mix(in srgb, var(--teal) 65%, transparent); }
 
-        /* Curtain / Modal Viewport */
+        /* ============================================================
+           8. CURTAIN MODAL & TOAST
+        ============================================================ */
         .curtain-container {
-            position: fixed; inset: 0; background: #0f172a; z-index: 1000;
-            transform: translateY(100%); transition: transform 0.4s ease; display: flex; flex-direction: column;
+            position: fixed; inset: 0; z-index: 1000; background: var(--bg);
+            transform: translateY(102%); transition: transform .5s var(--ease-spring);
+            display: flex; flex-direction: column;
         }
         .curtain-container.active { transform: translateY(0); }
-        .curtain-header { padding: 1rem; background: #1e293b; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; }
-        .curtain-body { flex: 1; width: 100%; border: none; }
+        .curtain-header {
+            margin: 12px 16px 0; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center;
+            border-radius: 16px;
+        }
+        .curtain-header span { font-weight: 700; font-size: .85rem; }
+        .curtain-body { flex: 1; width: calc(100% - 32px); margin: 12px 16px 16px; border: 1px solid var(--glass-border-soft); border-radius: 18px; background: #fff; }
+
+        #notification-container { position: fixed; bottom: 96px; right: 18px; z-index: 1200; display: flex; flex-direction: column; gap: 10px; }
+        .toast {
+            padding: 13px 18px; font-size: .82rem; font-weight: 600; color: var(--text);
+            border-radius: 14px; display: flex; align-items: center; gap: 10px;
+            animation: toastIn .45s var(--ease-spring);
+        }
+        .toast i { color: var(--neon, var(--green)); }
+        @keyframes toastIn { from { opacity: 0; transform: translateX(60px) scale(.9); } }
+        .toast.out { transition: all .4s ease; opacity: 0; transform: translateX(60px); }
+
+        /* ============================================================
+           18. CHIP "DIPERBARUI", MODAL RINCIAN & PLACEHOLDER (Kode 18)
+        ============================================================ */
+        .updated-chip {
+            display: inline-flex; align-items: center; gap: 7px;
+            font-size: .7rem; font-weight: 600; color: var(--text-dim);
+            padding: 6px 12px; border-radius: 99px;
+            background: var(--glass-solid); border: 1px solid var(--glass-border-soft);
+        }
+        .updated-chip i { color: var(--green); font-size: .62rem; }
+
+        .detail-overlay {
+            position: fixed; inset: 0; z-index: 1150;
+            background: rgba(3, 7, 16, .55); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center; padding: 20px;
+            opacity: 0; pointer-events: none; transition: opacity .35s ease;
+        }
+        .detail-overlay.open { opacity: 1; pointer-events: auto; }
+        .detail-panel {
+            width: 100%; max-width: 880px; max-height: 82vh; display: flex; flex-direction: column;
+            transform: translateY(24px) scale(.97); transition: transform .4s var(--ease-spring);
+        }
+        .detail-overlay.open .detail-panel { transform: translateY(0) scale(1); }
+        .detail-head {
+            display: flex; align-items: center; justify-content: space-between; gap: 12px;
+            padding: 18px 22px; border-bottom: 1px solid var(--glass-border-soft);
+        }
+        .detail-head h3 { font-size: .98rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .detail-head h3 i { color: var(--neon, var(--blue)); }
+        .detail-body { padding: 18px 22px; overflow-y: auto; }
+        .detail-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+        .detail-table th {
+            position: sticky; top: -18px; z-index: 2; text-align: left; padding: 10px 12px;
+            font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; color: var(--text-dim);
+            background: var(--glass-solid); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--neon, var(--blue));
+        }
+        .detail-table td { padding: 9px 12px; border-bottom: 1px solid var(--glass-border-soft); }
+        .detail-table tbody tr { transition: background .25s ease, box-shadow .25s ease; }
+        .detail-table tbody tr:hover {
+            background: color-mix(in srgb, var(--neon, var(--blue)) 9%, transparent);
+            box-shadow: inset 3px 0 0 var(--neon, var(--blue));
+        }
+        .detail-note { text-align: center; padding: 26px 10px; color: var(--text-dim); font-size: .84rem; }
+        .detail-note i { font-size: 1.5rem; color: var(--neon, var(--orange)); display: block; margin-bottom: 10px; }
+        .pill { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: .68rem; font-weight: 700; }
+        .pill-fit   { color: var(--green);  background: color-mix(in srgb, var(--green) 14%, transparent); }
+        .pill-unfit { color: var(--orange); background: color-mix(in srgb, var(--orange) 14%, transparent); }
+
+        .chart-placeholder {
+            height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; gap: 10px; color: var(--text-dim); font-size: .8rem; padding: 20px;
+            border: 1.5px dashed var(--glass-border); border-radius: var(--radius-md);
+        }
+        .chart-placeholder i { font-size: 1.6rem; color: var(--teal); }
+        .chart-placeholder code {
+            display: block; margin-top: 6px; padding: 8px 12px; border-radius: 9px; font-size: .68rem;
+            background: var(--glass-solid); border: 1px solid var(--glass-border-soft);
+            font-family: var(--font-mono); color: var(--teal);
+        }
+
+        @media (min-width: 901px) {
+            .span-all { grid-column: 1 / -1; }
+        }
+
+        @media (max-width: 720px) {
+            .clock-chip .date, .brand small { display: none; }
+            .clock-chip { padding: 7px 12px; gap: 8px; }
+            .clock-chip .time { min-width: 0; font-size: .88rem; }
+            .btn-logout span { display: none; }
+        }
+
+        footer.license {
+            max-width: 1280px; margin: 40px auto 10px; padding: 18px;
+            text-align: center; font-size: .74rem; color: var(--text-dim);
+        }
+        footer.license b { color: var(--text); }
+
+        .skel { height: 132px; border-radius: var(--radius-lg); overflow: hidden; position: relative; }
+        .skel::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.14) 50%, transparent 70%);
+            animation: sweep 1.3s ease infinite;
+        }
+
+        .rise { opacity: 0; transform: translateY(26px); animation: rise .7s var(--ease-spring) forwards; }
+        @keyframes rise { to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100">
+<body>
 
-    <!-- ===== HEADER / TOP NAVIGATION (Integrasi Kode 1 & 2) ===== -->
-    <header class="bg-slate-800 border-b border-slate-700 px-4 py-3 flex justify-between items-center sticky top-0 z-50">
-        <div class="header-left flex items-center gap-3">
-            <button class="mobile-hamburger text-slate-300 hover:text-white p-2" onclick="window._toggleDrawer()" aria-label="Buka Menu">
-                <i class="fa-solid fa-bars text-lg"></i>
-            </button>
-            <img src="MSB Logo.png" alt="Logo" class="logo-small h-8 w-auto" onerror="this.style.display='none'">
-            <span class="font-bold text-lg tracking-wider">MSB ERP</span>
-        </div>
-        <nav class="hidden md:flex items-center gap-6">
-            <a href="#" class="text-sm hover:text-blue-400">Dashboard</a>
-            <a href="#" class="text-sm hover:text-blue-400">Modul</a>
-            <a href="#" class="text-sm hover:text-blue-400">Laporan</a>
-        </nav>
-        <div class="flex items-center gap-3">
-            <div class="mobile-topbar-actions flex items-center">
-                <button class="mobile-theme-btn p-2 text-slate-300 hover:text-white" onclick="window._tTheme()" aria-label="Ubah Tema"><i class="fa-solid fa-sun"></i></button>
+    <!-- Latar aurora + noise -->
+    <div class="aurora" aria-hidden="true">
+        <div class="blob b-blue"></div>
+        <div class="blob b-teal"></div>
+        <div class="blob b-orange"></div>
+        <div class="blob b-green"></div>
+    </div>
+    <div class="noise" aria-hidden="true"></div>
+
+    <!-- ================= 13 & 14. HEADER ================= -->
+    <header class="topbar glass">
+        <button class="icon-btn neonable neon-blue" onclick="window._toggleDrawer()" aria-label="Buka Menu" data-testid="menu-button">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="logo-wrap">
+            <!-- 10 & 14. Inline SVG Logo dinamis via variabel CSS -->
+            <svg class="logo-svg" viewBox="0 0 64 64" role="img" aria-label="Logo MSB" data-testid="app-logo">
+                <rect class="lbg" width="64" height="64" rx="14"/>
+                <path class="lm" d="M14 46V18h8l10 14 10-14h8v28h-8V30l-10 14-10-14v16z"/>
+                <path class="lar" d="M18 48l30-24 4 3-30 24z"/>
+            </svg>
+            <div class="brand">
+                <b>MSB ERP</b>
+                <small>PT Murinda Sentra Baja</small>
             </div>
-            <button class="btn-logout bg-red-600/20 text-red-400 border border-red-600/30 px-3 py-1.5 rounded-lg text-sm flex items-center gap-2 hover:bg-red-600/30 transition" onclick="window._dOut()" aria-label="Logout from System"><i class="fa-solid fa-power-off" aria-hidden="true"></i> Keluar</button>
         </div>
+
+        <!-- Clock Chip -->
+        <div class="clock-chip neonable neon-teal" data-testid="clock-chip">
+            <div>
+                <div class="day" id="clock-day">—</div>
+                <div class="date" id="clock-date">—</div>
+            </div>
+            <div class="time" id="clock-time">--:--:--</div>
+        </div>
+
+        <button class="icon-btn neonable neon-orange" id="theme-toggle" onclick="window._tTheme()" aria-label="Ubah Tema" data-testid="theme-toggle-button">
+            <i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i>
+        </button>
+        <button class="btn-logout" onclick="window._dOut()" aria-label="Keluar dari Sistem" data-testid="logout-button">
+            <i class="fa-solid fa-power-off"></i> <span>Keluar</span>
+        </button>
     </header>
 
-    <!-- ===== (Integrasi Kode 3): MOBILE SIDEBAR DRAWER + OVERLAY & BOTTOM NAV ===== -->
-    <div class="mobile-drawer-overlay" id="drawer-overlay" onclick="window._closeDrawer()"></div>
-    <aside class="mobile-drawer" id="mobile-drawer" aria-label="Menu Navigasi">
+    <!-- ================= 11. DRAWER ================= -->
+    <div class="drawer-overlay" id="drawer-overlay" onclick="window._closeDrawer()"></div>
+    <aside class="mobile-drawer glass" id="mobile-drawer" aria-label="Menu Navigasi">
         <div class="drawer-head">
-            <img src="MSB Logo.png" alt="MSB" onerror="this.style.display='none'">
+            <!-- 11. Logo SVG Drawer -->
+            <svg class="logo-svg" viewBox="0 0 64 64" aria-hidden="true">
+                <rect class="lbg" width="64" height="64" rx="14"/>
+                <path class="lm" d="M14 46V18h8l10 14 10-14h8v28h-8V30l-10 14-10-14v16z"/>
+                <path class="lar" d="M18 48l30-24 4 3-30 24z"/>
+            </svg>
             <div class="dh-info">
                 <div class="dh-title">MSB ERP</div>
-                <div class="dh-sub"><i class="fa-solid fa-circle text-emerald-400" style="font-size:0.55rem"></i> Kalijati Plant</div>
+                <div class="dh-sub"><i class="fa-solid fa-circle" style="font-size:.5rem;color:var(--green)"></i> Kalijati Plant</div>
             </div>
-            <button class="drawer-close" onclick="window._closeDrawer()" aria-label="Tutup Menu"><i class="fa-solid fa-xmark"></i></button>
+            <button class="icon-btn" onclick="window._closeDrawer()" aria-label="Tutup Menu"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        <div class="drawer-scroll">
+        <div class="drawer-scroll" id="drawer-scroll">
             <div class="drawer-label">Menu Utama</div>
-            <a class="drawer-link active" onclick="window._drawerHome()"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
-            <a class="drawer-link mod-purple" onclick="window._closeDrawer();window._openCurtain('https://murindasentrabaja.github.io/Struktur-Organisasi-MSB/')"><i class="fa-solid fa-sitemap"></i> Struktur Organisasi</a>
+            <a class="drawer-link neonable neon-blue" onclick="window._drawerHome()"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+            <a class="drawer-link neonable neon-teal" onclick="window._closeDrawer();window._openCurtain('https://murindasentrabaja.github.io/Struktur-Organisasi-MSB/')"><i class="fa-solid fa-sitemap"></i> Struktur Organisasi</a>
 
             <div class="drawer-label">Modul ERP System</div>
-            <a class="drawer-link" onclick="window._navMod('https://murindasentrabaja.github.io/HR-System/')"><i class="fa-solid fa-people-group"></i> Human Resource</a>
-            <a class="drawer-link mod-green" onclick="window._navMod('https://murindasentrabaja.github.io/General-Affairs/')"><i class="fa-solid fa-building-circle-check"></i> General Affairs</a>
-            <a class="drawer-link mod-orange" onclick="window._navMod('https://murindasentrabaja.github.io/HSE/')"><i class="fa-solid fa-helmet-safety"></i> HSE System</a>
-            <a class="drawer-link" onclick="window._navMod('https://murindasentrabaja.github.io/Maintenance/')"><i class="fa-solid fa-gears"></i> Maintenance</a>
-            <a class="drawer-link mod-green" onclick="window._navMod('https://murindasentrabaja.github.io/Purchase-Order/')"><i class="fa-solid fa-file-invoice-dollar"></i> Purchase Order</a>
-            <a class="drawer-link mod-orange" onclick="window._navMod('https://murindasentrabaja.github.io/Warehouse-System/')"><i class="fa-solid fa-boxes-stacked"></i> Warehouse</a>
-            <a class="drawer-link" onclick="window._navMod('https://murindasentrabaja.github.io/Production-Tracking/')"><i class="fa-solid fa-industry"></i> Produksi</a>
-            <a class="drawer-link mod-green" onclick="window._navMod('https://murindasentrabaja.github.io/QC-Inspection/')"><i class="fa-solid fa-microscope"></i> Quality Control</a>
-            <a class="drawer-link mod-purple" onclick="window._navMod('https://murindasentrabaja.github.io/QMS/')"><i class="fa-solid fa-award"></i> Quality Management</a>
-            <a class="drawer-link" onclick="window._navMod('https://murindasentrabaja.github.io/Security-Guard/')"><i class="fa-solid fa-shield-halved"></i> Security Guard</a>
-            <a class="drawer-link mod-orange" onclick="window._navMod('https://murindasentrabaja.github.io/SPP/')"><i class="fa-solid fa-file-invoice"></i> SPP System</a>
-            <a class="drawer-link" onclick="window._navMod('https://murindasentrabaja.github.io/Master-Schedule/')"><i class="fa-solid fa-calendar-days"></i> Master Schedule</a>
-            <a class="drawer-link" onclick="window._navMod('https://murindasentrabaja.github.io/MSB-Approval/')"><i class="fa-solid fa-file-signature"></i> MSB Approval</a>
-            <a class="drawer-link mod-green" onclick="window._navMod('https://murindasentrabaja.github.io/Administration-System/')"><i class="fa-solid fa-folder-tree"></i> Administration</a>
-            <a class="drawer-link mod-orange" onclick="window._navMod('https://murindasentrabaja.github.io/Filling-Material/')"><i class="fa-solid fa-layer-group"></i> Filling Material</a>
+            <a class="drawer-link neonable neon-blue"   onclick="window._navMod('https://murindasentrabaja.github.io/HR-System/')"><i class="fa-solid fa-people-group"></i> Human Resource</a>
+            <a class="drawer-link neonable neon-green"  onclick="window._navMod('https://murindasentrabaja.github.io/General-Affairs/')"><i class="fa-solid fa-building-circle-check"></i> General Affairs</a>
+            <a class="drawer-link neonable neon-orange" onclick="window._navMod('https://murindasentrabaja.github.io/HSE/')"><i class="fa-solid fa-helmet-safety"></i> HSE System</a>
+            <a class="drawer-link neonable neon-teal"   onclick="window._navMod('https://murindasentrabaja.github.io/Maintenance/')"><i class="fa-solid fa-gears"></i> Maintenance</a>
+            <a class="drawer-link neonable neon-green"  onclick="window._navMod('https://murindasentrabaja.github.io/Purchase-Order/')"><i class="fa-solid fa-file-invoice-dollar"></i> Purchase Order</a>
+            <a class="drawer-link neonable neon-orange" onclick="window._navMod('https://murindasentrabaja.github.io/Warehouse-System/')"><i class="fa-solid fa-boxes-stacked"></i> Warehouse</a>
+            <a class="drawer-link neonable neon-blue"   onclick="window._navMod('https://murindasentrabaja.github.io/Production-Tracking/')"><i class="fa-solid fa-industry"></i> Produksi</a>
+            <a class="drawer-link neonable neon-teal"   onclick="window._navMod('https://murindasentrabaja.github.io/QC-Inspection/')"><i class="fa-solid fa-microscope"></i> Quality Control</a>
+            <a class="drawer-link neonable neon-green"  onclick="window._navMod('https://murindasentrabaja.github.io/QMS/')"><i class="fa-solid fa-award"></i> Quality Management</a>
+            <a class="drawer-link neonable neon-blue"   onclick="window._navMod('https://murindasentrabaja.github.io/Security-Guard/')"><i class="fa-solid fa-shield-halved"></i> Security Guard</a>
+            <a class="drawer-link neonable neon-orange" onclick="window._navMod('https://murindasentrabaja.github.io/SPP/')"><i class="fa-solid fa-file-invoice"></i> SPP System</a>
+            <a class="drawer-link neonable neon-teal"   onclick="window._navMod('https://murindasentrabaja.github.io/Master-Schedule/')"><i class="fa-solid fa-calendar-days"></i> Master Schedule</a>
+            <a class="drawer-link neonable neon-blue"   onclick="window._navMod('https://murindasentrabaja.github.io/MSB-Approval/')"><i class="fa-solid fa-file-signature"></i> MSB Approval</a>
+            <a class="drawer-link neonable neon-green"  onclick="window._navMod('https://murindasentrabaja.github.io/Administration-System/')"><i class="fa-solid fa-folder-tree"></i> Administration</a>
+            <a class="drawer-link neonable neon-orange" onclick="window._navMod('https://murindasentrabaja.github.io/Filling-Material/')"><i class="fa-solid fa-layer-group"></i> Filling Material</a>
 
             <div class="drawer-label">Aksi Cepat</div>
-            <a class="drawer-link" href="MSB ERP.apk" download="MSB ERP.apk" onclick="window._closeDrawer()"><i class="fa-solid fa-download"></i> Instal Aplikasi</a>
-            <a class="drawer-link" onclick="window._closeDrawer();window._tTheme()"><i class="fa-solid fa-circle-half-stroke"></i> Ubah Tema</a>
-            <a class="drawer-link danger" onclick="window._closeDrawer();window._dOut()"><i class="fa-solid fa-power-off"></i> Keluar Sistem</a>
+            <a class="drawer-link neonable neon-teal" href="MSB ERP.apk" download="MSB ERP.apk" onclick="window._closeDrawer()"><i class="fa-solid fa-download"></i> Instal Aplikasi</a>
+            <a class="drawer-link neonable neon-orange" onclick="window._closeDrawer();window._tTheme()"><i class="fa-solid fa-circle-half-stroke"></i> Ubah Tema</a>
+            <a class="drawer-link neonable danger" onclick="window._closeDrawer();window._dOut()"><i class="fa-solid fa-power-off"></i> Keluar Sistem</a>
         </div>
     </aside>
 
-    <!-- MOBILE BOTTOM NAVIGATION -->
-    <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Navigasi Bawah">
-        <button class="bn-item active" onclick="window._drawerHome()"><i class="fa-solid fa-house"></i>Beranda</button>
-        <button class="bn-item" onclick="window._scrollTo('.dashboard-stats')"><i class="fa-solid fa-chart-simple"></i>Statistik</button>
-        <button class="bn-fab" onclick="window._toggleDrawer()" aria-label="Semua Modul"><i class="fa-solid fa-table-cells-large"></i></button>
-        <button class="bn-item" onclick="window._scrollTo('.content-area')"><i class="fa-solid fa-layer-group"></i>Modul</button>
-        <button class="bn-item" onclick="window._openCurtain('https://murindasentrabaja.github.io/Struktur-Organisasi-MSB/')"><i class="fa-solid fa-sitemap"></i>Struktur</button>
+    <!-- ================= NAVIGASI BAWAH ================= -->
+    <nav class="mobile-bottom-nav glass" aria-label="Navigasi Bawah">
+        <button class="bn-item active" onclick="window._drawerHome()" data-testid="nav-home"><i class="fa-solid fa-house"></i>Beranda</button>
+        <button class="bn-item" onclick="window._scrollTo('#summary-section')" data-testid="nav-stats"><i class="fa-solid fa-chart-simple"></i>Statistik</button>
+        <button class="bn-fab" onclick="window._toggleDrawer()" aria-label="Semua Modul" data-testid="nav-modules"><i class="fa-solid fa-table-cells-large"></i></button>
+        <button class="bn-item" onclick="window._scrollTo('#charts-section')" data-testid="nav-charts"><i class="fa-solid fa-chart-pie"></i>Grafik</button>
+        <button class="bn-item" onclick="window._openCurtain('https://murindasentrabaja.github.io/Struktur-Organisasi-MSB/')" data-testid="nav-structure"><i class="fa-solid fa-sitemap"></i>Struktur</button>
     </nav>
 
-    <!-- ===== MAIN CONTENT AREA ===== -->
-    <main class="p-6 max-w-7xl mx-auto">
-        <section class="dashboard-stats mb-8" aria-label="Key Performance Indicators">
-            <h1 class="text-2xl font-bold mb-4">Dashboard Utama MSB ERP</h1>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
-                    <div class="text-slate-400 text-sm">Total Produksi</div>
-                    <div id="stat-prod" class="text-2xl font-bold mt-1">1,482</div>
-                </div>
-                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
-                    <div class="text-slate-400 text-sm">Stok Gudang</div>
-                    <div id="stat-stock" class="text-2xl font-bold mt-1">84%</div>
-                </div>
-                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
-                    <div class="text-slate-400 text-sm">QC Lolos Uji</div>
-                    <div id="stat-qc" class="text-2xl font-bold mt-1">99.2%</div>
-                </div>
-                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
-                    <div class="text-slate-400 text-sm">Pending PO</div>
-                    <div id="stat-po" class="text-2xl font-bold mt-1">12</div>
-                </div>
+    <!-- ================= KONTEN UTAMA ================= -->
+    <main>
+        <section class="hero glass shine rise" aria-label="Sambutan">
+            <h1>Selamat Datang di <span class="grad">MSB ERP System</span></h1>
+            <p>Dashboard operasional terpadu PT Murinda Sentra Baja — Pabrik Kalijati. Data summary, tren Purchase Order, dan distribusi karyawan tersinkron langsung dari Google Spreadsheet.</p>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:12px;">
+                <div class="live-badge"><span class="live-dot"></span> Data Live dari Spreadsheet</div>
+                <div class="updated-chip"><i class="fa-solid fa-circle"></i> Sistem Terhubung</div>
             </div>
         </section>
 
-        <section class="content-area">
-            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
-                <h2 class="text-lg font-semibold mb-2">Selamat Datang di Sistem ERP PT Murinda Sentra Baja</h2>
-                <p class="text-slate-400 text-sm">Gunakan tombol menu di pojok kiri atas atau menu navigasi bawah untuk mengakses seluruh modul operasional pabrik Kalijati.</p>
+        <!-- Summary -->
+        <section id="summary-section" aria-label="Ringkasan Data">
+            <div class="section-title neonable neon-blue rise" style="--neon:var(--blue)">
+                <i class="fa-solid fa-cubes-stacked"></i> Summary Dashboard
+                <span class="spacer"></span>
+                <button class="icon-btn refresh-btn neonable neon-teal" onclick="loadDashboard(true)" data-testid="refresh-data-button">
+                    <i class="fa-solid fa-rotate"></i> Muat Ulang
+                </button>
+            </div>
+            <div class="stat-grid" id="stat-grid" data-testid="summary-grid">
+                <div class="glass skel"></div><div class="glass skel"></div>
+                <div class="glass skel"></div><div class="glass skel"></div>
+                <div class="glass skel"></div><div class="glass skel"></div>
+            </div>
+        </section>
+
+        <!-- Grafik -->
+        <section id="charts-section" aria-label="Grafik Data">
+            <div class="section-title neonable rise" style="--neon:var(--orange)">
+                <i class="fa-solid fa-chart-line"></i> Analitik Visual
+            </div>
+            <div class="charts-grid">
+                <div class="chart-panel glass shine neonable neon-blue rise" data-testid="po-chart-panel">
+                    <div class="chart-head">
+                        <h3><i class="fa-solid fa-file-invoice-dollar" style="color:var(--blue)"></i> Tren Purchase Order</h3>
+                        <p>Perbandingan PO per periode — arahkan kursor untuk detail angka</p>
+                    </div>
+                    <div class="chart-wrap" id="po-chart-wrap"><canvas id="po-chart"></canvas></div>
+                </div>
+                <div class="chart-panel glass shine neonable neon-teal rise" data-testid="dept-chart-panel">
+                    <div class="chart-head">
+                        <h3><i class="fa-solid fa-users" style="color:var(--teal)"></i> Distribusi Karyawan</h3>
+                        <p>Komposisi karyawan per departemen</p>
+                    </div>
+                    <div class="chart-wrap" id="dept-chart-wrap"><canvas id="dept-chart"></canvas></div>
+                </div>
             </div>
         </section>
     </main>
 
-    <!-- CURTAIN MODAL CONTAINER -->
+    <!-- Footer -->
+    <footer class="license glass rise" data-testid="license-footer">
+        &copy; 2026 <b>PT Murinda Sentra Baja</b> — MSB ERP System &nbsp;|&nbsp; Lisensi: <b>Aspuro Amarulloh Khoiri</b>
+    </footer>
+
+    <!-- Curtain Modal Viewport -->
     <div class="curtain-container" id="curtain-container">
-        <div class="curtain-header">
-            <span class="font-semibold text-sm">MSB Module View</span>
-            <button onclick="window._closeCurtain()" class="text-slate-400 hover:text-white px-3 py-1 bg-slate-700 rounded"><i class="fa-solid fa-xmark"></i> Tutup</button>
+        <div class="curtain-header glass">
+            <span><i class="fa-solid fa-window-restore" style="color:var(--teal)"></i> MSB Module View</span>
+            <button class="btn-logout" style="border-color:var(--glass-border-soft);background:var(--glass-solid);color:var(--text)" onclick="window._closeCurtain()" data-testid="curtain-close-button">
+                <i class="fa-solid fa-xmark"></i> <span>Tutup</span>
+            </button>
         </div>
-        <iframe id="curtain-frame" class="curtain-body" src=""></iframe>
+        <iframe id="curtain-frame" class="curtain-body" src="" title="Modul ERP"></iframe>
     </div>
 
-    <!-- NOTIFICATION CONTAINER -->
-    <div id="notification-container" class="fixed bottom-16 right-4 z-50 flex flex-col gap-2"></div>
+    <!-- 18. Detail Overlay Modal -->
+    <div class="detail-overlay" id="detail-overlay">
+        <div class="detail-panel glass shine">
+            <div class="detail-head">
+                <h3 id="detail-title"><i class="fa-solid fa-list-check"></i> Rincian Data</h3>
+                <button class="icon-btn" onclick="window._closeDetail()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="detail-body" id="detail-body">
+                <div class="detail-note"><i class="fa-solid fa-circle-notch fa-spin"></i> Memuat rincian data...</div>
+            </div>
+        </div>
+    </div>
 
-    <!-- ===== JAVASCRIPT FUNCTIONS (Integrasi Kode 4, 5, 6, 7, & 8) ===== -->
+    <!-- Toast Notification Holder -->
+    <div id="notification-container"></div>
+
+    <!-- ================= JAVASCRIPT ================= -->
     <script>
-        /* ===== (Integrasi Kode 8 & 7): Stat Targets Cache Handler & Animation Counter / Notification ===== */
-        function aV(id, target, duration) {
-            const el = document.getElementById(id);
-            if(!el) return;
-            target = Number(target) || 0;
-            window._statTargets = window._statTargets || {};
-            window._statTargets[id] = target;
-            let start = 0;
-            const increment = target / (duration / 16);
-            const timer = setInterval(() => {
-                start += increment;
-                if(start >= target) {
-                    el.innerText = Math.round(target).toLocaleString('id-ID');
-                    clearInterval(timer);
-                } else {
-                    el.innerText = Math.round(start).toLocaleString('id-ID');
-                }
-            }, 16);
-        }
-
-        function sN(title, msg, type='success'){
-            const container = document.getElementById('notification-container');
-            if(!container) return;
-            const notif = document.createElement('div');
-            notif.className = `p-3 rounded-lg shadow-lg text-sm text-white ${type === 'success' ? 'bg-emerald-600' : 'bg-blue-600'}`;
-            notif.innerHTML = `<strong>${title}</strong>: ${msg}`;
-            container.appendChild(notif);
-            setTimeout(() => notif.remove(), 3000);
-        }
-
-        /* ===== (Integrasi Kode 5): Viewport & Curtain Frame Actions ===== */
-        window._openCurtain = function(url) {
-            const curtain = document.getElementById('curtain-container');
-            const frame = document.getElementById('curtain-frame');
-            frame.src = url;
-            curtain.classList.add('active');
-            document.body.classList.add('viewport-open');
-            sN('Modul Dibuka', 'Memuat modul ERP system...');
-        };
-
-        /* ===== (Integrasi Kode 4): Drawer & Curtain Close Functions ===== */
-        window._closeCurtain = function() {
-            const curtain = document.getElementById('curtain-container');
-            const frame = document.getElementById('curtain-frame');
-            curtain.classList.remove('active');
-            setTimeout(() => frame.src = '', 400);
-        };
-
-        /* ===== MOBILE DRAWER + BOTTOM NAV ===== */
-        window._toggleDrawer = function() {
-            const d = document.getElementById('mobile-drawer');
-            const o = document.getElementById('drawer-overlay');
-            const isOpen = d.classList.toggle('open');
-            o.classList.toggle('open', isOpen);
-            document.body.style.overflow = isOpen ? 'hidden' : '';
-        };
-
-        window._closeDrawer = function() {
-            document.getElementById('mobile-drawer').classList.remove('open');
-            document.getElementById('drawer-overlay').classList.remove('open');
-            document.body.style.overflow = '';
-        };
-
-        window._navMod = function(url) { 
-            window._closeDrawer(); 
-            window._openCurtain(url); 
-        };
-
-        window._scrollTo = function(sel) {
-            const el = document.querySelector(sel);
-            if (el) window.scrollTo({ top: el.offsetTop - 96, behavior: 'smooth' });
-            document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
-        };
-
-        window._drawerHome = function() {
-            window._closeDrawer();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            document.querySelectorAll('.bn-item').forEach((b, i) => b.classList.toggle('active', i === 0));
-        };
-
-        window._tTheme = function() {
-            sN('Tema', 'Fitur ubah tema aktif.');
-        };
-
-        window._dOut = function() {
-            if(confirm('Apakah Anda yakin ingin keluar dari sistem?')) {
-                sN('Logout', 'Anda telah keluar dari sistem.');
-            }
-        };
-
-        /* ===== (Integrasi Kode 6): Viewport Close & Cleanup Actions ===== */
-        window._cleanupViewport = function() {
-            const curtain = document.getElementById('curtain-container');
-            const frame = document.getElementById('curtain-frame');
-            curtain.classList.remove('active');
-            document.body.classList.remove('viewport-open');
-            setTimeout(() => {
-                frame.src = '';
-            }, 300);
-        };
-
-        // Initialize counters on load
-        window.addEventListener('DOMContentLoaded', () => {
-            aV('stat-prod', 1482, 1000);
-            aV('stat-po', 12, 800);
+    /* 15. Service Worker Registration */
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(() => console.log('Service Worker Registered'))
+                .catch(err => console.log('SW Registration Failed:', err));
         });
+    }
+
+    /* Configuration */
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycby3-_962idRFE7kdAaokZrPZRmM6mc6Al9wHBdm1DeGdeSmcmBtk52NGeWT9Ob81Lliww/exec';
+
+    const NEON = {
+        blue:   { hex: '#3b82f6', rgb: '59,130,246' },
+        teal:   { hex: '#2dd4bf', rgb: '45,212,191' },
+        orange: { hex: '#fb923c', rgb: '251,146,60' },
+        green:  { hex: '#4ade80', rgb: '74,222,128' }
+    };
+
+    /* 1 & 2. Variables & Constants Setup */
+    const NEON_ORDER = ['blue', 'teal', 'orange', 'green'];
+    let poChart = null, deptChart = null, rawData = null;
+
+    /* Theme Functions */
+    function applyTheme(theme, silent) {
+        document.documentElement.setAttribute('data-theme', theme);
+        try { localStorage.setItem('msb-theme', theme); } catch (e) {}
+        updateChartsTheme();
+        if (!silent) sN('Tema Diubah', theme === 'dark' ? 'Mode gelap aktif' : 'Mode terang aktif', theme === 'dark' ? 'blue' : 'orange');
+    }
+    window._tTheme = function () {
+        const cur = document.documentElement.getAttribute('data-theme');
+        applyTheme(cur === 'dark' ? 'light' : 'dark');
+    };
+    (function initTheme() {
+        let saved = null;
+        try { saved = localStorage.getItem('msb-theme'); } catch (e) {}
+        if (!saved) saved = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        applyTheme(saved, true);
+    })();
+
+    /* Real-Time Digital Clock */
+    const dayFmt  = new Intl.DateTimeFormat('id-ID', { weekday: 'long' });
+    const dateFmt = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    function tickClock() {
+        const now = new Date();
+        document.getElementById('clock-day').textContent  = dayFmt.format(now);
+        document.getElementById('clock-date').textContent = dateFmt.format(now);
+        document.getElementById('clock-time').textContent =
+            now.toLocaleTimeString('id-ID', { hour12: false }).replace(/\./g, ':') + ' WIB';
+    }
+    tickClock();
+    setInterval(tickClock, 1000);
+
+    /* Toast Notification */
+    function sN(title, msg, color) {
+        color = color || 'green';
+        const c = document.getElementById('notification-container');
+        const t = document.createElement('div');
+        t.className = 'toast glass neonable neon-' + color;
+        t.style.setProperty('--neon', NEON[color].hex);
+        t.innerHTML = '<i class="fa-solid fa-circle-check"></i><div><b>' + title + '</b><br><span style="font-weight:500;font-size:.74rem;opacity:.8">' + msg + '</span></div>';
+        c.appendChild(t);
+        setTimeout(() => { t.classList.add('out'); setTimeout(() => t.remove(), 420); }, 3200);
+    }
+
+    /* Counter Animation */
+    function animateValue(el, target, duration) {
+        target = Number(target) || 0;
+        const t0 = performance.now();
+        function step(t) {
+            const p = Math.min((t - t0) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(target * eased).toLocaleString('id-ID');
+            if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    }
+
+    const SUMMARY_META = [
+        { key: 'Karyawan',         icon: 'fa-users',                sub: 'Total karyawan aktif' },
+        { key: 'Purchase Order',   icon: 'fa-file-invoice-dollar',  sub: 'PO tercatat' },
+        { key: 'Pengiriman',       icon: 'fa-truck-fast',           sub: 'Pengiriman barang' },
+        { key: 'Stok Produksi',    icon: 'fa-boxes-stacked',        sub: 'Unit stok produksi' },
+        { key: 'Jumlah LKP',       icon: 'fa-clipboard-list',       sub: 'Laporan kerja' },
+        { key: 'Total Insiden',    icon: 'fa-triangle-exclamation', sub: 'Insiden HSE' },
+        { key: 'SPP Belum Datang', icon: 'fa-clock-rotate-left',    sub: 'SPP menunggu' },
+        { key: 'Tamu Aktif',       icon: 'fa-id-badge',             sub: 'Tamu di area pabrik' },
+        { key: 'Kendaraan Aktif',  icon: 'fa-car-side',             sub: 'Kendaraan beroperasi' }
+    ];
+
+    /* 1. Dashboard Data Loader Function */
+    async function loadDashboard(manual) {
+        const grid = document.getElementById('stat-grid');
+        try {
+            const res = await fetch(GAS_URL);
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            rawData = await res.json();
+            renderSummary(rawData.summary);
+            renderPOChart(rawData.trendPO);
+            renderDeptChart(rawData.karyawan);
+            if (manual) sN('Data Diperbarui', 'Summary berhasil dimuat ulang dari spreadsheet', 'teal');
+        } catch (err) {
+            grid.innerHTML = '<div class="glass neonable neon-orange" style="grid-column:1/-1;padding:26px;text-align:center">' +
+                '<i class="fa-solid fa-cloud-arrow-down" style="font-size:1.6rem;color:var(--orange)"></i>' +
+                '<p style="margin-top:10px;font-size:.85rem">Gagal memuat data spreadsheet. Periksa koneksi lalu tekan <b>Muat Ulang</b>.</p></div>';
+            sN('Gagal Memuat', 'Tidak dapat mengambil data spreadsheet', 'orange');
+        }
+    }
+
+    function renderSummary(summary) {
+        const grid = document.getElementById('stat-grid');
+        grid.innerHTML = '';
+        if (!summary || summary.length < 2) return;
+        const headers = summary[0];
+        const values  = summary[1];
+        headers.forEach((label, i) => {
+            const meta = SUMMARY_META.find(m => m.key === label) || { icon: 'fa-chart-simple', sub: 'Data spreadsheet' };
+            const neon = NEON_ORDER[i % 4];
+            const card = document.createElement('div');
+            card.className = 'stat-card glass shine neonable neon-' + neon + ' rise';
+            card.style.animationDelay = (i * 60) + 'ms';
+            card.setAttribute('data-testid', 'stat-card-' + i);
+            card.innerHTML =
+                '<div class="stat-icon"><i class="fa-solid ' + meta.icon + '"></i></div>' +
+                '<div class="stat-label">' + label + '</div>' +
+                '<div class="stat-value">0</div>' +
+                '<div class="stat-sub">' + meta.sub + '</div>';
+            grid.appendChild(card);
+            animateValue(card.querySelector('.stat-value'), values[i], 1100 + i * 90);
+            attachTilt(card);
+        });
+        attachNeonClicks();
+    }
+
+    function renderPOChart(trendPO) {
+        if (!trendPO || trendPO.length < 2 || typeof Chart === 'undefined') return;
+        const labels  = trendPO.slice(1).map(r => r[0]);
+        const seriesA = trendPO.slice(1).map(r => Number(r[1]) || 0);
+        const seriesB = trendPO.slice(1).map(r => Number(r[2]) || 0);
+        const nameA = trendPO[0][1] || 'Customer A';
+        const nameB = trendPO[0][2] || 'Customer B';
+        const wrap = document.getElementById('po-chart-wrap');
+        const ctx = document.getElementById('po-chart').getContext('2d');
+
+        if (poChart) poChart.destroy();
+        const gA = ctx.createLinearGradient(0, 0, 0, 340);
+        gA.addColorStop(0, 'rgba(' + NEON.blue.rgb + ',.95)');
+        gA.addColorStop(1, 'rgba(' + NEON.blue.rgb + ',.25)');
+        const gB = ctx.createLinearGradient(0, 0, 0, 340);
+        gB.addColorStop(0, 'rgba(' + NEON.orange.rgb + ',.95)');
+        gB.addColorStop(1, 'rgba(' + NEON.orange.rgb + ',.25)');
+
+        poChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    { label: nameA, data: seriesA, backgroundColor: gA, borderColor: NEON.blue.hex, borderWidth: 1.5, borderRadius: 9, hoverBackgroundColor: NEON.blue.hex },
+                    { label: nameB, data: seriesB, backgroundColor: gB, borderColor: NEON.orange.hex, borderWidth: 1.5, borderRadius: 9, hoverBackgroundColor: NEON.orange.hex }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                onHover: function (e, active) {
+                    wrap.classList.remove('glow-blue', 'glow-orange');
+                    if (active && active.length) {
+                        wrap.classList.add(active[0].datasetIndex === 0 ? 'glow-blue' : 'glow-orange');
+                    }
+                },
+                plugins: {
+                    legend: { labels: { color: cssText(), font: { family: 'Plus Jakarta Sans', weight: '600' }, usePointStyle: true, pointStyle: 'rectRounded' } },
+                    tooltip: {
+                        backgroundColor: 'rgba(10,16,30,.9)', borderColor: NEON.blue.hex, borderWidth: 1,
+                        titleColor: '#fff', bodyColor: '#dbe6f5', padding: 13, cornerRadius: 12,
+                        titleFont: { family: 'Plus Jakarta Sans', weight: '700' },
+                        bodyFont: { family: 'JetBrains Mono', weight: '700', size: 13 },
+                        callbacks: { label: c => ' ' + c.dataset.label + ': ' + c.parsed.y.toLocaleString('id-ID') + ' PO' }
+                    }
+                },
+                scales: chartScales()
+            }
+        });
+    }
+
+    function renderDeptChart(karyawan) {
+        if (!karyawan || karyawan.length < 2 || typeof Chart === 'undefined') return;
+        const header = karyawan[0];
+        const deptIdx = header.findIndex(h => String(h).toLowerCase().includes('departemen'));
+        if (deptIdx < 0) return;
+        const counts = {};
+        karyawan.slice(1).forEach(row => {
+            const dept = String(row[deptIdx] || '').trim() || 'Lainnya';
+            counts[dept] = (counts[dept] || 0) + 1;
+        });
+        const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+        const labels = entries.map(e => e[0]);
+        const data = entries.map(e => e[1]);
+        const palette = [NEON.blue.hex, NEON.teal.hex, NEON.orange.hex, NEON.green.hex, '#60a5fa', '#5eead4', '#fdba74'];
+        const colors = labels.map((_, i) => palette[i % palette.length]);
+        const total = data.reduce((a, b) => a + b, 0);
+        const wrap = document.getElementById('dept-chart-wrap');
+        const ctx = document.getElementById('dept-chart').getContext('2d');
+
+        if (deptChart) deptChart.destroy();
+        deptChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data, backgroundColor: colors,
+                    borderColor: 'rgba(255,255,255,.16)', borderWidth: 2,
+                    hoverOffset: 16, hoverBorderColor: colors, hoverBorderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false, cutout: '58%',
+                onHover: function (e, active) {
+                    wrap.classList.toggle('glow-multi', !!(active && active.length));
+                },
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: cssText(), padding: 14, font: { family: 'Plus Jakarta Sans', weight: '600', size: 11 }, usePointStyle: true, pointStyle: 'circle' } },
+                    tooltip: {
+                        backgroundColor: 'rgba(10,16,30,.9)', borderColor: NEON.teal.hex, borderWidth: 1,
+                        titleColor: '#fff', bodyColor: '#dbe6f5', padding: 13, cornerRadius: 12,
+                        bodyFont: { family: 'JetBrains Mono', weight: '700', size: 13 },
+                        callbacks: {
+                            label: c => {
+                                const pct = ((c.parsed / total) * 100).toFixed(1);
+                                return ' ' + c.parsed + ' karyawan (' + pct + '%)';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function cssText() {
+        return getComputedStyle(document.documentElement).getPropertyValue('--text-dim').trim() || '#93a1b8';
+    }
+    function chartScales() {
+        const grid = getComputedStyle(document.documentElement).getPropertyValue('--chart-grid').trim();
+        return {
+            x: { grid: { color: 'transparent' }, ticks: { color: cssText(), font: { family: 'Plus Jakarta Sans', size: 11 } } },
+            y: { grid: { color: grid }, border: { display: false }, ticks: { color: cssText(), font: { family: 'JetBrains Mono', size: 11 } } }
+        };
+    }
+    function updateChartsTheme() {
+        if (poChart)  { Object.assign(poChart.options.scales, chartScales()); poChart.options.plugins.legend.labels.color = cssText(); poChart.update('none'); }
+        if (deptChart){ deptChart.options.plugins.legend.labels.color = cssText(); deptChart.update('none'); }
+    }
+
+    function attachNeonClicks() {
+        document.querySelectorAll('.neonable').forEach(el => {
+            if (el._neonBound) return;
+            el._neonBound = true;
+            el.addEventListener('pointerdown', () => {
+                el.classList.remove('neon-click');
+                void el.offsetWidth;
+                el.classList.add('neon-click');
+            });
+        });
+    }
+    attachNeonClicks();
+
+    function attachTilt(card) {
+        card.addEventListener('pointermove', e => {
+            const r = card.getBoundingClientRect();
+            const x = (e.clientX - r.left) / r.width - .5;
+            const y = (e.clientY - r.top) / r.height - .5;
+            card.style.transform = 'perspective(700px) rotateX(' + (-y * 7) + 'deg) rotateY(' + (x * 7) + 'deg) translateY(-3px)';
+        });
+        card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+    }
+
+    /* Modal & Drawer Handlers */
+    window._toggleDrawer = function () {
+        const d = document.getElementById('mobile-drawer');
+        const o = document.getElementById('drawer-overlay');
+        const open = d.classList.toggle('open');
+        o.classList.toggle('open', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+    };
+    window._closeDrawer = function () {
+        document.getElementById('mobile-drawer').classList.remove('open');
+        document.getElementById('drawer-overlay').classList.remove('open');
+        document.body.style.overflow = '';
+    };
+    window._closeDetail = function () {
+        document.getElementById('detail-overlay').classList.remove('open');
+    };
+    window._openCurtain = function (url) {
+        document.getElementById('curtain-frame').src = url;
+        document.getElementById('curtain-container').classList.add('active');
+        sN('Modul Dibuka', 'Memuat modul ERP system...', 'blue');
+    };
+    window._closeCurtain = function () {
+        document.getElementById('curtain-container').classList.remove('active');
+        setTimeout(() => document.getElementById('curtain-frame').src = '', 450);
+    };
+    window._navMod = function (url) { window._closeDrawer(); window._openCurtain(url); };
+    window._scrollTo = function (sel) {
+        const el = document.querySelector(sel);
+        if (el) window.scrollTo({ top: el.offsetTop - 100, behavior: 'smooth' });
+        document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
+    };
+    window._drawerHome = function () {
+        window._closeDrawer();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.querySelectorAll('.bn-item').forEach((b, i) => b.classList.toggle('active', i === 0));
+    };
+    window._dOut = function () {
+        if (confirm('Apakah Anda yakin ingin keluar dari sistem?')) {
+            sN('Logout', 'Anda telah keluar dari sistem.', 'orange');
+        }
+    };
+
+    window.addEventListener('DOMContentLoaded', () => loadDashboard(false));
     </script>
 </body>
 </html>
