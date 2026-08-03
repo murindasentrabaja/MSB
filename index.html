@@ -591,10 +591,22 @@
             <div class="chart-card">
                 <div class="chart-header"><div><h3 class="chart-title">Jadwal Pengiriman</h3><p class="chart-subtitle">Master Schedule (Live Data)</p></div></div>
                 <div class="calendar-widget-container">
-                    <div class="mini-cal-header-info"><span id="mini-cal-month" style="color: var(--primary-blue);"><i class="fa-solid fa-spinner fa-spin"></i> Memuat Jadwal...</span></div>
-                    <div class="mini-cal-days"><div style="color: var(--primary-red);">Min</div><div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div></div>
-                    <div class="mini-cal-grid" id="mini-cal-grid"></div>
-                </div>
+    <div class="mini-cal-header-info">
+        <span id="mini-cal-month" style="color: var(--primary-blue);">
+            <i class="fa-solid fa-spinner fa-spin"></i> Memuat Jadwal...
+        </span>
+    </div>
+    <div class="mini-cal-days">
+        <div style="color: var(--primary-red);">Min</div>
+        <div>Sen</div>
+        <div>Sel</div>
+        <div>Rab</div>
+        <div>Kam</div>
+        <div>Jum</div>
+        <div>Sab</div>
+    </div>
+    <div class="mini-cal-grid" id="mini-cal-grid"></div>
+</div>
             </div>
 
             <div class="chart-card">
@@ -908,35 +920,87 @@
         }
         
         // FUNGSI JAVASCRIPT YANG SEBELUMNYA TERPOTONG 
-        function buildMiniCalendar(){
-            const grid=document.getElementById('mini-cal-grid');
-            const mLabel=document.getElementById('mini-cal-month');
-            if(!grid)return;
-            grid.innerHTML='';
-            const now=new Date();
-            const y=now.getFullYear();
-            const m=now.getMonth();
-            const monthNames=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-            mLabel.innerHTML=`<i class="fa-solid fa-calendar-check"></i> ${monthNames[m]} ${y}`;
-            const firstDay=new Date(y,m,1).getDay();
-            const daysInMonth=new Date(y,m+1,0).getDate();
+       function buildMiniCalendar() {
+    const grid = document.getElementById('mini-cal-grid');
+    const mLabel = document.getElementById('mini-cal-month');
+    
+    if (!grid) return;
+    
+    grid.innerHTML = '';
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = now.getMonth();
+    const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+    
+    mLabel.innerHTML = `<i class="fa-solid fa-calendar-check"></i> ${monthNames[m]} ${y}`;
+    
+    const firstDay = new Date(y, m, 1).getDay();
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    
+    // 1. Tambahkan sel kosong untuk hari sebelum tanggal 1
+    for (let i = 0; i < firstDay; i++) {
+        let empty = document.createElement('div');
+        grid.appendChild(empty);
+    }
+    
+    // 2. Looping untuk membuat setiap tanggal di bulan tersebut
+    for (let i = 1; i <= daysInMonth; i++) {
+        let cell = document.createElement('div');
+        cell.className = 'mini-cal-cell';
+        cell.innerText = i;
+        
+        const isSunday = new Date(y, m, i).getDay() === 0;
+        if (isSunday) cell.classList.add('holiday');
+        
+        // Logika Pengecekan Data (Jadwal Pengiriman)
+        const todaysItems = deliveriesData.filter(item => {
+            const dateKey = Object.keys(item).find(k => k.toLowerCase().includes('delivery date') || k.toLowerCase().includes('tanggal'));
+            if (dateKey && item[dateKey]) {
+                const itemDate = new Date(item[dateKey]);
+                return itemDate.getDate() === i && itemDate.getMonth() === m && itemDate.getFullYear() === y;
+            }
+            return false;
+        });
+        
+        // Pembuatan Tooltip jika ada jadwal di tanggal tersebut
+        if (todaysItems.length > 0) {
+            cell.classList.add('has-data');
+            let tooltip = document.createElement('div');
+            tooltip.className = 'mini-tooltip';
+            let tooltipHtml = '';
             
-            for(let i=0;i<firstDay;i++){
-                let empty=document.createElement('div');
-                empty.className='mini-cal-cell';
-                empty.style.background='transparent';
-                empty.style.border='none';
-                grid.appendChild(empty);
-            }
-            for(let i=1;i<=daysInMonth;i++){
-                let cell=document.createElement('div');
-                cell.className='mini-cal-cell';
-                cell.innerText=i;
-                let dayOfWeek = new Date(y, m, i).getDay();
-                if(dayOfWeek === 0) cell.classList.add('holiday');
-                grid.appendChild(cell);
-            }
+            todaysItems.forEach(item => {
+                const exactSerialKey = Object.keys(item).find(k => k.toLowerCase() === 'serial number');
+                const poKey = Object.keys(item).find(k => k.toLowerCase().includes('po') || k.toLowerCase().includes('purchase'));
+                const sn = exactSerialKey ? item[exactSerialKey] : 'Unknown Item';
+                const po = poKey ? item[poKey] : '-';
+                tooltipHtml += `<div class="mini-tooltip-item"><span class="mini-sn">${sn}</span><span style="font-size:0.7rem; color:var(--text-muted)">PO: ${po}</span></div>`;
+            });
+            
+            tooltip.innerHTML = tooltipHtml;
+            cell.appendChild(tooltip);
+            
+            // Perbaikan penutup event listener yang terpotong
+            cell.addEventListener('click', (e) => {
+                // Hapus efek aktif di sel lain
+                document.querySelectorAll('.mini-cal-cell').forEach(c => {
+                    if (c !== cell) c.classList.remove('active-tooltip');
+                });
+                // Toggle tampilan tooltip di perangkat sentuh
+                cell.classList.toggle('active-tooltip');
+                e.stopPropagation();
+            });
         }
+        
+        // 3. BAGIAN PENTING: Menambahkan elemen tanggal ke dalam grid HTML
+        grid.appendChild(cell);
+    }
+    
+    // Opsional: Tutup tooltip saat area luar kalender diklik
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.mini-cal-cell').forEach(c => c.classList.remove('active-tooltip'));
+    });
+}
 
         // Action Functions Setup
         window._toggleFab = function() {
