@@ -82,7 +82,7 @@
             background-image: none; 
             color: var(--text-main);
             font-family: 'Inter', 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
-            overflow-x: hidden;
+            overflow-x: clip;
             position: relative;
             transition: background var(--transition-smooth), color var(--transition-smooth);
             padding-top: var(--safe-area-top);
@@ -96,7 +96,7 @@
 
         h1, h2, h3, h4, h5, button { font-family: 'Poppins', -apple-system, sans-serif; }
 
-        .glass-panel, .stat-card, .chart-card, .module-card {
+        .glass-panel, .stat-card, .module-card {
             background: var(--glass-bg);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
@@ -110,8 +110,23 @@
             z-index: 1;
             overflow: hidden;
         }
+        
+        .chart-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-top: 1.5px solid var(--glass-border-highlight) !important;
+            border-left: 1.5px solid var(--glass-border-highlight) !important;
+            border-right: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: var(--radius-lg);
+            position: relative;
+            z-index: 1;
+            overflow: visible !important;
+        }
 
-        .stat-card::before, .chart-card::before, .module-card::before {
+        .stat-card::before, .module-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -124,10 +139,10 @@
             pointer-events: none;
             z-index: 10;
         }
-        body.light-theme .stat-card::before, body.light-theme .chart-card::before, body.light-theme .module-card::before {
+        body.light-theme .stat-card::before, body.light-theme .module-card::before {
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
         }
-        .stat-card:hover::before, .chart-card:hover::before, .module-card:hover::before {
+        .stat-card:hover::before, .module-card:hover::before {
             left: 150%;
         }
 
@@ -191,7 +206,7 @@
         body.light-theme .login-card .factory_img { border-top-color: rgba(255,255,255,0.8); border-left-color: rgba(255,255,255,0.8); box-shadow: 0 25px 45px -12px rgba(31,38,135,0.2); }
         .login-card:hover .factory_img, .login-card:focus-within .factory_img { top: 50%; left: 74%; transform: translate(-50%, -50%) scale(1) rotate(0deg) translateZ(40px); opacity: 1; }
 
-        #main-dashboard { display: none; flex-direction: column; min-height: 100vh; transform-origin: top center; animation: fadeIn 0.75s cubic-bezier(0.25, 1, 0.3, 1); width: 100%; overflow-x: hidden; }
+        #main-dashboard { display: none; flex-direction: column; min-height: 100vh; transform-origin: top center; animation: fadeIn 0.75s cubic-bezier(0.25, 1, 0.3, 1); width: 100%; overflow-x: clip; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.98) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
         .dashboard-dimmed { transform: scale(0.96) translateY(-12px); opacity: 0.35; filter: blur(12px); pointer-events: none; transition: transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease; }
 
@@ -203,7 +218,7 @@
         .hse-ticker { display: inline-block; padding-left: 100%; animation: ticker 42s linear infinite; font-weight: 600; color: var(--primary-orange); font-size: 0.82rem; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        header { min-height: 80px; background: var(--glass-bg); backdrop-filter: var(--glass-blur); border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.1); position: sticky; top: 0; width: 100%; }
+        header { min-height: 80px; background: var(--glass-bg); backdrop-filter: var(--glass-blur); border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; z-index: 999; box-shadow: 0 4px 20px rgba(0,0,0,0.1); position: sticky; top: 0; width: 100%; }
         body.light-theme header { box-shadow: 0 4px 20px rgba(31,38,135,0.05); }
         .header-left { display: flex; align-items: center; gap: 20px; }
         .header-divider { width: 1px; height: 32px; background: var(--glass-border); }
@@ -398,7 +413,7 @@
         body.light-theme .mini-cal-cell.has-data { background: linear-gradient(180deg, transparent 40%, rgba(255, 159, 10, 0.1) 100%); }
         .mini-cal-cell.holiday { color: var(--primary-red); }
         
-        .mini-tooltip { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%) scale(0.85); opacity: 0; visibility: hidden; background: linear-gradient(135deg, rgba(20, 25, 40, 0.92) 0%, rgba(10, 14, 25, 0.96) 100%); border: 1px solid rgba(255,255,255,0.18); padding: 10px; border-radius: var(--radius-md); min-width: 190px; z-index: 100; transition: opacity 0.3s cubic-bezier(0.25, 1, 0.3, 1), transform 0.3s cubic-bezier(0.25, 1, 0.3, 1), visibility 0.3s; box-shadow: 0 10px 25px rgba(0,0,0,0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); max-height: 160px; overflow-y: auto; text-align: left; pointer-events: none; }
+        .mini-tooltip { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%) scale(0.85); opacity: 0; visibility: hidden; background: linear-gradient(135deg, rgba(20, 25, 40, 0.92) 0%, rgba(10, 14, 25, 0.96) 100%); border: 1px solid rgba(255,255,255,0.18); padding: 10px; border-radius: var(--radius-md); min-width: 190px; z-index: 9999; transition: opacity 0.3s cubic-bezier(0.25, 1, 0.3, 1), transform 0.3s cubic-bezier(0.25, 1, 0.3, 1), visibility 0.3s; box-shadow: 0 10px 25px rgba(0,0,0,0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); max-height: 160px; overflow-y: auto; text-align: left; pointer-events: none; }
         body.light-theme .mini-tooltip { background: linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 100%); border-color:rgba(0,0,0,0.1); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         .mini-cal-cell:hover .mini-tooltip, .mini-cal-cell.active-tooltip .mini-tooltip { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); pointer-events: auto; }
         
@@ -463,9 +478,13 @@
             .login-address-block .address-text, .login-address-block .contact-info { font-size: 0.76rem; }
             .luxury-btn { padding: 14px; font-size: 0.95rem; border-radius: 18px; }
             
-            footer { flex-direction: column; text-align: center; padding: 20px 16px; gap: 16px; }
-            .footer-contact { flex-direction: column; gap: 6px; align-items: center; }
-            .footer-copy { text-align: center; }
+            footer { flex-direction: column; text-align: center; padding: 30px 20px; gap: 24px; }
+            .footer-address { font-size: 0.85rem; line-height: 1.6; }
+            .footer-address strong { font-size: 1rem; margin-bottom: 8px; display: block; }
+            .footer-contact { flex-direction: column; gap: 12px; align-items: center; padding-top: 10px; }
+            .footer-contact span { display: flex; justify-content: center; width: 100%; }
+            .footer-copy { text-align: center; border-top: 1px solid var(--glass-border); padding-top: 20px; width: 100%; margin-top: 5px; }
+            .footer-copy span:first-child { margin-bottom: 8px; display: block; }
             
             .notification-container { top: 12px; right: 12px; left: 12px; }
             .notification { min-width: 0; width: 100%; padding: 14px; }
@@ -811,285 +830,31 @@
             if (clientProcessChart) clientProcessChart.destroy();
             clientProcessChart = new Chart(ctxPO, {
                 type: 'line',
-                data: { labels: poLabels, datasets: poDatasets },
+                data: {
+                    labels: poLabels,
+                    datasets: poDatasets
+                },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
                     plugins: {
                         legend: {
-                            position: 'top',
-                            labels: {
-                                color: textColor,
-                                usePointStyle: true, 
-                                pointStyle: 'circle', 
-                                font: { family: 'Inter', size: 11 }
-                            }
-                        },
-                        tooltip: { backgroundColor: 'rgba(0,0,0,0.8)', padding: 10, cornerRadius: 8, titleFont: {family: 'Inter'}, bodyFont: {family: 'Inter'} }
+                            labels: { color: textColor, font: { family: 'Inter' } }
+                        }
                     },
                     scales: {
-                        y: { grid: { color: gridColor }, ticks: { color: tickColor, font: {family: 'Inter', size: 10} } },
-                        x: { grid: { display: false }, ticks: { color: tickColor, font: {family: 'Inter', size: 10} } }
+                        x: {
+                            ticks: { color: tickColor },
+                            grid: { color: gridColor }
+                        },
+                        y: {
+                            ticks: { color: tickColor },
+                            grid: { color: gridColor }
+                        }
                     }
                 }
             });
         }
-
-        async function fD(){
-            try{
-                const r = await fetch(m);
-                const d = await r.json();
-                globalTrendPO = d.trendPO;
-                globalKaryawan = d.karyawan;
-
-                let sM={};
-                if(d.summary && d.summary.length > 0){
-                    let h = d.summary[0].length > 2;
-                    if(h && d.summary.length > 1){
-                        d.summary[0].forEach((he,i)=>{if(he)sM[String(he).trim().toLowerCase()]=d.summary[1][i];});
-                    }else{
-                        d.summary.forEach(ro=>{if(ro.length>=2&&ro[0]!=null&&ro[0]!=='')sM[String(ro[0]).trim().toLowerCase()]=ro[1];});
-                    }
-                }
-                
-                const pT=(l)=>{
-                    let ma=sM[l.toLowerCase().trim()];
-                    if(ma===undefined||ma===null||ma==='')return 0;
-                    if(typeof ma==='string')return parseFloat(ma.replace(/[^0-9.-]/g,''))||0;
-                    return ma;
-                };
-                
-                aV('stat-karyawan',pT('Karyawan'),1200);
-                aV('stat-po',pT('Purchase Order'),1200);
-                aV('stat-pengiriman',pT('Pengiriman'),1200);
-                aV('stat-stok',pT('Stok Produksi'),1200);
-                aV('stat-lkp',pT('Jumlah LKP'),1200);
-                aV('stat-insiden',pT('Total Insiden'),1200);
-                aV('stat-spp',pT('SPP Belum Datang'),1200);
-                
-                let tamuAktif = pT('tamu di dalam') || pT('tamu aktif') || pT('tamu') || pT('jumlah tamu') || 0;
-                let kendaraanAktif = pT('kendaraan masuk') || pT('kendaraan aktif') || pT('kendaraan di dalam') || pT('kendaraan') || 0;
-                
-                aV('stat-tamu-aktif', tamuAktif, 1200);
-                aV('stat-kendaraan-aktif', kendaraanAktif, 1200);
-                uC(globalTrendPO, globalKaryawan);
-            } catch(e) {
-                console.error("Data Fetch Error:", e);
-                uC(null, null);
-            }
-        }
-
-        async function fS(){
-            try{
-                const r=await fetch(s),res=await r.json();
-                if(res.error)return;
-                const h=res.headers,d=res.data,mI=h.findIndex(x=>x.toString().toLowerCase().trim()==='nama material'),sI=h.findIndex(x=>x.toString().toLowerCase().trim()==='spp total'),kI=h.findIndex(x=>x.toString().toLowerCase().trim()==='kedatangan');
-                if(mI===-1||sI===-1||kI===-1)return;
-                let mM={},tS=0,tD=0;
-                d.forEach(ro=>{
-                    if(ro.every(ce=>ce===''||ce===null||ce===undefined))return;
-                    let mN=ro[mI],sQ=Number(ro[sI])||0,dQ=Number(ro[kI])||0,si=dQ-sQ;
-                    if(mN){if(si<0)mM[mN]=(mM[mN]||0)+Math.abs(si);tS+=sQ;tD+=dQ>sQ?sQ:dQ;}
-                });
-                const pL=document.getElementById('spp-pending-list');
-                if(Object.keys(mM).length===0){
-                    pL.innerHTML=`<li class="sp-list-item"><span style="color:var(--primary-green);">✨ Seluruh material telah terpenuhi</span><strong style="color:var(--primary-green);">-</strong></li>`;
-                }else{
-                    let hL='';
-                    for(let mat in mM)hL+=`<li class="sp-list-item"><span>${mat}</span><strong style="color:var(--primary-red);">- ${mM[mat]}</strong></li>`;
-                    pL.innerHTML=hL;
-                }
-                let pt=tS>0?Math.floor((tD/tS)*100):0;if(pt>100)pt=100;
-                document.getElementById('spp-fulfillment-text').innerText=pt+"%";
-                document.getElementById('spp-fulfillment-bar').style.width=pt+"%";
-            }catch(e){
-                document.getElementById('spp-pending-list').innerHTML=`<li class="sp-list-item"><span style="color:var(--primary-red);">Gagal mengambil data sinkronisasi</span><strong style="color:var(--primary-red);">X</strong></li>`;
-            }
-        }
-        
-        async function fetchSchedule(){
-            try{
-                const r=await fetch(schUrl);
-                const d=await r.json();
-                if(!d.error){deliveriesData=d;buildMiniCalendar();}
-            }catch(e){
-                console.error("Gagal memuat jadwal:",e);
-                document.getElementById('mini-cal-month').innerHTML="<i class='fa-solid fa-triangle-exclamation'></i> Gagal Sinkronisasi";
-            }
-        }
-        
-        // FUNGSI JAVASCRIPT YANG SEBELUMNYA TERPOTONG 
-       function buildMiniCalendar() {
-    const grid = document.getElementById('mini-cal-grid');
-    const mLabel = document.getElementById('mini-cal-month');
-    
-    if (!grid) return;
-    
-    grid.innerHTML = '';
-    const now = new Date();
-    const y = now.getFullYear();
-    const m = now.getMonth();
-    const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-    
-    mLabel.innerHTML = `<i class="fa-solid fa-calendar-check"></i> ${monthNames[m]} ${y}`;
-    
-    const firstDay = new Date(y, m, 1).getDay();
-    const daysInMonth = new Date(y, m + 1, 0).getDate();
-    
-    // 1. Tambahkan sel kosong untuk hari sebelum tanggal 1
-    for (let i = 0; i < firstDay; i++) {
-        let empty = document.createElement('div');
-        grid.appendChild(empty);
-    }
-    
-    // 2. Looping untuk membuat setiap tanggal di bulan tersebut
-    for (let i = 1; i <= daysInMonth; i++) {
-        let cell = document.createElement('div');
-        cell.className = 'mini-cal-cell';
-        cell.innerText = i;
-        
-        const isSunday = new Date(y, m, i).getDay() === 0;
-        if (isSunday) cell.classList.add('holiday');
-        
-        // Logika Pengecekan Data (Jadwal Pengiriman)
-        const todaysItems = deliveriesData.filter(item => {
-            const dateKey = Object.keys(item).find(k => k.toLowerCase().includes('delivery date') || k.toLowerCase().includes('tanggal'));
-            if (dateKey && item[dateKey]) {
-                const itemDate = new Date(item[dateKey]);
-                return itemDate.getDate() === i && itemDate.getMonth() === m && itemDate.getFullYear() === y;
-            }
-            return false;
-        });
-        
-        // Pembuatan Tooltip jika ada jadwal di tanggal tersebut
-        if (todaysItems.length > 0) {
-            cell.classList.add('has-data');
-            let tooltip = document.createElement('div');
-            tooltip.className = 'mini-tooltip';
-            let tooltipHtml = '';
-            
-            todaysItems.forEach(item => {
-                const exactSerialKey = Object.keys(item).find(k => k.toLowerCase() === 'serial number');
-                const poKey = Object.keys(item).find(k => k.toLowerCase().includes('po') || k.toLowerCase().includes('purchase'));
-                const sn = exactSerialKey ? item[exactSerialKey] : 'Unknown Item';
-                const po = poKey ? item[poKey] : '-';
-                tooltipHtml += `<div class="mini-tooltip-item"><span class="mini-sn">${sn}</span><span style="font-size:0.7rem; color:var(--text-muted)">PO: ${po}</span></div>`;
-            });
-            
-            tooltip.innerHTML = tooltipHtml;
-            cell.appendChild(tooltip);
-            
-            // Perbaikan penutup event listener yang terpotong
-            cell.addEventListener('click', (e) => {
-                // Hapus efek aktif di sel lain
-                document.querySelectorAll('.mini-cal-cell').forEach(c => {
-                    if (c !== cell) c.classList.remove('active-tooltip');
-                });
-                // Toggle tampilan tooltip di perangkat sentuh
-                cell.classList.toggle('active-tooltip');
-                e.stopPropagation();
-            });
-        }
-        
-        // 3. BAGIAN PENTING: Menambahkan elemen tanggal ke dalam grid HTML
-        grid.appendChild(cell);
-    }
-    
-    // Opsional: Tutup tooltip saat area luar kalender diklik
-    document.addEventListener('click', () => {
-        document.querySelectorAll('.mini-cal-cell').forEach(c => c.classList.remove('active-tooltip'));
-    });
-}
-
-        // Action Functions Setup
-        window._toggleFab = function() {
-            const fab = document.getElementById('quick-action-fab');
-            if(fab) {
-                fab.classList.toggle('active');
-            }
-        };
-
-        window._eSys = function(e) {
-            if(e) e.preventDefault();
-            const overlay = document.getElementById('login-overlay');
-            const main = document.getElementById('main-dashboard');
-            overlay.style.opacity = '0';
-            overlay.style.visibility = 'hidden';
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                main.style.display = 'flex';
-                fD();
-                fS();
-                fetchSchedule();
-            }, 600);
-        };
-
-        window._lNch = function(url) {
-            const viewport = document.getElementById('viewport-container');
-            const frame = document.getElementById('erp-frame');
-            const backBtn = document.getElementById('back-btn');
-            frame.src = url;
-            viewport.style.display = 'block';
-            setTimeout(() => {
-                viewport.classList.add('active');
-                backBtn.style.display = 'flex';
-                setTimeout(() => backBtn.classList.add('active'), 50);
-            }, 10);
-            document.getElementById('main-dashboard').classList.add('dashboard-dimmed');
-            document.getElementById('quick-action-fab').classList.add('hidden-by-viewport');
-        };
-
-        window._cView = function() {
-            const viewport = document.getElementById('viewport-container');
-            const frame = document.getElementById('erp-frame');
-            const backBtn = document.getElementById('back-btn');
-            backBtn.classList.remove('active');
-            viewport.classList.remove('active');
-            document.getElementById('main-dashboard').classList.remove('dashboard-dimmed');
-            document.getElementById('quick-action-fab').classList.remove('hidden-by-viewport');
-            setTimeout(() => {
-                backBtn.style.display = 'none';
-                viewport.style.display = 'none';
-                frame.src = '';
-            }, 450);
-        };
-
-        window._openCurtain = function(url) {
-            const curtain = document.getElementById('curtain-container');
-            const frame = document.getElementById('curtain-frame');
-            frame.src = url;
-            curtain.classList.add('active');
-            document.getElementById('main-dashboard').classList.add('dashboard-dimmed');
-        };
-
-        window._closeCurtain = function() {
-            const curtain = document.getElementById('curtain-container');
-            const frame = document.getElementById('curtain-frame');
-            curtain.classList.remove('active');
-            document.getElementById('main-dashboard').classList.remove('dashboard-dimmed');
-            setTimeout(() => {
-                frame.src = '';
-            }, 500);
-        };
-
-        window._tTheme = function() {
-            document.body.classList.toggle('light-theme');
-            if(globalTrendPO !== null || globalKaryawan !== null) {
-                uC(globalTrendPO, globalKaryawan);
-            }
-        };
-
-        window._dOut = function() {
-            const overlay = document.getElementById('login-overlay');
-            const main = document.getElementById('main-dashboard');
-            main.style.display = 'none';
-            overlay.style.display = 'flex';
-            setTimeout(() => {
-                overlay.style.opacity = '1';
-                overlay.style.visibility = 'visible';
-            }, 50);
-        };
     </script>
 </body>
 </html>
