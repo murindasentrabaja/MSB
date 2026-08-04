@@ -612,15 +612,25 @@
         
         .mini-cal-cell.has-data { border-bottom: 3px solid var(--primary-orange); color: var(--primary-orange); background: linear-gradient(180deg, transparent 40%, rgba(255, 159, 10, 0.15) 100%); font-weight: 800; }
         body.light-theme .mini-cal-cell.has-data { background: linear-gradient(180deg, transparent 40%, rgba(255, 159, 10, 0.1) 100%); }
+        .mini-cal-cell.has-data.all-delivered { border-bottom-color: var(--primary-green); color: var(--primary-green); background: linear-gradient(180deg, transparent 40%, rgba(48, 209, 88, 0.15) 100%); }
+        body.light-theme .mini-cal-cell.has-data.all-delivered { background: linear-gradient(180deg, transparent 40%, rgba(48, 209, 88, 0.1) 100%); }
         .mini-cal-cell.holiday { color: var(--primary-red); }
         
-        .mini-tooltip { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%) scale(0.85); opacity: 0; visibility: hidden; background: linear-gradient(135deg, rgba(20, 25, 40, 0.92) 0%, rgba(10, 14, 25, 0.96) 100%); border: 1px solid rgba(255,255,255,0.18); padding: 10px; border-radius: var(--radius-md); min-width: 190px; z-index: 100; transition: opacity 0.3s cubic-bezier(0.25, 1, 0.3, 1), transform 0.3s cubic-bezier(0.25, 1, 0.3, 1), visibility 0.3s; box-shadow: 0 10px 25px rgba(0,0,0,0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); max-height: 160px; overflow-y: auto; text-align: left; pointer-events: none; }
+        .mini-tooltip { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%) scale(0.85); opacity: 0; visibility: hidden; background: linear-gradient(135deg, rgba(20, 25, 40, 0.92) 0%, rgba(10, 14, 25, 0.96) 100%); border: 1px solid rgba(255,255,255,0.18); padding: 10px; border-radius: var(--radius-md); min-width: 220px; max-width: 260px; z-index: 100; transition: opacity 0.3s cubic-bezier(0.25, 1, 0.3, 1), transform 0.3s cubic-bezier(0.25, 1, 0.3, 1), visibility 0.3s; box-shadow: 0 10px 25px rgba(0,0,0,0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); max-height: 160px; overflow-y: auto; text-align: left; pointer-events: none; }
         body.light-theme .mini-tooltip { background: linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 100%); border-color:rgba(0,0,0,0.1); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         .mini-cal-cell:hover .mini-tooltip, .mini-cal-cell.active-tooltip .mini-tooltip { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); pointer-events: auto; }
         
         .mini-tooltip-item { font-size: 0.78rem; padding: 6px 2px; border-bottom: 1px solid var(--glass-border); display: flex; flex-direction: column; gap: 4px; }
         .mini-tooltip-item:last-child { border-bottom: none; }
         .mini-sn { font-weight: 700; color: var(--text-main); word-break: break-all; }
+        .mini-status-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.68rem; font-weight: 700; }
+        .mini-status-badge.delivered { color: var(--primary-green); }
+        .mini-status-badge.pending { color: var(--primary-orange); }
+
+        .cell-status-icon { position: absolute; top: -4px; right: -4px; font-size: 0.72rem; width: 15px; height: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #14192b; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 2px 5px rgba(0,0,0,0.35); }
+        body.light-theme .cell-status-icon { background: #ffffff; border-color: rgba(0,0,0,0.1); }
+        .cell-status-icon.delivered { color: var(--primary-green); }
+        .cell-status-icon.pending { color: var(--primary-orange); }
         
         /* ==================== OPTIMIZASI MOBILE RESPONSIVE ==================== */
         @media (max-width: 1200px) { .charts-section { grid-template-columns: 1fr; } }
@@ -998,7 +1008,7 @@
 
         const m = "https://script.google.com/macros/s/AKfycbzuq0CdzMfoRVG-YhJIja8Lsy1ZeShZbEjmIZgn7gFqqXonEq3PhoMR9XsIfWhARTWo/exec";
         const s = atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5ZzBrMmw4NGtaQXdveERNdnlua2xHQWVIWDJOY3hmX0RfVUhETU1SUHBnQ0c4dk9qSE00VFdveHM5S1laYUhzdU4vZXhlYw==");
-        const schUrl = "https://script.google.com/macros/s/AKfycbzuq0CdzMfoRVG-YhJIja8Lsy1ZeShZbEjmIZgn7gFqqXonEq3PhoMR9XsIfWhARTWo/exec";
+        const schUrl = "https://script.google.com/macros/s/AKfycbwIN-kg3cjvdHV7pStMbRIpCJtQeo9j80ncjDPCZ5TosPcJaZPxpRrhUDkwzgVyor_gig/exec";
         
         let clientProcessChart = null;
         let karyawanDeptChart = null;
@@ -1358,12 +1368,44 @@
         
         async function fetchSchedule(){
             try{
-                const r=await fetch(schUrl);
-                const d=await r.json();
-                if(!d.error){deliveriesData=d;buildMiniCalendar();}
+                const r = await fetch(schUrl);
+                if(!r.ok) throw new Error(`Server merespons status ${r.status}`);
+
+                const raw = await r.text();
+                let d;
+                try{
+                    d = JSON.parse(raw);
+                }catch(parseErr){
+                    // Respons bukan JSON valid (biasanya berarti Apps Script mengembalikan
+                    // halaman HTML/login, misalnya karena deployment belum "Anyone" atau
+                    // belum di-deploy ulang setelah skrip terakhir diubah).
+                    console.error("Respons jadwal bukan JSON:", raw.slice(0, 300));
+                    throw new Error('Respons server bukan JSON (kemungkinan deployment Apps Script belum benar).');
+                }
+
+                if(d && d.error){
+                    throw new Error(typeof d.error === 'string' ? d.error : 'Server mengembalikan status error.');
+                }
+
+                // Normalisasi: backend bisa mengembalikan array langsung, atau
+                // dibungkus di dalam properti seperti data/deliveries/result/rows.
+                let arr = null;
+                if(Array.isArray(d)) arr = d;
+                else if(d && Array.isArray(d.data)) arr = d.data;
+                else if(d && Array.isArray(d.deliveries)) arr = d.deliveries;
+                else if(d && Array.isArray(d.result)) arr = d.result;
+                else if(d && Array.isArray(d.rows)) arr = d.rows;
+
+                if(!arr){
+                    throw new Error('Format data jadwal tidak dikenali (bukan array).');
+                }
+
+                deliveriesData = arr;
+                buildMiniCalendar();
             }catch(e){
                 console.error("Gagal memuat jadwal:",e);
                 document.getElementById('mini-cal-month').innerHTML="<i class='fa-solid fa-triangle-exclamation'></i> Gagal Sinkronisasi";
+                sN('Jadwal Gagal Dimuat', e.message || 'Tidak dapat terhubung ke server jadwal.', 'warning');
             }
         }
         
@@ -1383,6 +1425,7 @@
             
             const firstDay = new Date(y, m, 1).getDay();
             const daysInMonth = new Date(y, m + 1, 0).getDate();
+            const safeData = Array.isArray(deliveriesData) ? deliveriesData : [];
             
             for (let i = 0; i < firstDay; i++) {
                 let empty = document.createElement('div');
@@ -1397,17 +1440,45 @@
                 const isSunday = new Date(y, m, i).getDay() === 0;
                 if (isSunday) cell.classList.add('holiday');
                 
-                const todaysItems = deliveriesData.filter(item => {
+                const todaysItems = safeData.filter(item => {
+                    if(!item || typeof item !== 'object') return false;
                     const dateKey = Object.keys(item).find(k => k.toLowerCase().includes('delivery date') || k.toLowerCase().includes('tanggal'));
                     if (dateKey && item[dateKey]) {
                         const itemDate = new Date(item[dateKey]);
+                        if(isNaN(itemDate.getTime())) return false;
                         return itemDate.getDate() === i && itemDate.getMonth() === m && itemDate.getFullYear() === y;
                     }
                     return false;
                 });
                 
+                // Helper: cari status pengiriman (terkirim/pending) dari kolom apa pun
+                // yang namanya mengandung "status", lalu klasifikasikan sudah terkirim atau belum.
+                const getStatusInfo = (item) => {
+                    const statusKey = Object.keys(item).find(k => k.toLowerCase().includes('status'));
+                    if (!statusKey || item[statusKey] === '' || item[statusKey] == null) {
+                        return { label: 'Pending', delivered: false };
+                    }
+                    const raw = String(item[statusKey]).trim();
+                    const low = raw.toLowerCase();
+                    const delivered = low.includes('terkirim') || low.includes('delivered') || low.includes('selesai') || low.includes('done') || low.includes('sent');
+                    return { label: raw || (delivered ? 'Terkirim' : 'Pending'), delivered };
+                };
+
                 if (todaysItems.length > 0) {
                     cell.classList.add('has-data');
+
+                    const allDelivered = todaysItems.every(item => getStatusInfo(item).delivered);
+                    if (allDelivered) cell.classList.add('all-delivered');
+
+                    // Ikon status ringkas di pojok sel: ceklis hijau jika semua SN pada
+                    // tanggal itu sudah terkirim, atau ikon jam (pending) jika masih ada yang belum.
+                    let statusIcon = document.createElement('i');
+                    statusIcon.className = allDelivered
+                        ? 'fa-solid fa-circle-check cell-status-icon delivered'
+                        : 'fa-solid fa-clock cell-status-icon pending';
+                    statusIcon.title = allDelivered ? 'Semua sudah terkirim' : 'Ada pengiriman pending';
+                    cell.appendChild(statusIcon);
+
                     let tooltip = document.createElement('div');
                     tooltip.className = 'mini-tooltip';
                     let tooltipHtml = '';
@@ -1417,14 +1488,36 @@
                         const poKey = Object.keys(item).find(k => k.toLowerCase().includes('po') || k.toLowerCase().includes('purchase'));
                         const sn = exactSerialKey ? item[exactSerialKey] : 'Unknown Item';
                         const po = poKey ? item[poKey] : '-';
-                        tooltipHtml += `<div class="mini-tooltip-item"><span class="mini-sn">${sn}</span><span style="font-size:0.7rem; color:var(--text-muted)">PO: ${po}</span></div>`;
+                        const st = getStatusInfo(item);
+                        const badgeClass = st.delivered ? 'delivered' : 'pending';
+                        const badgeIcon = st.delivered ? 'fa-circle-check' : 'fa-clock';
+                        tooltipHtml += `<div class="mini-tooltip-item">
+                            <span class="mini-sn">${sn}</span>
+                            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                                <span style="font-size:0.7rem; color:var(--text-muted)">PO: ${po}</span>
+                                <span class="mini-status-badge ${badgeClass}"><i class="fa-solid ${badgeIcon}"></i> ${st.label}</span>
+                            </div>
+                        </div>`;
                     });
                     tooltip.innerHTML = tooltipHtml;
                     cell.appendChild(tooltip);
+
+                    // Klik sel untuk membuka/menutup detail (selain hover, agar ramah untuk sentuhan/mobile)
+                    cell.addEventListener('click', (ev) => {
+                        ev.stopPropagation();
+                        const wasActive = cell.classList.contains('active-tooltip');
+                        document.querySelectorAll('.mini-cal-cell.active-tooltip').forEach(c => c.classList.remove('active-tooltip'));
+                        if (!wasActive) cell.classList.add('active-tooltip');
+                    });
                 }
                 grid.appendChild(cell);
             }
         } 
+
+        // Tutup detail jadwal yang sedang terbuka saat mengklik di luar kalender
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.mini-cal-cell.active-tooltip').forEach(c => c.classList.remove('active-tooltip'));
+        });
     </script>
 </body>
 </html>
