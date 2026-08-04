@@ -388,6 +388,8 @@
         }
 
         .luxury-btn { display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; padding: 16px; background: linear-gradient(135deg, #00f2fe 0%, var(--primary-blue) 100%); color: #fff; font-weight: 700; font-size: 1.05rem; border: none; cursor: pointer; border-radius: var(--radius-lg); letter-spacing: 0.5px; box-shadow: 0 8px 22px rgba(10, 132, 255, 0.4); transition: var(--transition-smooth); position: relative; overflow: hidden; transform-style: preserve-3d; }
+        .luxury-btn::before { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transform: skewX(-25deg); transition: all 0.75s cubic-bezier(0.25, 1, 0.3, 1); pointer-events: none; }
+        .luxury-btn:hover::before { left: 150%; }
         .luxury-btn:hover { transform: translateY(-2px); background: linear-gradient(135deg, #3fa1ff 0%, var(--primary-blue-hover) 100%); box-shadow: 0 12px 28px rgba(10, 132, 255, 0.6); }
         .luxury-btn:active { transform: translateY(0) scale(0.97); }
 
@@ -471,9 +473,13 @@
         .datetime { display: flex; align-items: center; gap: 15px; }
         .datetime i { color: var(--primary-blue); font-size: 0.9rem; }
         
-        .hse-ticker-wrap { flex: 1; max-width: 55%; overflow: hidden; white-space: nowrap; position: relative; display: flex; align-items: center; background: rgba(255, 159, 10, 0.1); padding: 5px 14px; border-radius: var(--radius-sm); border: 1px solid rgba(255, 159, 10, 0.15); margin-left: 20px; backdrop-filter: blur(5px); }
-        .hse-ticker { display: inline-block; padding-left: 100%; animation: ticker 42s linear infinite; font-weight: 600; color: var(--primary-orange); font-size: 0.82rem; }
+        .hse-ticker-wrap { flex: 1; max-width: 55%; overflow: hidden; white-space: nowrap; position: relative; display: flex; align-items: center; background: linear-gradient(90deg, rgba(10, 132, 255, 0.12), rgba(100, 210, 255, 0.08)); padding: 5px 14px; border-radius: var(--radius-sm); border: 1px solid rgba(100, 210, 255, 0.2); margin-left: 20px; backdrop-filter: blur(5px); }
+        .hse-ticker-wrap::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, transparent, rgba(100,210,255,0.35), transparent); width: 40%; animation: tickerGlint 5s ease-in-out infinite; pointer-events: none; }
+        @keyframes tickerGlint { 0% { transform: translateX(-120%); opacity: 0; } 15% { opacity: 0.7; } 50% { transform: translateX(280%); opacity: 0; } 100% { transform: translateX(280%); opacity: 0; } }
+        .hse-ticker { display: inline-block; padding-left: 100%; animation: ticker 42s linear infinite; font-weight: 600; font-size: 0.82rem; background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--primary-blue) 30%, var(--primary-purple) 55%, var(--primary-blue) 80%, var(--neon-cyan) 100%); background-size: 260% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: ticker 42s linear infinite, tickerShine 7s linear infinite; }
+        .hse-ticker i, .hse-ticker strong { -webkit-text-fill-color: var(--neon-cyan); color: var(--neon-cyan); text-shadow: 0 0 10px rgba(100, 210, 255, 0.5); }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        @keyframes tickerShine { 0% { background-position: 0% 0; } 100% { background-position: 260% 0; } }
 
         header { min-height: 70px; display: flex; justify-content: space-between; align-items: center; padding: 12px 40px; width: 100%; }
         .header-left { display: flex; align-items: center; gap: 20px; }
@@ -505,6 +511,36 @@
         .user-profile i { font-size: 1.25rem; color: var(--primary-blue); }
 
         .dashboard-stats { padding: 30px 40px 15px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; perspective: 1000px; width: 100%; }
+        
+        /* ==================== ENTRANCE REVEAL — CASCADE MODERN ==================== */
+        @keyframes cardRise { from { opacity: 0; transform: translateY(22px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .stat-card, .chart-card, .module-card { animation: cardRise 0.65s cubic-bezier(0.25, 1, 0.3, 1) backwards; }
+        .dashboard-stats .stat-card:nth-child(1) { animation-delay: .03s; }
+        .dashboard-stats .stat-card:nth-child(2) { animation-delay: .08s; }
+        .dashboard-stats .stat-card:nth-child(3) { animation-delay: .13s; }
+        .dashboard-stats .stat-card:nth-child(4) { animation-delay: .18s; }
+        .dashboard-stats .stat-card:nth-child(5) { animation-delay: .23s; }
+        .dashboard-stats .stat-card:nth-child(6) { animation-delay: .28s; }
+        .dashboard-stats .stat-card:nth-child(7) { animation-delay: .33s; }
+        .charts-section .chart-card:nth-child(1) { animation-delay: .1s; }
+        .charts-section .chart-card:nth-child(2) { animation-delay: .16s; }
+        .charts-section .chart-card:nth-child(3) { animation-delay: .22s; }
+        .charts-section .chart-card:nth-child(4) { animation-delay: .28s; }
+        .charts-section .chart-card:nth-child(5) { animation-delay: .34s; }
+        .content-area .module-card:nth-child(2) { animation-delay: .04s; }
+        .content-area .module-card:nth-child(3) { animation-delay: .07s; }
+        .content-area .module-card:nth-child(4) { animation-delay: .1s; }
+        .content-area .module-card:nth-child(5) { animation-delay: .13s; }
+        .content-area .module-card:nth-child(6) { animation-delay: .16s; }
+        .content-area .module-card:nth-child(7) { animation-delay: .19s; }
+        .content-area .module-card:nth-child(8) { animation-delay: .22s; }
+        .content-area .module-card:nth-child(9) { animation-delay: .25s; }
+        .content-area .module-card:nth-child(10) { animation-delay: .28s; }
+        .content-area .module-card:nth-child(11) { animation-delay: .31s; }
+        .content-area .module-card:nth-child(12) { animation-delay: .34s; }
+        .content-area .module-card:nth-child(13) { animation-delay: .37s; }
+        .content-area .module-card:nth-child(14) { animation-delay: .4s; }
+        .content-area .module-card:nth-child(15) { animation-delay: .43s; }
         
         .stat-card { 
             padding: 22px; 
@@ -546,6 +582,15 @@
         body.light-theme .chart-card:hover { border-top-color: rgba(255,255,255,1) !important; border-left-color: rgba(255,255,255,1) !important; box-shadow: 0 15px 30px -10px rgba(31,38,135,0.15); }
         
         .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .chart-header-left { display: flex; align-items: center; gap: 13px; }
+        .chart-icon-badge { width: 42px; height: 42px; border-radius: var(--radius-sm); display: flex; justify-content: center; align-items: center; font-size: 1.05rem; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.4s cubic-bezier(0.25, 1, 0.3, 1); }
+        body.light-theme .chart-icon-badge { border-color: rgba(255,255,255,0.8); }
+        .chart-card:hover .chart-icon-badge { transform: scale(1.08) rotate(-4deg); }
+        .chart-icon-badge.badge-blue { color: var(--primary-blue); background: rgba(10, 132, 255, 0.12); border-color: rgba(10, 132, 255, 0.22); }
+        .chart-icon-badge.badge-green { color: var(--primary-green); background: rgba(48, 209, 88, 0.12); border-color: rgba(48, 209, 88, 0.22); }
+        .chart-icon-badge.badge-purple { color: var(--primary-purple); background: rgba(191, 90, 242, 0.12); border-color: rgba(191, 90, 242, 0.22); }
+        .chart-icon-badge.badge-red { color: var(--primary-red); background: rgba(255, 69, 58, 0.12); border-color: rgba(255, 69, 58, 0.22); }
+        .chart-icon-badge.badge-cyan { color: var(--primary-cyan); background: rgba(100, 210, 255, 0.12); border-color: rgba(100, 210, 255, 0.22); }
         .chart-title { font-size: 1.1rem; font-weight: 700; color: var(--text-main); font-family: 'Inter', sans-serif; letter-spacing: -0.3px; }
         .chart-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
         
@@ -685,8 +730,8 @@
 
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(10, 132, 255, 0.35); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary-blue); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--neon-cyan), var(--primary-blue)); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, var(--primary-blue), var(--primary-purple)); }
 
         .calendar-widget-container { flex: 1; display: flex; flex-direction: column; min-height: 220px; position: relative; margin-top: 10px; font-family: 'Inter', sans-serif; }
         .mini-cal-header-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 700; font-size: 0.88rem; }
@@ -777,6 +822,8 @@
             .stat-label { font-size: 0.65rem; letter-spacing: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
             
             .chart-card { padding: 16px 12px; border-radius: var(--radius-md); min-height: auto; }
+            .chart-icon-badge { width: 34px; height: 34px; font-size: 0.9rem; border-radius: 10px; }
+            .chart-header-left { gap: 10px; }
             .chart-title { font-size: 0.98rem; }
             .chart-subtitle { font-size: 0.72rem; }
             .chart-container-wrapper { height: 180px; }
@@ -976,20 +1023,23 @@
 
         <section class="charts-section" aria-label="Data Analytics Charts">
             <div class="chart-card">
-                <div class="chart-header"><div><h3 class="chart-title">Trend PO Bulanan</h3><p class="chart-subtitle">Rekapitulasi Purchase Order per Bulan</p></div></div>
+                <div class="chart-header"><div class="chart-header-left"><div class="chart-icon-badge badge-blue"><i class="fa-solid fa-chart-line"></i></div><div><h3 class="chart-title">Trend PO Bulanan</h3><p class="chart-subtitle">Rekapitulasi Purchase Order per Bulan</p></div></div></div>
                 <div class="chart-container-wrapper"><canvas id="clientProcessChart" aria-label="Line Chart Trend PO" role="img"></canvas></div>
             </div>
             
             <div class="chart-card">
-                <div class="chart-header"><div><h3 class="chart-title">Distribusi Karyawan</h3><p class="chart-subtitle">Perbandingan per Departemen</p></div></div>
+                <div class="chart-header"><div class="chart-header-left"><div class="chart-icon-badge badge-purple"><i class="fa-solid fa-users"></i></div><div><h3 class="chart-title">Distribusi Karyawan</h3><p class="chart-subtitle">Perbandingan per Departemen</p></div></div></div>
                 <div class="chart-container-wrapper"><canvas id="karyawanDeptChart" aria-label="Doughnut Chart Distribusi Karyawan" role="img"></canvas></div>
             </div>
             
            <div class="chart-card" style="display:flex;flex-direction:column;justify-content:center;">
     <div class="chart-header">
-        <div>
-            <h3 class="chart-title">Summary SPP</h3>
-            <p class="chart-subtitle">Monitoring Material & Persentase</p>
+        <div class="chart-header-left">
+            <div class="chart-icon-badge badge-green"><i class="fa-solid fa-chart-pie"></i></div>
+            <div>
+                <h3 class="chart-title">Summary SPP</h3>
+                <p class="chart-subtitle">Monitoring Material & Persentase</p>
+            </div>
         </div>
     </div>
     
@@ -1025,7 +1075,7 @@
     </div>
 </div> 
             <div class="chart-card">
-                <div class="chart-header"><div><h3 class="chart-title">Jadwal Pengiriman</h3><p class="chart-subtitle">Master Schedule (Live Data)</p></div></div>
+                <div class="chart-header"><div class="chart-header-left"><div class="chart-icon-badge badge-cyan"><i class="fa-solid fa-calendar-days"></i></div><div><h3 class="chart-title">Jadwal Pengiriman</h3><p class="chart-subtitle">Master Schedule (Live Data)</p></div></div></div>
                 <div class="calendar-widget-container">
                     <div class="mini-cal-header-info">
                         <span id="mini-cal-month" style="color: var(--primary-blue);">
@@ -1046,7 +1096,7 @@
             </div>
 
             <div class="chart-card">
-                <div class="chart-header"><div><h3 class="chart-title">Security & Log Book</h3><p class="chart-subtitle">Status Tamu & Kendaraan di Dalam Area MSB</p></div></div>
+                <div class="chart-header"><div class="chart-header-left"><div class="chart-icon-badge badge-red"><i class="fa-solid fa-shield-halved"></i></div><div><h3 class="chart-title">Security & Log Book</h3><p class="chart-subtitle">Status Tamu & Kendaraan di Dalam Area MSB</p></div></div></div>
                 <div style="display:flex; flex-direction:column; gap:16px; justify-content:center; flex:1; margin-top:10px;">
                     <div style="background:rgba(10, 132, 255, 0.08); border:1px solid rgba(10, 132, 255, 0.2); border-left:4px solid var(--primary-blue); border-radius:var(--radius-sm); padding:18px; display:flex; justify-content:space-between; align-items:center;">
                         <div style="display:flex; align-items:center; gap:14px;"><div style="width:42px; height:42px; background:rgba(10,132,255,0.15); border-radius:50%; display:flex; justify-content:center; align-items:center; color:var(--primary-blue); font-size:1.2rem;"><i class="fa-solid fa-id-badge"></i></div><h4 style="color:var(--text-main); font-size:1.05rem; margin:0; font-family:'Inter', sans-serif;">Tamu Aktif</h4></div>
@@ -1124,6 +1174,11 @@
         let deliveriesData = [];
         let globalTrendPO = null;
         let globalKaryawan = null;
+
+        // Default global Chart.js — jaring pengaman agar tidak ada teks chart yang
+        // "kebetulan" memakai warna default gelap (hitam) saat tema aktif adalah dark mode.
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.color = 'rgba(255,255,255,0.82)';
 
         window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loading-screen').classList.add('hidden'),800));
 
@@ -1246,6 +1301,18 @@
 
         window._tTheme = function() {
             document.body.classList.toggle('light-theme');
+            const isLight = document.body.classList.contains('light-theme');
+
+            // Ganti ikon toggle mengikuti tema aktif (bulan = sedang dark, matahari = sedang light)
+            const icon = document.querySelector('.theme-toggle i');
+            if (icon) icon.className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+
+            // PENTING: gambar ulang chart PO & Karyawan dengan warna teks yang sesuai tema baru,
+            // agar tidak ada teks yang "nyangkut" dari warna tema sebelumnya (mis. teks gelap
+            // tak terbaca saat kembali ke dark mode).
+            if (typeof uC === 'function') {
+                uC(globalTrendPO, globalKaryawan);
+            }
         };
 
         // --- FUNGSI MEMBUKA MODUL DI DALAM IFRAME ---
@@ -1333,9 +1400,11 @@
 
        function uC(trendPO, karyawan) {
             const isLightTheme = document.body.classList.contains('light-theme');
+            // Warna teks dipaksa eksplisit (bukan default Chart.js) agar selalu kontras
+            // dan jelas terbaca baik di dark mode maupun light mode.
             const textColor = isLightTheme ? '#1D1D1F' : '#FFFFFF';
-            const gridColor = isLightTheme ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
-            const tickColor = isLightTheme ? '#6E6E73' : 'rgba(255,255,255,0.6)';
+            const gridColor = isLightTheme ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)';
+            const tickColor = isLightTheme ? '#4B4B50' : 'rgba(255,255,255,0.82)';
 
             let deptLabels = [];
             let deptData = [];
@@ -1382,7 +1451,7 @@
                             position: 'right',
                             labels: { color: textColor, usePointStyle: true, pointStyle: 'circle', font: { family: 'Inter', size: 11 } }
                         },
-                        tooltip: { backgroundColor: 'rgba(0,0,0,0.8)', titleFont: {family: 'Inter'}, bodyFont: {family: 'Inter'}, padding: 10, cornerRadius: 8 }
+                        tooltip: { backgroundColor: 'rgba(10,14,28,0.92)', titleColor: '#FFFFFF', bodyColor: 'rgba(255,255,255,0.9)', titleFont: {family: 'Inter', weight: '700'}, bodyFont: {family: 'Inter'}, padding: 10, cornerRadius: 10, borderColor: 'rgba(255,255,255,0.08)', borderWidth: 1 }
                     },
                     cutout: '65%'
                 }
@@ -1450,7 +1519,7 @@
                                 font: { family: 'Inter', size: 11 }
                             }
                         },
-                        tooltip: { backgroundColor: 'rgba(0,0,0,0.8)', padding: 10, cornerRadius: 8, titleFont: {family: 'Inter'}, bodyFont: {family: 'Inter'} }
+                        tooltip: { backgroundColor: 'rgba(10,14,28,0.92)', titleColor: '#FFFFFF', bodyColor: 'rgba(255,255,255,0.9)', padding: 10, cornerRadius: 10, titleFont: {family: 'Inter', weight: '700'}, bodyFont: {family: 'Inter'}, borderColor: 'rgba(255,255,255,0.08)', borderWidth: 1 }
                     },
                     scales: {
                         y: { grid: { color: gridColor }, ticks: { color: tickColor, font: {family: 'Inter', size: 10} } },
