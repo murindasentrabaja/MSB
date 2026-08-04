@@ -1085,7 +1085,80 @@
             // Untuk preview, kita buka di tab baru agar tidak error di iframe lokal:
             window.open(url, '_blank');
         };
+// --- FUNGSI MEMBUKA MODUL DI DALAM IFRAME ---
+        window._lNch = function(url) {
+            sN('Membuka Modul', 'Mempersiapkan aplikasi terkait...', 'success');
+            
+            const vp = document.getElementById('viewport-container');
+            const frame = document.getElementById('erp-frame');
+            const backBtn = document.getElementById('back-btn');
+            const main = document.getElementById('main-dashboard');
+            const fab = document.getElementById('quick-action-fab');
+            
+            // Set sumber iframe ke URL tujuan
+            frame.src = url;
+            
+            // Tampilkan viewport
+            vp.style.display = 'block';
+            
+            // Berikan sedikit delay agar animasi transisi CSS berjalan mulus
+            setTimeout(() => {
+                vp.classList.add('active');
+                backBtn.style.display = 'flex';
+                setTimeout(() => backBtn.classList.add('active'), 50);
+            }, 50);
+            
+            // Redupkan dashboard utama dan sembunyikan tombol FAB
+            main.classList.add('dashboard-dimmed');
+            if (fab) fab.classList.add('hidden-by-viewport');
+        };
 
+        // --- FUNGSI KEMBALI KE DASHBOARD (MENUTUP IFRAME) ---
+        window._cView = function() {
+            const vp = document.getElementById('viewport-container');
+            const frame = document.getElementById('erp-frame');
+            const backBtn = document.getElementById('back-btn');
+            const main = document.getElementById('main-dashboard');
+            const fab = document.getElementById('quick-action-fab');
+            
+            // Sembunyikan viewport & tombol kembali dengan animasi
+            vp.classList.remove('active');
+            backBtn.classList.remove('active');
+            
+            // Kembalikan main dashboard & FAB ke kondisi terang
+            main.classList.remove('dashboard-dimmed');
+            if (fab) fab.classList.remove('hidden-by-viewport');
+            
+            // Hapus source iframe dan sembunyikan elemen setelah animasi CSS selesai
+            setTimeout(() => {
+                vp.style.display = 'none';
+                backBtn.style.display = 'none';
+                frame.src = ''; 
+            }, 450); 
+        };
+
+        // --- FUNGSI UNTUK STRUKTUR ORGANISASI (CURTAIN) ---
+        window._openCurtain = function(url) {
+            const curtain = document.getElementById('curtain-container');
+            const frame = document.getElementById('curtain-frame');
+            frame.src = url;
+            curtain.classList.add('active');
+        };
+
+        window._closeCurtain = function() {
+            const curtain = document.getElementById('curtain-container');
+            const frame = document.getElementById('curtain-frame');
+            curtain.classList.remove('active');
+            setTimeout(() => {
+                frame.src = '';
+            }, 500);
+        };
+
+        // --- FUNGSI UNTUK MENGAKSES QUICK ACTION FAB ---
+        window._toggleFab = function() {
+            const fab = document.getElementById('quick-action-fab');
+            fab.classList.toggle('active');
+        };
     </script>
 </body>
 </html>
