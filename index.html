@@ -339,22 +339,61 @@
         body.light-theme .login-card .factory_img { border-top-color: rgba(255,255,255,0.8); border-left-color: rgba(255,255,255,0.8); box-shadow: 0 25px 45px -12px rgba(31,38,135,0.2); }
         .login-card:hover .factory_img, .login-card:focus-within .factory_img { top: 50%; left: 74%; transform: translate(-50%, -50%) scale(1) rotate(0deg) translateZ(40px); opacity: 1; }
 
+        /* ==================== SIDEBAR MODERN (AUTO-HIDE) ==================== */
+        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); z-index: 2999; display: none; opacity: 0; transition: opacity 0.3s ease; }
+        .sidebar-overlay.active { display: block; opacity: 1; }
+
+        .modern-sidebar { position: fixed; top: 0; left: -320px; width: 280px; height: 100vh; background: rgba(11, 16, 30, 0.95); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-right: 1px solid var(--glass-border); box-shadow: 10px 0 30px rgba(0,0,0,0.5); z-index: 3000; transition: left 0.4s cubic-bezier(0.25, 1, 0.3, 1); display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; }
+        body.light-theme .modern-sidebar { background: rgba(242, 244, 248, 0.95); box-shadow: 10px 0 30px rgba(0,0,0,0.1); }
+        .modern-sidebar.active { left: 0; }
+        
+        .sidebar-header { padding: 25px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; background: inherit; z-index: 2; }
+        body.light-theme .sidebar-header { border-bottom-color: rgba(0,0,0,0.05); }
+        .sidebar-header img { height: 35px; filter: brightness(0) invert(1); }
+        body.light-theme .sidebar-header img { filter: none; }
+        
+        .close-sidebar-btn { background: rgba(255,69,58,0.15); border: none; color: var(--primary-red); width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 1.1rem; transition: var(--transition-smooth); }
+        .close-sidebar-btn:hover { background: var(--primary-red); color: #fff; transform: scale(1.1) rotate(90deg); }
+        
+        .sidebar-menu { padding: 20px 15px; display: flex; flex-direction: column; gap: 8px; }
+        .sidebar-title { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; padding: 10px 10px 5px 10px; margin-top: 10px; }
+        
+        .sidebar-link { display: flex; align-items: center; gap: 14px; padding: 12px 15px; border-radius: var(--radius-sm); color: var(--text-main); text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; border: 1px solid transparent; }
+        .sidebar-link:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); transform: translateX(5px); }
+        body.light-theme .sidebar-link:hover { background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.05); }
+        
+        .sidebar-icon { width: 35px; height: 35px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 1rem; flex-shrink: 0; }
+        .sidebar-link:hover .sidebar-icon i { transform: scale(1.15); }
+        .sidebar-icon i { transition: transform 0.3s ease; }
+        
+        .c-blue { color: var(--primary-blue); background: rgba(10, 132, 255, 0.15); }
+        .c-green { color: var(--primary-green); background: rgba(48, 209, 88, 0.15); }
+        .c-orange { color: var(--primary-orange); background: rgba(255, 159, 10, 0.15); }
+        .c-purple { color: var(--primary-purple); background: rgba(191, 90, 242, 0.15); }
+
+        /* Tombol Hamburger Header */
+        .hamburger-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main); width: 42px; height: 42px; border-radius: 12px; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; transition: var(--transition-smooth); flex-shrink: 0; }
+        body.light-theme .hamburger-btn { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.1); }
+        .hamburger-btn:hover { background: rgba(255,255,255,0.15); transform: scale(1.05); }
+        body.light-theme .hamburger-btn:hover { background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
         /* ==================== DASHBOARD & FIXED HEADER ==================== */
-        #main-dashboard { display: none; flex-direction: column; min-height: 100vh; transform-origin: top center; animation: fadeIn 0.75s cubic-bezier(0.25, 1, 0.3, 1); width: 100%; overflow-x: hidden; }
+        #main-dashboard { display: none; flex-direction: column; min-height: 100vh; transform-origin: top center; animation: fadeIn 0.75s cubic-bezier(0.25, 1, 0.3, 1); width: 100%; overflow-x: hidden; padding-top: 110px; /* Offset for fixed header */ }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.98) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
         .dashboard-dimmed { transform: scale(0.96) translateY(-12px); opacity: 0.35; filter: blur(12px); pointer-events: none; transition: transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease; }
 
-        /* HEADER DIBUAT STICKY / FIXED AT TOP SEHINGGA TIDAK IKUT SCROLL */
+        /* HEADER DIBUAT FIXED AT TOP SEHINGGA TIDAK IKUT SCROLL */
         .sticky-top-container {
-            position: sticky;
+            position: fixed; /* Berubah menjadi Fixed */
             top: 0;
-            z-index: 1000;
+            left: 0;
+            z-index: 2000;
             width: 100%;
             background: rgba(11, 16, 30, 0.85);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border-bottom: 1px solid var(--glass-border);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
         body.light-theme .sticky-top-container {
@@ -390,7 +429,7 @@
 
         .nav-right { display: flex; align-items: center; gap: 12px; }
         
-        /* Tombol Install App (Direct Download APK) */
+        /* Tombol Install App */
         .install-app-btn { background: rgba(10, 132, 255, 0.12); border: 1px solid rgba(10, 132, 255, 0.25); padding: 10px 18px; border-radius: 20px; cursor: pointer; color: var(--primary-blue); font-size: 0.88rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: var(--transition-smooth); backdrop-filter: blur(10px); white-space: nowrap; }
         body.light-theme .install-app-btn { background: rgba(0, 122, 255, 0.08); border-color: rgba(0, 122, 255, 0.15); }
         .install-app-btn:hover { background: var(--primary-blue); color: #fff; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(10, 132, 255, 0.35); border-color: transparent; }
@@ -496,7 +535,7 @@
         .module-card.purple .explore-btn { color: var(--primary-purple); }
 
         .notification-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; pointer-events: none; }
-        .notification { pointer-events: auto; background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 100%); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-top: 1px solid var(--glass-border-highlight); border-left: 1px solid var(--glass-border-highlight); box-shadow: 0 10px 30px rgba(0,0,0,0.3); padding: 16px 20px; border-radius: var(--radius-md); min-width: 320px; display: flex; align-items: center; gap: 14px; animation: slideInRight 0.45s cubic-bezier(0.25, 1, 0.3, 1); color: var(--text-main); }
+        .notification { pointer-events: auto; background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 100%); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-top: 1px solid var(--glass-border-highlight); border-left: 1px solid var(--glass-border-highlight); box-shadow: 0 10px 30px rgba(0,0,0,0.3); padding: 16px 20px; border-radius: var(--radius-md); min-width: 320px; display: flex; align-items: center; gap: 14px; animation: slideInRight 0.45s cubic-bezier(0.25, 1, 0.3, 1); color: var(--text-main); transition: opacity 0.5s ease; }
         body.light-theme .notification { background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 100%); }
         @keyframes slideInRight { from { opacity: 0; transform: translateX(380px) scale(0.92); } to { opacity: 1; transform: translateX(0) scale(1); } }
         .notification i { font-size: 1.45rem; }
@@ -506,12 +545,12 @@
         .notification-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 2px; letter-spacing: -0.2px; }
         .notification-message { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
 
-        #viewport-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--glass-bg); backdrop-filter: var(--glass-blur); z-index: 3000; opacity: 0; transform: translateY(45px) scale(0.98); transition: all 0.45s cubic-bezier(0.25, 1, 0.3, 1); will-change: transform, opacity; overflow: hidden; border-top: 1px solid var(--glass-border-highlight); }
+        #viewport-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--glass-bg); backdrop-filter: var(--glass-blur); z-index: 4000; opacity: 0; transform: translateY(45px) scale(0.98); transition: all 0.45s cubic-bezier(0.25, 1, 0.3, 1); will-change: transform, opacity; overflow: hidden; border-top: 1px solid var(--glass-border-highlight); }
         body.light-theme #viewport-container { background: #fff; }
         #viewport-container.active { opacity: 1; transform: translateY(0) scale(1); }
         #erp-frame { width: 100%; height: 100%; border: none; background: #fff; }
         
-        .back-nav { position: fixed; bottom: 25px; right: 25px; background: rgba(0,0,0,0.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: #fff; padding: 12px 22px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.25); font-weight: 700; cursor: pointer; z-index: 3001; box-shadow: 0 10px 30px rgba(0,0,0,0.4); font-size: 0.9rem; display: none; align-items: center; gap: 8px; opacity: 0; transform: translateY(20px); transition: var(--transition-smooth); font-family: 'Inter', sans-serif; }
+        .back-nav { position: fixed; bottom: 25px; right: 25px; background: rgba(0,0,0,0.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: #fff; padding: 12px 22px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.25); font-weight: 700; cursor: pointer; z-index: 4001; box-shadow: 0 10px 30px rgba(0,0,0,0.4); font-size: 0.9rem; display: none; align-items: center; gap: 8px; opacity: 0; transform: translateY(20px); transition: var(--transition-smooth); font-family: 'Inter', sans-serif; }
         .back-nav.active { opacity: 1; transform: translateY(0); }
         .back-nav:hover { background: #000; transform: translateY(-2px) scale(1.04); box-shadow: 0 14px 35px rgba(0,0,0,0.5); }
         .back-nav:active { transform: scale(0.95); }
@@ -593,19 +632,25 @@
             .top-info-bar { padding: 8px 20px; }
         }
         @media (max-width: 768px) {
+            #main-dashboard { padding-top: 130px; }
             .top-info-bar { flex-direction: column; gap: 6px; text-align: center; padding: 8px 12px; }
             .datetime { justify-content: center; width: 100%; flex-wrap: wrap; font-size: 0.75rem; gap: 8px; }
             .hse-ticker-wrap { max-width: 100%; width: 100%; margin-left: 0; padding: 4px 10px; }
             
             header { padding: 10px 14px; min-height: auto; flex-wrap: wrap; gap: 10px; }
-            .header-left { width: 100%; justify-content: space-between; }
+            
+            /* Penyesuaian Header agar Logo dan Menu terlihat rapi di mobile */
+            .header-left { width: 100%; justify-content: flex-start; gap: 12px; }
             .header-divider { display: none; }
             .logo-small { height: 30px; }
+            .system-status { margin-left: auto; font-size: 0.75rem; padding: 6px 10px; }
+            
             .nav-right { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 6px; overflow-x: auto; padding-bottom: 2px; -webkit-overflow-scrolling: touch; }
             .nav-right::-webkit-scrollbar { display: none; }
             
             .install-app-btn, .theme-toggle, .btn-logout, .user-profile { padding: 7px 10px; font-size: 0.78rem; border-radius: 14px; flex-shrink: 0; }
-            .install-text { font-size: 0.76rem; }
+            .install-text { font-size: 0.76rem; display: none; } /* hide text install on mobile to save space */
+            .install-app-btn { width: 35px; height: 35px; justify-content: center; padding: 0; }
             .user-profile { padding: 4px 6px; font-size: 0.78rem; }
             
             /* Responsive Cards Mobile Friendly */
@@ -689,6 +734,52 @@
         <button class="fab-trigger" onclick="window._toggleFab()" aria-label="Toggle Quick Actions"><i class="fa-solid fa-bolt"></i></button>
     </div>
 
+    <!-- SIDEBAR MODERN UNTUK NAVIGASI CEPAT -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="window._toggleSidebar()"></div>
+    <aside class="modern-sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="MSB Logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/180x60?text=MSB'">
+            <button onclick="window._toggleSidebar()" class="close-sidebar-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="sidebar-menu">
+            <div class="sidebar-title">Menu Utama</div>
+            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/HR-System/'); window._toggleSidebar();" class="sidebar-link">
+                <div class="sidebar-icon c-blue"><i class="fa-solid fa-people-group"></i></div><span>HR System</span>
+            </a>
+            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/General-Affairs/'); window._toggleSidebar();" class="sidebar-link">
+                <div class="sidebar-icon c-green"><i class="fa-solid fa-building-circle-check"></i></div><span>General Affairs</span>
+            </a>
+            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/HSE/'); window._toggleSidebar();" class="sidebar-link">
+                <div class="sidebar-icon c-orange"><i class="fa-solid fa-helmet-safety"></i></div><span>HSE System</span>
+            </a>
+            
+            <div class="sidebar-title">Operasional</div>
+            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/Production-Tracking/'); window._toggleSidebar();" class="sidebar-link">
+                <div class="sidebar-icon c-blue"><i class="fa-solid fa-industry"></i></div><span>Produksi</span>
+            </a>
+            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/Warehouse-System/'); window._toggleSidebar();" class="sidebar-link">
+                <div class="sidebar-icon c-orange"><i class="fa-solid fa-boxes-stacked"></i></div><span>Warehouse</span>
+            </a>
+            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/Maintenance/'); window._toggleSidebar();" class="sidebar-link">
+                <div class="sidebar-icon c-blue"><i class="fa-solid fa-gears"></i></div><span>Maintenance</span>
+            </a>
+            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/QC-Inspection/'); window._toggleSidebar();" class="sidebar-link">
+                <div class="sidebar-icon c-green"><i class="fa-solid fa-microscope"></i></div><span>Quality Control</span>
+            </a>
+            
+            <div class="sidebar-title">Administrasi</div>
+            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/Purchase-Order/'); window._toggleSidebar();" class="sidebar-link">
+                <div class="sidebar-icon c-green"><i class="fa-solid fa-file-invoice-dollar"></i></div><span>Purchase Order</span>
+            </a>
+            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/SPP/'); window._toggleSidebar();" class="sidebar-link">
+                <div class="sidebar-icon c-orange"><i class="fa-solid fa-file-invoice"></i></div><span>SPP System</span>
+            </a>
+            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/MSB-Approval/'); window._toggleSidebar();" class="sidebar-link">
+                <div class="sidebar-icon c-blue"><i class="fa-solid fa-file-signature"></i></div><span>MSB Approval</span>
+            </a>
+        </div>
+    </aside>
+
     <!-- HALAMAN LOGIN DENGAN ANIMATED NEON BORDER TERBARU -->
     <div id="login-overlay">
         <div class="login-wrapper">
@@ -736,6 +827,8 @@
             
             <header>
                 <div class="header-left">
+                    <!-- HAMBURGER MENU MUNCUL DI HEADER KIRI -->
+                    <button class="hamburger-btn" onclick="window._toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
                     <img src="MSB Logo.png" alt="Logo" class="logo-small" onerror="this.style.display='none'">
                     <div class="header-divider"></div>
                     <div class="system-status" aria-label="System Status"><div class="status-dot"></div><span>Online MSB ERP</span></div>
@@ -748,7 +841,7 @@
                     
                     <button class="theme-toggle" onclick="window._tTheme()" aria-label="Toggle Dark or Light Theme" title="Ubah Tema"><i class="fa-solid fa-sun" aria-hidden="true"></i></button>
                     <div class="user-profile"><i class="fa-solid fa-circle-user" aria-hidden="true"></i><span id="display-user">Kalijati Plant</span></div>
-                    <button class="btn-logout" onclick="window._dOut()" aria-label="Logout from System"><i class="fa-solid fa-power-off" aria-hidden="true"></i> Keluar</button>
+                    <button class="btn-logout" onclick="window._dOut()" aria-label="Logout from System"><i class="fa-solid fa-power-off" aria-hidden="true"></i> <span class="install-text">Keluar</span></button>
                 </nav>
             </header>
         </div>
@@ -774,27 +867,45 @@
                 <div class="chart-container-wrapper"><canvas id="karyawanDeptChart" aria-label="Doughnut Chart Distribusi Karyawan" role="img"></canvas></div>
             </div>
             
-            <div class="chart-card" style="display:flex;flex-direction:column;justify-content:center;">
-                <div class="chart-header"><div><h3 class="chart-title">Summary SPP</h3><p class="chart-subtitle">Monitoring Material & Persentase</p></div></div>
-                <div style="margin-top:5px;display:flex;flex-direction:column;gap:12px;flex:1;overflow-y:auto;max-height:220px;padding-right:2px;">
-                    <div style="background:rgba(255, 69, 58, 0.06); border:1px solid rgba(255, 69, 58, 0.15); border-left:4px solid var(--primary-red); border-radius:var(--radius-sm); padding:12px; backdrop-filter:blur(5px);">
-                        <h4 style="color:var(--text-main); font-size:0.88rem; margin-bottom:10px; display:flex; align-items:center; gap:8px; font-family:'Inter', sans-serif;"><i class="fa-solid fa-boxes-stacked" style="color:var(--primary-red);"></i> Barang Belum Datang</h4>
-                        <ul id="spp-pending-list" style="list-style:none; padding-left:0; margin:0; font-size:0.82rem; color:var(--text-muted); line-height:1.5;">
-                            <li class="sp-list-item"><span>Menyinkronkan Data...</span><strong style="color:var(--primary-red);"><i class="fa-solid fa-spinner fa-spin"></i></strong></li>
-                        </ul>
-                    </div>
-                    <div style="background:rgba(48, 209, 88, 0.06); border:1px solid rgba(48, 209, 88, 0.15); border-left:4px solid var(--primary-green); border-radius:var(--radius-sm); padding:12px; margin-top:auto; backdrop-filter:blur(5px);">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                            <h4 style="color:var(--text-main); font-size:0.88rem; margin:0; display:flex; align-items:center; gap:8px; font-family:'Inter', sans-serif;"><i class="fa-solid fa-chart-pie" style="color:var(--primary-green);"></i> Pemenuhan Material</h4>
-                            <span id="spp-fulfillment-text" style="font-weight:700; font-size:1rem; color:var(--primary-green);">0%</span>
-                        </div>
-                        <div style="width:100%; height:8px; background:rgba(255,255,255,0.08); border-radius:10px; overflow:hidden; position:relative;">
-                            <div id="spp-fulfillment-bar" style="width:0%; height:100%; background:linear-gradient(90deg, var(--primary-cyan), var(--primary-green)); border-radius:10px; box-shadow:0 0 10px rgba(48, 209, 88, 0.4); transition:width 1.5s cubic-bezier(0.25, 1, 0.3, 1);"></div>
-                        </div>
-                    </div>
-                </div>
+           <div class="chart-card" style="display:flex;flex-direction:column;justify-content:center;">
+    <div class="chart-header">
+        <div>
+            <h3 class="chart-title">Summary SPP</h3>
+            <p class="chart-subtitle">Monitoring Material & Persentase</p>
+        </div>
+    </div>
+    
+    <!-- Bagian ini yang membuat summary muncul dan bisa di-scroll (overflow-y:auto) -->
+    <div style="margin-top:5px;display:flex;flex-direction:column;gap:12px;flex:1;overflow-y:auto;max-height:220px;padding-right:2px;">
+        
+        <!-- Blok Barang Belum Datang -->
+        <div style="background:rgba(255, 69, 58, 0.06); border:1px solid rgba(255, 69, 58, 0.15); border-left:4px solid var(--primary-red); border-radius:var(--radius-sm); padding:12px; backdrop-filter:blur(5px);">
+            <h4 style="color:var(--text-main); font-size:0.88rem; margin-bottom:10px; display:flex; align-items:center; gap:8px; font-family:'Inter', sans-serif;">
+                <i class="fa-solid fa-boxes-stacked" style="color:var(--primary-red);"></i> Barang Belum Datang
+            </h4>
+            <ul id="spp-pending-list" style="list-style:none; padding-left:0; margin:0; font-size:0.82rem; color:var(--text-muted); line-height:1.5;">
+                <li class="sp-list-item">
+                    <span>Menyinkronkan Data...</span>
+                    <strong style="color:var(--primary-red);"><i class="fa-solid fa-spinner fa-spin"></i></strong>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Blok Pemenuhan Material -->
+        <div style="background:rgba(48, 209, 88, 0.06); border:1px solid rgba(48, 209, 88, 0.15); border-left:4px solid var(--primary-green); border-radius:var(--radius-sm); padding:12px; margin-top:auto; backdrop-filter:blur(5px);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <h4 style="color:var(--text-main); font-size:0.88rem; margin:0; display:flex; align-items:center; gap:8px; font-family:'Inter', sans-serif;">
+                    <i class="fa-solid fa-chart-pie" style="color:var(--primary-green);"></i> Pemenuhan Material
+                </h4>
+                <span id="spp-fulfillment-text" style="font-weight:700; font-size:1rem; color:var(--primary-green);">0%</span>
             </div>
-            
+            <div style="width:100%; height:8px; background:rgba(255,255,255,0.08); border-radius:10px; overflow:hidden; position:relative;">
+                <div id="spp-fulfillment-bar" style="width:0%; height:100%; background:linear-gradient(90deg, var(--primary-cyan), var(--primary-green)); border-radius:10px; box-shadow:0 0 10px rgba(48, 209, 88, 0.4); transition:width 1.5s cubic-bezier(0.25, 1, 0.3, 1);"></div>
+            </div>
+        </div>
+        
+    </div>
+</div> 
             <div class="chart-card">
                 <div class="chart-header"><div><h3 class="chart-title">Jadwal Pengiriman</h3><p class="chart-subtitle">Master Schedule (Live Data)</p></div></div>
                 <div class="calendar-widget-container">
@@ -882,12 +993,12 @@
                   (e.ctrlKey&&(e.key==='U'||e.key==='u'||e.key==='S'||e.key==='s'||e.key==='P'||e.key==='p'))||
                   (e.metaKey&&e.altKey&&(e.key==='I'||e.key==='J'||e.key==='U'))){e.preventDefault();return false;}
             });
-            setInterval(function(){const s=new Date().getTime();debugger;const e=new Date().getTime();if(e-s>100){document.body.innerHTML="<h2 style='color:red;text-align:center;margin-top:20vh;font-family:-apple-system,sans-serif;'>Security Restriction Enforced</h2>";window.location.replace("about:blank");}},1000);
+            // setInterval(function(){const s=new Date().getTime();debugger;const e=new Date().getTime();if(e-s>100){document.body.innerHTML="<h2 style='color:red;text-align:center;margin-top:20vh;font-family:-apple-system,sans-serif;'>Security Restriction Enforced</h2>";window.location.replace("about:blank");}},1000);
         })();
 
-        const m = "https://script.google.com/macros/s/AKfycbx3odMeOlwjsh3s7mG4r2YeXlJwsB02gBLsJIc-IBtguulySWZKCb7b3v_OczkIHMvOqA/exec";
+        const m = "https://script.google.com/macros/s/AKfycbzuq0CdzMfoRVG-YhJIja8Lsy1ZeShZbEjmIZgn7gFqqXonEq3PhoMR9XsIfWhARTWo/exec";
         const s = atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5ZzBrMmw4NGtaQXdveERNdnlua2xHQWVIWDJOY3hmX0RfVUhETU1SUHBnQ0c4dk9qSE00VFdveHM5S1laYUhzdU4vZXhlYw==");
-        const schUrl = "https://script.google.com/macros/s/AKfycbwIN-kg3cjvdHV7pStMbRIpCJtQeo9j80ncjDPCZ5TosPcJaZPxpRrhUDkwzgVyor_gig/exec";
+        const schUrl = "https://script.google.com/macros/s/AKfycbzuq0CdzMfoRVG-YhJIja8Lsy1ZeShZbEjmIZgn7gFqqXonEq3PhoMR9XsIfWhARTWo/exec";
         
         let clientProcessChart = null;
         let karyawanDeptChart = null;
@@ -915,22 +1026,152 @@
             }, 16);
         }
 
+        // --- SKRIP LENGKAP UNTUK NOTIFIKASI YANG TERPOTONG SEBELUMNYA ---
         function sN(title, msg, type='success'){
             const container = document.getElementById('notification-container');
             if(!container) return;
             const notif = document.createElement('div');
             notif.className = `notification ${type}`;
             const icon = type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation';
-            notif.innerHTML = `<i class="fa-solid ${icon}"></i><div class="notification-content"><div class="notification-title">${title}</div><div class="notification-message">${msg}</div></div>`;
+            notif.innerHTML = `
+                <i class="fa-solid ${icon}"></i>
+                <div class="notification-content">
+                    <div class="notification-title">${title}</div>
+                    <div class="notification-message">${msg}</div>
+                </div>
+            `;
             container.appendChild(notif);
+            
+            // Auto hide setelah 3.5 detik
             setTimeout(() => {
                 notif.style.opacity = '0';
-                notif.style.transform = 'translateX(100px)';
-                setTimeout(() => notif.remove(), 400);
+                setTimeout(() => {
+                    notif.remove();
+                }, 500); // durasi animasi CSS
             }, 3500);
         }
 
-        function uC(trendPO, karyawan) {
+        // --- SKRIP UNTUK MENGAKSES SIDEBAR ---
+        window._toggleSidebar = function() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            } else {
+                sidebar.classList.add('active');
+                overlay.classList.add('active');
+            }
+        };
+
+        // --- FUNGSI LOGIN & PERPINDAHAN TAMPILAN DASHBOARD ---
+        window._eSys = function(e) {
+            if (e) e.preventDefault();
+            const loginOverlay = document.getElementById('login-overlay');
+            const mainDashboard = document.getElementById('main-dashboard');
+            loginOverlay.style.opacity = '0';
+            loginOverlay.style.visibility = 'hidden';
+            setTimeout(() => {
+                loginOverlay.style.display = 'none';
+                mainDashboard.style.display = 'flex';
+                // Panggil semua fungsi pengambil data agar summary, chart PO,
+                // chart karyawan, dan jadwal pengiriman langsung terisi.
+                fD();
+                fS();
+                fetchSchedule();
+                sN('Login Berhasil', 'Selamat datang di MSB ERP System', 'success');
+            }, 400);
+        };
+
+        window._dOut = function() {
+            document.getElementById('main-dashboard').style.display = 'none';
+            const login = document.getElementById('login-overlay');
+            login.style.display = 'flex';
+            setTimeout(() => {
+                login.style.visibility = 'visible';
+                login.style.opacity = '1';
+            }, 50);
+        };
+
+        window._tTheme = function() {
+            document.body.classList.toggle('light-theme');
+        };
+
+        // --- FUNGSI MEMBUKA MODUL DI DALAM IFRAME ---
+        window._lNch = function(url) {
+            sN('Membuka Modul', 'Mempersiapkan aplikasi terkait...', 'success');
+            
+            const vp = document.getElementById('viewport-container');
+            const frame = document.getElementById('erp-frame');
+            const backBtn = document.getElementById('back-btn');
+            const main = document.getElementById('main-dashboard');
+            const fab = document.getElementById('quick-action-fab');
+            
+            // Set sumber iframe ke URL tujuan
+            frame.src = url;
+            
+            // Tampilkan viewport
+            vp.style.display = 'block';
+            
+            // Berikan sedikit delay agar animasi transisi CSS berjalan mulus
+            setTimeout(() => {
+                vp.classList.add('active');
+                backBtn.style.display = 'flex';
+                setTimeout(() => backBtn.classList.add('active'), 50);
+            }, 50);
+            
+            // Redupkan dashboard utama dan sembunyikan tombol FAB
+            main.classList.add('dashboard-dimmed');
+            if (fab) fab.classList.add('hidden-by-viewport');
+        };
+
+        // --- FUNGSI KEMBALI KE DASHBOARD (MENUTUP IFRAME) ---
+        window._cView = function() {
+            const vp = document.getElementById('viewport-container');
+            const frame = document.getElementById('erp-frame');
+            const backBtn = document.getElementById('back-btn');
+            const main = document.getElementById('main-dashboard');
+            const fab = document.getElementById('quick-action-fab');
+            
+            // Sembunyikan viewport & tombol kembali dengan animasi
+            vp.classList.remove('active');
+            backBtn.classList.remove('active');
+            
+            // Kembalikan main dashboard & FAB ke kondisi terang
+            main.classList.remove('dashboard-dimmed');
+            if (fab) fab.classList.remove('hidden-by-viewport');
+            
+            // Hapus source iframe dan sembunyikan elemen setelah animasi CSS selesai
+            setTimeout(() => {
+                vp.style.display = 'none';
+                backBtn.style.display = 'none';
+                frame.src = ''; 
+            }, 450); 
+        };
+
+        // --- FUNGSI UNTUK STRUKTUR ORGANISASI (CURTAIN) ---
+        window._openCurtain = function(url) {
+            const curtain = document.getElementById('curtain-container');
+            const frame = document.getElementById('curtain-frame');
+            frame.src = url;
+            curtain.classList.add('active');
+        };
+
+        window._closeCurtain = function() {
+            const curtain = document.getElementById('curtain-container');
+            const frame = document.getElementById('curtain-frame');
+            curtain.classList.remove('active');
+            setTimeout(() => {
+                frame.src = '';
+            }, 500);
+        };
+
+        // --- FUNGSI UNTUK MENGAKSES QUICK ACTION FAB ---
+        window._toggleFab = function() {
+            const fab = document.getElementById('quick-action-fab');
+            fab.classList.toggle('active');
+        };
+       function uC(trendPO, karyawan) {
             const isLightTheme = document.body.classList.contains('light-theme');
             const textColor = isLightTheme ? '#1D1D1F' : '#FFFFFF';
             const gridColor = isLightTheme ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
@@ -1183,91 +1424,7 @@
                 }
                 grid.appendChild(cell);
             }
-        }
-
-        /* SYSTEM UTILITY FUNCTIONS */
-        window._eSys = function(e) {
-            if(e) e.preventDefault();
-            const loginOverlay = document.getElementById('login-overlay');
-            const mainDashboard = document.getElementById('main-dashboard');
-            loginOverlay.style.opacity = '0';
-            loginOverlay.style.visibility = 'hidden';
-            setTimeout(() => {
-                loginOverlay.style.display = 'none';
-                mainDashboard.style.display = 'flex';
-                fD();
-                fS();
-                fetchSchedule();
-                sN('Sistem Siap', 'Selamat datang di MSB ERP System', 'success');
-            }, 400);
-        };
-
-        window._dOut = function() {
-            const loginOverlay = document.getElementById('login-overlay');
-            const mainDashboard = document.getElementById('main-dashboard');
-            mainDashboard.style.display = 'none';
-            loginOverlay.style.display = 'flex';
-            setTimeout(() => {
-                loginOverlay.style.opacity = '1';
-                loginOverlay.style.visibility = 'visible';
-            }, 50);
-        };
-
-        window._tTheme = function() {
-            document.body.classList.toggle('light-theme');
-            uC(globalTrendPO, globalKaryawan);
-        };
-
-        window._toggleFab = function() {
-            const fab = document.getElementById('quick-action-fab');
-            fab.classList.toggle('active');
-        };
-
-        window._lNch = function(url) {
-            const viewport = document.getElementById('viewport-container');
-            const frame = document.getElementById('erp-frame');
-            const backBtn = document.getElementById('back-btn');
-            const fab = document.getElementById('quick-action-fab');
-
-            frame.src = url;
-            viewport.style.display = 'block';
-            setTimeout(() => {
-                viewport.classList.add('active');
-                backBtn.style.display = 'flex';
-                setTimeout(() => backBtn.classList.add('active'), 50);
-                fab.classList.add('hidden-by-viewport');
-            }, 10);
-        };
-
-        window._cView = function() {
-            const viewport = document.getElementById('viewport-container');
-            const frame = document.getElementById('erp-frame');
-            const backBtn = document.getElementById('back-btn');
-            const fab = document.getElementById('quick-action-fab');
-
-            viewport.classList.remove('active');
-            backBtn.classList.remove('active');
-            setTimeout(() => {
-                viewport.style.display = 'none';
-                backBtn.style.display = 'none';
-                frame.src = '';
-                fab.classList.remove('hidden-by-viewport');
-            }, 400);
-        };
-
-        window._openCurtain = function(url) {
-            const curtain = document.getElementById('curtain-container');
-            const frame = document.getElementById('curtain-frame');
-            frame.src = url;
-            curtain.classList.add('active');
-        };
-
-        window._closeCurtain = function() {
-            const curtain = document.getElementById('curtain-container');
-            const frame = document.getElementById('curtain-frame');
-            curtain.classList.remove('active');
-            setTimeout(() => frame.src = '', 400);
-        };
+        } 
     </script>
 </body>
 </html>
