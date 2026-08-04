@@ -339,61 +339,22 @@
         body.light-theme .login-card .factory_img { border-top-color: rgba(255,255,255,0.8); border-left-color: rgba(255,255,255,0.8); box-shadow: 0 25px 45px -12px rgba(31,38,135,0.2); }
         .login-card:hover .factory_img, .login-card:focus-within .factory_img { top: 50%; left: 74%; transform: translate(-50%, -50%) scale(1) rotate(0deg) translateZ(40px); opacity: 1; }
 
-        /* ==================== SIDEBAR MODERN (AUTO-HIDE) ==================== */
-        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); z-index: 2999; display: none; opacity: 0; transition: opacity 0.3s ease; }
-        .sidebar-overlay.active { display: block; opacity: 1; }
-
-        .modern-sidebar { position: fixed; top: 0; left: -320px; width: 280px; height: 100vh; background: rgba(11, 16, 30, 0.95); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-right: 1px solid var(--glass-border); box-shadow: 10px 0 30px rgba(0,0,0,0.5); z-index: 3000; transition: left 0.4s cubic-bezier(0.25, 1, 0.3, 1); display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; }
-        body.light-theme .modern-sidebar { background: rgba(242, 244, 248, 0.95); box-shadow: 10px 0 30px rgba(0,0,0,0.1); }
-        .modern-sidebar.active { left: 0; }
-        
-        .sidebar-header { padding: 25px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; background: inherit; z-index: 2; }
-        body.light-theme .sidebar-header { border-bottom-color: rgba(0,0,0,0.05); }
-        .sidebar-header img { height: 35px; filter: brightness(0) invert(1); }
-        body.light-theme .sidebar-header img { filter: none; }
-        
-        .close-sidebar-btn { background: rgba(255,69,58,0.15); border: none; color: var(--primary-red); width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 1.1rem; transition: var(--transition-smooth); }
-        .close-sidebar-btn:hover { background: var(--primary-red); color: #fff; transform: scale(1.1) rotate(90deg); }
-        
-        .sidebar-menu { padding: 20px 15px; display: flex; flex-direction: column; gap: 8px; }
-        .sidebar-title { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; padding: 10px 10px 5px 10px; margin-top: 10px; }
-        
-        .sidebar-link { display: flex; align-items: center; gap: 14px; padding: 12px 15px; border-radius: var(--radius-sm); color: var(--text-main); text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; border: 1px solid transparent; }
-        .sidebar-link:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); transform: translateX(5px); }
-        body.light-theme .sidebar-link:hover { background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.05); }
-        
-        .sidebar-icon { width: 35px; height: 35px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 1rem; flex-shrink: 0; }
-        .sidebar-link:hover .sidebar-icon i { transform: scale(1.15); }
-        .sidebar-icon i { transition: transform 0.3s ease; }
-        
-        .c-blue { color: var(--primary-blue); background: rgba(10, 132, 255, 0.15); }
-        .c-green { color: var(--primary-green); background: rgba(48, 209, 88, 0.15); }
-        .c-orange { color: var(--primary-orange); background: rgba(255, 159, 10, 0.15); }
-        .c-purple { color: var(--primary-purple); background: rgba(191, 90, 242, 0.15); }
-
-        /* Tombol Hamburger Header */
-        .hamburger-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main); width: 42px; height: 42px; border-radius: 12px; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; transition: var(--transition-smooth); flex-shrink: 0; }
-        body.light-theme .hamburger-btn { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.1); }
-        .hamburger-btn:hover { background: rgba(255,255,255,0.15); transform: scale(1.05); }
-        body.light-theme .hamburger-btn:hover { background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-
         /* ==================== DASHBOARD & FIXED HEADER ==================== */
-        #main-dashboard { display: none; flex-direction: column; min-height: 100vh; transform-origin: top center; animation: fadeIn 0.75s cubic-bezier(0.25, 1, 0.3, 1); width: 100%; overflow-x: hidden; padding-top: 110px; /* Offset for fixed header */ }
+        #main-dashboard { display: none; flex-direction: column; min-height: 100vh; transform-origin: top center; animation: fadeIn 0.75s cubic-bezier(0.25, 1, 0.3, 1); width: 100%; overflow-x: hidden; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.98) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
         .dashboard-dimmed { transform: scale(0.96) translateY(-12px); opacity: 0.35; filter: blur(12px); pointer-events: none; transition: transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease; }
 
-        /* HEADER DIBUAT FIXED AT TOP SEHINGGA TIDAK IKUT SCROLL */
+        /* HEADER DIBUAT STICKY / FIXED AT TOP SEHINGGA TIDAK IKUT SCROLL */
         .sticky-top-container {
-            position: fixed; /* Berubah menjadi Fixed */
+            position: sticky;
             top: 0;
-            left: 0;
-            z-index: 2000;
+            z-index: 1000;
             width: 100%;
             background: rgba(11, 16, 30, 0.85);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border-bottom: 1px solid var(--glass-border);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         body.light-theme .sticky-top-container {
@@ -429,7 +390,7 @@
 
         .nav-right { display: flex; align-items: center; gap: 12px; }
         
-        /* Tombol Install App */
+        /* Tombol Install App (Direct Download APK) */
         .install-app-btn { background: rgba(10, 132, 255, 0.12); border: 1px solid rgba(10, 132, 255, 0.25); padding: 10px 18px; border-radius: 20px; cursor: pointer; color: var(--primary-blue); font-size: 0.88rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: var(--transition-smooth); backdrop-filter: blur(10px); white-space: nowrap; }
         body.light-theme .install-app-btn { background: rgba(0, 122, 255, 0.08); border-color: rgba(0, 122, 255, 0.15); }
         .install-app-btn:hover { background: var(--primary-blue); color: #fff; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(10, 132, 255, 0.35); border-color: transparent; }
@@ -535,7 +496,7 @@
         .module-card.purple .explore-btn { color: var(--primary-purple); }
 
         .notification-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; pointer-events: none; }
-        .notification { pointer-events: auto; background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 100%); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-top: 1px solid var(--glass-border-highlight); border-left: 1px solid var(--glass-border-highlight); box-shadow: 0 10px 30px rgba(0,0,0,0.3); padding: 16px 20px; border-radius: var(--radius-md); min-width: 320px; display: flex; align-items: center; gap: 14px; animation: slideInRight 0.45s cubic-bezier(0.25, 1, 0.3, 1); color: var(--text-main); transition: opacity 0.5s ease; }
+        .notification { pointer-events: auto; background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 100%); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-top: 1px solid var(--glass-border-highlight); border-left: 1px solid var(--glass-border-highlight); box-shadow: 0 10px 30px rgba(0,0,0,0.3); padding: 16px 20px; border-radius: var(--radius-md); min-width: 320px; display: flex; align-items: center; gap: 14px; animation: slideInRight 0.45s cubic-bezier(0.25, 1, 0.3, 1); color: var(--text-main); }
         body.light-theme .notification { background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 100%); }
         @keyframes slideInRight { from { opacity: 0; transform: translateX(380px) scale(0.92); } to { opacity: 1; transform: translateX(0) scale(1); } }
         .notification i { font-size: 1.45rem; }
@@ -545,12 +506,12 @@
         .notification-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 2px; letter-spacing: -0.2px; }
         .notification-message { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
 
-        #viewport-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--glass-bg); backdrop-filter: var(--glass-blur); z-index: 4000; opacity: 0; transform: translateY(45px) scale(0.98); transition: all 0.45s cubic-bezier(0.25, 1, 0.3, 1); will-change: transform, opacity; overflow: hidden; border-top: 1px solid var(--glass-border-highlight); }
+        #viewport-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--glass-bg); backdrop-filter: var(--glass-blur); z-index: 3000; opacity: 0; transform: translateY(45px) scale(0.98); transition: all 0.45s cubic-bezier(0.25, 1, 0.3, 1); will-change: transform, opacity; overflow: hidden; border-top: 1px solid var(--glass-border-highlight); }
         body.light-theme #viewport-container { background: #fff; }
         #viewport-container.active { opacity: 1; transform: translateY(0) scale(1); }
         #erp-frame { width: 100%; height: 100%; border: none; background: #fff; }
         
-        .back-nav { position: fixed; bottom: 25px; right: 25px; background: rgba(0,0,0,0.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: #fff; padding: 12px 22px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.25); font-weight: 700; cursor: pointer; z-index: 4001; box-shadow: 0 10px 30px rgba(0,0,0,0.4); font-size: 0.9rem; display: none; align-items: center; gap: 8px; opacity: 0; transform: translateY(20px); transition: var(--transition-smooth); font-family: 'Inter', sans-serif; }
+        .back-nav { position: fixed; bottom: 25px; right: 25px; background: rgba(0,0,0,0.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: #fff; padding: 12px 22px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.25); font-weight: 700; cursor: pointer; z-index: 3001; box-shadow: 0 10px 30px rgba(0,0,0,0.4); font-size: 0.9rem; display: none; align-items: center; gap: 8px; opacity: 0; transform: translateY(20px); transition: var(--transition-smooth); font-family: 'Inter', sans-serif; }
         .back-nav.active { opacity: 1; transform: translateY(0); }
         .back-nav:hover { background: #000; transform: translateY(-2px) scale(1.04); box-shadow: 0 14px 35px rgba(0,0,0,0.5); }
         .back-nav:active { transform: scale(0.95); }
@@ -632,25 +593,19 @@
             .top-info-bar { padding: 8px 20px; }
         }
         @media (max-width: 768px) {
-            #main-dashboard { padding-top: 130px; }
             .top-info-bar { flex-direction: column; gap: 6px; text-align: center; padding: 8px 12px; }
             .datetime { justify-content: center; width: 100%; flex-wrap: wrap; font-size: 0.75rem; gap: 8px; }
             .hse-ticker-wrap { max-width: 100%; width: 100%; margin-left: 0; padding: 4px 10px; }
             
             header { padding: 10px 14px; min-height: auto; flex-wrap: wrap; gap: 10px; }
-            
-            /* Penyesuaian Header agar Logo dan Menu terlihat rapi di mobile */
-            .header-left { width: 100%; justify-content: flex-start; gap: 12px; }
+            .header-left { width: 100%; justify-content: space-between; }
             .header-divider { display: none; }
             .logo-small { height: 30px; }
-            .system-status { margin-left: auto; font-size: 0.75rem; padding: 6px 10px; }
-            
             .nav-right { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 6px; overflow-x: auto; padding-bottom: 2px; -webkit-overflow-scrolling: touch; }
             .nav-right::-webkit-scrollbar { display: none; }
             
             .install-app-btn, .theme-toggle, .btn-logout, .user-profile { padding: 7px 10px; font-size: 0.78rem; border-radius: 14px; flex-shrink: 0; }
-            .install-text { font-size: 0.76rem; display: none; } /* hide text install on mobile to save space */
-            .install-app-btn { width: 35px; height: 35px; justify-content: center; padding: 0; }
+            .install-text { font-size: 0.76rem; }
             .user-profile { padding: 4px 6px; font-size: 0.78rem; }
             
             /* Responsive Cards Mobile Friendly */
@@ -734,52 +689,6 @@
         <button class="fab-trigger" onclick="window._toggleFab()" aria-label="Toggle Quick Actions"><i class="fa-solid fa-bolt"></i></button>
     </div>
 
-    <!-- SIDEBAR MODERN UNTUK NAVIGASI CEPAT -->
-    <div class="sidebar-overlay" id="sidebar-overlay" onclick="window._toggleSidebar()"></div>
-    <aside class="modern-sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <img src="MSB Logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/180x60?text=MSB'">
-            <button onclick="window._toggleSidebar()" class="close-sidebar-btn"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="sidebar-menu">
-            <div class="sidebar-title">Menu Utama</div>
-            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/HR-System/'); window._toggleSidebar();" class="sidebar-link">
-                <div class="sidebar-icon c-blue"><i class="fa-solid fa-people-group"></i></div><span>HR System</span>
-            </a>
-            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/General-Affairs/'); window._toggleSidebar();" class="sidebar-link">
-                <div class="sidebar-icon c-green"><i class="fa-solid fa-building-circle-check"></i></div><span>General Affairs</span>
-            </a>
-            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/HSE/'); window._toggleSidebar();" class="sidebar-link">
-                <div class="sidebar-icon c-orange"><i class="fa-solid fa-helmet-safety"></i></div><span>HSE System</span>
-            </a>
-            
-            <div class="sidebar-title">Operasional</div>
-            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/Production-Tracking/'); window._toggleSidebar();" class="sidebar-link">
-                <div class="sidebar-icon c-blue"><i class="fa-solid fa-industry"></i></div><span>Produksi</span>
-            </a>
-            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/Warehouse-System/'); window._toggleSidebar();" class="sidebar-link">
-                <div class="sidebar-icon c-orange"><i class="fa-solid fa-boxes-stacked"></i></div><span>Warehouse</span>
-            </a>
-            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/Maintenance/'); window._toggleSidebar();" class="sidebar-link">
-                <div class="sidebar-icon c-blue"><i class="fa-solid fa-gears"></i></div><span>Maintenance</span>
-            </a>
-            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/QC-Inspection/'); window._toggleSidebar();" class="sidebar-link">
-                <div class="sidebar-icon c-green"><i class="fa-solid fa-microscope"></i></div><span>Quality Control</span>
-            </a>
-            
-            <div class="sidebar-title">Administrasi</div>
-            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/Purchase-Order/'); window._toggleSidebar();" class="sidebar-link">
-                <div class="sidebar-icon c-green"><i class="fa-solid fa-file-invoice-dollar"></i></div><span>Purchase Order</span>
-            </a>
-            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/SPP/'); window._toggleSidebar();" class="sidebar-link">
-                <div class="sidebar-icon c-orange"><i class="fa-solid fa-file-invoice"></i></div><span>SPP System</span>
-            </a>
-            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/MSB-Approval/'); window._toggleSidebar();" class="sidebar-link">
-                <div class="sidebar-icon c-blue"><i class="fa-solid fa-file-signature"></i></div><span>MSB Approval</span>
-            </a>
-        </div>
-    </aside>
-
     <!-- HALAMAN LOGIN DENGAN ANIMATED NEON BORDER TERBARU -->
     <div id="login-overlay">
         <div class="login-wrapper">
@@ -827,8 +736,6 @@
             
             <header>
                 <div class="header-left">
-                    <!-- HAMBURGER MENU MUNCUL DI HEADER KIRI -->
-                    <button class="hamburger-btn" onclick="window._toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
                     <img src="MSB Logo.png" alt="Logo" class="logo-small" onerror="this.style.display='none'">
                     <div class="header-divider"></div>
                     <div class="system-status" aria-label="System Status"><div class="status-dot"></div><span>Online MSB ERP</span></div>
@@ -841,7 +748,7 @@
                     
                     <button class="theme-toggle" onclick="window._tTheme()" aria-label="Toggle Dark or Light Theme" title="Ubah Tema"><i class="fa-solid fa-sun" aria-hidden="true"></i></button>
                     <div class="user-profile"><i class="fa-solid fa-circle-user" aria-hidden="true"></i><span id="display-user">Kalijati Plant</span></div>
-                    <button class="btn-logout" onclick="window._dOut()" aria-label="Logout from System"><i class="fa-solid fa-power-off" aria-hidden="true"></i> <span class="install-text">Keluar</span></button>
+                    <button class="btn-logout" onclick="window._dOut()" aria-label="Logout from System"><i class="fa-solid fa-power-off" aria-hidden="true"></i> Keluar</button>
                 </nav>
             </header>
         </div>
@@ -975,12 +882,12 @@
                   (e.ctrlKey&&(e.key==='U'||e.key==='u'||e.key==='S'||e.key==='s'||e.key==='P'||e.key==='p'))||
                   (e.metaKey&&e.altKey&&(e.key==='I'||e.key==='J'||e.key==='U'))){e.preventDefault();return false;}
             });
-            // setInterval(function(){const s=new Date().getTime();debugger;const e=new Date().getTime();if(e-s>100){document.body.innerHTML="<h2 style='color:red;text-align:center;margin-top:20vh;font-family:-apple-system,sans-serif;'>Security Restriction Enforced</h2>";window.location.replace("about:blank");}},1000);
+            setInterval(function(){const s=new Date().getTime();debugger;const e=new Date().getTime();if(e-s>100){document.body.innerHTML="<h2 style='color:red;text-align:center;margin-top:20vh;font-family:-apple-system,sans-serif;'>Security Restriction Enforced</h2>";window.location.replace("about:blank");}},1000);
         })();
 
-        const m = "https://script.google.com/macros/s/AKfycbzuq0CdzMfoRVG-YhJIja8Lsy1ZeShZbEjmIZgn7gFqqXonEq3PhoMR9XsIfWhARTWo/exec";
+        const m = "https://script.google.com/macros/s/AKfycbx3odMeOlwjsh3s7mG4r2YeXlJwsB02gBLsJIc-IBtguulySWZKCb7b3v_OczkIHMvOqA/exec";
         const s = atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5ZzBrMmw4NGtaQXdveERNdnlua2xHQWVIWDJOY3hmX0RfVUhETU1SUHBnQ0c4dk9qSE00VFdveHM5S1laYUhzdU4vZXhlYw==");
-        const schUrl = "https://script.google.com/macros/s/AKfycbzuq0CdzMfoRVG-YhJIja8Lsy1ZeShZbEjmIZgn7gFqqXonEq3PhoMR9XsIfWhARTWo/exec";
+        const schUrl = "https://script.google.com/macros/s/AKfycbwIN-kg3cjvdHV7pStMbRIpCJtQeo9j80ncjDPCZ5TosPcJaZPxpRrhUDkwzgVyor_gig/exec";
         
         let clientProcessChart = null;
         let karyawanDeptChart = null;
@@ -1008,136 +915,346 @@
             }, 16);
         }
 
-        // --- SKRIP LENGKAP UNTUK NOTIFIKASI YANG TERPOTONG SEBELUMNYA ---
         function sN(title, msg, type='success'){
             const container = document.getElementById('notification-container');
             if(!container) return;
             const notif = document.createElement('div');
             notif.className = `notification ${type}`;
             const icon = type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation';
-            notif.innerHTML = `
-                <i class="fa-solid ${icon}"></i>
-                <div class="notification-content">
-                    <div class="notification-title">${title}</div>
-                    <div class="notification-message">${msg}</div>
-                </div>
-            `;
+            notif.innerHTML = `<i class="fa-solid ${icon}"></i><div class="notification-content"><div class="notification-title">${title}</div><div class="notification-message">${msg}</div></div>`;
             container.appendChild(notif);
-            
-            // Auto hide setelah 3.5 detik
             setTimeout(() => {
                 notif.style.opacity = '0';
-                setTimeout(() => {
-                    notif.remove();
-                }, 500); // durasi animasi CSS
+                notif.style.transform = 'translateX(100px)';
+                setTimeout(() => notif.remove(), 400);
             }, 3500);
         }
 
-        // --- SKRIP UNTUK MENGAKSES SIDEBAR ---
-        window._toggleSidebar = function() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
-            if (sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
-                overlay.classList.remove('active');
-            } else {
-                sidebar.classList.add('active');
-                overlay.classList.add('active');
-            }
-        };
+        function uC(trendPO, karyawan) {
+            const isLightTheme = document.body.classList.contains('light-theme');
+            const textColor = isLightTheme ? '#1D1D1F' : '#FFFFFF';
+            const gridColor = isLightTheme ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
+            const tickColor = isLightTheme ? '#6E6E73' : 'rgba(255,255,255,0.6)';
 
-        // --- FUNGSI LOGIN & PERPINDAHAN TAMPILAN DASHBOARD ---
+            let deptLabels = [];
+            let deptData = [];
+            
+            if (karyawan && karyawan.length > 1) {
+                const headers = karyawan[0].map(h => String(h).toLowerCase().trim());
+                let deptIndex = headers.findIndex(h => h.includes('departemen') || h.includes('dept'));
+                if (deptIndex === -1) deptIndex = 1;
+
+                const deptCounts = {};
+                for (let i = 1; i < karyawan.length; i++) {
+                    const baris = karyawan[i];
+                    if (baris && baris[0] && baris[0] !== '') { 
+                        let dept = String(baris[deptIndex] || 'Lainnya').trim();
+                        if (dept === '') dept = 'Lainnya';
+                        deptCounts[dept] = (deptCounts[dept] || 0) + 1;
+                    }
+                }
+                deptLabels = Object.keys(deptCounts);
+                deptData = Object.values(deptCounts);
+            } else {
+                deptLabels = ['Engineering', 'Produksi', 'PPIC', 'QA/QC', 'HR/GA'];
+                deptData = [12, 45, 8, 10, 5];
+            }
+
+            const ctxKaryawan = document.getElementById('karyawanDeptChart').getContext('2d');
+            if (karyawanDeptChart) karyawanDeptChart.destroy();
+            karyawanDeptChart = new Chart(ctxKaryawan, {
+                type: 'doughnut',
+                data: {
+                    labels: deptLabels,
+                    datasets: [{
+                        data: deptData,
+                        backgroundColor: ['#0A84FF', '#30D158', '#FF9F0A', '#BF5AF2', '#FF453A', '#64D2FF'],
+                        borderWidth: 0,
+                        hoverOffset: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: { color: textColor, usePointStyle: true, pointStyle: 'circle', font: { family: 'Inter', size: 11 } }
+                        },
+                        tooltip: { backgroundColor: 'rgba(0,0,0,0.8)', titleFont: {family: 'Inter'}, bodyFont: {family: 'Inter'}, padding: 10, cornerRadius: 8 }
+                    },
+                    cutout: '65%'
+                }
+            });
+
+            let poLabels = [];
+            let poDatasets = [];
+            
+            if (trendPO && trendPO.length > 1) {
+                poLabels = trendPO.slice(1).map(row => row[0]); 
+                const clients = trendPO[0].slice(1); 
+                const colors = ['#0A84FF', '#30D158', '#FF9F0A', '#BF5AF2', '#FF453A'];
+
+                poDatasets = clients.map((client, i) => {
+                    return {
+                        label: client,
+                        data: trendPO.slice(1).map(row => parseFloat(row[i + 1]) || 0),
+                        borderColor: colors[i % colors.length],
+                        backgroundColor: colors[i % colors.length],
+                        borderWidth: 2,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    };
+                });
+            } else {
+                poLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'];
+                poDatasets = [{
+                    label: 'Sumitomo', data: [15, 25, 20, 35, 45, 40], borderColor: '#0A84FF', backgroundColor: '#0A84FF', borderWidth: 2, tension: 0.4
+                }];
+            }
+
+            const ctxPO = document.getElementById('clientProcessChart').getContext('2d');
+            if (clientProcessChart) clientProcessChart.destroy();
+            clientProcessChart = new Chart(ctxPO, {
+                type: 'line',
+                data: { labels: poLabels, datasets: poDatasets },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: textColor,
+                                usePointStyle: true, 
+                                pointStyle: 'circle', 
+                                font: { family: 'Inter', size: 11 }
+                            }
+                        },
+                        tooltip: { backgroundColor: 'rgba(0,0,0,0.8)', padding: 10, cornerRadius: 8, titleFont: {family: 'Inter'}, bodyFont: {family: 'Inter'} }
+                    },
+                    scales: {
+                        y: { grid: { color: gridColor }, ticks: { color: tickColor, font: {family: 'Inter', size: 10} } },
+                        x: { grid: { display: false }, ticks: { color: tickColor, font: {family: 'Inter', size: 10} } }
+                    }
+                }
+            });
+        }
+
+        async function fD(){
+            try{
+                const r = await fetch(m);
+                const d = await r.json();
+                globalTrendPO = d.trendPO;
+                globalKaryawan = d.karyawan;
+
+                let sM={};
+                if(d.summary && d.summary.length > 0){
+                    let h = d.summary[0].length > 2;
+                    if(h && d.summary.length > 1){
+                        d.summary[0].forEach((he,i)=>{if(he)sM[String(he).trim().toLowerCase()]=d.summary[1][i];});
+                    }else{
+                        d.summary.forEach(ro=>{if(ro.length>=2&&ro[0]!=null&&ro[0]!=='')sM[String(ro[0]).trim().toLowerCase()]=ro[1];});
+                    }
+                }
+                
+                const pT=(l)=>{
+                    let ma=sM[l.toLowerCase().trim()];
+                    if(ma===undefined||ma===null||ma==='')return 0;
+                    if(typeof ma==='string')return parseFloat(ma.replace(/[^0-9.-]/g,''))||0;
+                    return ma;
+                };
+                
+                aV('stat-karyawan',pT('Karyawan'),1200);
+                aV('stat-po',pT('Purchase Order'),1200);
+                aV('stat-pengiriman',pT('Pengiriman'),1200);
+                aV('stat-stok',pT('Stok Produksi'),1200);
+                aV('stat-lkp',pT('Jumlah LKP'),1200);
+                aV('stat-insiden',pT('Total Insiden'),1200);
+                aV('stat-spp',pT('SPP Belum Datang'),1200);
+                
+                let tamuAktif = pT('tamu di dalam') || pT('tamu aktif') || pT('tamu') || pT('jumlah tamu') || 0;
+                let kendaraanAktif = pT('kendaraan masuk') || pT('kendaraan aktif') || pT('kendaraan di dalam') || pT('kendaraan') || 0;
+                
+                aV('stat-tamu-aktif', tamuAktif, 1200);
+                aV('stat-kendaraan-aktif', kendaraanAktif, 1200);
+                uC(globalTrendPO, globalKaryawan);
+            } catch(e) {
+                console.error("Data Fetch Error:", e);
+                uC(null, null);
+            }
+        }
+
+        async function fS(){
+            try{
+                const r=await fetch(s),res=await r.json();
+                if(res.error)return;
+                const h=res.headers,d=res.data,mI=h.findIndex(x=>x.toString().toLowerCase().trim()==='nama material'),sI=h.findIndex(x=>x.toString().toLowerCase().trim()==='spp total'),kI=h.findIndex(x=>x.toString().toLowerCase().trim()==='kedatangan');
+                if(mI===-1||sI===-1||kI===-1)return;
+                let mM={},tS=0,tD=0;
+                d.forEach(ro=>{
+                    if(ro.every(ce=>ce===''||ce===null||ce===undefined))return;
+                    let mN=ro[mI],sQ=Number(ro[sI])||0,dQ=Number(ro[kI])||0,si=dQ-sQ;
+                    if(mN){if(si<0)mM[mN]=(mM[mN]||0)+Math.abs(si);tS+=sQ;tD+=dQ>sQ?sQ:dQ;}
+                });
+                const pL=document.getElementById('spp-pending-list');
+                if(Object.keys(mM).length===0){
+                    pL.innerHTML=`<li class="sp-list-item"><span style="color:var(--primary-green);">✨ Seluruh material telah terpenuhi</span><strong style="color:var(--primary-green);">-</strong></li>`;
+                }else{
+                    let hL='';
+                    for(let mat in mM)hL+=`<li class="sp-list-item"><span>${mat}</span><strong style="color:var(--primary-red);">- ${mM[mat]}</strong></li>`;
+                    pL.innerHTML=hL;
+                }
+                let pt=tS>0?Math.floor((tD/tS)*100):0;if(pt>100)pt=100;
+                document.getElementById('spp-fulfillment-text').innerText=pt+"%";
+                document.getElementById('spp-fulfillment-bar').style.width=pt+"%";
+            }catch(e){
+                document.getElementById('spp-pending-list').innerHTML=`<li class="sp-list-item"><span style="color:var(--primary-red);">Gagal mengambil data sinkronisasi</span><strong style="color:var(--primary-red);">X</strong></li>`;
+            }
+        }
+        
+        async function fetchSchedule(){
+            try{
+                const r=await fetch(schUrl);
+                const d=await r.json();
+                if(!d.error){deliveriesData=d;buildMiniCalendar();}
+            }catch(e){
+                console.error("Gagal memuat jadwal:",e);
+                document.getElementById('mini-cal-month').innerHTML="<i class='fa-solid fa-triangle-exclamation'></i> Gagal Sinkronisasi";
+            }
+        }
+        
+        function buildMiniCalendar() {
+            const grid = document.getElementById('mini-cal-grid');
+            const mLabel = document.getElementById('mini-cal-month');
+            
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = now.getMonth();
+            const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            
+            mLabel.innerHTML = `<i class="fa-solid fa-calendar-check"></i> ${monthNames[m]} ${y}`;
+            
+            const firstDay = new Date(y, m, 1).getDay();
+            const daysInMonth = new Date(y, m + 1, 0).getDate();
+            
+            for (let i = 0; i < firstDay; i++) {
+                let empty = document.createElement('div');
+                grid.appendChild(empty);
+            }
+            
+            for (let i = 1; i <= daysInMonth; i++) {
+                let cell = document.createElement('div');
+                cell.className = 'mini-cal-cell';
+                cell.innerText = i;
+                
+                const isSunday = new Date(y, m, i).getDay() === 0;
+                if (isSunday) cell.classList.add('holiday');
+                
+                const todaysItems = deliveriesData.filter(item => {
+                    const dateKey = Object.keys(item).find(k => k.toLowerCase().includes('delivery date') || k.toLowerCase().includes('tanggal'));
+                    if (dateKey && item[dateKey]) {
+                        const itemDate = new Date(item[dateKey]);
+                        return itemDate.getDate() === i && itemDate.getMonth() === m && itemDate.getFullYear() === y;
+                    }
+                    return false;
+                });
+                
+                if (todaysItems.length > 0) {
+                    cell.classList.add('has-data');
+                    let tooltip = document.createElement('div');
+                    tooltip.className = 'mini-tooltip';
+                    let tooltipHtml = '';
+                    
+                    todaysItems.forEach(item => {
+                        const exactSerialKey = Object.keys(item).find(k => k.toLowerCase() === 'serial number');
+                        const poKey = Object.keys(item).find(k => k.toLowerCase().includes('po') || k.toLowerCase().includes('purchase'));
+                        const sn = exactSerialKey ? item[exactSerialKey] : 'Unknown Item';
+                        const po = poKey ? item[poKey] : '-';
+                        tooltipHtml += `<div class="mini-tooltip-item"><span class="mini-sn">${sn}</span><span style="font-size:0.7rem; color:var(--text-muted)">PO: ${po}</span></div>`;
+                    });
+                    tooltip.innerHTML = tooltipHtml;
+                    cell.appendChild(tooltip);
+                }
+                grid.appendChild(cell);
+            }
+        }
+
+        /* SYSTEM UTILITY FUNCTIONS */
         window._eSys = function(e) {
-            e.preventDefault();
-            document.getElementById('login-overlay').style.opacity = '0';
-            document.getElementById('login-overlay').style.visibility = 'hidden';
-            document.getElementById('main-dashboard').style.display = 'flex';
-            sN('Login Berhasil', 'Selamat datang di MSB ERP System', 'success');
+            if(e) e.preventDefault();
+            const loginOverlay = document.getElementById('login-overlay');
+            const mainDashboard = document.getElementById('main-dashboard');
+            loginOverlay.style.opacity = '0';
+            loginOverlay.style.visibility = 'hidden';
+            setTimeout(() => {
+                loginOverlay.style.display = 'none';
+                mainDashboard.style.display = 'flex';
+                fD();
+                fS();
+                fetchSchedule();
+                sN('Sistem Siap', 'Selamat datang di MSB ERP System', 'success');
+            }, 400);
         };
 
         window._dOut = function() {
-            document.getElementById('main-dashboard').style.display = 'none';
-            const login = document.getElementById('login-overlay');
-            login.style.visibility = 'visible';
-            login.style.opacity = '1';
+            const loginOverlay = document.getElementById('login-overlay');
+            const mainDashboard = document.getElementById('main-dashboard');
+            mainDashboard.style.display = 'none';
+            loginOverlay.style.display = 'flex';
+            setTimeout(() => {
+                loginOverlay.style.opacity = '1';
+                loginOverlay.style.visibility = 'visible';
+            }, 50);
         };
 
         window._tTheme = function() {
             document.body.classList.toggle('light-theme');
+            uC(globalTrendPO, globalKaryawan);
+        };
+
+        window._toggleFab = function() {
+            const fab = document.getElementById('quick-action-fab');
+            fab.classList.toggle('active');
         };
 
         window._lNch = function(url) {
-            sN('Membuka Modul', 'Mempersiapkan aplikasi terkait...', 'success');
-            // Mencontoh perilaku _lNch yang lama, Anda dapat mengaktifkan iframe di sini:
-            /*
-            const vp = document.getElementById('viewport-container');
+            const viewport = document.getElementById('viewport-container');
             const frame = document.getElementById('erp-frame');
             const backBtn = document.getElementById('back-btn');
-            const main = document.getElementById('main-dashboard');
-            
-            frame.src = url;
-            vp.style.display = 'block';
-            setTimeout(() => vp.classList.add('active'), 50);
-            backBtn.style.display = 'flex';
-            setTimeout(() => backBtn.classList.add('active'), 50);
-            main.classList.add('dashboard-dimmed');
-            */
-            // Untuk preview, kita buka di tab baru agar tidak error di iframe lokal:
-            window.open(url, '_blank');
-        };
-// --- FUNGSI MEMBUKA MODUL DI DALAM IFRAME ---
-        window._lNch = function(url) {
-            sN('Membuka Modul', 'Mempersiapkan aplikasi terkait...', 'success');
-            
-            const vp = document.getElementById('viewport-container');
-            const frame = document.getElementById('erp-frame');
-            const backBtn = document.getElementById('back-btn');
-            const main = document.getElementById('main-dashboard');
             const fab = document.getElementById('quick-action-fab');
-            
-            // Set sumber iframe ke URL tujuan
+
             frame.src = url;
-            
-            // Tampilkan viewport
-            vp.style.display = 'block';
-            
-            // Berikan sedikit delay agar animasi transisi CSS berjalan mulus
+            viewport.style.display = 'block';
             setTimeout(() => {
-                vp.classList.add('active');
+                viewport.classList.add('active');
                 backBtn.style.display = 'flex';
                 setTimeout(() => backBtn.classList.add('active'), 50);
-            }, 50);
-            
-            // Redupkan dashboard utama dan sembunyikan tombol FAB
-            main.classList.add('dashboard-dimmed');
-            if (fab) fab.classList.add('hidden-by-viewport');
+                fab.classList.add('hidden-by-viewport');
+            }, 10);
         };
 
-        // --- FUNGSI KEMBALI KE DASHBOARD (MENUTUP IFRAME) ---
         window._cView = function() {
-            const vp = document.getElementById('viewport-container');
+            const viewport = document.getElementById('viewport-container');
             const frame = document.getElementById('erp-frame');
             const backBtn = document.getElementById('back-btn');
-            const main = document.getElementById('main-dashboard');
             const fab = document.getElementById('quick-action-fab');
-            
-            // Sembunyikan viewport & tombol kembali dengan animasi
-            vp.classList.remove('active');
+
+            viewport.classList.remove('active');
             backBtn.classList.remove('active');
-            
-            // Kembalikan main dashboard & FAB ke kondisi terang
-            main.classList.remove('dashboard-dimmed');
-            if (fab) fab.classList.remove('hidden-by-viewport');
-            
-            // Hapus source iframe dan sembunyikan elemen setelah animasi CSS selesai
             setTimeout(() => {
-                vp.style.display = 'none';
+                viewport.style.display = 'none';
                 backBtn.style.display = 'none';
-                frame.src = ''; 
-            }, 450); 
+                frame.src = '';
+                fab.classList.remove('hidden-by-viewport');
+            }, 400);
         };
 
-        // --- FUNGSI UNTUK STRUKTUR ORGANISASI (CURTAIN) ---
         window._openCurtain = function(url) {
             const curtain = document.getElementById('curtain-container');
             const frame = document.getElementById('curtain-frame');
@@ -1149,15 +1266,7 @@
             const curtain = document.getElementById('curtain-container');
             const frame = document.getElementById('curtain-frame');
             curtain.classList.remove('active');
-            setTimeout(() => {
-                frame.src = '';
-            }, 500);
-        };
-
-        // --- FUNGSI UNTUK MENGAKSES QUICK ACTION FAB ---
-        window._toggleFab = function() {
-            const fab = document.getElementById('quick-action-fab');
-            fab.classList.toggle('active');
+            setTimeout(() => frame.src = '', 400);
         };
     </script>
 </body>
