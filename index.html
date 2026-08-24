@@ -813,9 +813,27 @@
         body.light-theme .mini-cal-cell.has-data.all-delivered { background: linear-gradient(180deg, transparent 40%, rgba(48, 209, 88, 0.1) 100%); }
         .mini-cal-cell.holiday { color: var(--primary-red); }
         
-        .mini-tooltip { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%) scale(0.85); opacity: 0; visibility: hidden; background: linear-gradient(135deg, rgba(20, 25, 40, 0.92) 0%, rgba(10, 14, 25, 0.96) 100%); border: 1px solid rgba(255,255,255,0.18); padding: 10px; border-radius: var(--radius-md); min-width: 220px; max-width: 260px; z-index: 100; transition: opacity 0.3s cubic-bezier(0.25, 1, 0.3, 1), transform 0.3s cubic-bezier(0.25, 1, 0.3, 1), visibility 0.3s; box-shadow: 0 10px 25px rgba(0,0,0,0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); max-height: 160px; overflow-y: auto; text-align: left; pointer-events: none; }
+        /* PERBAIKAN BUG "Jadwal Pengiriman terpotong saat tanggal diklik":
+           Sebelumnya tooltip ini adalah anak (child) langsung dari setiap sel
+           kalender dan diposisikan dengan "position: absolute" relatif terhadap
+           sel tersebut. Masalahnya, kartu pembungkus kalender (.chart-card)
+           memakai "overflow: hidden" (dipakai bersama utk efek kilau & sudut
+           membulat pada semua kartu), sehingga bagian tooltip yang menonjol
+           keluar dari batas kartu — terutama saat tanggal berada di baris atas
+           atau di tepi kiri/kanan kalender — ikut terpotong (lihat area
+           screenshot yang dilaporkan pengguna).
+           Solusinya: tooltip kini dibuat sebagai SATU elemen tunggal yang
+           ditempel langsung ke <body> (lihat JS: getMiniTooltipEl()) dan
+           diposisikan dengan "position: fixed" relatif terhadap viewport,
+           dihitung ulang tiap kali muncul lewat getBoundingClientRect() +
+           logika clamp/flip di JS (showMiniTooltip()). Dengan begitu tooltip
+           tidak lagi berada di dalam DOM kartu ber-"overflow:hidden" apa pun,
+           sehingga tidak akan pernah terpotong lagi, di baris/kolom manapun
+           tanggal itu berada, dan tetap otomatis membalik ke bawah sel atau
+           bergeser ke dalam layar bila ruang di atas/samping tidak cukup. */
+        .mini-tooltip { position: fixed; top: 0; left: 0; opacity: 0; visibility: hidden; transform: scale(0.85); transform-origin: center bottom; background: linear-gradient(135deg, rgba(20, 25, 40, 0.92) 0%, rgba(10, 14, 25, 0.96) 100%); border: 1px solid rgba(255,255,255,0.18); padding: 10px; border-radius: var(--radius-md); min-width: 220px; max-width: min(260px, calc(100vw - 24px)); z-index: 9999; transition: opacity 0.3s cubic-bezier(0.25, 1, 0.3, 1), transform 0.3s cubic-bezier(0.25, 1, 0.3, 1), visibility 0.3s; box-shadow: 0 10px 25px rgba(0,0,0,0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); max-height: min(220px, calc(100vh - 24px)); overflow-y: auto; text-align: left; pointer-events: none; }
         body.light-theme .mini-tooltip { background: linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 100%); border-color:rgba(0,0,0,0.1); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
-        .mini-cal-cell:hover .mini-tooltip, .mini-cal-cell.active-tooltip .mini-tooltip { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); pointer-events: auto; }
+        .mini-tooltip.tooltip-visible { opacity: 1; visibility: visible; transform: scale(1); pointer-events: auto; }
         
         .mini-tooltip-item { font-size: 0.78rem; padding: 6px 2px; border-bottom: 1px solid var(--glass-border); display: flex; flex-direction: column; gap: 4px; }
         .mini-tooltip-item:last-child { border-bottom: none; }
@@ -1872,8 +1890,6 @@
                     statusIcon.title = allDelivered ? 'Semua sudah terkirim' : 'Ada pengiriman pending';
                     cell.appendChild(statusIcon);
 
-                    let tooltip = document.createElement('div');
-                    tooltip.className = 'mini-tooltip';
                     let tooltipHtml = '';
                     
                     todaysItems.forEach(item => {
@@ -1892,25 +1908,134 @@
                             </div>
                         </div>`;
                     });
-                    tooltip.innerHTML = tooltipHtml;
-                    cell.appendChild(tooltip);
+
+                    // Catatan: tooltip TIDAK lagi dibuat & ditempel sebagai anak dari
+                    // "cell" di sini. Ia kini satu elemen global yang ditempel ke <body>
+                    // dan diposisikan lewat showMiniTooltip() (lihat penjelasan di CSS
+                    // ".mini-tooltip" dan blok JS di bawah buildMiniCalendar()), supaya
+                    // tidak lagi terpotong oleh "overflow:hidden" milik .chart-card.
+
+                    // Hover (desktop): tampilkan tooltip. Pakai sedikit jeda saat kursor
+                    // meninggalkan sel supaya tidak "berkedip" ketika berpindah ke sel
+                    // sebelah, dan supaya isi tooltip tetap bisa di-scroll dengan mouse.
+                    cell.addEventListener('mouseenter', () => {
+                        cancelMiniTooltipHide();
+                        showMiniTooltip(cell, tooltipHtml);
+                    });
+                    cell.addEventListener('mouseleave', () => {
+                        if (!cell.classList.contains('active-tooltip')) scheduleMiniTooltipHide();
+                    });
 
                     // Klik sel untuk membuka/menutup detail (selain hover, agar ramah untuk sentuhan/mobile)
                     cell.addEventListener('click', (ev) => {
                         ev.stopPropagation();
                         const wasActive = cell.classList.contains('active-tooltip');
                         document.querySelectorAll('.mini-cal-cell.active-tooltip').forEach(c => c.classList.remove('active-tooltip'));
-                        if (!wasActive) cell.classList.add('active-tooltip');
+                        if (!wasActive) {
+                            cell.classList.add('active-tooltip');
+                            cancelMiniTooltipHide();
+                            showMiniTooltip(cell, tooltipHtml);
+                        } else {
+                            hideMiniTooltip();
+                        }
                     });
                 }
                 grid.appendChild(cell);
             }
         } 
 
+        // ==== Tooltip Jadwal Pengiriman: elemen global anti-terpotong ====
+        // Satu elemen ".mini-tooltip" dibuat sekali dan ditempel ke <body> (bukan
+        // ke dalam kartu kalender), lalu posisinya (top/left) dihitung ulang setiap
+        // kali muncul berdasarkan posisi sel yang di-hover/diklik terhadap ukuran
+        // layar (viewport) saat itu — bukan lagi relatif terhadap kartu yang
+        // ber-"overflow:hidden". Ini akar perbaikan agar tampilan detail jadwal
+        // tidak pernah terpotong lagi, di tanggal manapun ia diklik.
+        var miniTooltipHideTimer = null;
+
+        function getMiniTooltipEl() {
+            let tip = document.getElementById('global-mini-tooltip');
+            if (!tip) {
+                tip = document.createElement('div');
+                tip.id = 'global-mini-tooltip';
+                tip.className = 'mini-tooltip';
+                document.body.appendChild(tip);
+                // Jika kursor masuk ke dalam tooltip itu sendiri (misalnya untuk
+                // men-scroll daftar item yang panjang), jangan ditutup — kecuali
+                // memang tidak ada sel yang sedang "dikunci" lewat klik.
+                tip.addEventListener('mouseenter', cancelMiniTooltipHide);
+                tip.addEventListener('mouseleave', () => {
+                    if (!document.querySelector('.mini-cal-cell.active-tooltip')) scheduleMiniTooltipHide();
+                });
+            }
+            return tip;
+        }
+
+        function showMiniTooltip(cell, html) {
+            const tip = getMiniTooltipEl();
+            tip.innerHTML = html;
+            tip.classList.add('tooltip-visible');
+
+            const margin = 10;
+            const viewportPadding = 12;
+            const cellRect = cell.getBoundingClientRect();
+            const tipRect = tip.getBoundingClientRect();
+
+            // Horizontal: pusatkan tooltip di atas sel, lalu geser (clamp) agar
+            // tidak keluar dari sisi kiri/kanan layar (penting utk sel di kolom
+            // "Min"/"Sab" alias tepi kiri/kanan kalender).
+            let left = cellRect.left + (cellRect.width / 2) - (tipRect.width / 2);
+            const maxLeft = window.innerWidth - tipRect.width - viewportPadding;
+            left = Math.max(viewportPadding, Math.min(left, maxLeft));
+
+            // Vertikal: utamakan tampil DI ATAS sel seperti semula. Jika ruang di
+            // atas tidak cukup (mis. sel di baris pertama kalender) DAN ruang di
+            // bawah lebih luas, otomatis dibalik ke BAWAH sel supaya seluruh isi
+            // tooltip tetap terlihat, lalu tetap di-clamp ke dalam tinggi layar.
+            const spaceAbove = cellRect.top;
+            const spaceBelow = window.innerHeight - cellRect.bottom;
+            let top, origin;
+            if (spaceAbove >= (tipRect.height + margin) || spaceAbove >= spaceBelow) {
+                top = cellRect.top - tipRect.height - margin;
+                origin = 'center bottom';
+            } else {
+                top = cellRect.bottom + margin;
+                origin = 'center top';
+            }
+            top = Math.max(viewportPadding, Math.min(top, window.innerHeight - tipRect.height - viewportPadding));
+
+            tip.style.transformOrigin = origin;
+            tip.style.left = left + 'px';
+            tip.style.top = top + 'px';
+        }
+
+        function hideMiniTooltip() {
+            const tip = document.getElementById('global-mini-tooltip');
+            if (tip) tip.classList.remove('tooltip-visible');
+        }
+
+        function scheduleMiniTooltipHide() {
+            cancelMiniTooltipHide();
+            miniTooltipHideTimer = setTimeout(hideMiniTooltip, 80);
+        }
+
+        function cancelMiniTooltipHide() {
+            if (miniTooltipHideTimer) { clearTimeout(miniTooltipHideTimer); miniTooltipHideTimer = null; }
+        }
+
         // Tutup detail jadwal yang sedang terbuka saat mengklik di luar kalender
         document.addEventListener('click', () => {
             document.querySelectorAll('.mini-cal-cell.active-tooltip').forEach(c => c.classList.remove('active-tooltip'));
+            hideMiniTooltip();
         });
+
+        // Tutup tooltip saat halaman di-scroll (agar posisinya tidak "meleset"
+        // dari sel yang sudah berpindah) atau saat ukuran jendela berubah.
+        window.addEventListener('scroll', () => {
+            document.querySelectorAll('.mini-cal-cell.active-tooltip').forEach(c => c.classList.remove('active-tooltip'));
+            hideMiniTooltip();
+        }, true);
+        window.addEventListener('resize', hideMiniTooltip);
     </script>
 </body>
 </html>
