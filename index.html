@@ -43,14 +43,18 @@
                 inset 0 1.5px 1px rgba(255, 255, 255, 0.22),
                 inset 0 -14px 22px -16px rgba(0, 0, 0, 0.4),
                 inset 0 0 0 1px var(--glass-border);
-            --glass-blur: blur(26px) saturate(180%);
+            --glass-blur: blur(28px) saturate(195%);
             
             /* Typography & UI Contrast */
             --text-main: #FFFFFF;
             --text-muted: rgba(255, 255, 255, 0.65);
             --text-accent: rgba(255, 255, 255, 0.85);
             
-            --transition-smooth: 0.4s cubic-bezier(0.25, 1, 0.3, 1);
+            /* Kurva "spring" khas iOS — sedikit overshoot agar interaksi terasa hidup,
+               bukan sekadar ease-out yang datar. Dipakai oleh hampir semua transisi
+               di seluruh halaman lewat var(--transition-smooth). */
+            --transition-smooth: 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --transition-fast: 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             --radius-lg: 24px;
             --radius-md: 16px;
             --radius-sm: 12px;
@@ -77,7 +81,7 @@
                 inset 0 1.5px 1px rgba(255, 255, 255, 0.95),
                 inset 0 -12px 20px -16px rgba(31, 38, 135, 0.18),
                 inset 0 0 0 1px var(--glass-border);
-            --glass-blur: blur(30px) saturate(190%);
+            --glass-blur: blur(32px) saturate(205%);
 
             --text-main: #1D1D1F;
             --text-muted: #6E6E73;
@@ -198,6 +202,43 @@
             opacity: 0.03;
             mix-blend-mode: overlay;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* ==================== EFEK OVERLAY BARU: RIPPLE SAAT KLIK & TILT 3D SAAT HOVER ==================== */
+        /* Ripple lembut ala iOS yang muncul dari titik klik/tap pada elemen interaktif.
+           Elemen host diberi position:relative & overflow:hidden secara dinamis oleh JS
+           (lihat initRippleFX), sehingga tidak ada markup/CSS lain yang perlu diubah. */
+        .ripple-fx {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.55);
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            z-index: 6;
+            transform: scale(0);
+            opacity: 0.85;
+            animation: rippleExpand 0.65s cubic-bezier(0.25, 1, 0.3, 1) forwards;
+            will-change: transform, opacity;
+        }
+        body.light-theme .ripple-fx {
+            background: rgba(10, 132, 255, 0.22);
+            mix-blend-mode: normal;
+        }
+        @keyframes rippleExpand {
+            0% { transform: scale(0); opacity: 0.85; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+
+        /* Tilt 3D lembut yang mengikuti posisi kursor di atas kartu (diset lewat JS
+           sebagai custom property --tilt-x/--tilt-y di initLiquidGlassFX), dipadukan
+           dengan transform :hover yang sudah ada agar tidak menghapus efek sebelumnya. */
+        .stat-card, .chart-card, .module-card { --tilt-x: 0deg; --tilt-y: 0deg; }
+
+        /* Highlight fokus keyboard yang konsisten dengan bahasa desain iOS */
+        a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+            outline: 2.5px solid var(--primary-blue);
+            outline-offset: 3px;
+            border-radius: var(--radius-sm);
         }
 
         header img.logo-small { height: 38px; width: auto; object-fit: contain; transition: filter var(--transition-smooth); }
@@ -551,7 +592,7 @@
             width: 100%;
         }
         
-        .stat-card:hover { transform: translateY(-5px) scale(1.02) rotateX(2deg); background: var(--glass-bg-hover); }
+        .stat-card:hover { transform: translateY(-5px) scale(1.02) rotateX(calc(2deg + var(--tilt-x, 0deg))) rotateY(var(--tilt-y, 0deg)); background: var(--glass-bg-hover); }
         
         .stat-card.blue:hover { border-top-color: rgba(10, 132, 255, 0.6) !important; border-left-color: rgba(10, 132, 255, 0.6) !important; box-shadow: 0 12px 28px -5px rgba(10, 132, 255, 0.3); }
         .stat-card.green:hover { border-top-color: rgba(48, 209, 88, 0.6) !important; border-left-color: rgba(48, 209, 88, 0.6) !important; box-shadow: 0 12px 28px -5px rgba(48, 209, 88, 0.3); }
@@ -578,7 +619,7 @@
         
         .chart-card { padding: 24px; transition: transform 0.4s cubic-bezier(0.25, 1, 0.3, 1), background var(--transition-smooth), box-shadow var(--transition-smooth), border-color var(--transition-smooth); display: flex; flex-direction: column; width: 100%; min-height: 290px; }
         
-        .chart-card:hover { transform: translateY(-5px) scale(1.01) rotateX(1.5deg); background: var(--glass-bg-hover); border-top-color: rgba(255,255,255,0.4) !important; border-left-color: rgba(255,255,255,0.4) !important; box-shadow: 0 15px 35px -10px rgba(0,0,0,0.5); }
+        .chart-card:hover { transform: translateY(-5px) scale(1.01) rotateX(calc(1.5deg + var(--tilt-x, 0deg))) rotateY(var(--tilt-y, 0deg)); background: var(--glass-bg-hover); border-top-color: rgba(255,255,255,0.4) !important; border-left-color: rgba(255,255,255,0.4) !important; box-shadow: 0 15px 35px -10px rgba(0,0,0,0.5); }
         body.light-theme .chart-card:hover { border-top-color: rgba(255,255,255,1) !important; border-left-color: rgba(255,255,255,1) !important; box-shadow: 0 15px 30px -10px rgba(31,38,135,0.15); }
         
         .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
@@ -607,7 +648,7 @@
         
         .module-card { padding: 22px; cursor: pointer; display: flex; flex-direction: column; gap: 14px; position: relative; transform-style: preserve-3d; transition: transform 0.4s cubic-bezier(0.25, 1, 0.3, 1), background var(--transition-smooth), box-shadow 0.4s ease, border-color 0.4s ease; width: 100%; }
         
-        .module-card:hover { transform: translateY(-5px) scale(1.02); background: var(--glass-bg-hover); }
+        .module-card:hover { transform: translateY(-5px) scale(1.02) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); background: var(--glass-bg-hover); }
         .module-card:active { transform: scale(0.98); }
         .module-card.blue:hover { border-top-color: rgba(10, 132, 255, 0.5) !important; border-left-color: rgba(10, 132, 255, 0.5) !important; box-shadow: 0 15px 35px -8px rgba(10, 132, 255, 0.35); }
         .module-card.green:hover { border-top-color: rgba(48, 209, 88, 0.5) !important; border-left-color: rgba(48, 209, 88, 0.5) !important; box-shadow: 0 15px 35px -8px rgba(48, 209, 88, 0.35); }
@@ -687,10 +728,33 @@
         }
         .fab-trigger:hover { transform: scale(1.08) translateY(-2px); box-shadow: 0 14px 32px -4px rgba(10, 132, 255, 0.65), inset 0 1px 1px rgba(255,255,255,0.65), inset 0 -3px 6px rgba(0,0,0,0.22); }
         .fab-trigger:active { transform: scale(0.94); }
-        .fab-trigger i { transition: transform 0.45s cubic-bezier(0.25, 1, 0.3, 1); position: relative; z-index: 2; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25)); }
+
+        /* Ikon Quick Access memakai favicon situs (bukan lagi ikon petir), disusun
+           bertumpuk dengan ikon "X" agar bisa saling cross-fade saat menu dibuka —
+           lebih halus daripada memutar gambar logo 135 derajat. */
+        .fab-trigger .fab-icon-stack { position: relative; width: 26px; height: 26px; z-index: 2; }
+        .fab-trigger .fab-trigger-icon,
+        .fab-trigger .fab-trigger-close {
+            position: absolute; inset: 0; margin: auto;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25));
+        }
+        .fab-trigger .fab-trigger-icon {
+            width: 26px; height: 26px; object-fit: contain; border-radius: 6px;
+            /* Dipaksa jadi siluet putih agar tetap kontras & konsisten di atas
+               lingkaran gradient biru/merah, apa pun warna asli favicon-nya. */
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25)) brightness(0) invert(1);
+            opacity: 1; transform: scale(1) rotate(0deg);
+        }
+        .fab-trigger .fab-trigger-close {
+            color: #fff; font-size: 1.25rem;
+            opacity: 0; transform: scale(0.4) rotate(-90deg);
+        }
         .fab-wrapper.active .fab-trigger { background: linear-gradient(145deg, #ff8a7a 0%, var(--primary-red) 65%, #c62a20 100%); box-shadow: 0 10px 26px -6px rgba(255, 69, 58, 0.55), inset 0 1px 1px rgba(255,255,255,0.65), inset 0 -3px 6px rgba(0,0,0,0.22); }
         .fab-wrapper.active .fab-trigger::after { border-color: rgba(255, 69, 58, 0.5); }
-        .fab-wrapper.active .fab-trigger i { transform: rotate(135deg); }
+        .fab-wrapper.active .fab-trigger .fab-trigger-icon { opacity: 0; transform: scale(0.4) rotate(90deg); }
+        .fab-wrapper.active .fab-trigger .fab-trigger-close { opacity: 1; transform: scale(1) rotate(0deg); }
         
         .fab-menu { display: flex; flex-direction: column-reverse; gap: 10px; pointer-events: none; }
         
@@ -773,6 +837,19 @@
             border-color: rgba(48, 209, 88, 0.5);
             box-shadow: 0 2px 6px rgba(48, 209, 88, 0.5);
             animation: deliveredRipple 2.4s ease-out infinite;
+        }
+        /* PERBAIKAN BUG: di mode terang, aturan "body.light-theme .cell-status-icon"
+           (background putih) punya spesifisitas CSS lebih tinggi daripada
+           ".cell-status-icon.delivered" (background hijau) karena ada selector tag
+           "body" di depannya — akibatnya ceklis jadi putih di atas latar putih
+           (tidak terlihat), padahal di mode gelap latar tetap hijau sehingga ceklis
+           terlihat normal. Aturan berikut menaikkan spesifisitas agar tampilan
+           lingkaran hijau + ceklis putih konsisten di kedua mode. */
+        body.light-theme .cell-status-icon.delivered {
+            color: #fff;
+            background: linear-gradient(135deg, #34e07a, var(--primary-green));
+            border-color: rgba(48, 209, 88, 0.5);
+            box-shadow: 0 2px 6px rgba(48, 209, 88, 0.5);
         }
         @keyframes deliveredRipple {
             0% { box-shadow: 0 2px 6px rgba(48, 209, 88, 0.5), 0 0 0 0 rgba(48, 209, 88, 0.55); }
@@ -866,6 +943,9 @@
             
             .fab-wrapper { bottom: 20px; left: 16px; }
             .fab-trigger { width: 50px; height: 50px; font-size: 1.1rem; border-radius: 17px; }
+            .fab-trigger .fab-icon-stack { width: 22px; height: 22px; }
+            .fab-trigger .fab-trigger-icon { width: 22px; height: 22px; }
+            .fab-trigger .fab-trigger-close { font-size: 1.05rem; }
             .fab-btn { padding: 5px 14px 5px 5px; font-size: 0.78rem; gap: 9px; }
             .fab-btn .fab-icon-wrap { width: 30px; height: 30px; font-size: 0.9rem; border-radius: 10px; }
             .back-nav { right: 16px; bottom: 20px; padding: 10px 18px; font-size: 0.85rem; }
@@ -896,7 +976,12 @@
             <button class="fab-btn" onclick="window._lNch('https://murindasentrabaja.github.io/Logistics/')"><span class="fab-icon-wrap c-blue"><i class="fa-solid fa-truck-fast"></i></span><span class="fab-label">Logistics</span></button>
             <button class="fab-btn" onclick="window._lNch('https://murindasentrabaja.github.io/Product-Label/')"><span class="fab-icon-wrap c-orange"><i class="fa-solid fa-tags"></i></span><span class="fab-label">Product Label</span></button>
         </div>
-        <button class="fab-trigger" onclick="window._toggleFab()" aria-label="Toggle Quick Actions"><i class="fa-solid fa-bolt"></i></button>
+        <button class="fab-trigger" onclick="window._toggleFab()" aria-label="Toggle Quick Actions">
+            <span class="fab-icon-stack">
+                <img src="MSB Favicon.png" alt="Menu" class="fab-trigger-icon" onerror="this.onerror=null;this.src='https://via.placeholder.com/40x40?text=MSB'">
+                <i class="fa-solid fa-xmark fab-trigger-close" aria-hidden="true"></i>
+            </span>
+        </button>
     </div>
 
     <!-- SIDEBAR MODERN UNTUK NAVIGASI CEPAT -->
@@ -1187,6 +1272,7 @@
             const spotlight = document.getElementById('cursor-spotlight');
             let ticking = false;
             let lastX = window.innerWidth / 2, lastY = window.innerHeight * 0.2;
+            let tiltedCard = null;
 
             function applyFx(x, y){
                 if (spotlight){
@@ -1201,6 +1287,26 @@
                     const spotY = ((y - rect.top) / rect.height) * 100;
                     card.style.setProperty('--spot-x', spotX + '%');
                     card.style.setProperty('--spot-y', spotY + '%');
+
+                    // Tilt 3D halus ala iOS — sudut kartu mengikuti posisi kursor
+                    // relatif terhadap titik tengahnya (maksimal ±6 derajat), dipadukan
+                    // dengan transform :hover yang sudah ada lewat var(--tilt-x/--tilt-y).
+                    const midX = rect.width / 2, midY = rect.height / 2;
+                    const offX = (x - rect.left - midX) / midX;
+                    const offY = (y - rect.top - midY) / midY;
+                    const maxTilt = 6;
+                    card.style.setProperty('--tilt-x', (-offY * maxTilt).toFixed(2) + 'deg');
+                    card.style.setProperty('--tilt-y', (offX * maxTilt).toFixed(2) + 'deg');
+
+                    if (tiltedCard && tiltedCard !== card){
+                        tiltedCard.style.setProperty('--tilt-x', '0deg');
+                        tiltedCard.style.setProperty('--tilt-y', '0deg');
+                    }
+                    tiltedCard = card;
+                } else if (tiltedCard){
+                    tiltedCard.style.setProperty('--tilt-x', '0deg');
+                    tiltedCard.style.setProperty('--tilt-y', '0deg');
+                    tiltedCard = null;
                 }
                 ticking = false;
             }
@@ -1212,6 +1318,50 @@
                     requestAnimationFrame(() => applyFx(lastX, lastY));
                 }
             }, { passive: true });
+        })();
+
+        // --- EFEK OVERLAY BARU: RIPPLE ALA iOS SAAT KLIK/TAP ---
+        // Murni dekoratif (hanya menambah satu elemen span visual), tidak pernah
+        // memanggil preventDefault/stopPropagation, sehingga seluruh onclick/href
+        // yang sudah ada tetap berjalan persis seperti sebelumnya.
+        (function initRippleFX(){
+            const RIPPLE_SELECTOR = [
+                '.module-card', '.stat-card', '.chart-card',
+                '.fab-btn', '.luxury-btn', '.install-app-btn',
+                '.theme-toggle', '.btn-logout', '.hamburger-btn',
+                '.close-sidebar-btn', '.sidebar-link', '.neon-contact-btn',
+                '.back-nav', '.curtain-close-btn', '.footer-contact a'
+            ].join(', ');
+
+            function spawnRipple(host, clientX, clientY){
+                const cs = getComputedStyle(host);
+                if (cs.position === 'static') host.style.position = 'relative';
+                if (cs.overflow === 'visible') host.style.overflow = 'hidden';
+
+                const rect = host.getBoundingClientRect();
+                const cx = clientX - rect.left;
+                const cy = clientY - rect.top;
+                const radius = Math.max(
+                    Math.hypot(cx, cy),
+                    Math.hypot(rect.width - cx, cy),
+                    Math.hypot(cx, rect.height - cy),
+                    Math.hypot(rect.width - cx, rect.height - cy)
+                );
+                const span = document.createElement('span');
+                span.className = 'ripple-fx';
+                span.style.width = span.style.height = (radius * 2) + 'px';
+                span.style.left = (cx - radius) + 'px';
+                span.style.top = (cy - radius) + 'px';
+                host.appendChild(span);
+                span.addEventListener('animationend', () => span.remove(), { once: true });
+                setTimeout(() => span.remove(), 900); // jaring pengaman
+            }
+
+            document.addEventListener('click', function(e){
+                const host = e.target.closest(RIPPLE_SELECTOR);
+                if (!host) return;
+                spawnRipple(host, e.clientX, e.clientY);
+            }, true);
         })();
         
         const uD=()=>{const n=new Date(),dy=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'],mo=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];document.getElementById('current-date').innerText=`${dy[n.getDay()]}, ${n.getDate()} ${mo[n.getMonth()]} ${n.getFullYear()}`;document.getElementById('current-time').innerText=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}:${String(n.getSeconds()).padStart(2,'0')} WIB`;};setInterval(uD,1000);uD();
