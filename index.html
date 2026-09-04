@@ -169,8 +169,79 @@
             mix-blend-mode: normal;
         }
 
-        .bg-glow { position: fixed; border-radius: 50%; filter: blur(160px); opacity: 0.25; z-index: -1; animation: float 20s infinite alternate ease-in-out; pointer-events: none; }
-        body.light-theme .bg-glow { opacity: 0.35; filter: blur(140px); }
+        /* ==================== LATAR BELAKANG ALAM DINAMIS: "Liquid Glass" ala iOS ==================== */
+        /* Dua layer foto pemandangan alam ditumpuk untuk transisi crossfade yang mulus
+           setiap kali pengguna menekan tombol "Next". Di atasnya ada scrim gradasi
+           gelap/terang agar seluruh panel kaca (glass-panel/stat-card/dst) tetap
+           terbaca kontrasnya di atas foto apa pun, persis seperti wallpaper blur
+           di Control Center / Lock Screen iOS. */
+        .nature-bg-layer {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            overflow: hidden;
+            background-color: #05070d;
+        }
+        .nature-bg-img {
+            position: absolute;
+            inset: -3%;
+            width: 106%;
+            height: 106%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transform: scale(1.045);
+            filter: saturate(1.12) brightness(0.88) contrast(1.03);
+            transition: opacity 1.6s cubic-bezier(0.25, 1, 0.3, 1), transform 9s cubic-bezier(0.25, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .nature-bg-img.is-active { opacity: 1; transform: scale(1); }
+        body.light-theme .nature-bg-img { filter: saturate(1.08) brightness(1.05) contrast(1.02); }
+
+        .nature-bg-scrim {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+            background:
+                radial-gradient(130% 90% at 50% -15%, rgba(4, 7, 18, 0.1), transparent 55%),
+                radial-gradient(140% 100% at 50% 120%, rgba(4, 7, 18, 0.6), transparent 62%),
+                linear-gradient(180deg, rgba(5, 8, 20, 0.58) 0%, rgba(6, 9, 20, 0.32) 28%, rgba(6, 9, 20, 0.4) 68%, rgba(3, 5, 12, 0.68) 100%);
+            transition: background 0.6s ease;
+        }
+        body.light-theme .nature-bg-scrim {
+            background:
+                radial-gradient(130% 90% at 50% -15%, rgba(255, 255, 255, 0.4), transparent 55%),
+                radial-gradient(140% 100% at 50% 120%, rgba(238, 242, 248, 0.6), transparent 62%),
+                linear-gradient(180deg, rgba(242, 244, 248, 0.55) 0%, rgba(242, 244, 248, 0.25) 28%, rgba(242, 244, 248, 0.38) 68%, rgba(226, 231, 240, 0.62) 100%);
+        }
+
+        .nature-bg-credit {
+            position: fixed;
+            left: 14px;
+            bottom: calc(14px + var(--safe-area-bottom));
+            z-index: 5;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(0, 0, 0, 0.28);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 5px 11px;
+            border-radius: 20px;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .nature-bg-credit.show { opacity: 1; transform: translateY(0); }
+        body.light-theme .nature-bg-credit { color: rgba(30, 30, 32, 0.75); background: rgba(255, 255, 255, 0.55); }
+        .nature-bg-toggle:hover i { color: var(--primary-green); }
+        .nature-bg-toggle.is-loading i { animation: spin 0.9s linear infinite; }
+
+        .bg-glow { position: fixed; border-radius: 50%; filter: blur(160px); opacity: 0.22; z-index: -1; mix-blend-mode: soft-light; animation: float 20s infinite alternate ease-in-out; pointer-events: none; }
+        body.light-theme .bg-glow { opacity: 0.28; filter: blur(140px); mix-blend-mode: multiply; }
         .blob-1 { background: linear-gradient(135deg, var(--neon-blue), var(--primary-blue)); width: 60vw; height: 60vw; max-width: 800px; max-height: 800px; top: -20%; left: -10%; }
         .blob-2 { background: linear-gradient(135deg, var(--neon-green), #059669); width: 50vw; height: 50vw; max-width: 700px; max-height: 700px; bottom: -10%; right: -10%; animation-delay: 3s; }
         .blob-3 { background: linear-gradient(135deg, var(--neon-orange), var(--primary-red)); width: 45vw; height: 45vw; max-width: 600px; max-height: 600px; top: 30%; right: 10%; animation-delay: 6s; }
@@ -980,6 +1051,17 @@
     </style>
 </head>
 <body oncontextmenu="return false;">
+    <!-- ==================== LATAR BELAKANG ALAM DINAMIS (Liquid Glass ala iOS) ==================== -->
+    <!-- Dua layer foto ditumpuk untuk crossfade mulus setiap ganti foto. Scrim gelap/terang
+         di atasnya menjaga kontras seluruh panel kaca, lalu blob warna & spotlight kursor
+         (di bawah) tetap berada di atas foto sebagai lapisan kaca cair khas iOS. -->
+    <div class="nature-bg-layer" aria-hidden="true">
+        <div class="nature-bg-img" id="nature-bg-a"></div>
+        <div class="nature-bg-img" id="nature-bg-b"></div>
+    </div>
+    <div class="nature-bg-scrim" aria-hidden="true"></div>
+    <div class="nature-bg-credit" id="nature-bg-credit"><i class="fa-solid fa-leaf" aria-hidden="true"></i> Nature via Unsplash</div>
+
     <div id="loading-screen" aria-live="polite"><div class="loader-container"><div class="loader"></div><img src="MSB Logo.png" class="loader-logo" alt="Logo PT Murinda" onerror="this.src='https://via.placeholder.com/60x60?text=MSB'"></div><div class="loading-text">PT Murinda Sentra Baja</div><div class="loading-progress">Memuat ERP System...</div></div>
     
     <div class="bg-glow blob-1" aria-hidden="true"></div>
@@ -1107,6 +1189,7 @@
                     <!-- TOMBOL INSTAL APP DENGAN DOWNLOAD DIRECT MSB ERP.apk -->
                     <a href="MSB ERP.apk" download="MSB ERP.apk" class="install-app-btn" title="Unduh dan Instal MSB ERP.apk"><i class="fa-solid fa-download"></i> <span class="install-text">Instal App</span></a>
                     
+                    <button class="theme-toggle nature-bg-toggle" id="nature-bg-btn" onclick="window._nextNatureBg()" aria-label="Ganti Latar Belakang Alam" title="Ganti Pemandangan Alam"><i class="fa-solid fa-mountain-sun" aria-hidden="true"></i></button>
                     <button class="theme-toggle" onclick="window._tTheme()" aria-label="Toggle Dark or Light Theme" title="Ubah Tema"><i class="fa-solid fa-sun" aria-hidden="true"></i></button>
                     <div class="user-profile"><i class="fa-solid fa-circle-user" aria-hidden="true"></i><span id="display-user">Kalijati Plant</span></div>
                     <button class="btn-logout" onclick="window._dOut()" aria-label="Logout from System"><i class="fa-solid fa-power-off" aria-hidden="true"></i> <span class="install-text">Keluar</span></button>
@@ -1284,6 +1367,113 @@
         Chart.defaults.color = 'rgba(255,255,255,0.82)';
 
         window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loading-screen').classList.add('hidden'),800));
+
+        // --- LATAR BELAKANG ALAM DINAMIS: TOMBOL "NEXT" TANPA BATAS ALA WALLPAPER iOS ---
+        // Kumpulan foto pemandangan alam (gunung, hutan, danau, air terjun, dst) diputar
+        // dengan algoritma "kantong kocok" (shuffle-bag): urutan diacak, lalu begitu semua
+        // foto sudah pernah tampil, dikocok ulang secara acak dari awal — sehingga tombol
+        // "Next" bisa ditekan berkali-kali tanpa pernah "kehabisan" dan tidak terasa cepat
+        // mengulang. Jika satu tautan foto gagal dimuat, otomatis dilewati ke foto lain
+        // secara diam-diam (tidak pernah menampilkan gambar rusak ke pengguna).
+        (function initNatureBackgroundFX(){
+            const NATURE_PHOTOS = [
+                'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+                'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05',
+                'https://images.unsplash.com/photo-1441974231531-c6227db76b6e',
+                'https://images.unsplash.com/photo-1500534623283-312aade485b7',
+                'https://images.unsplash.com/photo-1439853949127-fa647821eba0',
+                'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
+                'https://images.unsplash.com/photo-1518495973542-4542c06a5843',
+                'https://images.unsplash.com/photo-1519681393784-d120267933ba',
+                'https://images.unsplash.com/photo-1472214103451-9374bd1c798e',
+                'https://images.unsplash.com/photo-1426604966848-d7adac402bff',
+                'https://images.unsplash.com/photo-1441260038675-7329ab4cc264',
+                'https://images.unsplash.com/photo-1476231682828-37e571bc172f',
+                'https://images.unsplash.com/photo-1490750967868-88aa4486c946',
+                'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d',
+                'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07',
+                'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1',
+                'https://images.unsplash.com/photo-1519046904884-53103b34b206',
+                'https://images.unsplash.com/photo-1441716844725-09cedc13a4e7',
+                'https://images.unsplash.com/photo-1502082553048-f009c37129b9',
+                'https://images.unsplash.com/photo-1465101162946-4377e57745c3',
+                'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4',
+                'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8'
+            ];
+            const IMG_PARAMS = '?auto=format&fit=crop&w=1920&q=80';
+
+            const layerA = document.getElementById('nature-bg-a');
+            const layerB = document.getElementById('nature-bg-b');
+            const creditEl = document.getElementById('nature-bg-credit');
+            const btn = document.getElementById('nature-bg-btn');
+            if (!layerA || !layerB) return;
+
+            let activeLayer = layerA, idleLayer = layerB;
+            let deck = [];
+            const dead = new Set();
+            let busy = false;
+            let creditTimer = null;
+
+            function shuffle(list){
+                const a = list.slice();
+                for (let i = a.length - 1; i > 0; i--){
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [a[i], a[j]] = [a[j], a[i]];
+                }
+                return a;
+            }
+
+            function drawNext(){
+                if (!deck.length){
+                    const pool = NATURE_PHOTOS.filter(u => !dead.has(u));
+                    deck = shuffle(pool.length ? pool : NATURE_PHOTOS);
+                }
+                return deck.pop();
+            }
+
+            function flashCredit(){
+                if (!creditEl) return;
+                creditEl.classList.add('show');
+                clearTimeout(creditTimer);
+                creditTimer = setTimeout(() => creditEl.classList.remove('show'), 3200);
+            }
+
+            function applyBackground(url, attempt){
+                attempt = attempt || 0;
+                if (!url || busy) return;
+                busy = true;
+                if (btn) btn.classList.add('is-loading');
+
+                const fullUrl = url + IMG_PARAMS;
+                const preload = new Image();
+                preload.onload = () => {
+                    idleLayer.style.backgroundImage = `url("${fullUrl}")`;
+                    void idleLayer.offsetWidth; // paksa reflow agar transisi opacity selalu jalan
+                    activeLayer.classList.remove('is-active');
+                    idleLayer.classList.add('is-active');
+                    const tmp = activeLayer; activeLayer = idleLayer; idleLayer = tmp;
+                    busy = false;
+                    if (btn) btn.classList.remove('is-loading');
+                    flashCredit();
+                };
+                preload.onerror = () => {
+                    dead.add(url);
+                    busy = false;
+                    if (btn) btn.classList.remove('is-loading');
+                    // Otomatis coba foto lain, tapi maksimal satu putaran penuh koleksi
+                    // (mis. saat sedang offline) — supaya tidak retry tanpa henti.
+                    if (attempt < NATURE_PHOTOS.length - 1){
+                        applyBackground(drawNext(), attempt + 1);
+                    }
+                };
+                preload.src = fullUrl;
+            }
+
+            window._nextNatureBg = function(){ applyBackground(drawNext(), 0); };
+
+            // Tampilkan foto pertama begitu skrip siap
+            applyBackground(drawNext());
+        })();
 
         // --- EFEK VISUAL PREMIUM: SPOTLIGHT AMBIENT & KILAU KACA 3D MENGIKUTI KURSOR ---
         (function initLiquidGlassFX(){
