@@ -1,7 +1,7 @@
 // Service Worker - MSB ERP System
 // Strategi: network-first untuk data selalu ter-update, fallback ke cache saat offline/koneksi lemah.
 
-const CACHE_NAME = 'msb-erp-shell-v1';
+const CACHE_NAME = 'msb-erp-shell-v2'; // <-- dibump dari v1 supaya cache lama (termasuk ikon lama) dibuang
 const APP_SHELL = [
   './',
   './index.html',
