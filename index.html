@@ -655,6 +655,8 @@
         .content-area .module-card:nth-child(13) { animation-delay: .37s; }
         .content-area .module-card:nth-child(14) { animation-delay: .4s; }
         .content-area .module-card:nth-child(15) { animation-delay: .43s; }
+        .content-area .module-card:nth-child(16) { animation-delay: .46s; }
+        .content-area .module-card:nth-child(17) { animation-delay: .49s; }
         
         .stat-card { 
             padding: 22px; 
@@ -1106,6 +1108,9 @@
             </a>
             
             <div class="sidebar-title">Operasional</div>
+            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/Engineering-MSB/'); window._toggleSidebar();" class="sidebar-link">
+                <div class="sidebar-icon c-green"><i class="fa-solid fa-compass-drafting"></i></div><span>Engineering</span>
+            </a>
             <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/Production-Tracking/'); window._toggleSidebar();" class="sidebar-link">
                 <div class="sidebar-icon c-blue"><i class="fa-solid fa-industry"></i></div><span>Produksi</span>
             </a>
@@ -1309,6 +1314,7 @@
             <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Maintenance/')"><div class="module-icon"><i class="fa-solid fa-gears"></i></div><div class="module-info"><h3>Maintenance</h3><p>Perawatan Preventif, Mesin Responsif.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/Purchase-Order/')"><div class="module-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div><div class="module-info"><h3>Purchase Order</h3><p>Pengadaan Cepat, Transaksi Akurat.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/Warehouse-System/')"><div class="module-icon"><i class="fa-solid fa-boxes-stacked"></i></div><div class="module-info"><h3>Warehouse</h3><p>Stok Transparan, Logistik Efisien.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/Engineering-MSB/')"><div class="module-icon"><i class="fa-solid fa-compass-drafting"></i></div><div class="module-info"><h3>Engineering</h3><p>Desain Presisi, Produksi Terarah.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Production-Tracking/')"><div class="module-icon"><i class="fa-solid fa-industry"></i></div><div class="module-info"><h3>Produksi</h3><p>Digitalisasi Lini, Efisiensi Tinggi.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/QC-Inspection/')"><div class="module-icon"><i class="fa-solid fa-microscope"></i></div><div class="module-info"><h3>Quality Control</h3><p>Mutu Terjamin, Presisi Terkunci.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card purple" onclick="window._lNch('https://murindasentrabaja.github.io/QMS/')"><div class="module-icon"><i class="fa-solid fa-award"></i></div><div class="module-info"><h3>Quality Management</h3><p>Sistem Manajemen Mutu Terpadu (QMS).</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
@@ -1374,7 +1380,7 @@
         window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loading-screen').classList.add('hidden'),800));
 
         // --- LATAR BELAKANG ALAM DINAMIS: TOMBOL "NEXT" TANPA BATAS ALA WALLPAPER iOS ---
-        // Kumpulan foto pemandangan alam (gunung, hutan, danau, air terjun, dst) diputar
+        // Kumpulan foto pemandangan alam (gunung, hutan, bawah laut, danau, air terjun, dst) diputar
         // dengan algoritma "kantong kocok" (shuffle-bag): urutan diacak, lalu begitu semua
         // foto sudah pernah tampil, dikocok ulang secara acak dari awal — sehingga tombol
         // "Next" bisa ditekan berkali-kali tanpa pernah "kehabisan" dan tidak terasa cepat
@@ -1403,7 +1409,27 @@
                 'https://images.unsplash.com/photo-1502082553048-f009c37129b9',
                 'https://images.unsplash.com/photo-1465101162946-4377e57745c3',
                 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4',
-                'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8'
+                'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8',
+                'https://images.unsplash.com/photo-1448375240586-882707db888b',
+                'https://images.unsplash.com/photo-1425913397330-cf8af2ff40a1',
+                'https://images.unsplash.com/photo-1511497584788-876760111969',
+                'https://images.unsplash.com/photo-1473448912268-2022ce9509d8',
+                'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d',
+                'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc',
+                'https://images.unsplash.com/photo-1440342359743-84fcb8c21f21',
+                'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9',
+                'https://images.unsplash.com/photo-1502786129293-79981df4e689',
+                'https://images.unsplash.com/photo-1455156218388-5e61b526818b',
+                'https://images.unsplash.com/photo-1544551763-46a013bb70d5',
+                'https://images.unsplash.com/photo-1559827260-dc66d52bef19',
+                'https://images.unsplash.com/photo-1546026423-cc4642628d2b',
+                'https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f',
+                'https://images.unsplash.com/photo-1583212292454-1fe6229603b7',
+                'https://images.unsplash.com/photo-1582967788606-a171c1080cb0',
+                'https://images.unsplash.com/photo-1518837695005-2083093ee35b',
+                'https://images.unsplash.com/photo-1505142468610-359e7d316be0',
+                'https://images.unsplash.com/photo-1544552866-d3ed42536cfd',
+                'https://images.unsplash.com/photo-1570481662006-a3a1374699e8'
             ];
             const IMG_PARAMS = '?auto=format&fit=crop&w=1920&q=80';
 
