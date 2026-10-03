@@ -1355,6 +1355,56 @@
             .nature-bg-img { translate: 0 0 !important; }
             .msb-skel, .msb-skel-box::after { animation: none !important; }
         }
+    
+        /* ===== Efek visual modern (ringan: hanya transform/opacity) ===== */
+        :root { --fx-line: rgba(100,210,255,.07); --fx-dot: rgba(100,210,255,.8); --fx-ring: rgba(100,210,255,.16); }
+        body.light-theme { --fx-line: rgba(10,132,255,.07); --fx-dot: rgba(10,132,255,.55); --fx-ring: rgba(10,132,255,.14); }
+        @keyframes msbRise { from { opacity: 0; transform: translate3d(0,18px,0) scale(.98); } }
+        @keyframes msbShine { to { background-position: 100% 0; } }
+        @keyframes msbAurora { to { transform: translate3d(3%,-4%,0) rotate(8deg) scale(1.12); } }
+        @keyframes msbGrid { to { transform: translate3d(56px,56px,0); } }
+        @keyframes msbSpin { to { transform: rotate(360deg); } }
+        @keyframes msbPart { 0% { transform: translate3d(0,0,0); opacity: 0; } 10% { opacity: .7; } 90% { opacity: .45; } 100% { transform: translate3d(var(--dx),-105vh,0); opacity: 0; } }
+        #msb-fx { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        #msb-fx > * { position: absolute; }
+        .fx-aurora { inset: -20%; background: radial-gradient(40% 35% at 20% 30%, rgba(10,132,255,.14), transparent 70%), radial-gradient(35% 30% at 80% 70%, rgba(191,90,242,.12), transparent 70%), radial-gradient(30% 25% at 60% 15%, rgba(48,209,88,.07), transparent 70%); animation: msbAurora 30s ease-in-out infinite alternate; will-change: transform; }
+        .fx-gw { inset: 0; overflow: hidden; -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 15%, transparent 72%); mask-image: radial-gradient(ellipse at 50% 40%, #000 15%, transparent 72%); }
+        .fx-grid { inset: -56px; background-image: linear-gradient(var(--fx-line) 1px, transparent 1px), linear-gradient(90deg, var(--fx-line) 1px, transparent 1px); background-size: 56px 56px; animation: msbGrid 7s linear infinite; will-change: transform; }
+        .fx-ring { right: -16vmax; bottom: -16vmax; width: 52vmax; height: 52vmax; border-radius: 50%; border: 1px dashed var(--fx-ring); animation: msbSpin 140s linear infinite; will-change: transform; }
+        .fx-ring.r2 { right: -6vmax; bottom: -6vmax; width: 32vmax; height: 32vmax; border: 1px solid transparent; border-top-color: var(--fx-ring); border-right-color: var(--fx-ring); animation-duration: 100s; animation-direction: reverse; }
+        .fx-vig { inset: 0; background: radial-gradient(ellipse at center, transparent 55%, rgba(3,6,16,.42) 100%); }
+        body.light-theme .fx-vig { background: radial-gradient(ellipse at center, transparent 60%, rgba(31,38,135,.08) 100%); }
+        .fx-p { bottom: -12px; width: var(--s); height: var(--s); border-radius: 50%; background: var(--fx-dot); box-shadow: 0 0 8px var(--fx-dot); opacity: 0; animation: msbPart var(--t) linear var(--w) infinite; will-change: transform, opacity; }
+        #msb-fx.paused * { animation-play-state: paused !important; }
+        .msb-feats { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: -4px 0 14px; }
+        .msb-feats span { display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px; font: 700 .7rem 'Inter', sans-serif; letter-spacing: .4px; color: var(--text-accent); background: rgba(100,210,255,.08); border: 1px solid rgba(100,210,255,.22); animation: msbRise .8s var(--msb-ease) .3s backwards; }
+        .msb-feats span:nth-child(2) { animation-delay: .45s; } .msb-feats span:nth-child(3) { animation-delay: .6s; }
+        .msb-feats i { color: var(--primary-cyan); }
+        .msb-hero-sub { margin-top: 6px; font: 500 .8rem 'Inter', sans-serif; color: var(--text-muted); max-width: 56ch; animation: msbRise .9s var(--msb-ease) .15s backwards; }
+        .msb-hero-tag { background-size: 220% 100%; animation: msbShine 6s ease-in-out infinite alternate; }
+        .login-card .content h2 { background: linear-gradient(100deg, var(--text-main) 35%, var(--primary-cyan) 50%, var(--text-main) 65%) 0 0 / 250% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none; animation: msbShine 6s ease-in-out infinite alternate; }
+        body.perf-lite #msb-fx { display: none !important; }
+        body.perf-lite .msb-hero-tag, body.perf-lite .login-card .content h2 { animation: none; }
+        @media (max-width: 768px) { .fx-p:nth-child(n+11) { display: none; } }
+        @media (prefers-reduced-motion: reduce) { #msb-fx { display: none !important; } .msb-feats span, .msb-hero-sub, .msb-hero-tag, .login-card .content h2 { animation: none !important; } }
+    
+        /* ===== Perbaikan ponsel: kolom grid boleh menyusut agar kalender & data tidak terpotong ===== */
+        .mini-cal-days, .mini-cal-grid { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+        .calendar-widget-container, .chart-card, .stat-card, .module-card, .msb-hero-main, .msb-safe { min-width: 0; max-width: 100%; }
+        .chart-container-wrapper { min-width: 0; width: 100%; }
+        @media (max-width: 768px) {
+            html, body { max-width: 100%; overflow-x: hidden; }
+            .dashboard-stats, .content-area { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .charts-section, .msb-hero { grid-template-columns: minmax(0, 1fr); }
+            .chart-card { overflow: hidden; }
+            .mini-cal-days { gap: 2px; font-size: .66rem; }
+            .mini-cal-grid { gap: 3px; }
+            .mini-cal-cell { font-size: .7rem; border-radius: 7px; min-width: 0; }
+            .mini-cal-header-info { gap: 6px; font-size: .8rem; flex-wrap: wrap; }
+            .stat-value, .module-info h3, .chart-title { overflow-wrap: anywhere; }
+            .msb-hero-tag, .msb-hero-sub, #msb-greet { max-width: 100%; overflow-wrap: anywhere; }
+        }
+        @media (max-width: 400px) { .dashboard-stats { grid-template-columns: minmax(0, 1fr); } }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -1460,6 +1510,7 @@
                         <div class="mobile-login-logo"><img src="MSB Logo.png" alt="Logo PT Murinda" onerror="this.style.display='none'"></div>
                         <h2>MSB ERP SYSTEM</h2>
                         <div class="msb-tagline" id="msb-tagline-login" aria-live="off"></div>
+                        <div class="msb-feats" aria-hidden="true"><span><i class="fa-solid fa-bolt"></i> Real-time</span><span><i class="fa-solid fa-diagram-project"></i> Terintegrasi</span><span><i class="fa-solid fa-shield-halved"></i> Aman</span></div>
                         
                         <div class="login-address-block">
                             <div class="company-name">PT Murinda Sentra Baja</div>
@@ -1524,6 +1575,7 @@
             <div class="msb-hero-main">
                 <div class="msb-hero-hello"><span class="msb-gi" id="msb-greet-ico" aria-hidden="true"><i class="fa-solid fa-sun"></i></span><h2 id="msb-greet">Selamat datang</h2></div>
                 <div class="msb-hero-tag" id="msb-tagline-hero"></div>
+                <p class="msb-hero-sub">Produksi, mutu, K3, gudang, hingga pengiriman — terhubung dalam satu platform.</p>
                 <div class="msb-hero-meta"><span class="msb-pill busy" id="msb-sync" role="status"><i class="fa-solid fa-rotate" aria-hidden="true"></i> Menyinkronkan data…</span><button type="button" class="msb-pill" id="msb-refresh"><i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> Refresh</button></div>
             </div>
             <div class="msb-safe" id="msb-safe">
@@ -2980,7 +3032,7 @@
         });
 
         /* ---------- Tagline mengetik ---------- */
-        const TAGS = ['Satu Sistem, Seluruh Operasional Baja', 'Dari Baja ke Data — Real-time, Terintegrasi, Presisi', 'Forging the Future, Digitally'];
+        const TAGS = ['Konstruksi Kokoh, Komponen Presisi', 'Menempa Baja, Membangun Kepercayaan', 'ERP Terpadu untuk Setiap Lini Produksi', 'Data Real-time, Keputusan Lebih Tepat', 'Presisi Terukur, Tangguh di Setiap Medan', 'Dari Pesanan hingga Pengiriman, Satu Alur', 'Bucket dan Counterweight, Dibuat Terukur', 'Mutu Terjaga, Keselamatan Utama', 'Terintegrasi, Transparan, Terkendali', 'Dari Baja, Lahir Karya yang Bertahan'];
         function typewriter(el, startIdx) {
             if (!el) return;
             const txt = document.createElement('span'), caret = document.createElement('i'); caret.className = 'msb-caret'; caret.setAttribute('aria-hidden', 'true');
@@ -3343,11 +3395,23 @@
             });
         }
 
+        /* ---------- Efek visual ringan: aurora, grid, partikel ---------- */
+        function wireFx() {
+            if (REDUCED) return;
+            const fx = document.createElement('div'); fx.id = 'msb-fx'; fx.setAttribute('aria-hidden', 'true');
+            let h = '<div class="fx-aurora"></div><div class="fx-gw"><div class="fx-grid"></div></div><div class="fx-ring"></div><div class="fx-ring r2"></div><div class="fx-vig"></div>';
+            for (let i = 0; i < 10; i++) h += '<i class="fx-p" style="left:' + (5 + i * 9.5) + '%;--s:' + (2 + i % 3) + 'px;--t:' + (16 + (i * 7) % 14) + 's;--w:' + (-i * 2.3) + 's;--dx:' + ((i % 2 ? 1 : -1) * (20 + i * 4)) + 'px"></i>';
+            fx.innerHTML = h; body.appendChild(fx);
+            const upd = () => fx.classList.toggle('paused', document.hidden || modOpen() || idleOn);
+            document.addEventListener('visibilitychange', upd); setInterval(upd, 2000); upd();
+        }
+
         /* ===================== INISIALISASI ===================== */
         safe('registri', () => { buildRegistry(); decorateCards(); renderRecent(); wireToolbar(); applyFilter(); });
         safe('performa', () => { body.classList.toggle('hud-off', !S.hud); applyPerf(); });
         safe('tagline', () => { typewriter($('#msb-tagline-login'), 0); typewriter($('#msb-tagline-hero'), 1); });
         safe('hero', () => { updateGreeting(); setInterval(updateGreeting, 60000); wireSafe(); renderSafe(); setInterval(renderSafe, 60000); $('#msb-refresh').addEventListener('click', () => refreshData(false)); });
+        safe('efek', wireFx);
         safe('palette', wirePalette);
         safe('notifikasi', () => { wireBell(); updateBell(); });
         safe('pembungkus', () => { buildVeil(); wrapLegacy(); });
