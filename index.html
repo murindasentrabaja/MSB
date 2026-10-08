@@ -617,6 +617,10 @@
         body.light-theme .install-app-btn.org-btn { background: rgba(175, 82, 222, 0.08); border-color: rgba(175, 82, 222, 0.15); color: var(--primary-purple); }
         .install-app-btn.org-btn:hover { background: var(--primary-purple); color: #fff; box-shadow: 0 4px 12px rgba(191, 90, 242, 0.25); }
 
+        .install-app-btn.po-btn { background: rgba(255, 159, 10, 0.12); border-color: rgba(255, 159, 10, 0.25); color: var(--primary-orange); }
+        body.light-theme .install-app-btn.po-btn { background: rgba(255, 149, 0, 0.08); border-color: rgba(255, 149, 0, 0.18); color: var(--primary-orange); }
+        .install-app-btn.po-btn:hover { background: var(--primary-orange); color: #fff; box-shadow: 0 4px 12px rgba(255, 159, 10, 0.3); }
+
         .theme-toggle, .btn-logout { background: rgba(255, 255, 255, 0.04); border: 1px solid var(--glass-border); padding: 10px 15px; border-radius: 20px; cursor: pointer; color: var(--text-main); font-size: 1rem; transition: var(--transition-smooth); display: flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; font-weight: 600; flex-shrink: 0; }
         body.light-theme .theme-toggle, body.light-theme .btn-logout { background: rgba(255, 255, 255, 0.5); }
         .theme-toggle:hover, .btn-logout:hover { background: rgba(255, 255, 255, 0.1); transform: scale(1.04); }
@@ -1556,7 +1560,8 @@
                     <div class="system-status" aria-label="System Status"><div class="status-dot"></div><span>Online MSB ERP</span></div>
                 </div>
                 <nav class="nav-right" aria-label="User Navigation">
-                    <button class="install-app-btn org-btn" onclick="window._openCurtain('https://murindasentrabaja.github.io/Struktur-Organisasi-MSB/')" title="Buka Struktur Organisasi"><i class="fa-solid fa-sitemap"></i> <span class="install-text">Struktur Org</span></button>
+                    <button class="install-app-btn org-btn" onclick="window._openCurtain('https://murindasentrabaja.github.io/Struktur-Organisasi-MSB/', 'Struktur Organisasi')" title="Buka Struktur Organisasi"><i class="fa-solid fa-sitemap"></i> <span class="install-text">Struktur Org</span></button>
+                    <button class="install-app-btn po-btn" onclick="window._openCurtain('https://murindasentrabaja.github.io/PO-Update/', 'Purchase Order Update')" title="Buka Purchase Order Update"><i class="fa-solid fa-file-invoice"></i> <span class="install-text">Purchase Order Update</span></button>
                     
                     <!-- TOMBOL INSTAL APP DENGAN DOWNLOAD DIRECT MSB ERP.apk -->
                     <a href="MSB ERP.apk" download="MSB ERP.apk" class="install-app-btn" title="Unduh dan Instal MSB ERP.apk"><i class="fa-solid fa-download"></i> <span class="install-text">Instal App</span></a>
@@ -1731,8 +1736,8 @@
     <button class="back-nav" id="back-btn" onclick="window._cView()" aria-label="Kembali ke Dashboard"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i><span class="back-label">Kembali</span></button>
 
     <div id="curtain-container" aria-hidden="true">
-        <button class="curtain-close-btn" onclick="window._closeCurtain()" aria-label="Tutup Struktur Organisasi"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Tutup</button>
-        <iframe id="curtain-frame" title="Embedded Organizational Structure"></iframe>
+        <button class="curtain-close-btn" onclick="window._closeCurtain()" id="curtain-close-btn" aria-label="Tutup"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Tutup</button>
+        <iframe id="curtain-frame" title="Embedded Curtain Viewport"></iframe>
     </div>
 
     <script>
@@ -2301,19 +2306,28 @@
             }, 450); 
         };
 
-        // --- FUNGSI UNTUK STRUKTUR ORGANISASI (CURTAIN) ---
-        window._openCurtain = function(url) {
+        // --- FUNGSI TIRAI (CURTAIN): Struktur Organisasi & Purchase Order Update ---
+        let _curtainTimer = null;
+        window._openCurtain = function(url, label) {
             const curtain = document.getElementById('curtain-container');
             const frame = document.getElementById('curtain-frame');
+            const closeBtn = document.getElementById('curtain-close-btn');
+            clearTimeout(_curtainTimer); // cegah iframe dikosongkan jika dibuka lagi sebelum animasi tutup selesai
+            const name = label || 'Halaman';
+            frame.title = 'Embedded ' + name;
+            if (closeBtn) closeBtn.setAttribute('aria-label', 'Tutup ' + name);
             frame.src = url;
             curtain.classList.add('active');
+            curtain.setAttribute('aria-hidden', 'false');
         };
 
         window._closeCurtain = function() {
             const curtain = document.getElementById('curtain-container');
             const frame = document.getElementById('curtain-frame');
             curtain.classList.remove('active');
-            setTimeout(() => {
+            curtain.setAttribute('aria-hidden', 'true');
+            clearTimeout(_curtainTimer);
+            _curtainTimer = setTimeout(() => {
                 frame.src = '';
             }, 500);
         };
@@ -3210,7 +3224,8 @@
                 { kind: 'cmd', icon: 'fa-moon', color: 'purple', title: 'Layar siaga (ruang kontrol)', desc: 'Jam besar + KPI setelah 2 menit tanpa aktivitas', tag: onOff(S.idle), on: S.idle, run: () => { S.idle = !S.idle; store.set('idle', S.idle); toast('Layar Siaga', S.idle ? 'Aktif — muncul setelah 2 menit tanpa aktivitas.' : 'Dimatikan.', 'success'); } },
                 { kind: 'cmd', icon: 'fa-rotate', color: 'blue', title: 'Refresh data sekarang', desc: 'Muat ulang KPI, grafik, SPP, dan jadwal', run: () => refreshData(false) },
                 { kind: 'cmd', icon: 'fa-shield-heart', color: 'green', title: 'Atur tanggal kecelakaan terakhir', desc: 'Untuk widget Hari Tanpa Kecelakaan', run: () => setTimeout(openSafeEditor, 120) },
-                { kind: 'cmd', icon: 'fa-sitemap', color: 'purple', title: 'Struktur organisasi', desc: 'Buka bagan organisasi MSB', run: () => window._openCurtain('https://murindasentrabaja.github.io/Struktur-Organisasi-MSB/') },
+                { kind: 'cmd', icon: 'fa-sitemap', color: 'purple', title: 'Struktur organisasi', desc: 'Buka bagan organisasi MSB', run: () => window._openCurtain('https://murindasentrabaja.github.io/Struktur-Organisasi-MSB/', 'Struktur Organisasi') },
+                { kind: 'cmd', icon: 'fa-file-invoice', color: 'orange', title: 'Purchase Order Update', desc: 'Buka halaman update Purchase Order', run: () => window._openCurtain('https://murindasentrabaja.github.io/PO-Update/', 'Purchase Order Update') },
                 { kind: 'cmd', icon: 'fa-expand', color: 'blue', title: 'Layar penuh', desc: 'Masuk / keluar mode layar penuh', run: () => { try { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); } catch (_) {} } },
                 { kind: 'cmd', icon: 'fa-power-off', color: 'orange', title: 'Keluar dari sistem', desc: 'Kembali ke halaman masuk', run: () => window._dOut() }
             ];
