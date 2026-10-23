@@ -1859,6 +1859,9 @@ html body footer .footer-divider-dot { background: var(--text-accent); opacity: 
             <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/HR-System/'); window._toggleSidebar();" class="sidebar-link">
                 <div class="sidebar-icon c-blue"><i class="fa-solid fa-people-group"></i></div><span>HR System</span>
             </a>
+            <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/MSB_Competency_Matrix_System/'); window._toggleSidebar();" class="sidebar-link">
+                <div class="sidebar-icon c-purple"><i class="fa-solid fa-ranking-star"></i></div><span>Competency Matrix</span>
+            </a>
             <a href="#" onclick="window._lNch('https://murindasentrabaja.github.io/General-Affairs/'); window._toggleSidebar();" class="sidebar-link">
                 <div class="sidebar-icon c-green"><i class="fa-solid fa-building-circle-check"></i></div><span>General Affairs</span>
             </a>
@@ -2073,6 +2076,7 @@ html body footer .footer-divider-dot { background: var(--text-accent); opacity: 
             <div class="msb-recent" id="msb-recent" hidden></div>
             <div class="msb-empty" id="msb-empty" hidden><i class="fa-regular fa-face-frown" aria-hidden="true"></i>Tidak ada modul yang cocok.<br><button class="msb-link" id="msb-empty-reset" type="button" style="margin-top:10px">Reset filter</button></div>
             <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/HR-System/')"><div class="module-icon"><i class="fa-solid fa-people-group"></i></div><div class="module-info"><h3>Human Resource</h3><p>Talenta Terkelola, Kinerja Optimal.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
+            <div class="module-card purple" onclick="window._lNch('https://murindasentrabaja.github.io/MSB_Competency_Matrix_System/')"><div class="module-icon"><i class="fa-solid fa-ranking-star"></i></div><div class="module-info"><h3>Competency Matrix</h3><p>Kompetensi Terpetakan, Talenta Terarah.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card green" onclick="window._lNch('https://murindasentrabaja.github.io/General-Affairs/')"><div class="module-icon"><i class="fa-solid fa-building-circle-check"></i></div><div class="module-info"><h3>General Affairs</h3><p>Fasilitas Terdata, Operasional Prima.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card orange" onclick="window._lNch('https://murindasentrabaja.github.io/HSE/')"><div class="module-icon"><i class="fa-solid fa-helmet-safety"></i></div><div class="module-info"><h3>HSE System</h3><p>K3 Terpantau, Standar Terjaga.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
             <div class="module-card blue" onclick="window._lNch('https://murindasentrabaja.github.io/Maintenance/')"><div class="module-icon"><i class="fa-solid fa-gears"></i></div><div class="module-info"><h3>Maintenance</h3><p>Perawatan Preventif, Mesin Responsif.</p></div><div class="explore-btn">Buka Aplikasi <i class="fa-solid fa-chevron-right"></i></div></div>
@@ -3206,7 +3210,7 @@ html body footer .footer-divider-dot { background: var(--text-accent); opacity: 
 
         /* ---------- Registri modul (dibaca dari DOM: kartu, sidebar, FAB) ---------- */
         const CAT = {
-            'hr-system': 'Umum', 'general-affairs': 'Umum', 'hse': 'Umum', 'security-guard': 'Umum',
+            'hr-system': 'Umum', 'msb_competency_matrix_system': 'Umum', 'general-affairs': 'Umum', 'hse': 'Umum', 'security-guard': 'Umum',
             'engineering-msb': 'Operasional', 'production-tracking': 'Operasional', 'warehouse-system': 'Operasional', 'maintenance': 'Operasional',
             'qc-inspection': 'Operasional', 'qms': 'Operasional', 'master-schedule': 'Operasional', 'filling-material': 'Operasional', 'msb-gcode-application': 'Operasional', 'logistics': 'Operasional', 'product-label': 'Operasional',
             'purchase-order': 'Administrasi', 'spp': 'Administrasi', 'msb-approval': 'Administrasi', 'administration-system': 'Administrasi', 'portal-delivery': 'Administrasi'
