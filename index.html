@@ -3937,14 +3937,15 @@ body:not(.light-theme) #mc-root{--mc-bg:#0f172a}
 .mc-box{padding:28px 20px;text-align:center;color:var(--text-muted);font-size:13px}
 .mc-box .row{display:flex;gap:8px;margin-top:14px}
 .mc-box .go{border:0;border-radius:14px;padding:0 16px;background:var(--primary-blue,#0A84FF);color:#fff;font-weight:600;cursor:pointer}
+.mc-av{width:40px;height:40px;object-fit:contain;flex:none}.mc-form{display:flex;flex-direction:column;gap:8px;margin-top:14px;text-align:left}.mc-form input{padding:10px 12px;border-radius:14px;border:1px solid var(--glass-border,rgba(255,255,255,.12));background:var(--mc-in);color:var(--text-main);font:14px Inter,sans-serif}#mc-name{flex:none}.mc-form .go{padding:11px}#mc-err{min-height:18px;color:var(--primary-red,#FF453A);font-size:12px}.mc-m b small{font-weight:500;color:var(--text-muted);margin-left:6px}
 @media(max-width:600px){#mc-panel{inset:0;width:auto;height:auto;border-radius:0;padding-top:env(safe-area-inset-top)}#mc-fab{right:16px;bottom:16px}}
 </style>
 <div id="mc-root">
   <button id="mc-fab" type="button" aria-label="Buka chat grup MSB"><i class="fa-solid fa-comments"></i><span id="mc-badge"></span></button>
   <section id="mc-panel" role="dialog" aria-label="Chat grup MSB">
-    <div class="mc-h"><i class="fa-solid fa-people-group" style="font-size:20px;color:var(--primary-blue,#0A84FF)"></i>
+    <div class="mc-h"><img class="mc-av" src="MSB Favicon.png" alt="" onerror="this.onerror=null;this.src='https://via.placeholder.com/40x40?text=MSB'">
       <div><strong>MSB Group</strong><small id="mc-stat">Menghubungkan…</small></div>
-      <button id="mc-x" type="button" aria-label="Tutup chat"><i class="fa-solid fa-xmark"></i></button></div>
+      <button id="mc-out" type="button" aria-label="Keluar dari chat" title="Ganti akun" hidden><i class="fa-solid fa-right-from-bracket"></i></button><button id="mc-x" type="button" aria-label="Tutup chat"><i class="fa-solid fa-xmark"></i></button></div>
     <div id="mc-list" aria-live="polite"></div>
     <div class="mc-ft" id="mc-ft">
       <div id="mc-chip"><span id="mc-chipn"></span><button id="mc-chipx" type="button" aria-label="Batalkan lampiran"><i class="fa-solid fa-xmark"></i></button></div>
@@ -3964,14 +3965,15 @@ const MAXMB=10, FAST=3000, SLOW=30000;
 const $=s=>document.querySelector(s), esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const LS={g:k=>{try{return localStorage.getItem('msb_chat_'+k)}catch(_){return null}},s:(k,v)=>{try{localStorage.setItem('msb_chat_'+k,v)}catch(_){}}};
 const configured=/^https:\/\/script\.google\.com\//.test(API);
-let me=LS.g('name')||'', seen=+LS.g('seen')||0, lastId=0, all=[], open=false, first=true, timer, polling=false, busy=false, pf=null;
+let tok=LS.g('tok')||'', me=tok?(LS.g('name')||''):'', ros=[], rosTried=false, seen=+LS.g('seen')||0, lastId=0, all=[], open=false, first=true, timer, polling=false, busy=false, pf=null;
 const list=$('#mc-list'), inp=$('#mc-in'), stat=$('#mc-stat');
 const hue=n=>{let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%360;return 'hsl('+h+' 70% 55%)'};
 const hm=t=>new Date(t).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
 const sz=b=>b>1048576?(b/1048576).toFixed(1)+' MB':Math.max(1,Math.round(b/1024))+' KB';
 const gid=x=>/^[\w-]+$/.test(x||'')?x:'';
+function dept(n){const r=ros.find(x=>x.n===n);return r?r.d:''}
 function row(m){const f=gid(m.f),mine=m.u===me;let h='<div class="mc-m'+(mine?' me':'')+'">';
-  if(!mine)h+='<b style="color:'+hue(m.u)+'">'+esc(m.u)+'</b>';
+  if(!mine){const dp=dept(m.u);h+='<b style="color:'+hue(m.u)+'">'+esc(m.u)+(dp?'<small>'+esc(dp)+'</small>':'')+'</b>'}
   if(f){h+=/^image\//.test(m.m)
     ?'<a href="https://drive.google.com/file/d/'+f+'/view" target="_blank" rel="noopener"><img loading="lazy" alt="'+esc(m.fn)+'" src="https://drive.google.com/thumbnail?id='+f+'&sz=w640"></a>'
     :'<a class="mc-f" target="_blank" rel="noopener" href="https://drive.google.com/uc?export=download&id='+f+'"><i class="fa-solid fa-file-arrow-down"></i><span>'+esc(m.fn)+'<small>'+sz(m.sz)+'</small></span></a>';}
@@ -3979,18 +3981,17 @@ function row(m){const f=gid(m.f),mine=m.u===me;let h='<div class="mc-m'+(mine?' 
 const down=()=>{list.scrollTop=list.scrollHeight};
 function render(){
   if(!configured){list.innerHTML='<div class="mc-box">Chat belum dihubungkan. Isi konstanta <b>API</b> pada skrip chat dengan URL web app dari <b>Code_Chat.gs</b>.</div>';$('#mc-ft').style.display='none';return}
-  if(!me){$('#mc-ft').style.display='none';list.innerHTML='<div class="mc-box">Masukkan nama Anda agar rekan lain tahu siapa yang mengirim pesan.<div class="row"><input id="mc-name" maxlength="40" placeholder="Nama lengkap / panggilan" aria-label="Nama"><button class="go" id="mc-go" type="button">Mulai</button></div></div>';
-    const go=()=>{const v=$('#mc-name').value.trim();if(!v)return;me=v;LS.s('name',v);$('#mc-ft').style.display='';render();inp.focus()};
-    $('#mc-go').onclick=go;$('#mc-name').onkeydown=e=>{if(e.key==='Enter')go()};return}
+  $('#mc-out').hidden=!(me&&tok);
+  if(!me||!tok){loginView();return}
   $('#mc-ft').style.display='';
   list.innerHTML=all.length?all.map(row).join(''):'<div class="mc-box">Belum ada pesan. Mulai percakapan pertama.</div>';down();}
 function badge(){const n=all.filter(m=>m.id>seen&&m.u!==me).length;$('#mc-badge').textContent=n>99?'99+':(n||'')}
 function markSeen(){if(all.length){seen=all[all.length-1].id;LS.s('seen',seen)}badge()}
 async function poll(){
-  if(polling||!configured||!$('#mc-root').classList.contains('on'))return schedule();
+  if(polling||!configured||!me||!tok||!$('#mc-root').classList.contains('on'))return schedule();
   polling=true;
-  try{const d=await(await fetch(API+'?since='+lastId+'&_='+Date.now())).json();
-    if(!d.ok)throw 0;stat.textContent='Terhubung';
+  try{const d=await(await fetch(API+'?since='+lastId+'&n='+encodeURIComponent(me)+'&t='+encodeURIComponent(tok)+'&_='+Date.now())).json();
+    if(!d.ok){if(d.error==='auth'){polling=false;logout('Sesi berakhir. Silakan masuk lagi.');return schedule()}throw 0}stat.textContent='Terhubung';
     const fresh=d.msgs.filter(m=>m.id>lastId);
     if(fresh.length){all=all.concat(fresh).slice(-200);lastId=all[all.length-1].id;
       if(open){render();markSeen()}else{badge();
@@ -3999,7 +4000,20 @@ async function poll(){
   }catch(e){stat.textContent='Tidak terhubung — mencoba lagi…'}
   polling=false;schedule();}
 function schedule(){clearTimeout(timer);timer=setTimeout(poll,open&&!document.hidden?FAST:SLOW)}
-function toggle(v){open=v;$('#mc-panel').classList.toggle('open',v);if(v){render();markSeen();if(me)inp.focus();clearTimeout(timer);poll()}else schedule()}
+async function loadRoster(){rosTried=true;try{const d=await(await fetch(API+'?action=roster')).json();if(d.ok)ros=d.list||[]}catch(e){}}
+function logout(msg){me='';tok='';LS.s('name','');LS.s('tok','');all=[];lastId=0;seen=0;LS.s('seen',0);badge();render();if(msg)setTimeout(()=>{const e=$('#mc-err');if(e)e.textContent=msg},0)}
+function loginView(){
+  $('#mc-ft').style.display='none';
+  list.innerHTML='<div class="mc-box"><b>Masuk dengan nama karyawan</b><br>Pilih nama Anda dari daftar, lalu masukkan PIN.<div class="mc-form"><input id="mc-name" list="mc-names" autocomplete="off" placeholder="Ketik untuk mencari nama" aria-label="Nama karyawan"><datalist id="mc-names">'+ros.map(r=>'<option value="'+esc(r.n)+'">'+esc(r.d)+'</option>').join('')+'</datalist><input id="mc-pin" type="password" inputmode="numeric" maxlength="12" autocomplete="off" placeholder="PIN" aria-label="PIN"><button class="go" id="mc-go" type="button">Masuk</button><div id="mc-err" role="alert"></div></div></div>';
+  const err=$('#mc-err');
+  if(!ros.length){err.textContent=rosTried?'Daftar karyawan belum diisi atau tidak terbaca.':'Memuat daftar karyawan…';if(!rosTried)loadRoster().then(()=>{if(!me||!tok)loginView()})}
+  const go=async()=>{const n=$('#mc-name').value.trim(),pin=$('#mc-pin').value.trim();if(!n||!pin){err.textContent='Isi nama dan PIN.';return}
+    $('#mc-go').disabled=true;err.textContent='';
+    try{const d=await(await fetch(API,{method:'POST',body:JSON.stringify({a:'login',n:n,p:pin})})).json();if(!d.ok)throw new Error(d.error);
+      me=d.name;tok=d.token;LS.s('name',me);LS.s('tok',tok);all=[];lastId=0;first=true;render();inp.focus();clearTimeout(timer);poll()
+    }catch(e){err.textContent=e.message||'Gagal masuk';$('#mc-go').disabled=false}};
+  $('#mc-go').onclick=go;$('#mc-pin').onkeydown=e=>{if(e.key==='Enter')go()}}
+function toggle(v){open=v;$('#mc-panel').classList.toggle('open',v);if(v){render();if(me&&tok&&!rosTried)loadRoster().then(()=>{if(open)render()});markSeen();if(me)inp.focus();clearTimeout(timer);poll()}else schedule()}
 function clearFile(){pf=null;$('#mc-file').value='';$('#mc-chip').classList.remove('on')}
 function enc(f){return new Promise((ok,no)=>{
   const raw=()=>{const r=new FileReader();r.onload=()=>ok({name:f.name,mime:f.type||'application/octet-stream',data:r.result.split(',')[1]});r.onerror=no;r.readAsDataURL(f)};
@@ -4011,12 +4025,12 @@ function enc(f){return new Promise((ok,no)=>{
 async function send(){
   const x=inp.value.trim();if((!x&&!pf)||busy||!me)return;busy=true;
   const t=document.createElement('div');t.className='mc-m me pend';t.innerHTML='<p>'+esc(x||pf.name)+'</p><time>Mengirim…</time>';list.append(t);down();
-  try{const body={u:me,x:x};if(pf)body.file=await enc(pf);
+  try{const body={n:me,t:tok,x:x};if(pf)body.file=await enc(pf);
     const d=await(await fetch(API,{method:'POST',body:JSON.stringify(body)})).json();
     if(!d.ok)throw new Error(d.error);inp.value='';inp.style.height='';clearFile();t.remove();clearTimeout(timer);poll();
-  }catch(e){t.remove();stat.textContent='Gagal terkirim — periksa koneksi lalu kirim lagi'}
+  }catch(e){t.remove();if(e.message==='auth')logout('Sesi berakhir. Silakan masuk lagi.');else stat.textContent='Gagal terkirim — periksa koneksi lalu kirim lagi'}
   busy=false}
-$('#mc-fab').onclick=()=>toggle(!open);$('#mc-x').onclick=()=>toggle(false);$('#mc-send').onclick=send;
+$('#mc-fab').onclick=()=>toggle(!open);$('#mc-out').onclick=()=>logout('');$('#mc-x').onclick=()=>toggle(false);$('#mc-send').onclick=send;
 $('#mc-att').onclick=()=>$('#mc-file').click();$('#mc-chipx').onclick=clearFile;
 $('#mc-file').onchange=e=>{const f=e.target.files[0];if(!f)return;
   if(f.size>MAXMB*1048576){stat.textContent='File maksimal '+MAXMB+' MB';clearFile();return}
