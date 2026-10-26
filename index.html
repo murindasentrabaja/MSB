@@ -3912,14 +3912,14 @@ body:not(.light-theme) #mc-root{--mc-bg:#0f172a}
 #mc-root{display:none}#mc-root.on{display:block}
 #mc-fab{position:fixed;right:22px;bottom:22px;z-index:1000;width:56px;height:56px;border:0;border-radius:50%;cursor:pointer;color:#fff;font-size:22px;background:var(--primary-blue,#0A84FF);box-shadow:0 10px 28px -6px rgba(10,132,255,.55)}
 #mc-fab:focus-visible,#mc-panel button:focus-visible{outline:2px solid var(--primary-cyan,#64D2FF);outline-offset:2px}
-#mc-badge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--primary-red,#FF453A);font:700 11px/20px Inter,sans-serif}
-#mc-badge:empty{display:none}
-#mc-panel{position:fixed;right:22px;bottom:90px;z-index:3150;width:min(390px,calc(100vw - 24px));height:min(580px,calc(100dvh - 120px));display:none;flex-direction:column;overflow:hidden;border-radius:22px;color:var(--text-main);font-family:Inter,sans-serif;background:color-mix(in srgb,var(--mc-bg) 90%,transparent);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--glass-border,rgba(255,255,255,.12));box-shadow:0 24px 60px -12px rgba(0,0,0,.5)}
-#mc-panel.open{display:flex}
+#mc-badge,#ai-badge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--primary-red,#FF453A);font:700 11px/20px Inter,sans-serif}
+#mc-badge:empty,#ai-badge:empty{display:none}
+#mc-panel,#ai-panel{position:fixed;right:22px;bottom:90px;z-index:3150;width:min(390px,calc(100vw - 24px));height:min(580px,calc(100dvh - 120px));display:none;flex-direction:column;overflow:hidden;border-radius:22px;color:var(--text-main);font-family:Inter,sans-serif;background:color-mix(in srgb,var(--mc-bg) 90%,transparent);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--glass-border,rgba(255,255,255,.12));box-shadow:0 24px 60px -12px rgba(0,0,0,.5)}
+#mc-panel.open,#ai-panel.open{display:flex}
 .mc-h{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--glass-border,rgba(255,255,255,.12))}
 .mc-h strong{font-size:15px}.mc-h small{display:block;font-size:11px;color:var(--text-muted)}.mc-h div{flex:1}
 .mc-h button,.mc-ft button{border:0;background:none;color:var(--text-muted);font-size:17px;cursor:pointer;padding:6px}
-#mc-list{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;overscroll-behavior:contain}
+#mc-list,#ai-list{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;overscroll-behavior:contain}
 .mc-m{align-self:flex-start;max-width:82%;padding:8px 12px;border-radius:16px 16px 16px 4px;background:var(--mc-in);font-size:14px;line-height:1.4;word-break:break-word}
 .mc-m.me{align-self:flex-end;border-radius:16px 16px 4px 16px;background:var(--primary-blue,#0A84FF);color:#fff}
 .mc-m b{display:block;font-size:12px;margin-bottom:2px}.mc-m p{margin:0;white-space:pre-wrap}
@@ -3932,15 +3932,22 @@ body:not(.light-theme) #mc-root{--mc-bg:#0f172a}
 #mc-chip{display:none;margin-bottom:8px;padding:6px 10px;border-radius:10px;background:var(--mc-in);font-size:12px}
 #mc-chip.on{display:flex;justify-content:space-between;gap:8px}
 .mc-row{display:flex;gap:6px;align-items:flex-end}
-#mc-in,#mc-name{flex:1;resize:none;max-height:96px;padding:10px 12px;border-radius:14px;border:1px solid var(--glass-border,rgba(255,255,255,.12));background:var(--mc-in);color:var(--text-main);font:14px Inter,sans-serif}
+#mc-in,#mc-name,#ai-in{flex:1;resize:none;max-height:96px;padding:10px 12px;border-radius:14px;border:1px solid var(--glass-border,rgba(255,255,255,.12));background:var(--mc-in);color:var(--text-main);font:14px Inter,sans-serif}
 #mc-send{color:var(--primary-blue,#0A84FF)!important;font-size:20px!important}
 .mc-box{padding:28px 20px;text-align:center;color:var(--text-muted);font-size:13px}
 .mc-box .row{display:flex;gap:8px;margin-top:14px}
 .mc-box .go{border:0;border-radius:14px;padding:0 16px;background:var(--primary-blue,#0A84FF);color:#fff;font-weight:600;cursor:pointer}
 .mc-av{width:40px;height:40px;object-fit:contain;flex:none}.mc-form{display:flex;flex-direction:column;gap:8px;margin-top:14px;text-align:left}.mc-form input{padding:10px 12px;border-radius:14px;border:1px solid var(--glass-border,rgba(255,255,255,.12));background:var(--mc-in);color:var(--text-main);font:14px Inter,sans-serif}#mc-name{flex:none}.mc-form .go{padding:11px}#mc-err{min-height:18px;color:var(--primary-red,#FF453A);font-size:12px}.mc-m b small{font-weight:500;color:var(--text-muted);margin-left:6px}
-@media(max-width:600px){#mc-panel{inset:0;width:auto;height:auto;border-radius:0;padding-top:env(safe-area-inset-top)}#mc-fab{right:16px;bottom:16px}}
+.mc-m.ai{max-width:94%;border-radius:16px;background:color-mix(in srgb,var(--primary-purple,#BF5AF2) 13%,transparent);border:1px solid color-mix(in srgb,var(--primary-purple,#BF5AF2) 38%,transparent)}.mc-m.ai b{color:var(--primary-purple,#BF5AF2)}.mc-m.ai p{line-height:1.55}
+#ai-fab{position:fixed;right:28px;bottom:90px;z-index:1000;width:46px;height:46px;display:flex;align-items:center;justify-content:center;border:1px solid var(--glass-border,rgba(128,128,128,.28));border-radius:50%;cursor:pointer;background:var(--mc-bg);box-shadow:0 10px 24px -8px rgba(66,133,244,.55)}
+.gmn{width:24px;height:24px;display:block}
+#ai-fab:focus-visible,#ai-panel button:focus-visible{outline:2px solid var(--primary-cyan,#64D2FF);outline-offset:2px}
+#ai-send{color:var(--primary-purple,#BF5AF2)!important;font-size:20px!important}
+.mc-m .go{margin-top:8px;border:0;border-radius:12px;padding:8px 14px;background:var(--primary-purple,#BF5AF2);color:#fff;font-weight:600;cursor:pointer}
+@media(max-width:600px){#mc-panel,#ai-panel{inset:0;width:auto;height:auto;border-radius:0;padding-top:env(safe-area-inset-top)}#mc-fab{right:16px;bottom:16px}#ai-fab{right:22px;bottom:80px}}
 </style>
 <div id="mc-root">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><linearGradient id="gmn-g" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#4285F4"/><stop offset=".55" stop-color="#9B72CB"/><stop offset="1" stop-color="#D96570"/></linearGradient></defs></svg>
   <button id="mc-fab" type="button" aria-label="Buka chat grup MSB"><i class="fa-solid fa-comments"></i><span id="mc-badge"></span></button>
   <section id="mc-panel" role="dialog" aria-label="Chat grup MSB">
     <div class="mc-h"><img class="mc-av" src="MSB Favicon.png" alt="" onerror="this.onerror=null;this.src='https://via.placeholder.com/40x40?text=MSB'">
@@ -3956,6 +3963,17 @@ body:not(.light-theme) #mc-root{--mc-bg:#0f172a}
         <button id="mc-send" type="button" aria-label="Kirim pesan"><i class="fa-solid fa-paper-plane"></i></button>
       </div>
     </div>
+  </section>
+  <button id="ai-fab" type="button" aria-label="Buka MSB AI" title="MSB AI"><svg class="gmn" viewBox="0 0 24 24" aria-hidden="true"><path fill="url(#gmn-g)" d="M12 0C12 6.63 17.37 12 24 12 17.37 12 12 17.37 12 24 12 17.37 6.63 12 0 12 6.63 12 12 6.63 12 0Z"/></svg><span id="ai-badge"></span></button>
+  <section id="ai-panel" role="dialog" aria-label="MSB AI">
+    <div class="mc-h"><svg class="gmn" viewBox="0 0 24 24" aria-hidden="true" style="width:26px;height:26px;flex:none"><path fill="url(#gmn-g)" d="M12 0C12 6.63 17.37 12 24 12 17.37 12 12 17.37 12 24 12 17.37 6.63 12 0 12 6.63 12 12 6.63 12 0Z"/></svg>
+      <div><strong>MSB AI</strong><small id="ai-stat">Laporan harian semua departemen</small></div>
+      <button id="ai-re" type="button" aria-label="Perbarui laporan" title="Perbarui laporan dengan data terbaru"><i class="fa-solid fa-rotate"></i></button><button id="ai-x" type="button" aria-label="Tutup MSB AI"><i class="fa-solid fa-xmark"></i></button></div>
+    <div id="ai-list" aria-live="polite"></div>
+    <div class="mc-ft" id="ai-ft"><div class="mc-row">
+      <textarea id="ai-in" rows="1" placeholder="Tanya MSB AI tentang data portal…" aria-label="Pertanyaan untuk MSB AI"></textarea>
+      <button id="ai-send" type="button" aria-label="Kirim pertanyaan"><i class="fa-solid fa-paper-plane"></i></button>
+    </div></div>
   </section>
 </div>
 <script>
@@ -3992,16 +4010,16 @@ async function poll(){
   polling=true;
   try{const d=await(await fetch(API+'?since='+lastId+'&n='+encodeURIComponent(me)+'&t='+encodeURIComponent(tok)+'&_='+Date.now())).json();
     if(!d.ok){if(d.error==='auth'){polling=false;logout('Sesi berakhir. Silakan masuk lagi.');return schedule()}throw 0}stat.textContent='Terhubung';
-    const fresh=d.msgs.filter(m=>m.id>lastId);
+    const fresh=d.msgs.filter(m=>m.id>lastId&&m.u!=='MSB AI');
     if(fresh.length){all=all.concat(fresh).slice(-200);lastId=all[all.length-1].id;
       if(open){render();markSeen()}else{badge();
-        if(!first){const m=fresh.filter(x=>x.u!==me).pop();if(m&&typeof window.sN==='function')window.sN('Chat MSB',m.u+': '+(m.x||m.fn||'mengirim lampiran'),'success')}}}
-    if(first&&!open)badge();first=false;
+        if(!first){const m=fresh.filter(x=>x.u!==me).pop();if(m&&typeof window.sN==='function')window.sN('Chat MSB',m.u+': '+(m.x||m.fn||'mengirim lampiran').slice(0,90),'success')}}}
+    lastId=Math.max(lastId,d.last||0);if(first&&!open)badge();first=false;
   }catch(e){stat.textContent='Tidak terhubung — mencoba lagi…'}
   polling=false;schedule();}
 function schedule(){clearTimeout(timer);timer=setTimeout(poll,open&&!document.hidden?FAST:SLOW)}
 async function loadRoster(){rosTried=true;try{const d=await(await fetch(API+'?action=roster')).json();if(d.ok)ros=d.list||[]}catch(e){}}
-function logout(msg){me='';tok='';LS.s('name','');LS.s('tok','');all=[];lastId=0;seen=0;LS.s('seen',0);badge();render();if(msg)setTimeout(()=>{const e=$('#mc-err');if(e)e.textContent=msg},0)}
+function logout(msg){me='';tok='';LS.s('name','');LS.s('tok','');all=[];lastId=0;seen=0;LS.s('seen',0);badge();render();aiView();if(msg)setTimeout(()=>{const e=$('#mc-err');if(e)e.textContent=msg},0)}
 function loginView(){
   $('#mc-ft').style.display='none';
   list.innerHTML='<div class="mc-box"><b>Masuk dengan nama karyawan</b><br>Pilih nama Anda dari daftar, lalu masukkan PIN.<div class="mc-form"><input id="mc-name" list="mc-names" autocomplete="off" placeholder="Ketik untuk mencari nama" aria-label="Nama karyawan"><datalist id="mc-names">'+ros.map(r=>'<option value="'+esc(r.n)+'">'+esc(r.d)+'</option>').join('')+'</datalist><input id="mc-pin" type="password" inputmode="numeric" maxlength="12" autocomplete="off" placeholder="PIN" aria-label="PIN"><button class="go" id="mc-go" type="button">Masuk</button><div id="mc-err" role="alert"></div></div></div>';
@@ -4013,7 +4031,41 @@ function loginView(){
       me=d.name;tok=d.token;LS.s('name',me);LS.s('tok',tok);all=[];lastId=0;first=true;render();inp.focus();clearTimeout(timer);poll()
     }catch(e){err.textContent=e.message||'Gagal masuk';$('#mc-go').disabled=false}};
   $('#mc-go').onclick=go;$('#mc-pin').onkeydown=e=>{if(e.key==='Enter')go()}}
-function toggle(v){open=v;$('#mc-panel').classList.toggle('open',v);if(v){render();if(me&&tok&&!rosTried)loadRoster().then(()=>{if(open)render()});markSeen();if(me)inp.focus();clearTimeout(timer);poll()}else schedule()}
+const md=x=>esc(x).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+function collect(){ // potret data yang sedang tampil di portal, dikirim ke MSB AI
+  const tx=e=>e?e.innerText.replace(/\s+/g,' ').trim():'';
+  const o={waktu:new Date().toLocaleString('id-ID',{timeZone:'Asia/Jakarta'})+' WIB'};
+  o.kpi=[...document.querySelectorAll('.stat-card')].map(tx).filter(Boolean);
+  o.hariTanpaKecelakaan=tx($('#msb-safe-s'));
+  o.grafik=[...document.querySelectorAll('canvas')].map(c=>{const ch=window.Chart&&Chart.getChart&&Chart.getChart(c);if(!ch)return null;
+    return {judul:tx(c.closest('.chart-card')&&c.closest('.chart-card').querySelector('.chart-title')),label:ch.data.labels,seri:ch.data.datasets.map(d=>({nama:d.label,nilai:d.data}))}}).filter(Boolean);
+  const sp=$('#spp-pending-list');o.ringkasanSPP=tx(sp&&sp.closest('.chart-card'));
+  try{if(Array.isArray(deliveriesData))o.jadwalPengiriman=deliveriesData.slice(0,200).map(r=>{const q={};for(const k in r){const v=r[k];q[k]=typeof v==='string'?v.slice(0,80):v}return q})}catch(e){}
+  return o}
+// ===== MSB AI: bagian tersendiri (sapaan harian + laporan semua departemen), tidak masuk ke chat grup =====
+const aiL=$('#ai-list'), aiIn=$('#ai-in'), aiS=$('#ai-stat');
+let aiOpen=false, aiBusy=false, aiDay=false;
+const today=()=>new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Jakarta'});
+function sapa(){const j=+new Intl.DateTimeFormat('en-GB',{hour:'numeric',hourCycle:'h23',timeZone:'Asia/Jakarta'}).format(new Date());return j<11?'Selamat pagi':j<15?'Selamat siang':j<18?'Selamat sore':'Selamat malam'}
+function aiMsg(x,mine){const d=document.createElement('div');d.className='mc-m '+(mine?'me':'ai');d.innerHTML=x;aiL.append(d);aiL.scrollTop=aiL.scrollHeight;return d}
+function aiView(){aiL.innerHTML='';
+  if(!me||!tok){$('#ai-ft').style.display='none';aiMsg('<b>MSB AI</b><p>'+sapa()+'! Masuk dulu dengan nama dan PIN karyawan agar laporan harian bisa disiapkan.</p><button class="go" id="ai-login" type="button">Masuk lewat Chat</button>');$('#ai-login').onclick=()=>{aiToggle(false);toggle(true)};return}
+  $('#ai-ft').style.display='';aiMsg('<b>MSB AI</b><p>'+sapa()+', '+esc(me)+'! Berikut ringkasan laporan semua departemen hari ini.</p>');aiBrief(false)}
+function aiCall(body,ok){if(aiBusy)return;aiBusy=true;const w=aiMsg('<b>MSB AI</b><p>Sedang menyusun dari data portal…</p>');w.classList.add('pend');aiS.textContent='Menyusun…';
+  fetch(API,{method:'POST',body:JSON.stringify(Object.assign({n:me,t:tok,snap:JSON.stringify(collect())},body))}).then(r=>r.json()).then(d=>{w.remove();
+    if(!d.ok){if(d.error==='auth')return logout('Sesi berakhir. Silakan masuk lagi.');throw new Error(d.error)}ok(d);aiS.textContent='Laporan harian semua departemen'})
+  .catch(e=>{w.remove();aiMsg('<b>MSB AI</b><p>'+esc(e.message&&e.message!=='0'?e.message:'MSB AI tidak terjangkau. Coba lagi sebentar.')+'</p>');aiS.textContent='Gagal — coba lagi'}).finally(()=>{aiBusy=false})}
+function aiBrief(force){aiCall({a:'brief',force:!!force},d=>{aiMsg('<b>Laporan harian · '+hm(d.t)+'</b><p>'+md(d.text)+'</p>');LS.s('aiday',today())})}
+function aiAsk(){const q=aiIn.value.trim();if(!q||aiBusy||!me)return;aiIn.value='';aiIn.style.height='';aiMsg('<p>'+esc(q)+'</p>',true);aiCall({a:'ai',q:q},d=>aiMsg('<b>MSB AI</b><p>'+md(d.text)+'</p>'))}
+function aiToggle(v){aiOpen=v;$('#ai-panel').classList.toggle('open',v);if(v){toggle(false);$('#ai-badge').textContent='';if(!aiL.childElementCount)aiView();else if(me)aiIn.focus()}}
+function aiDaily(){if(aiDay||!me||!tok||LS.g('aiday')===today())return;aiDay=true;let n=0; // sapa sekali sehari setelah data portal selesai dimuat
+  const t=setInterval(()=>{const k=$('#stat-karyawan');if(!(k&&k.textContent.trim()!=='0')&&++n<25)return;clearInterval(t);
+    if(open||aiOpen)$('#ai-badge').textContent='1';else{$('#ai-badge').textContent='1';aiToggle(true)}},1000)}
+$('#ai-fab').onclick=()=>aiToggle(!aiOpen);$('#ai-x').onclick=()=>aiToggle(false);$('#ai-send').onclick=aiAsk;
+$('#ai-re').onclick=()=>{if(me&&tok&&!aiBusy){aiMsg('<p>Perbarui laporan dengan data terbaru</p>',true);aiBrief(true)}};
+aiIn.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();aiAsk()}};
+aiIn.oninput=()=>{aiIn.style.height='auto';aiIn.style.height=Math.min(aiIn.scrollHeight,96)+'px'};
+function toggle(v){if(v)aiToggle(false);open=v;$('#mc-panel').classList.toggle('open',v);if(v){render();if(me&&tok&&!rosTried)loadRoster().then(()=>{if(open)render()});markSeen();if(me)inp.focus();clearTimeout(timer);poll()}else schedule()}
 function clearFile(){pf=null;$('#mc-file').value='';$('#mc-chip').classList.remove('on')}
 function enc(f){return new Promise((ok,no)=>{
   const raw=()=>{const r=new FileReader();r.onload=()=>ok({name:f.name,mime:f.type||'application/octet-stream',data:r.result.split(',')[1]});r.onerror=no;r.readAsDataURL(f)};
@@ -4042,7 +4094,7 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden)schedule()
 setInterval(()=>{const m=$('#main-dashboard'),v=$('#viewport-container'),
   on=!!m&&getComputedStyle(m).display!=='none'&&!(v&&v.classList.contains('active'));
   const r=$('#mc-root'),was=r.classList.contains('on');r.classList.toggle('on',on);
-  if(on&&!was)poll();if(!on&&open)toggle(false)},800);
+  if(on&&!was)poll();if(!on){if(open)toggle(false);if(aiOpen)aiToggle(false)}else aiDaily()},800);
 })();
 </script>
 <!-- ===== AKHIR MSB GROUP CHAT ===== -->
